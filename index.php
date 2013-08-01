@@ -37,17 +37,67 @@ class Simple_Comment_Editing {
 		/* BEGIN ACTIONS */
 		//When a comment is posted
 		add_action( 'comment_post', array( $this, 'comment_posted' ),100,1 );
+		
+		/* Begin Filters */
+		if ( !is_feed() ) {
+			add_filter( 'comment_excerpt', array( $this, 'add_edit_interface'), 1000, 2 );
+			add_filter( 'comment_text', array( $this, 'add_edit_interface'), 1000,2 );
+			//Notice Thesis compatibility not here?  It's not an accident.
+		}
 	} //end init
 	
 	/**
-	 * comment_posted - WordPress action comment_post
+	 * add_edit_interface - Adds the SCE interface if a user can edit their comment
 	 * 
-	 * Called when a comment has been posted
+	 * Called via the comment_text or comment_excerpt filter to add the SCE editing interface to a comment.
+	 *
+	 * @since 1.0
+	 *
+	 */
+	public function add_edit_interface( $comment_content, $comment = false) {
+		if ( !$comment ) return $comment_content;
+		
+		$comment_id = $comment->comment_ID;
+		$post_id = $comment->comment_post_ID;
+		
+		//Check to see if a user can edit their comment
+		if ( !$this->can_edit( $comment_id, $post_id ) ) return "can't edit"/*$comment_content*/;
+		
+		return "can edit";
+	
+	} //end add_edit_interface
+	
+	/**
+	 * can_edit - Returns true/false if a user can edit a comment
+	 * 
+	 * Retrieves a cookie to see if a comment can be edited or not
 	 *
 	 * @since 1.0
 	 *
 	 * @param int $comment_id The Comment ID
-	 * @return   type                Description
+	 * @param int $post_id The Comment's Post ID
+	 * @return bool true if can edit, false if not
+	 */
+	public function can_edit( $comment_id, $post_id ) {
+		global $comment;
+		if ( !is_object( $comment ) ) $comment = get_comment( $comment_id, OBJECT );
+		
+		//Check to see if time has elapsed for the comment
+		$comment_timestamp = strtotime( $comment->comment_date );
+		$time_elapsed = current_time( 'timestamp', get_option( 'gmt_offset' ) ) - $comment_timestamp;
+		$minuted_elapsed = round( ( ( ( $time_elapsed % 604800 ) % 86400 )  % 3600 ) / 60 );
+		if ( ( $minuted_elapsed - $this->comment_time ) > 0 ) return false;
+	
+	} //end can_edit
+	
+	/**
+	 * comment_posted - WordPress action comment_post
+	 * 
+	 * Called when a comment has been posted - Stores a cookie for later editing
+	 *
+	 * @since 1.0
+	 *
+	 * @param int $comment_id The Comment ID
 	 */
 	public function comment_posted( $comment_id ) {
 		$comment = get_comment( $comment_id, OBJECT );
