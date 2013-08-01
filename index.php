@@ -25,8 +25,23 @@ class Simple_Comment_Editing {
 	} //end constructor
 	
 	public function init() {
-	
+		//* Localization Code */
+		load_plugin_textdomain( 'sce', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	} //end init
+	
+	public function get_plugin_dir( $path = '' ) {
+		$dir = $this->plugin_dir;
+		if ( !empty( $path ) && is_string( $path) )
+			$dir .= '/' . ltrim( $path, '/' );
+		return $dir;		
+	}
+	//Returns the plugin url
+	public function get_plugin_url( $path = '' ) {
+		$dir = $this->plugin_url;
+		if ( !empty( $path ) && is_string( $path) )
+			$dir .= '/' . ltrim( $path, '/' );
+		return $dir;	
+	}
 	
 } //end class Simple_Comment_Editing
 
