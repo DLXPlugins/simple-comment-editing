@@ -92,6 +92,18 @@ class Simple_Comment_Editing {
 		if ( ( $minuted_elapsed - $this->comment_time ) > 0 ) return false;
 		
 		//Now check to see if the cookie is present
+		if ( !isset( $_COOKIE ) || !is_array( $_COOKIE ) ) return false;
+		//Perform a foreach on the cookie global to see if SimpleCommentEditing is present - processes on the server, but avoids a query if the cookie isn't set
+		$is_cookie_present = false;
+		foreach( $_COOKIE as $cookie_key => $cookie_value ) {
+			if ( 'SimpleCommentEditing' == substr( $cookie_key, 0, 20 ) ) {
+				$is_cookie_present = true;
+				break;
+			}
+		}
+		if ( !$is_cookie_present ) return false;
+		
+		//Now check for post meta and cookie values being the same
 		$post_meta_hash = get_post_meta( $post_id, '_' . $comment_id, true );
 		$cookie_hash = md5( $comment->comment_author_IP . $comment->comment_date_gmt );
 		if ( !isset( $_COOKIE[ 'SimpleCommentEditing' . $comment_id . $cookie_hash] ) ) return false;
@@ -143,11 +155,12 @@ class Simple_Comment_Editing {
 		}
 		
 		//Now delete security keys (use the same names/techniques as Ajax Edit Comments
-		$min_security_keys = absint( apply_filters( 'sce_security_key_min', 10 ) );
+		$min_security_keys = absint( apply_filters( 'sce_security_key_min', 100 ) );
 		if ( $security_key_count >= $min_security_keys ) {
 			global $wpdb;
 			$comment_id_to_exclude = "_" . $comment_id;
-			@$wpdb->query( $wpdb->prepare( "delete from {$wpdb->postmeta} where left(meta_value, 6) = 'wpAjax' and meta_key <> %s", $comment_id_to_exclude ) );
+			/* Only delete the first 50 to make sure the bottom 50 aren't suddenly without to the ability to edit comments - Props Marco Pereirinha */
+			$wpdb->query( $wpdb->prepare( "delete from {$wpdb->postmeta} where left(meta_value, 6) = 'wpAjax' and meta_key <> %s ORDER BY {$wpdb->postmeta}.meta_id ASC LIMIT 50 ", $comment_id_to_exclude ) ); 
 			$security_key_count = 1;
 		}
 		update_option( 'ajax-edit-comments_security_key_count', $security_key_count );
