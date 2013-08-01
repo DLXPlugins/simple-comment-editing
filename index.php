@@ -60,6 +60,9 @@ class Simple_Comment_Editing {
 		$comment_id = $comment->comment_ID;
 		$post_id = $comment->comment_post_ID;
 		
+		//todo - remove - working below
+		return $comment_content;
+		
 		//Check to see if a user can edit their comment
 		if ( !$this->can_edit( $comment_id, $post_id ) ) return "can't edit"/*$comment_content*/;
 		
@@ -87,7 +90,18 @@ class Simple_Comment_Editing {
 		$time_elapsed = current_time( 'timestamp', get_option( 'gmt_offset' ) ) - $comment_timestamp;
 		$minuted_elapsed = round( ( ( ( $time_elapsed % 604800 ) % 86400 )  % 3600 ) / 60 );
 		if ( ( $minuted_elapsed - $this->comment_time ) > 0 ) return false;
-	
+		
+		//Now check to see if the cookie is present
+		$post_meta_hash = get_post_meta( $post_id, '_' . $comment_id, true );
+		$cookie_hash = md5( $comment->comment_author_IP . $comment->comment_date_gmt );
+		if ( !isset( $_COOKIE[ 'SimpleCommentEditing' . $comment_id . $cookie_hash] ) ) return false;
+		
+		//Check to see if the cookie value matches the post meta hash
+		$cookie_value = $_COOKIE[ 'SimpleCommentEditing' . $comment_id . $cookie_hash ];
+		if ( $cookie_value !== $post_meta_hash ) return false;
+		
+		//All is well, the person/place/thing can edit the comment
+		return true;
 	} //end can_edit
 	
 	/**
