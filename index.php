@@ -40,6 +40,9 @@ class Simple_Comment_Editing {
 		//When a comment is posted
 		add_action( 'comment_post', array( $this, 'comment_posted' ),100,1 );
 		
+		//Loading scripts
+		add_action( 'wp_enqueue_scripts', array( $this, 'add_scripts' ) );
+		
 		/* Begin Filters */
 		if ( !is_feed() ) {
 			add_filter( 'comment_excerpt', array( $this, 'add_edit_interface'), 1000, 2 );
@@ -79,16 +82,16 @@ class Simple_Comment_Editing {
 		$comment_content .= '<div class="sce-edit-button">';
 		$ajax_edit_url = add_query_arg( array( 'cid' => $comment_id, 'pid' => $post_id ) , wp_nonce_url( admin_url( 'admin-ajax.php', 'sce-edit-comment' . $comment_id ) ) );
 		$comment_content .= sprintf( '<a href="%s">%s</a>', $ajax_edit_url, esc_html__( 'Click to Edit', 'sce' ) );
-		$comment_content .= '<span class="sce-timer"></span>';
+		$comment_content .= '&nbsp;<span class="sce-timer"></span>';
 		$comment_content .= '</div><!-- .sce-edit-button -->';
 		
 		//Loading button
-		$comment_content .= '<div class="sce-loading">';
+		$comment_content .= '<div class="sce-loading" style="display: none;">';
 		$comment_content .= sprintf( '<img src="%1$s" title="%2$s" alt="%2$s" />', $this->loading_img, esc_attr__( 'Loading', 'sce' ) );
 		$comment_content .= '</div><!-- sce-loading -->';
 		
 		//Textarea
-		$comment_content .= '<div class="sce-textarea">';
+		$comment_content .= '<div class="sce-textarea" style="display: none;">';
 		$textarea_content = format_to_edit( $raw_content, 1 );
 		$textarea_content = apply_filters( 'comment_edit_pre', $textarea_content );
 		$comment_content .= '<div class="sce-comment-textarea">';
@@ -101,16 +104,30 @@ class Simple_Comment_Editing {
 		$comment_content .= '</div><!-- .sce-textarea -->';
 		
 		
-		
-		
-		
-		
+		//End
 		$comment_content .= '</div><!-- .sce-edit-comment -->';
 		
 		return $comment_content;
 	
 	} //end add_edit_interface
 	
+	/**
+	 * add_scripts - Adds the necessary JavaScript for the plugin (only loads on posts/pages)
+	 * 
+	 * Called via the wp_enqueue_scripts
+	 *
+	 * @since 1.0
+	 *
+	 */
+	 public function add_scripts() {
+	 	if ( !is_single() && !is_page() ) return;
+	 	$main_script_uri = $this->get_plugin_url( '/js/simple-comment-editing.js' );
+	 	wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery' ), '20130802', true );
+	 	wp_localize_script( 'simple-comment-editing', 'simple_comment_editing', array(
+	 	
+	 	) );
+	 } //end add_scripts
+	 
 	/**
 	 * can_edit - Returns true/false if a user can edit a comment
 	 * 
