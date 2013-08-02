@@ -77,7 +77,7 @@ class Simple_Comment_Editing {
 		
 		//Edit Button
 		$comment_content .= '<div class="sce-edit-button">';
-		$ajax_edit_url = add_query_arg( array( 'cid' => $comment_id, 'pid' => $post_id ) , wp_nonce_url( admin_url( 'admin-ajax.php', 'sce-edit-comment' ) ) );
+		$ajax_edit_url = add_query_arg( array( 'cid' => $comment_id, 'pid' => $post_id ) , wp_nonce_url( admin_url( 'admin-ajax.php', 'sce-edit-comment' . $comment_id ) ) );
 		$comment_content .= sprintf( '<a href="%s">%s</a>', $ajax_edit_url, esc_html__( 'Click to Edit', 'sce' ) );
 		$comment_content .= '<span class="sce-timer"></span>';
 		$comment_content .= '</div><!-- .sce-edit-button -->';
@@ -91,8 +91,13 @@ class Simple_Comment_Editing {
 		$comment_content .= '<div class="sce-textarea">';
 		$textarea_content = format_to_edit( $raw_content, 1 );
 		$textarea_content = apply_filters( 'comment_edit_pre', $textarea_content );
-
-		$comment_content .= sprintf( '<textarea class="sce-comment-text" name="sce-comment-text" cols="45" rows="8">%s</textarea>', esc_textarea( $raw_content ) );
+		$comment_content .= '<div class="sce-comment-textarea">';
+		$comment_content .= sprintf( '<textarea class="sce-comment-text" cols="45" rows="8">%s</textarea>', esc_textarea( $raw_content ) );
+		$comment_content .= '</div><!-- .sce-comment-textarea -->';
+		$comment_content .= '<div class="sce-comment-edit-buttons">';
+		$comment_content .= sprintf( '<button class="sce-comment-save">%s</button>', esc_html__( 'Save', 'sce' ) );
+		$comment_content .= sprintf( '<button class="sce-comment-cancel">%s</button>', esc_html__( 'Cancel', 'sce' ) );
+		$comment_content .= '</div><!-- .sce-comment-edit-buttons -->';
 		$comment_content .= '</div><!-- .sce-textarea -->';
 		
 		
