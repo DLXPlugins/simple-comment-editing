@@ -63,11 +63,32 @@ class Simple_Comment_Editing {
 		//Check to see if a user can edit their comment
 		if ( !$this->can_edit( $comment_id, $post_id ) ) return $comment_content;
 		
-		//Yay, user can edit - Add the initial wrapper
-		$comment_content = sprintf( '<div id="sce-edit-comment%d" class="sce-edit-comment">%s</div>', $comment_id, $comment_content );
-		return $comment_content;
+		$raw_content = $comment_content; //For later usage in the textarea
 		
-		return "can edit";
+		//Yay, user can edit - Add the initial wrapper
+		$comment_content = sprintf( '<div id="sce-comment%d" class="sce-comment">%s</div>', $comment_id, $comment_content );		
+		
+		//Create Overall wrapper for JS interface
+		$comment_content .= sprintf( '<div id="sce-edit-comment%d" class="sce-edit-comment">', $comment_id );
+		
+		//Edit Button
+		$comment_content .= '<div class="sce-edit-button">';
+		$ajax_edit_url = add_query_arg( array( 'cid' => $comment_id, 'pid' => $post_id ) , wp_nonce_url( admin_url( 'admin-ajax.php', 'sce-edit-comment' ) ) );
+		$comment_content .= sprintf( '<a href="%s">%s</a>', $ajax_edit_url, esc_html__( 'Click to Edit', 'sce' ) );
+		$comment_content .= '<span class="sce-timer"></span>';
+		$comment_content .= '</div><!-- .sce-edit-button -->';
+		
+		//Loading button
+		$comment_content .= '<div class="sce-loading">';
+		$comment_content .= sprintf( '<img src="%1$s" title="%2$s" alt="%2$s" />', $this->loading_img, esc_attr__( 'Loading', 'sce' ) );
+		$comment_content .= '</div><!-- sce-loading -->';
+		
+		
+		
+		
+		$comment_content .= '</div><!-- .sce-edit-comment -->';
+		
+		return $comment_content;
 	
 	} //end add_edit_interface
 	
