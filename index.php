@@ -30,6 +30,8 @@ class Simple_Comment_Editing {
 		//* Localization Code */
 		load_plugin_textdomain( 'sce', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 		
+		if ( is_admin() ) return false;
+		
 		//Set plugin defaults
 		$this->comment_time = intval( apply_filters( 'sce_comment_time', 5 ) );
 		$this->loading_img = esc_url( apply_filters( 'sce_loading_img', $this->get_plugin_url( '/images/loading.png' ) ) );
@@ -56,14 +58,16 @@ class Simple_Comment_Editing {
 	 */
 	public function add_edit_interface( $comment_content, $comment = false) {
 		if ( !$comment ) return $comment_content;
-		
+				
 		$comment_id = $comment->comment_ID;
 		$post_id = $comment->comment_post_ID;
 		
 		//Check to see if a user can edit their comment
 		if ( !$this->can_edit( $comment_id, $post_id ) ) return $comment_content;
 		
-		$raw_content = $comment_content; //For later usage in the textarea
+		//Variables for later
+		$original_content = $comment_content;
+		$raw_content = $comment->comment_content; //For later usage in the textarea
 		
 		//Yay, user can edit - Add the initial wrapper
 		$comment_content = sprintf( '<div id="sce-comment%d" class="sce-comment">%s</div>', $comment_id, $comment_content );		
@@ -82,6 +86,16 @@ class Simple_Comment_Editing {
 		$comment_content .= '<div class="sce-loading">';
 		$comment_content .= sprintf( '<img src="%1$s" title="%2$s" alt="%2$s" />', $this->loading_img, esc_attr__( 'Loading', 'sce' ) );
 		$comment_content .= '</div><!-- sce-loading -->';
+		
+		//Textarea
+		$comment_content .= '<div class="sce-textarea">';
+		$textarea_content = format_to_edit( $raw_content, 1 );
+		$textarea_content = apply_filters( 'comment_edit_pre', $textarea_content );
+
+		$comment_content .= sprintf( '<textarea class="sce-comment-text" name="sce-comment-text" cols="45" rows="8">%s</textarea>', esc_textarea( $raw_content ) );
+		$comment_content .= '</div><!-- .sce-textarea -->';
+		
+		
 		
 		
 		
