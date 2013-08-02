@@ -60,11 +60,12 @@ class Simple_Comment_Editing {
 		$comment_id = $comment->comment_ID;
 		$post_id = $comment->comment_post_ID;
 		
-		//todo - remove - working below
-		return $comment_content;
-		
 		//Check to see if a user can edit their comment
-		if ( !$this->can_edit( $comment_id, $post_id ) ) return "can't edit"/*$comment_content*/;
+		if ( !$this->can_edit( $comment_id, $post_id ) ) return $comment_content;
+		
+		//Yay, user can edit - Add the initial wrapper
+		$comment_content = sprintf( '<div id="sce-edit-comment%d" class="sce-edit-comment">%s</div>', $comment_id, $comment_content );
+		return $comment_content;
 		
 		return "can edit";
 	
@@ -92,7 +93,7 @@ class Simple_Comment_Editing {
 		if ( ( $minuted_elapsed - $this->comment_time ) > 0 ) return false;
 		
 		//Now check to see if the cookie is present
-		if ( !isset( $_COOKIE ) || !is_array( $_COOKIE ) ) return false;
+		if ( !isset( $_COOKIE ) || !is_array( $_COOKIE ) || empty( $_COOKIE ) ) return false;
 		//Perform a foreach on the cookie global to see if SimpleCommentEditing is present - processes on the server, but avoids a query if the cookie isn't set
 		$is_cookie_present = false;
 		foreach( $_COOKIE as $cookie_key => $cookie_value ) {
