@@ -151,20 +151,13 @@ class Simple_Comment_Editing {
 		
 		//Now check to see if the cookie is present
 		if ( !isset( $_COOKIE ) || !is_array( $_COOKIE ) || empty( $_COOKIE ) ) return false;
-		//Perform a foreach on the cookie global to see if SimpleCommentEditing is present - processes on the server, but avoids a query if the cookie isn't set
-		$is_cookie_present = false;
-		foreach( $_COOKIE as $cookie_key => $cookie_value ) {
-			if ( 'SimpleCommentEditing' == substr( $cookie_key, 0, 20 ) ) {
-				$is_cookie_present = true;
-				break;
-			}
-		}
-		if ( !$is_cookie_present ) return false;
 		
 		//Now check for post meta and cookie values being the same
-		$post_meta_hash = get_post_meta( $post_id, '_' . $comment_id, true );
 		$cookie_hash = md5( $comment->comment_author_IP . $comment->comment_date_gmt );
 		if ( !isset( $_COOKIE[ 'SimpleCommentEditing' . $comment_id . $cookie_hash] ) ) return false;
+		$post_meta_hash = get_post_meta( $post_id, '_' . $comment_id, true );
+		
+		
 		
 		//Check to see if the cookie value matches the post meta hash
 		$cookie_value = $_COOKIE[ 'SimpleCommentEditing' . $comment_id . $cookie_hash ];
