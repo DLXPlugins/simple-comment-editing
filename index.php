@@ -86,7 +86,7 @@ class Simple_Comment_Editing {
 		$comment_content .= '<div class="sce-edit-button">';
 		$ajax_edit_url = add_query_arg( array( 'cid' => $comment_id, 'pid' => $post_id ) , wp_nonce_url( admin_url( 'admin-ajax.php', 'sce-edit-comment' . $comment_id ) ) );
 		$comment_content .= sprintf( '<a href="%s">%s</a>', $ajax_edit_url, esc_html__( 'Click to Edit', 'sce' ) );
-		$comment_content .= '&nbsp;<span class="sce-timer"></span>';
+		$comment_content .= '<span class="sce-timer"></span>';
 		$comment_content .= '</div><!-- .sce-edit-button -->';
 		
 		//Loading button
@@ -128,7 +128,11 @@ class Simple_Comment_Editing {
 	 	$main_script_uri = $this->get_plugin_url( '/js/simple-comment-editing.js' );
 	 	wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery', 'wp-ajax-response' ), '20130802', true );
 	 	wp_localize_script( 'simple-comment-editing', 'simple_comment_editing', array(
-	 	
+	 		'minutes' => esc_js( __( 'minutes', 'sce' ) ),
+	 		'minute' => esc_js( __( 'minute', 'sce' ) ),
+	 		'and' => esc_js( __( 'and', 'sce' ) ),
+	 		'seconds' => esc_js( __( 'seconds', 'sce' ) ),
+	 		'second' => esc_js( __( 'second', 'sce' ) )
 	 	) );
 	 } //end add_scripts
 	 
