@@ -83,7 +83,7 @@ class Simple_Comment_Editing {
 		$comment_content .= sprintf( '<div id="sce-edit-comment%d" class="sce-edit-comment">', $comment_id );
 		
 		//Edit Button
-		$comment_content .= '<div class="sce-edit-button">';
+		$comment_content .= '<div class="sce-edit-button" style="display:none;">';
 		$ajax_edit_url = add_query_arg( array( 'cid' => $comment_id, 'pid' => $post_id ) , wp_nonce_url( admin_url( 'admin-ajax.php', 'sce-edit-comment' . $comment_id ) ) );
 		$comment_content .= sprintf( '<a href="%s">%s</a>', $ajax_edit_url, esc_html__( 'Click to Edit', 'sce' ) );
 		$comment_content .= '<span class="sce-timer"></span>';

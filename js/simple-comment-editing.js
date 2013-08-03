@@ -14,6 +14,7 @@ jQuery( document ).ready( function( $ ) {
 			} );
 			
 			//Use siblings to set up events for save/cancel button
+			
 			//Load timers
 			/*
 			1.  Use Ajax to get the amount of time left to edit the comment.
@@ -26,6 +27,7 @@ jQuery( document ).ready( function( $ ) {
 				var seconds = parseInt( response.seconds );
 				var timer_text = sce.get_timer_text( minutes, seconds );
 				$( element ).find( '.sce-timer' ).html( timer_text );
+				$( element ).show();
 				
 				//Set interval
 				sce.timers[ response.comment_id ] = {
