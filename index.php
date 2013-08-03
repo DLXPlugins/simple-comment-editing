@@ -30,7 +30,7 @@ class Simple_Comment_Editing {
 		//* Localization Code */
 		load_plugin_textdomain( 'sce', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 		
-		if ( is_admin() ) return false;
+		if ( is_admin() && !defined( 'DOING_AJAX' ) ) return false;
 		
 		//Set plugin defaults
 		$this->comment_time = intval( apply_filters( 'sce_comment_time', 5 ) );
@@ -42,6 +42,10 @@ class Simple_Comment_Editing {
 		
 		//Loading scripts
 		add_action( 'wp_enqueue_scripts', array( $this, 'add_scripts' ) );
+		
+		//Ajax
+		add_action( 'wp_ajax_sce_get_time_left', array( $this, 'ajax_get_time_left' ) );
+		add_action( 'wp_ajax_nopriv_sce_get_time_left', array( $this, 'ajax_get_time_left' ) );
 		
 		/* Begin Filters */
 		if ( !is_feed() ) {
@@ -122,11 +126,43 @@ class Simple_Comment_Editing {
 	 public function add_scripts() {
 	 	if ( !is_single() && !is_page() ) return;
 	 	$main_script_uri = $this->get_plugin_url( '/js/simple-comment-editing.js' );
-	 	wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery' ), '20130802', true );
+	 	wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery', 'wp-ajax-response' ), '20130802', true );
 	 	wp_localize_script( 'simple-comment-editing', 'simple_comment_editing', array(
 	 	
 	 	) );
 	 } //end add_scripts
+	 
+	 /**
+	 * ajax_get_time_left - Returns a JSON object of minutes/seconds of the time left to edit a comment
+	 * 
+	 * Returns a JSON object of minutes/seconds of the time left to edit a comment
+	 *
+	 * @since 1.0
+	 *
+	 * @param int $_POST[ 'comment_id' ] The Comment ID
+	 * @param int $_POST[ 'post_id' ] The Comment's Post ID
+	 * @return JSON object e.g. {minutes:4,seconds:5}
+	 */
+	 public function ajax_get_time_left() {
+	 	global $wpdb;
+	 	$comment_id = absint( $_POST[ 'comment_id' ] );
+	 	$post_id = absint( $_POST[ 'post_id' ] );
+	 	
+	 	$comment_time = absint( $this->comment_time );
+	 	$query = $wpdb->prepare( "SELECT ( $comment_time * 60 - (UNIX_TIMESTAMP('" . current_time('mysql') . "') - UNIX_TIMESTAMP(comment_date))) comment_time FROM {$wpdb->comments} where comment_ID = %d", $comment_id );
+	 	$comment_time_result = $wpdb->get_row( $query, ARRAY_A );
+	 	
+	 	$time_left = absint( $comment_time_result[ 'comment_time' ] );
+	 	$minutes = floor( $time_left / 60 );
+		$seconds = $time_left - ( $minutes * 60 );
+		$response = array(
+			'minutes' => $minutes,
+			'comment_id' => $comment_id, 
+			'seconds' => $seconds
+		);
+		die( json_encode( $response ) );
+	 } //end ajax_get_time_left
+	 
 	 
 	/**
 	 * can_edit - Returns true/false if a user can edit a comment
