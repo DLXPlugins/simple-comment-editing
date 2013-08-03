@@ -7,10 +7,34 @@ jQuery( document ).ready( function( $ ) {
 			var element = this;
 
 			//Set up event for when the edit button is clicked
-			$( element ).on( 'click', 'a', function( evt ) { 
-				evt.preventDefault();
-				alert( ajax_params.cid );
-				sce.test_function();
+			$( element ).on( 'click', 'a', function( e ) { 
+				e.preventDefault();
+				
+				//Hide the edit button and show the textarea
+				$( element ).fadeOut( 'fast', function() {
+					$( element ).siblings( '.sce-textarea' ).find( 'button' ).prop( 'disabled', false );
+					$( element ).siblings( '.sce-textarea' ).fadeIn( 'fast' );
+				} );
+			} );
+			
+			//Cancel button
+			$( element ).siblings( '.sce-textarea' ).on( 'click', '.sce-comment-cancel', function( e ) {
+				e.preventDefault();
+				
+				//Hide the textarea and show the edit button
+				$( element ).siblings( '.sce-textarea' ).fadeOut( 'fast', function() {
+					$( element ).fadeIn( 'fast' );
+				} );
+			} );
+			
+			//Save button
+			$( element ).siblings( '.sce-textarea' ).on( 'click', '.sce-comment-save', function( e ) {
+				e.preventDefault();
+				
+				$( element ).siblings( '.sce-textarea' ).find( 'button' ).prop( 'disabled', true );
+				$( element ).siblings( '.sce-textarea' ).fadeOut( 'fast', function() {
+					$( element ).siblings( '.sce-loading' ).fadeIn( 'fast' );
+				} );
 			} );
 			
 			//Use siblings to set up events for save/cancel button
@@ -54,9 +78,6 @@ jQuery( document ).ready( function( $ ) {
 			}, 'json' );
 		} );
 	};
-	sce.test_function = function() {
-		alert( 'test_function' );
-	};
 	sce.get_timer_text = function( minutes, seconds ) {
 		if (seconds < 0) { minutes -= 1; seconds = 59; }
 		//Create timer text
@@ -72,8 +93,5 @@ jQuery( document ).ready( function( $ ) {
 		return text;
 	};
 	sce.timers = new Array();
-	function test_function() {
-		alert( "blah" );
-	};
 	$( '.sce-edit-button' ).simplecommentediting();
 } );
