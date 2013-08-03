@@ -21,10 +21,34 @@ jQuery( document ).ready( function( $ ) {
 			3.  Set Interval
 			*/
 			$.post( ajax_url, { action: 'sce_get_time_left', comment_id: ajax_params.cid, post_id: ajax_params.pid }, function( response ) {
+				//Set initial timer text
 				var minutes = parseInt( response.minutes );
 				var seconds = parseInt( response.seconds );
 				var timer_text = sce.get_timer_text( minutes, seconds );
 				$( element ).find( '.sce-timer' ).html( timer_text );
+				
+				//Set interval
+				sce.timers[ response.comment_id ] = {
+					minutes: minutes,
+					seconds: seconds,
+					timer: setInterval( function() {
+						timer_seconds = sce.timers[ response.comment_id ].seconds - 1;
+						timer_minutes = sce.timers[ response.comment_id ].minutes;
+						if ( timer_minutes <=0 && timer_seconds <= 0) { 
+							clearInterval( sce.timers[ response.comment_id ].timer );
+							//todo - Unbind and remove edit elements
+						} else {
+							if ( timer_seconds < 0 ) { 
+								timer_minutes -= 1; timer_seconds = 59;
+							} 
+							$( element ).find( '.sce-timer' ).html(  sce.get_timer_text( timer_minutes, timer_seconds ) );
+							sce.timers[ response.comment_id ].seconds = timer_seconds;
+							sce.timers[ response.comment_id ].minutes = timer_minutes;
+						}
+					}, 1000 )
+				};
+				
+				
 			}, 'json' );
 		} );
 	};
