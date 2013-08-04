@@ -11,6 +11,8 @@ Simple Comment Editing for your website.
 
 == Description ==
 
+Simple Comment Editing gives anonymous users the ability to edit their comments for a period of time.
+
 Simple Comment Editing is a stripped down version of <a href="http://wordpress.org/plugins/wp-ajax-edit-comments/">Ajax Edit Comments</a>.
 
 The biggest differences:
