@@ -255,7 +255,8 @@ class Simple_Comment_Editing {
 		}
 		
 		//Now get the new comment again for security
-		$comment_to_return = get_comment ( $comment_id );
+		if ( isset( $GLOBALS['comment'] ) ) unset( $GLOBALS['comment'] );	//caching
+		$comment_to_return = get_comment ( $comment_id ); //todo - cached
 		$comment_content_to_return = $comment_to_return->comment_content;
 		
 		//Format the comment for returning
