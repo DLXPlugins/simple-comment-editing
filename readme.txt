@@ -1,4 +1,36 @@
-==FAQ==
+=== Simple Comment Editor ===
+Contributors: ronalfy, metronet
+Tags: ajax, comments,edit comments, edit, comment, admin
+Requires at least: 3.5
+Tested up to: 3.6
+Stable tag: 1.0.0
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+Simple Comment Editing for your website.
+
+== Description ==
+
+Simple Comment Editing is a stripped down version of <a href="http://wordpress.org/plugins/wp-ajax-edit-comments/">Ajax Edit Comments</a>.
+
+The biggest differences:
+<ol>
+<li>Only anonymous users (and logged in users who don't have permission to edit comments) can edit their comments for a period of time (the default is 5 minutes).</li>
+<li>There are no styles included with this plugin.  For most themes, the appearance is acceptable.  For advanced customization, see the "Other Notes" section.</li>
+<li>There are no options.  Some defaults can be overwritten using filters.</li>
+</ol>
+
+== Installation ==
+
+1. Just unzip and upload the "simple-comment-editor" folder to your '/wp-content/plugins/' directory
+2. Activate the plugin through the 'Plugins' menu in WordPress
+
+== Frequently Asked Questions ==
+= Why doesn't this plugin come with any styles? =
+It's impossible to style an inline comment editor for every theme.  We've included basic HTML markup that is easily stylable to fit your theme.
+= Where are the options? =
+No options :) - Just simple comment editing.
+
 = How do you adjust the comment time? =
 Place and edit the following into your theme's `functions.php` file:
 `
@@ -7,15 +39,103 @@ add_filter( 'sce_comment_time', 'edit_sce_comment_time' );
 function edit_sce_comment_time( $time_in_minutes ) {
 	return 60;
 }
+`
+
+
+= How do you change the loading Image? =
+`
+//Simple Comment Editing
+add_filter( 'sce_loading_img', 'edit_sce_loading_img' );
+function edit_sce_loading_img( $default_url ) {
+	return 'http://domain.com/new_loading_image.gif';
+}
+`
+
+= I want to style the editing interface.  Where do I start? =
+See "Other Notes".
+
 = What Browsers Have You Tested This In? =
-IE6-10
-Latest versions of Chrome, Firefox, and Safari
-iOS Safari
+<ul>
+<li>IE 6-10</li>
+<li>Latest versions of Chrome, Firefox, and Safari</li>
+<li>iOS Safari</li>
+</ul>
 
 = What Themes Have You Tested This In? =
-* Twenty Ten
-* Twenty Eleven
-* Twenty Twelve 
-* Twenty Thirteen
-* Genesis
-* Genesis Mindstream
+<ul>
+<li>Twenty Ten</li>
+<li>Twenty Eleven</li>
+<li>Twenty Twelve</li>
+<li>Twenty Thirteen</li>
+<li>Genesis</li>
+<li>Genesis Mindstream</li>
+</ul>
+
+
+== Screenshots ==
+
+1. Edit button and timer.
+2. Textarea and Save/Cancel buttons.
+
+== Changelog ==
+
+= 1.0 =
+* Initial release.
+
+== Upgrade Notice ==
+
+= 1.0 =
+Initial Release
+
+== Styling ==
+The plugin doesn't come with any styles.  We leave it up to you to style the interface.  It doesn't look horribly ugly on most themes, but we leave the advanced customization up to you.
+
+== Styling the Edit Interface ==
+The overall editing interface has been wrapped in a `div` with class `sce-edit-comment`.
+
+`
+.sce-edit-comment { /* styles here */ }
+`
+
+== Styling the Edit Button ==
+The edit button and timer have been wrapped in a `div` with class `sce-edit-button`.
+
+`
+.sce-edit-button { /* styles here */ }
+.sce-edit-button a { /* styles here */ }
+.sce-edit-button .sce-timer { /* styles here */ }
+`
+
+== Styling the Loading Icon ==
+The loading icon has been wrapped in a `div` with class `sce-loading`.
+`
+.sce-loading { /* styles here */ }
+.sce-loading img { /* styles here */ }
+`
+
+== Styling the Textarea ==
+The textarea interface has been wrapped in a `div` with class `sce-textarea`.
+
+The actual `textarea` has been wrapped in a `div` with class `sce-comment-textarea`.
+The save/cancel buttons have been wrapped in a `div` with class `sce-comment-edit-buttons`.
+
+`
+.sce-textarea { /* styles here */ }
+.sce-textarea .sce-comment-textarea textarea { /* styles here */ }
+.sce-comment-edit-buttons { /* styles here */ }
+.sce-comment-edit-buttons .sce-comment-save { /* styles here */ }
+.sce-comment-edit-buttons .sce-comment-cancel { /* styles here */ }
+`
+
+== Testing the Styles ==
+Since most of the interface is hidden, it's a little hard to style.  Just place this into your stylesheet, and remove when you're done.
+`
+/* todo - remove me when done styling */
+.sce-edit-button,
+.sce-loading,
+.sce-textarea {
+	display: block !important;
+}
+`
+Have fun leaving lots of test comments :) - Recommended is to use the filter (in the FAQ section) to temporarily increase the comment editing time.  Make sure you leave the test comments when you're not logged in.
+
