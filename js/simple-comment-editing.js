@@ -62,7 +62,13 @@ jQuery( document ).ready( function( $ ) {
 						timer_minutes = sce.timers[ response.comment_id ].minutes;
 						if ( timer_minutes <=0 && timer_seconds <= 0) { 
 							clearInterval( sce.timers[ response.comment_id ].timer );
-							//todo - Unbind and remove edit elements
+							
+							//Remove event handlers
+							$( element ).siblings( '.sce-textarea' ).off();	
+							$( element ).off();
+								
+							//Remove elements
+							$( element ).parent().fadeOut( 'slow' );
 						} else {
 							if ( timer_seconds < 0 ) { 
 								timer_minutes -= 1; timer_seconds = 59;
