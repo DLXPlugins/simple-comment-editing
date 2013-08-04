@@ -7,7 +7,7 @@ Author: ronalfy
 Version: 1.0.0
 Requires at least: 3.5
 Author URI: http://www.ronalfy.com
-Contributors: ronalfy
+Contributors: ronalfy, metronet
 */ 
 class Simple_Comment_Editing {
 	private static $instance = null;
