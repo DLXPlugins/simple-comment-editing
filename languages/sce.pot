@@ -1,0 +1,149 @@
+# Translation of the WordPress plugin Posts 2 Posts 1.1.4 by scribu.
+# Copyright (C) 2011 scribu
+# This file is distributed under the same license as the Posts 2 Posts package.
+# ÖNDER CEYLAN <ondercey@yahoo.com>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Simple Comment Editing\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/posts-to-posts\n"
+"POT-Creation-Date: 2013-08-04 19:55+0100\n"
+"PO-Revision-Date: 2013-08-04 19:55+0100\n"
+"Last-Translator: Ronald Huereca <ron@ronalfy.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.3\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: _e;__;esc_html__;esc_html_e;esc_attr__;esc_attr_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../index.php:31
+msgid "You do not have permission to edit this comment."
+msgstr ""
+
+#: ../index.php:32
+msgid "You can no longer edit this comment"
+msgstr ""
+
+#: ../index.php:33
+msgid "Your comment cannot be empty"
+msgstr ""
+
+#: ../index.php:34
+msgid "This comment was marked as spam"
+msgstr ""
+
+#: ../index.php:98
+msgid "Click to Edit"
+msgstr ""
+
+#: ../index.php:104
+msgid "Loading"
+msgstr ""
+
+#: ../index.php:115
+msgid "Save"
+msgstr ""
+
+#: ../index.php:116
+msgid "Cancel"
+msgstr ""
+
+#: ../index.php:146
+msgid "minutes"
+msgstr ""
+
+#: ../index.php:147
+msgid "minute"
+msgstr ""
+
+#: ../index.php:148
+msgid "and"
+msgstr ""
+
+#: ../index.php:149
+msgid "seconds"
+msgstr ""
+
+#: ../index.php:150
+msgid "second"
+msgstr ""
+
+#~ msgid "Are you sure you want to delete all connections?"
+#~ msgstr "Tüm bağlantıları kaldırmak istediğinizden emin misiniz?"
+
+#~ msgid "Create connections:"
+#~ msgstr "Bağlantı yarat:"
+
+#~ msgid "Search"
+#~ msgstr "Ara"
+
+#~ msgid "View All"
+#~ msgstr "Tümünü Listele"
+
+#~ msgid "previous"
+#~ msgstr "önceki"
+
+#~ msgid "next"
+#~ msgstr "sonraki"
+
+#~ msgid "of"
+#~ msgstr "arasından"
+
+#~ msgid "Create connection"
+#~ msgstr "Bağlantı ekle"
+
+#~ msgid "Delete all connections"
+#~ msgstr "Tüm bağlantıları kaldır"
+
+#~ msgid "Delete connection"
+#~ msgstr "Bağlantıyı kaldır"
+
+#~ msgid "Users"
+#~ msgstr "Kullanıcılar"
+
+#~ msgid "User"
+#~ msgstr "Kullanıcı"
+
+#~ msgid "Search Users"
+#~ msgstr "Kullanıcı Ara"
+
+#~ msgid "No users found."
+#~ msgstr "Kullanıcı bulunamadı."
+
+#~ msgid "Upgraded %d connections."
+#~ msgstr "%d bağlantı güncellendi."
+
+#~ msgid ""
+#~ "The Posts 2 Posts connections need to be upgraded. <a href='%s'>Proceed.</"
+#~ "a>"
+#~ msgstr ""
+#~ "Posts 2 Posts bağlantılarının güncellenmesi gerekiyor. <a href='%s'>Devam "
+#~ "et.</a>"
+
+#~ msgid "Connected %s"
+#~ msgstr "%s Bağlandı"
+
+#~ msgid "Posts 2 Posts"
+#~ msgstr "Posts 2 Posts"
+
+#~ msgid "A list of posts connected to the current post"
+#~ msgstr "Mevcut sayfayla bağlantılı sayfalar"
+
+#~ msgid "Connection type:"
+#~ msgstr "Bağlantı türü:"
+
+#~ msgid "Connection listing:"
+#~ msgstr "Bağlantı listesi:"
+
+#~ msgid "connected"
+#~ msgstr "bağlı"
+
+#~ msgid "related"
+#~ msgstr "benzer"
+
+#~ msgid "Related %s"
+#~ msgstr "Benzer %s"
