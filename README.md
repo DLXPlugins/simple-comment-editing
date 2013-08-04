@@ -10,7 +10,7 @@ Simple Comment Editing is a stripped down version of <a href="http://wordpress.o
 The biggest differences:
 <ol>
 <li>Only anonymous users (and logged in users who don't have permission to edit comments) can edit their comments for a period of time (the default is 5 minutes).</li>
-<li>There are no styles included with this plugin.  For most themes, the appearance is acceptable.  For advanced customization, see the "Other Notes" section.</li>
+<li>There are no styles included with this plugin.  For most themes, the appearance is acceptable.  For advanced customization, see the "Styles" section.</li>
 <li>There are no options.  Some defaults can be overwritten using filters.</li>
 </ol>
 
@@ -46,7 +46,7 @@ function edit_sce_loading_img( $default_url ) {
 ```
 
 ### I want to style the editing interface.  Where do I start?
-See "Other Notes".
+See "Styles" section.
 
 ### What Browsers Have You Tested This In?
 <ul>
