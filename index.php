@@ -135,8 +135,13 @@ class Simple_Comment_Editing {
 	 */
 	 public function add_scripts() {
 	 	if ( !is_single() && !is_page() ) return;
-	 	$main_script_uri = $this->get_plugin_url( '/js/simple-comment-editing.js' );
-	 	wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery', 'wp-ajax-response' ), '20130802', true );
+	 	$main_script_uri = $this->get_plugin_url( '/js/simple-comment-editing.min.js' );
+	 	if ( defined( 'SCRIPT_DEBUG' ) ) {
+	 		if ( SCRIPT_DEBUG == true ) {
+	 			$main_script_uri = $this->get_plugin_url( '/js/simple-comment-editing.js' );
+	 		}
+	 	}
+	 	wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery', 'wp-ajax-response' ), '20130804', true );
 	 	wp_localize_script( 'simple-comment-editing', 'simple_comment_editing', array(
 	 		'minutes' => esc_js( __( 'minutes', 'sce' ) ),
 	 		'minute' => esc_js( __( 'minute', 'sce' ) ),
