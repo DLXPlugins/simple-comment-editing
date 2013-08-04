@@ -38,18 +38,25 @@ jQuery( document ).ready( function( $ ) {
 					//Save the comment
 					var comment_to_save = encodeURIComponent( $( element ).siblings( '.sce-textarea' ).find( 'textarea' ).val() );
 					$.post( ajax_url, { action: 'sce_save_comment', comment_content: comment_to_save, comment_id: ajax_params.cid, post_id: ajax_params.pid, nonce: ajax_params._wpnonce }, function( response ) {
-						console.log( response );
 						$( element ).siblings( '.sce-loading' ).fadeOut( 'fast', function() {
 							$( element ).fadeIn( 'fast', function() {
 								if ( !response.errors ) {
 									$( '#sce-comment' + ajax_params.cid ).html( response.comment_text );
 								} else {
-									//Output error, kill edit interface
+									//Output error, maybe kill interface
+									if ( response.remove == true ) {
+										//Remove event handlers
+										$( element ).siblings( '.sce-textarea' ).off();	
+										$( element ).off();
+											
+										//Remove elements
+										$( element ).parent().remove();
+									}
+									alert( response.error ); //Alerts may be evil, but they work here - Drawback, they stop the timer, which may result in the user thinking they have more time
 								}
 							} );
 						} );
 						
-						console.log( response );
 					}, 'json' );
 				} );
 			} );
@@ -85,7 +92,7 @@ jQuery( document ).ready( function( $ ) {
 							$( element ).off();
 								
 							//Remove elements
-							$( element ).parent().fadeOut( 'slow' );
+							$( element ).parent().remove();
 						} else {
 							if ( timer_seconds < 0 ) { 
 								timer_minutes -= 1; timer_seconds = 59;

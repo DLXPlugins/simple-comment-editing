@@ -198,10 +198,12 @@ class Simple_Comment_Editing {
 	 	
 	 	$return = array();
 	 	$return[ 'errors' ] = false;
+	 	$return[ 'remove' ] = false; //If set to true, removes the editing interface
 	 	
 	 	//Do a nonce check
 	 	if ( !wp_verify_nonce( $nonce, 'sce-edit-comment' . $comment_id ) ) {
 	 		$return[ 'errors' ] = true;
+	 		$return[ 'remove' ] = true;
 	 		$return[ 'error' ] = $this->errors->get_error_message( 'nonce_fail' );
 	 		die( json_encode( $return ) );
 	 	}	
@@ -209,6 +211,7 @@ class Simple_Comment_Editing {
 	 	//Check to see if the user can edit the comment
 	 	if ( !$this->can_edit( $comment_id, $post_id ) ) {
 	 		$return[ 'errors' ] = true;
+	 		$return[ 'remove' ] = true;
 	 		$return[ 'error' ] = $this->errors->get_error_message( 'edit_fail' );
 	 		die( json_encode( $return ) );
 	 	}
@@ -241,6 +244,15 @@ class Simple_Comment_Editing {
 		$comment_to_save[ 'comment_content' ] = $new_comment_content;
 		wp_update_comment( $comment_to_save );
 		
+		//If the comment was marked as spam, return an error
+		if ( $comment_to_save['comment_approved'] == 'spam' ) {
+			$return[ 'errors' ] = true;
+			$return[ 'remove' ] = true;
+			$return[ 'error' ] = $this->errors->get_error_message( 'comment_marked_spam' );
+			$this->remove_comment_cookie( $comment_to_save );
+			die( json_encode( $return ) );
+		}
+		
 		//Check the new comment for spam with Akismet
 		if ( function_exists( 'akismet_check_db_comment' ) ) {
 			if ( akismet_verify_key( get_option( 'wordpress_api_key' ) ) != "failed" ) { //Akismet
@@ -248,7 +260,9 @@ class Simple_Comment_Editing {
 				if ($response == "true") { //You have spam
 					wp_set_comment_status( $comment_id, 'spam');
 					$return[ 'errors' ] = true;
+					$return[ 'remove' ] = true;
 					$return[ 'error' ] = $this->errors->get_error_message( 'comment_marked_spam' );
+					$this->remove_comment_cookie( $comment_to_save );
 					die( json_encode( $return ) );
 				}
 			}
@@ -376,6 +390,27 @@ class Simple_Comment_Editing {
 			$dir .= '/' . ltrim( $path, '/' );
 		return $dir;	
 	}
+	
+	/**
+	 * remove_comment_cookie - Removes a comment cookie
+	 * 
+	 * Removes a comment cookie based on the passed comment
+	 *
+	 * @since 1.0
+	 *
+	 * @param associative array $comment The results from get_comment( $id, ARRAY_A )
+	 */
+	private function remove_comment_cookie( $comment ) {
+		if ( !is_array( $comment ) ) return;
+		
+		$hash = md5( $comment[ 'comment_author_IP' ] . $comment[ 'comment_date_gmt' ] );
+		$comment_id = $comment[ 'comment_ID' ];
+		
+		//Expire the cookie
+		$cookie_name = 'SimpleCommentEditing' . $comment_id . $hash;
+		setcookie( $cookie_name, '', time() - 60, COOKIEPATH,COOKIE_DOMAIN);
+	
+	} //end remove_comment_cookie
 	
 } //end class Simple_Comment_Editing
 
