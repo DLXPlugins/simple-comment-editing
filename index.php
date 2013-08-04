@@ -42,7 +42,7 @@ class Simple_Comment_Editing {
 		
 		//Set plugin defaults
 		$this->comment_time = intval( apply_filters( 'sce_comment_time', 5 ) );
-		$this->loading_img = esc_url( apply_filters( 'sce_loading_img', $this->get_plugin_url( '/images/loading.png' ) ) );
+		$this->loading_img = esc_url( apply_filters( 'sce_loading_img', $this->get_plugin_url( '/images/loading.gif' ) ) );
 		
 		/* BEGIN ACTIONS */
 		//When a comment is posted
