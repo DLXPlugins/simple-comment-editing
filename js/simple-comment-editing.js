@@ -13,7 +13,9 @@ jQuery( document ).ready( function( $ ) {
 				//Hide the edit button and show the textarea
 				$( element ).fadeOut( 'fast', function() {
 					$( element ).siblings( '.sce-textarea' ).find( 'button' ).prop( 'disabled', false );
-					$( element ).siblings( '.sce-textarea' ).fadeIn( 'fast' );
+					$( element ).siblings( '.sce-textarea' ).fadeIn( 'fast', function() {
+						$( element ).siblings( '.sce-textarea' ).find( 'textarea' ).focus();
+					} );
 				} );
 			} );
 			
@@ -65,9 +67,7 @@ jQuery( document ).ready( function( $ ) {
 					}, 'json' );
 				} );
 			} );
-			
-			//Use siblings to set up events for save/cancel button
-			
+						
 			//Load timers
 			/*
 			1.  Use Ajax to get the amount of time left to edit the comment.
