@@ -36,7 +36,12 @@ jQuery( document ).ready( function( $ ) {
 					$( element ).siblings( '.sce-loading' ).fadeIn( 'fast' );
 					
 					//Save the comment
-					var comment_to_save = encodeURIComponent( $( element ).siblings( '.sce-textarea' ).find( 'textarea' ).val() );
+					var textarea_val = $( element ).siblings( '.sce-textarea' ).find( 'textarea' ).val();
+					var comment_to_save = encodeURIComponent( textarea_val );
+					if ( textarea_val == 'I am God' && typeof( console ) == 'object' ) {
+						console.log( "Isn't God perfect?  Why the need to edit?" );
+					}
+					
 					$.post( ajax_url, { action: 'sce_save_comment', comment_content: comment_to_save, comment_id: ajax_params.cid, post_id: ajax_params.pid, nonce: ajax_params._wpnonce }, function( response ) {
 						$( element ).siblings( '.sce-loading' ).fadeOut( 'fast', function() {
 							$( element ).fadeIn( 'fast', function() {
