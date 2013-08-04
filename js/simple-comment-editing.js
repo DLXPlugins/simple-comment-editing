@@ -34,6 +34,23 @@ jQuery( document ).ready( function( $ ) {
 				$( element ).siblings( '.sce-textarea' ).find( 'button' ).prop( 'disabled', true );
 				$( element ).siblings( '.sce-textarea' ).fadeOut( 'fast', function() {
 					$( element ).siblings( '.sce-loading' ).fadeIn( 'fast' );
+					
+					//Save the comment
+					var comment_to_save = encodeURIComponent( $( element ).siblings( '.sce-textarea' ).find( 'textarea' ).val() );
+					$.post( ajax_url, { action: 'sce_save_comment', comment_content: comment_to_save, comment_id: ajax_params.cid, post_id: ajax_params.pid, nonce: ajax_params._wpnonce }, function( response ) {
+						console.log( response );
+						$( element ).siblings( '.sce-loading' ).fadeOut( 'fast', function() {
+							$( element ).fadeIn( 'fast', function() {
+								if ( !response.errors ) {
+									$( '#sce-comment' + ajax_params.cid ).html( response.comment_text );
+								} else {
+									//Output error, kill edit interface
+								}
+							} );
+						} );
+						
+						console.log( response );
+					}, 'json' );
 				} );
 			} );
 			

@@ -13,6 +13,7 @@ class Simple_Comment_Editing {
 	private static $instance = null;
 	private $comment_time = 0; //in minutes
 	private $loading_img = '';
+	private $errors;
 	
 	//Singleton
 	public static function get_instance() {
@@ -24,6 +25,13 @@ class Simple_Comment_Editing {
 	
 	private function __construct() {
 		add_action( 'init', array( $this, 'init' ), 9 );
+		
+		//Initialize errors
+		$this->errors = new WP_Error();
+		$this->errors->add( 'nonce_fail', __( 'You do not have permission to edit this comment.', 'sce' ) );
+		$this->errors->add( 'edit_fail', __( 'You can no longer edit this comment', 'sce' ) );
+		$this->errors->add( 'comment_empty', __( 'Your comment cannot be empty', 'sce' ) );
+		$this->errors->add( 'comment_marked_spam', __( 'This comment was marked as spam', 'sce' ) );
 	} //end constructor
 	
 	public function init() {
@@ -46,9 +54,11 @@ class Simple_Comment_Editing {
 		//Ajax
 		add_action( 'wp_ajax_sce_get_time_left', array( $this, 'ajax_get_time_left' ) );
 		add_action( 'wp_ajax_nopriv_sce_get_time_left', array( $this, 'ajax_get_time_left' ) );
+		add_action( 'wp_ajax_sce_save_comment', array( $this, 'ajax_save_comment' ) );
+		add_action( 'wp_ajax_nopriv_sce_save_comment', array( $this, 'ajax_save_comment' ) );
 		
 		/* Begin Filters */
-		if ( !is_feed() ) {
+		if ( !is_feed() && !defined( 'DOING_AJAX' ) ) {
 			add_filter( 'comment_excerpt', array( $this, 'add_edit_interface'), 1000, 2 );
 			add_filter( 'comment_text', array( $this, 'add_edit_interface'), 1000,2 );
 			//Notice Thesis compatibility not here?  It's not an accident.
@@ -84,7 +94,7 @@ class Simple_Comment_Editing {
 		
 		//Edit Button
 		$comment_content .= '<div class="sce-edit-button" style="display:none;">';
-		$ajax_edit_url = add_query_arg( array( 'cid' => $comment_id, 'pid' => $post_id ) , wp_nonce_url( admin_url( 'admin-ajax.php', 'sce-edit-comment' . $comment_id ) ) );
+		$ajax_edit_url = add_query_arg( array( 'cid' => $comment_id, 'pid' => $post_id ) , wp_nonce_url( admin_url( 'admin-ajax.php' ), 'sce-edit-comment' . $comment_id ) );
 		$comment_content .= sprintf( '<a href="%s">%s</a>', $ajax_edit_url, esc_html__( 'Click to Edit', 'sce' ) );
 		$comment_content .= '<span class="sce-timer"></span>';
 		$comment_content .= '</div><!-- .sce-edit-button -->';
@@ -166,6 +176,99 @@ class Simple_Comment_Editing {
 		);
 		die( json_encode( $response ) );
 	 } //end ajax_get_time_left
+	 
+	 /**
+	 * ajax_save_comment - Saves a comment to the database, returns the updated comment via JSON
+	 * 
+	 * Returns a JSON object of the saved comment
+	 *
+	 * @since 1.0
+	 *
+	 * @param string $_POST[ 'comment_content' ] The comment to save
+	 * @param int $_POST[ 'comment_id' ] The Comment ID
+	 * @param int $_POST[ 'post_id' ] The Comment's Post ID
+	 * @param string $_POST[ 'nonce' ] The nonce to check against
+	 * @return JSON object 
+	 */
+	 public function ajax_save_comment() {
+	 	$new_comment_content = trim( urldecode( $_POST[ 'comment_content' ] ) );
+	 	$comment_id = absint( $_POST[ 'comment_id' ] );
+	 	$post_id = absint( $_POST[ 'post_id' ] );
+	 	$nonce = $_POST[ 'nonce' ];
+	 	
+	 	$return = array();
+	 	$return[ 'errors' ] = false;
+	 	
+	 	//Do a nonce check
+	 	if ( !wp_verify_nonce( $nonce, 'sce-edit-comment' . $comment_id ) ) {
+	 		$return[ 'errors' ] = true;
+	 		$return[ 'error' ] = $this->errors->get_error_message( 'nonce_fail' );
+	 		die( json_encode( $return ) );
+	 	}	
+	 	
+	 	//Check to see if the user can edit the comment
+	 	if ( !$this->can_edit( $comment_id, $post_id ) ) {
+	 		$return[ 'errors' ] = true;
+	 		$return[ 'error' ] = $this->errors->get_error_message( 'edit_fail' );
+	 		die( json_encode( $return ) );
+	 	}
+	 	
+	 	//Check that the content isn't empty
+	 	if ( '' == $new_comment_content || 'undefined' == $new_comment_content ) {
+	 		$return[ 'errors' ] = true;
+	 		$return[ 'error' ] = $this->errors->get_error_message( 'comment_empty' );
+	 		die( json_encode( $return ) );
+	 	}
+	 	
+	 	//Get original comment
+	 	$comment_to_save = get_comment( $comment_id, ARRAY_A);
+	 	
+	 	//Check the comment
+	 	if ( $comment_to_save['comment_approved'] == 1 ) {
+			if ( check_comment( $comment_to_save['comment_author'], $comment_to_save['comment_author_email'], $comment_to_save['comment_author_url'], $new_comment_content, $comment_to_save['comment_author_IP'], $comment_to_save['comment_agent'], $comment_to_save['comment_type'] ) ) {
+				$comment_to_save['comment_approved'] = 1;
+			} else {
+				$comment_to_save['comment_approved'] = 0;
+			}						
+		}
+		
+		//Check comment against blacklist
+		if ( wp_blacklist_check( $comment_to_save['comment_author'], $comment_to_save['comment_author_email'], $comment_to_save['comment_author_url'], $new_comment_content, $comment_to_save['comment_author_IP'], $comment_to_save['comment_agent'] ) ) {
+			$comment_to_save['comment_approved'] = 'spam';
+		}
+		
+		//Now save the comment
+		$comment_to_save[ 'comment_content' ] = $new_comment_content;
+		wp_update_comment( $comment_to_save );
+		
+		//Check the new comment for spam with Akismet
+		if ( function_exists( 'akismet_check_db_comment' ) ) {
+			if ( akismet_verify_key( get_option( 'wordpress_api_key' ) ) != "failed" ) { //Akismet
+				$response = akismet_check_db_comment( $comment_id );
+				if ($response == "true") { //You have spam
+					wp_set_comment_status( $comment_id, 'spam');
+					$return[ 'errors' ] = true;
+					$return[ 'error' ] = $this->errors->get_error_message( 'comment_marked_spam' );
+					die( json_encode( $return ) );
+				}
+			}
+		}
+		
+		//Now get the new comment again for security
+		$comment_to_return = get_comment ( $comment_id );
+		$comment_content_to_return = $comment_to_return->comment_content;
+		
+		//Format the comment for returning
+		if ( function_exists( 'mb_convert_encoding' ) ) {
+			$comment_content_to_return = mb_convert_encoding( $comment_content_to_return, ''. get_option( 'blog_charset' ) . '', mb_detect_encoding( $comment_content_to_return, "UTF-8, ISO-8859-1, ISO-8859-15", true ) );
+		}
+		$comment_content_to_return = stripslashes( apply_filters( 'comment_text', apply_filters( 'get_comment_text', $comment_content_to_return ) ) );
+		
+		//Ajax response
+		$return[ 'comment_text' ] = $comment_content_to_return;
+		$return[ 'error' ] = '';
+		die( json_encode( $return ) );
+	 } //end ajax_save_comment
 	 
 	 
 	/**
