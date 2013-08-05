@@ -1,4 +1,4 @@
-=== Simple Comment Editor ===
+=== Simple Comment Editing ===
 Contributors: ronalfy, metronet
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 3.5
