@@ -3,7 +3,7 @@ Contributors: ronalfy, metronet
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 3.5
 Tested up to: 3.6
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,12 @@ The biggest differences:
 <li>There are no styles included with this plugin.  For most themes, the appearance is acceptable.  For advanced customization, see the "Other Notes" section.</li>
 <li>There are no options.  Some defaults can be overwritten using filters.</li>
 </ol>
+
+<h3>Translations</h3>
+<ul>
+<li>Norwegian Bokmål - Thanks <a href="http://www.metronet.no/menneskene/jan-hagen/">Jan Hagen</a></li>
+<li>Norwegian Nynorsk - Thanks <a href="http://www.metronet.no/menneskene/jan-hagen/">Jan Hagen</a>.</li>
+</ul>
 
 You are welcome to help us out and <a href="https://github.com/ronalfy/simple-comment-editing">contribute on GitHub</a>.
 
@@ -83,6 +89,10 @@ See "Other Notes".
 
 == Changelog ==
 
+= 1.0.2 =
+* Released 2013-08-05
+* Fixed an internationalization bug and added Norwegian translations.
+
 = 1.0.1 =
 * Released 2013-08-05
 * Improved script loading performance
@@ -91,6 +101,9 @@ See "Other Notes".
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.0.2 =
+Fixed an internationalization bug and added Norwegian translations
 
 = 1.0.1 =
 Improved script loading performance

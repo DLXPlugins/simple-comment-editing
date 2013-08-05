@@ -4,7 +4,7 @@ Plugin Name: Simple Comment Editing
 Plugin URI: http://wordpress.org/extend/plugins/simple-comment-editing/
 Description: Simple comment editing for your users.
 Author: ronalfy
-Version: 1.0.1
+Version: 1.0.2
 Requires at least: 3.5
 Author URI: http://www.ronalfy.com
 Contributors: ronalfy, metronet
@@ -26,6 +26,9 @@ class Simple_Comment_Editing {
 	private function __construct() {
 		add_action( 'init', array( $this, 'init' ), 9 );
 		
+		//* Localization Code */
+		load_plugin_textdomain( 'sce', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+		
 		//Initialize errors
 		$this->errors = new WP_Error();
 		$this->errors->add( 'nonce_fail', __( 'You do not have permission to edit this comment.', 'sce' ) );
@@ -35,8 +38,6 @@ class Simple_Comment_Editing {
 	} //end constructor
 	
 	public function init() {
-		//* Localization Code */
-		load_plugin_textdomain( 'sce', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 		
 		if ( is_admin() && !defined( 'DOING_AJAX' ) ) return false;
 		
