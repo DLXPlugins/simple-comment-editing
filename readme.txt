@@ -3,7 +3,7 @@ Contributors: ronalfy, metronet
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 3.5
 Tested up to: 3.6
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,8 @@ The biggest differences:
 <li>There are no styles included with this plugin.  For most themes, the appearance is acceptable.  For advanced customization, see the "Other Notes" section.</li>
 <li>There are no options.  Some defaults can be overwritten using filters.</li>
 </ol>
+
+You are welcome to help us out and <a href="https://github.com/ronalfy/simple-comment-editing">contribute on GitHub</a>.
 
 == Installation ==
 
@@ -81,10 +83,17 @@ See "Other Notes".
 
 == Changelog ==
 
+= 1.0.1 =
+* Released 2013-08-05
+* Improved script loading performance
+
 = 1.0 =
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+Improved script loading performance
 
 = 1.0 =
 Initial Release

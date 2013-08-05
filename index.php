@@ -4,7 +4,7 @@ Plugin Name: Simple Comment Editing
 Plugin URI: http://wordpress.org/extend/plugins/simple-comment-editing/
 Description: Simple comment editing for your users.
 Author: ronalfy
-Version: 1.0.0
+Version: 1.0.1
 Requires at least: 3.5
 Author URI: http://www.ronalfy.com
 Contributors: ronalfy, metronet
@@ -135,6 +135,19 @@ class Simple_Comment_Editing {
 	 */
 	 public function add_scripts() {
 	 	if ( !is_single() && !is_page() ) return;
+	 	
+	 	//Check if there are any cookies present, otherwise don't load the scripts
+	 	if ( !isset( $_COOKIE ) || empty( $_COOKIE ) ) return;
+	 	$has_cookie = false;
+	 	foreach( $_COOKIE as $cookie_name => $cookie_value ) {
+	 		if ( substr( $cookie_name , 0, 20 ) == 'SimpleCommentEditing' ) {
+				$has_cookie = true;
+				break;	 		
+	 		}
+	 	}
+	 	if ( !$has_cookie ) return;
+	 	
+	 	
 	 	$main_script_uri = $this->get_plugin_url( '/js/simple-comment-editing.min.js' );
 	 	if ( defined( 'SCRIPT_DEBUG' ) ) {
 	 		if ( SCRIPT_DEBUG == true ) {
