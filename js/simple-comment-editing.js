@@ -39,7 +39,7 @@ jQuery( document ).ready( function( $ ) {
 					
 					//Save the comment
 					var textarea_val = $( element ).siblings( '.sce-textarea' ).find( 'textarea' ).val();
-					var comment_to_save = encodeURIComponent( textarea_val );
+					var comment_to_save = textarea_val;
 					if ( textarea_val == 'I am God' && typeof( console ) == 'object' ) {
 						console.log( "Isn't God perfect?  Why the need to edit?" );
 					}

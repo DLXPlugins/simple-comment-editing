@@ -3,7 +3,7 @@ Contributors: ronalfy, metronet
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 3.5
 Tested up to: 3.6
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -89,6 +89,10 @@ See "Other Notes".
 
 == Changelog ==
 
+= 1.0.3 =
+* Released 2013-08-23
+* Fixed slashes being removed in the plugin
+
 = 1.0.2 =
 * Released 2013-08-05
 * Fixed an internationalization bug and added Norwegian translations.
@@ -101,6 +105,9 @@ See "Other Notes".
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.0.3 =
+Fixed slashes being removed in the plugin
 
 = 1.0.2 =
 Fixed an internationalization bug and added Norwegian translations

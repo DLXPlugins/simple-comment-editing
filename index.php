@@ -4,7 +4,7 @@ Plugin Name: Simple Comment Editing
 Plugin URI: http://wordpress.org/extend/plugins/simple-comment-editing/
 Description: Simple comment editing for your users.
 Author: ronalfy
-Version: 1.0.2
+Version: 1.0.3
 Requires at least: 3.5
 Author URI: http://www.ronalfy.com
 Contributors: ronalfy, metronet
@@ -210,7 +210,7 @@ class Simple_Comment_Editing {
 	 * @return JSON object 
 	 */
 	 public function ajax_save_comment() {
-	 	$new_comment_content = trim( urldecode( $_POST[ 'comment_content' ] ) );
+	 	$new_comment_content = trim( $_POST[ 'comment_content' ] );
 	 	$comment_id = absint( $_POST[ 'comment_id' ] );
 	 	$post_id = absint( $_POST[ 'post_id' ] );
 	 	$nonce = $_POST[ 'nonce' ];
@@ -296,7 +296,7 @@ class Simple_Comment_Editing {
 		if ( function_exists( 'mb_convert_encoding' ) ) {
 			$comment_content_to_return = mb_convert_encoding( $comment_content_to_return, ''. get_option( 'blog_charset' ) . '', mb_detect_encoding( $comment_content_to_return, "UTF-8, ISO-8859-1, ISO-8859-15", true ) );
 		}
-		$comment_content_to_return = stripslashes( apply_filters( 'comment_text', apply_filters( 'get_comment_text', $comment_content_to_return ) ) );
+		$comment_content_to_return = apply_filters( 'comment_text', apply_filters( 'get_comment_text', $comment_content_to_return ) );
 		
 		//Ajax response
 		$return[ 'comment_text' ] = $comment_content_to_return;
