@@ -3,7 +3,7 @@ Contributors: ronalfy, metronet
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 3.5
 Tested up to: 3.6
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,6 +24,7 @@ The biggest differences:
 
 <h3>Translations</h3>
 <ul>
+<li>German - Thanks Wilfried Kahrs</li>
 <li>Norwegian Bokmål - Thanks <a href="http://www.metronet.no/menneskene/jan-hagen/">Jan Hagen</a></li>
 <li>Norwegian Nynorsk - Thanks <a href="http://www.metronet.no/menneskene/jan-hagen/">Jan Hagen</a>.</li>
 </ul>
@@ -89,6 +90,10 @@ See "Other Notes".
 
 == Changelog ==
 
+= 1.0.4 =
+* Released 2013-09-06
+* Added German translation file
+
 = 1.0.3 =
 * Released 2013-08-23
 * Fixed slashes being removed in the plugin
@@ -105,6 +110,9 @@ See "Other Notes".
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.0.4 =
+Added German translation file
 
 = 1.0.3 =
 Fixed slashes being removed in the plugin
