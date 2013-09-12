@@ -129,14 +129,14 @@ cd $SVNPATH/trunk/
 svn status | grep -v "^.[ \t]*\..*" | grep "^\!" | awk '{print $2}' | xargs svn del
 # Add all new files that are not set to be ignored
 svn status | grep -v "^.[ \t]*\..*" | grep "^?" | awk '{print $2}' | xargs svn add
-svn commit --username=$SVNUSER -m "$COMMITMSG"
+svn commit --username=$SVNUSER -m "Preparing for $NEWVERSION1 release"
 
 
 echo "Creating new SVN tag and committing it"
 cd $SVNPATH
-md tags
+mkdir tags
 cd $SVNPATH/tags/
-md $NEWVERSION1
+mkdir $NEWVERSION1
 cd $SVNPATH
 svn copy trunk/ tags/$NEWVERSION1/
 cd $SVNPATH/tags/$NEWVERSION1
