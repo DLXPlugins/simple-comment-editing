@@ -89,15 +89,12 @@ echo "Versions match in readme.txt and $MAINFILE. Let's proceed..."
 
 echo "Changing to $GITPATH"
 cd $GITPATH
-# GaryJ: Commit message variable not needed . Hard coded for SVN trunk commit for consistency.
-#echo -e "Enter a commit message for this new version: \c"
-#read COMMITMSG
-# GaryJ: git flow release finish already covers this commit.
-#git commit -am "$COMMITMSG"
+echo -e "Enter a commit message for this new version: \c"
+read $COMMITMSG
 
 # GaryJ: git flow release finish already covers this tag creation.
-#echo "Tagging new version in git"
-#git tag -a "$NEWVERSION1" -m "Tagging version $NEWVERSION1"
+echo "Tagging new version in git"
+git tag -a "$NEWVERSION1" -m "Tagging version $NEWVERSION1"
 
 echo "Pushing git master to origin, with tags"
 git push origin master
@@ -109,6 +106,7 @@ svn checkout $SVNURL/trunk $SVNPATH/trunk
 
 echo "Ignoring GitHub specific files"
 svn propset svn:ignore "README.md
+deploy.sh
 Thumbs.db
 .git
 .gitignore" "$SVNPATH/trunk/"
@@ -125,31 +123,20 @@ if [ -f ".gitmodules" ]
 		git submodule foreach --recursive 'git checkout-index -a -f --prefix=$SVNPATH/trunk/$path/'
 fi
 
-# Support for the /assets folder on the .org repo.
-echo "Moving assets"
-# Make the directory if it doesn't already exist
-mkdir $SVNPATH/assets/
-mv $SVNPATH/trunk/assets/* $SVNPATH/assets/
-svn add $SVNPATH/assets/
-svn delete $SVNPATH/trunk/assets
-
 echo "Changing directory to SVN and committing to trunk"
 cd $SVNPATH/trunk/
 # Delete all files that should not now be added.
 svn status | grep -v "^.[ \t]*\..*" | grep "^\!" | awk '{print $2}' | xargs svn del
 # Add all new files that are not set to be ignored
 svn status | grep -v "^.[ \t]*\..*" | grep "^?" | awk '{print $2}' | xargs svn add
-svn commit --username=$SVNUSER -m "Preparing for $NEWVERSION1 release"
+svn commit --username=$SVNUSER -m "$COMMITMSG"
 
-echo "Updating WordPress plugin repo assets and committing"
-cd $SVNPATH/assets/
-# Add all new files that are not set to be ignored
-svn status | grep -v "^.[ \t]*\..*" | grep "^\!" | awk '{print $2}' | xargs svn del
-# Add all new files that are not set to be ignored
-svn status | grep -v "^.[ \t]*\..*" | grep "^?" | awk '{print $2}' | xargs svn add
-svn commit --username=$SVNUSER -m "Updating assets"
 
 echo "Creating new SVN tag and committing it"
+cd $SVNPATH
+md tags
+cd $SVNPATH/tags/
+md $NEWVERSION1
 cd $SVNPATH
 svn copy trunk/ tags/$NEWVERSION1/
 cd $SVNPATH/tags/$NEWVERSION1

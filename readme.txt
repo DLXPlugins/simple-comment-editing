@@ -3,7 +3,7 @@ Contributors: ronalfy, metronet
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 3.5
 Tested up to: 3.6.1
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,10 +24,11 @@ The biggest differences:
 
 <h3>Translations</h3>
 <ul>
-<li>German - Thanks Wilfried Kahrs</li>
-<li>Norwegian Bokmål - Thanks <a href="http://www.metronet.no/menneskene/jan-hagen/">Jan Hagen</a></li>
+<li>German - Thanks Wilfried Kahrs.</li>
+<li>Norwegian Bokmål - Thanks <a href="http://www.metronet.no/menneskene/jan-hagen/">Jan Hagen</a>.</li>
 <li>Norwegian Nynorsk - Thanks <a href="http://www.metronet.no/menneskene/jan-hagen/">Jan Hagen</a>.</li>
 <li>Portuguese (European) - Thanks <a href="https://twitter.com/porreirinha">Marco Pereirinha</a>.</li>
+<li>Serbian - Thanks <a href="https://twitter.com/lanche86">Milan Ivanovic</a>.</li>
 </ul>
 
 You are welcome to help us out and <a href="https://github.com/ronalfy/simple-comment-editing">contribute on GitHub</a>.
@@ -91,6 +92,10 @@ See "Other Notes".
 
 == Changelog ==
 
+= 1.0.6 =
+* Released 2013-09-12
+* Added Serbian translation file
+
 = 1.0.5 =
 * Released 2013-09-12
 * Added Portuguese translation file
@@ -115,6 +120,9 @@ See "Other Notes".
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.0.6 =
+Added Serbian translation file
 
 = 1.0.5 =
 Added Portuguese translation file
