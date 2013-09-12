@@ -21,7 +21,7 @@ default_svnurl="http://plugins.svn.wordpress.org/$PLUGINSLUG"
 
 echo -e "Enter your wp.org username: \c"
 read default_svnuser
-default_plugindir="$CURRENTDIR/$PLUGINSLUG"
+default_plugindir="$CURRENTDIR"
 default_mainfile="index.php"
 
 echo "1b) Path to a local directory where a temporary SVN checkout can be made."
