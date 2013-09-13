@@ -78,15 +78,6 @@ if [ "$NEWVERSION1" != "$NEWVERSION2" ]; then echo "Version in readme.txt & $MAI
 
 echo "Versions match in readme.txt and $MAINFILE. Let's proceed..."
 
-# GaryJ: Ignore check for git tag, as git flow release finish creates this.
-#if git show-ref --tags --quiet --verify -- "refs/tags/$NEWVERSION1"
-#	then 
-#		echo "Version $NEWVERSION1 already exists as git tag. Exiting...."; 
-#		exit 1; 
-#	else
-#		echo "Git version does not exist. Let's proceed..."
-#fi
-
 echo "Changing to $GITPATH"
 cd $GITPATH
 echo -e "Enter a commit message for this new version: \c"
@@ -129,18 +120,11 @@ cd $SVNPATH/trunk/
 svn status | grep -v "^.[ \t]*\..*" | grep "^\!" | awk '{print $2}' | xargs svn del
 # Add all new files that are not set to be ignored
 svn status | grep -v "^.[ \t]*\..*" | grep "^?" | awk '{print $2}' | xargs svn add
-svn commit --username=$SVNUSER -m "Preparing for $NEWVERSION1 release"
-
+svn commit --username=$SVNUSER -m "$COMMITMSG"
 
 echo "Creating new SVN tag and committing it"
-cd $SVNPATH
-mkdir tags
-cd $SVNPATH/tags/
-mkdir $NEWVERSION1
-cd $SVNPATH
-svn copy trunk/ tags/$NEWVERSION1/
-cd $SVNPATH/tags/$NEWVERSION1
-svn commit --username=$SVNUSER -m "Tagging version $NEWVERSION1"
+svn copy $SVNURL/trunk
+      $SVNURL/tags/$NEWVERSION1 -m "Release $NEWVERSION1"
 
 echo "Removing temporary directory $SVNPATH"
 cd $SVNPATH
