@@ -123,8 +123,7 @@ svn status | grep -v "^.[ \t]*\..*" | grep "^?" | awk '{print $2}' | xargs svn a
 svn commit --username=$SVNUSER -m "Release $NEWVERSION1 - $COMMITMSG"
 
 echo "Creating new SVN tag and committing it"
-svn copy $SVNURL/trunk
-      $SVNURL/tags/$NEWVERSION1 -m "Release $NEWVERSION1"
+svn copy $SVNURL/trunk $SVNURL/tags/$NEWVERSION1 -m "Release $NEWVERSION1"
 
 echo "Removing temporary directory $SVNPATH"
 cd $SVNPATH
