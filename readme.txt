@@ -3,7 +3,7 @@ Contributors: ronalfy, metronet
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 3.5
 Tested up to: 3.6.1
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,11 +22,15 @@ The biggest differences:
 <li>There are no options.  Some defaults can be overwritten using filters.</li>
 </ol>
 
+<h3>Spread the Word</h3>
+If you like this plugin, please help spread the word.  Rate the plugin.  Write about the plugin.  Something :)
+
 <h3>Translations</h3>
 <ul>
 <li>German - Thanks Wilfried Kahrs.</li>
 <li>Norwegian Bokmål - Thanks <a href="http://www.metronet.no/menneskene/jan-hagen/">Jan Hagen</a>.</li>
 <li>Norwegian Nynorsk - Thanks <a href="http://www.metronet.no/menneskene/jan-hagen/">Jan Hagen</a>.</li>
+<li>Persian - Thanks <a href="http://www.wordpress98.com/">Ali HajiMohamadi</a>.</li>
 <li>Portuguese (European) - Thanks <a href="https://twitter.com/porreirinha">Marco Pereirinha</a>.</li>
 <li>Serbian - Thanks <a href="https://twitter.com/lanche86">Milan Ivanovic</a>.</li>
 </ul>
@@ -92,6 +96,10 @@ See "Other Notes".
 
 == Changelog ==
 
+= 1.0.7 =
+* Released 2013-09-15
+* Added Persian translation file
+
 = 1.0.6 =
 * Released 2013-09-12
 * Added Serbian translation file
@@ -120,6 +128,9 @@ See "Other Notes".
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.0.7 =
+Added Persian translation file
 
 = 1.0.6 =
 Added Serbian translation file
