@@ -40,9 +40,36 @@ jQuery( document ).ready( function( $ ) {
 					
 					//Save the comment
 					var textarea_val = $( element ).siblings( '.sce-textarea' ).find( 'textarea' ).val();
-					var comment_to_save = textarea_val;
+					var comment_to_save = $.trim( textarea_val );
 					if ( textarea_val == 'I am God' && typeof( console ) == 'object' ) {
 						console.log( "Isn't God perfect?  Why the need to edit?" );
+					}
+					
+					//If the comment is blank, see if the user wants to delete their comment
+					if ( comment_to_save == '' ) {
+						if ( confirm( simple_comment_editing.confirm_delete ) ) {
+							$( element ).siblings( '.sce-textarea' ).off();	
+							$( element ).off();
+								
+							//Remove elements
+							$( element ).parent().remove();
+							$.post( ajax_url, { action: 'sce_delete_comment', comment_id: ajax_params.cid, post_id: ajax_params.pid, nonce: ajax_params._wpnonce }, function( response ) {
+									alert( simple_comment_editing.comment_deleted );
+									$( "#comment-" + ajax_params.cid ).slideUp(); //Attempt to remove the comment from the theme interface
+							}, 'json' );
+							return;
+						} else {
+							$( '#sce-edit-comment' + ajax_params.cid  + ' textarea' ).val( sce.textareas[ ajax_params.cid  ] ); //revert value
+							$( element ).siblings( '.sce-loading' ).fadeOut( 'fast', function() {
+								$( element ).fadeIn( 'fast' );
+							} );
+							return;
+							/*
+							//todo - still buggy - defaults to ajax call / error message for now
+							alert( simple_comment_editing.empty_comment );
+							return;
+							*/
+						}
 					}
 					
 					$.post( ajax_url, { action: 'sce_save_comment', comment_content: comment_to_save, comment_id: ajax_params.cid, post_id: ajax_params.pid, nonce: ajax_params._wpnonce }, function( response ) {
