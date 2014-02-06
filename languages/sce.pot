@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Simple Comment Editing\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/posts-to-posts\n"
-"POT-Creation-Date: 2013-08-04 19:55+0100\n"
-"PO-Revision-Date: 2013-08-04 19:55+0100\n"
+"POT-Creation-Date: 2014-02-06 13:48-0600\n"
+"PO-Revision-Date: 2014-02-06 13:48-0600\n"
 "Last-Translator: Ronald Huereca <ron@ronalfy.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -20,60 +20,65 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../index.php:31
+#: ../index.php:35
 msgid "You do not have permission to edit this comment."
 msgstr ""
 
-#: ../index.php:32
+#: ../index.php:36
 msgid "You can no longer edit this comment"
 msgstr ""
 
-#: ../index.php:33
+#: ../index.php:37
 msgid "Your comment cannot be empty"
 msgstr ""
 
-#: ../index.php:34
+#: ../index.php:38
 msgid "This comment was marked as spam"
 msgstr ""
 
-#: ../index.php:98
+#: ../index.php:103
 msgid "Click to Edit"
 msgstr ""
 
-#: ../index.php:104
+#: ../index.php:109
 msgid "Loading"
 msgstr ""
 
-#: ../index.php:115
+#: ../index.php:120
 msgid "Save"
 msgstr ""
 
-#: ../index.php:116
+#: ../index.php:121
 msgid "Cancel"
 msgstr ""
 
-#: ../index.php:146
+#: ../index.php:164
 msgid "minutes"
 msgstr ""
 
-#: ../index.php:147
+#: ../index.php:165
 msgid "minute"
 msgstr ""
 
-#: ../index.php:148
+#: ../index.php:166
 msgid "and"
 msgstr ""
 
-#: ../index.php:149
+#: ../index.php:167
 msgid "seconds"
 msgstr ""
 
-#: ../index.php:150
+#: ../index.php:168
 msgid "second"
 msgstr ""
 
-#~ msgid "Are you sure you want to delete all connections?"
-#~ msgstr "Tüm bağlantıları kaldırmak istediğinizden emin misiniz?"
+#: ../index.php:169
+msgid "Do you want to delete this comment?"
+msgstr ""
+
+#: ../index.php:170
+msgid "Your comment has been removed."
+msgstr ""
 
 #~ msgid "Create connections:"
 #~ msgstr "Bağlantı yarat:"
