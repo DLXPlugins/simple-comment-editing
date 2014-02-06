@@ -46,7 +46,7 @@ jQuery( document ).ready( function( $ ) {
 					}
 					
 					//If the comment is blank, see if the user wants to delete their comment
-					if ( comment_to_save == '' ) {
+					if ( comment_to_save == '' && simple_comment_editing.allow_delete == true  ) {
 						if ( confirm( simple_comment_editing.confirm_delete ) ) {
 							$( element ).siblings( '.sce-textarea' ).off();	
 							$( element ).off();
