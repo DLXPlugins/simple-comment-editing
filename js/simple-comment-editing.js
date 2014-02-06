@@ -26,6 +26,7 @@ jQuery( document ).ready( function( $ ) {
 				//Hide the textarea and show the edit button
 				$( element ).siblings( '.sce-textarea' ).fadeOut( 'fast', function() {
 					$( element ).fadeIn( 'fast' );
+					$( '#sce-edit-comment' + ajax_params.cid  + ' textarea' ).val( sce.textareas[ ajax_params.cid  ] );
 				} );
 			} );
 			
@@ -48,7 +49,8 @@ jQuery( document ).ready( function( $ ) {
 						$( element ).siblings( '.sce-loading' ).fadeOut( 'fast', function() {
 							$( element ).fadeIn( 'fast', function() {
 								if ( !response.errors ) {
-									$( '#sce-comment' + ajax_params.cid ).html( response.comment_text );
+									$( '#sce-comment' + ajax_params.cid ).html( response.comment_text ); //Update comment HTML
+									sce.textareas[ ajax_params.cid  ] = $( '#sce-edit-comment' + ajax_params.cid  + ' textarea' ).val(); //Update textarea placeholder
 								} else {
 									//Output error, maybe kill interface
 									if ( response.remove == true ) {
@@ -81,6 +83,9 @@ jQuery( document ).ready( function( $ ) {
 				var timer_text = sce.get_timer_text( minutes, seconds );
 				$( element ).find( '.sce-timer' ).html( timer_text );
 				$( element ).show();
+				
+				//Save state in textarea
+				sce.textareas[ response.comment_id ] = $( '#sce-edit-comment' + response.comment_id + ' textarea' ).val();
 				
 				//Set interval
 				sce.timers[ response.comment_id ] = {
@@ -128,5 +133,6 @@ jQuery( document ).ready( function( $ ) {
 		return text;
 	};
 	sce.timers = new Array();
+	sce.textareas = new Array();
 	$( '.sce-edit-button' ).simplecommentediting();
 } );
