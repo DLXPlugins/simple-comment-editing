@@ -4,7 +4,7 @@ Plugin Name: Simple Comment Editing
 Plugin URI: http://wordpress.org/extend/plugins/simple-comment-editing/
 Description: Simple comment editing for your users.
 Author: ronalfy
-Version: 1.0.7
+Version: 1.1.0
 Requires at least: 3.5
 Author URI: http://www.ronalfy.com
 Contributors: ronalfy, metronet
@@ -13,6 +13,7 @@ class Simple_Comment_Editing {
 	private static $instance = null;
 	private $comment_time = 0; //in minutes
 	private $loading_img = '';
+	private $allow_delete = true;
 	private $errors;
 	
 	//Singleton
@@ -44,6 +45,7 @@ class Simple_Comment_Editing {
 		//Set plugin defaults
 		$this->comment_time = intval( apply_filters( 'sce_comment_time', 5 ) );
 		$this->loading_img = esc_url( apply_filters( 'sce_loading_img', $this->get_plugin_url( '/images/loading.gif' ) ) );
+		$this->allow_delete = (bool)apply_filters( 'sce_allow_delete', $this->allow_delete );
 		
 		/* BEGIN ACTIONS */
 		//When a comment is posted
@@ -57,6 +59,8 @@ class Simple_Comment_Editing {
 		add_action( 'wp_ajax_nopriv_sce_get_time_left', array( $this, 'ajax_get_time_left' ) );
 		add_action( 'wp_ajax_sce_save_comment', array( $this, 'ajax_save_comment' ) );
 		add_action( 'wp_ajax_nopriv_sce_save_comment', array( $this, 'ajax_save_comment' ) );
+		add_action( 'wp_ajax_sce_delete_comment', array( $this, 'ajax_delete_comment' ) );
+		add_action( 'wp_ajax_nopriv_sce_delete_comment', array( $this, 'ajax_delete_comment' ) );
 		
 		/* Begin Filters */
 		if ( !is_feed() && !defined( 'DOING_AJAX' ) ) {
@@ -88,7 +92,7 @@ class Simple_Comment_Editing {
 		$raw_content = $comment->comment_content; //For later usage in the textarea
 		
 		//Yay, user can edit - Add the initial wrapper
-		$comment_content = sprintf( '<div id="sce-comment%d" class="sce-comment">%s</div>', $comment_id, $comment_content );		
+		$comment_content = sprintf( '<div id="sce-comment%d" class="sce-comment">%s</div>', $comment_id, $comment_content );	
 		
 		//Create Overall wrapper for JS interface
 		$comment_content .= sprintf( '<div id="sce-edit-comment%d" class="sce-edit-comment">', $comment_id );
@@ -155,13 +159,17 @@ class Simple_Comment_Editing {
 	 			$main_script_uri = $this->get_plugin_url( '/js/simple-comment-editing.js' );
 	 		}
 	 	}
-	 	wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery', 'wp-ajax-response' ), '20130804', true );
+	 	wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery', 'wp-ajax-response' ), '20140205', true );
 	 	wp_localize_script( 'simple-comment-editing', 'simple_comment_editing', array(
-	 		'minutes' => esc_js( __( 'minutes', 'sce' ) ),
-	 		'minute' => esc_js( __( 'minute', 'sce' ) ),
-	 		'and' => esc_js( __( 'and', 'sce' ) ),
-	 		'seconds' => esc_js( __( 'seconds', 'sce' ) ),
-	 		'second' => esc_js( __( 'second', 'sce' ) )
+	 		'minutes' => __( 'minutes', 'sce' ),
+	 		'minute' => __( 'minute', 'sce' ),
+	 		'and' => __( 'and', 'sce' ),
+	 		'seconds' => __( 'seconds', 'sce' ),
+	 		'second' => __( 'second', 'sce' ),
+	 		'confirm_delete' => __( 'Do you want to delete this comment?', 'sce' ),
+	 		'comment_deleted' => __( 'Your comment has been removed.', 'sce' ),
+	 		'empty_comment' => $this->errors->get_error_message( 'comment_empty' ),
+	 		'allow_delete' => $this->allow_delete
 	 	) );
 	 } //end add_scripts
 	 
@@ -195,6 +203,47 @@ class Simple_Comment_Editing {
 		);
 		die( json_encode( $response ) );
 	 } //end ajax_get_time_left
+	 
+	 /**
+	 * ajax_delete_comment- Removes a WordPress comment, but saves it to the trash
+	 * 
+	 * Returns a JSON object of the saved comment
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param int $_POST[ 'comment_id' ] The Comment ID
+	 * @param int $_POST[ 'post_id' ] The Comment's Post ID
+	 * @param string $_POST[ 'nonce' ] The nonce to check against
+	 * @return JSON object 
+	 */
+	 public function ajax_delete_comment() {
+	 	$comment_id = absint( $_POST[ 'comment_id' ] );
+	 	$post_id = absint( $_POST[ 'post_id' ] );
+	 	$nonce = $_POST[ 'nonce' ];
+	 	
+	 	$return = array();
+	 	$return[ 'errors' ] = false;
+	 	
+	 	//Do a nonce check
+	 	if ( !wp_verify_nonce( $nonce, 'sce-edit-comment' . $comment_id ) ) {
+	 		$return[ 'errors' ] = true;
+	 		$return[ 'remove' ] = true;
+	 		$return[ 'error' ] = $this->errors->get_error_message( 'nonce_fail' );
+	 		die( json_encode( $return ) );
+	 	}
+	 	
+	 	//Check to see if the user can edit the comment
+	 	if ( !$this->can_edit( $comment_id, $post_id ) || $this->allow_delete == false ) {
+	 		$return[ 'errors' ] = true;
+	 		$return[ 'remove' ] = true;
+	 		$return[ 'error' ] = $this->errors->get_error_message( 'edit_fail' );
+	 		die( json_encode( $return ) );
+	 	}	
+	 	
+	 	wp_delete_comment( $comment_id ); //Save to trash for admin retrieval
+	 	$return[ 'error' ] = '';
+		die( json_encode( $return ) );
+	 } //end ajax_delete_comment
 	 
 	 /**
 	 * ajax_save_comment - Saves a comment to the database, returns the updated comment via JSON

@@ -1,9 +1,9 @@
 === Simple Comment Editing ===
-Contributors: ronalfy, metronet
+Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 3.5
-Tested up to: 3.6.1
-Stable tag: 1.0.7
+Tested up to: 3.9
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -11,7 +11,7 @@ Simple Comment Editing for your website.
 
 == Description ==
 
-Simple Comment Editing gives anonymous users the ability to edit their comments for a period of time.
+Simple Comment Editing gives anonymous users the ability to edit and/or delete their comments for a period of time.
 
 Simple Comment Editing is a stripped down version of <a href="http://wordpress.org/plugins/wp-ajax-edit-comments/">Ajax Edit Comments</a>.
 
@@ -68,6 +68,12 @@ function edit_sce_loading_img( $default_url ) {
 }
 `
 
+= How do you disable the delete comment functionality? =
+`
+//Simple Comment Editing
+add_filter( 'sce_allow_delete', '__return_false' );
+`
+
 = I want to style the editing interface.  Where do I start? =
 See "Other Notes".
 
@@ -95,6 +101,11 @@ See "Other Notes".
 2. Textarea and Save/Cancel buttons.
 
 == Changelog ==
+
+= 1.1.0 =
+* Released 2014-02-05
+* Added JavaScript textarea save states when hitting the cancel button
+* Allow commenters to delete their comments when they leave an empty comment
 
 = 1.0.7 =
 * Released 2013-09-15
@@ -128,6 +139,9 @@ See "Other Notes".
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+Added JavaScript textarea save states when hitting the cancel button.  Allow commenters to delete their comments when they leave an empty comment.
 
 = 1.0.7 =
 Added Persian translation file
