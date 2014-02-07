@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 3.5
 Tested up to: 3.9
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,8 @@ If you like this plugin, please help spread the word.  Rate the plugin.  Write a
 <li>Portuguese (European) - Thanks <a href="https://twitter.com/porreirinha">Marco Pereirinha</a>.</li>
 <li>Serbian - Thanks <a href="https://twitter.com/lanche86">Milan Ivanovic</a>.</li>
 </ul>
+
+If you would like to contribute a translation, please <a href="http://www.ronalfy.com/contact/">get in touch</a>.
 
 You are welcome to help us out and <a href="https://github.com/ronalfy/simple-comment-editing">contribute on GitHub</a>.
 
@@ -102,6 +104,10 @@ See "Other Notes".
 
 == Changelog ==
 
+= 1.1.1 =
+* Released 2014-02-06
+* Fixed an error where users were erroneously being told their comment was marked as spam
+
 = 1.1.0 =
 * Released 2014-02-05
 * Added JavaScript textarea save states when hitting the cancel button
@@ -139,6 +145,9 @@ See "Other Notes".
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.1.1 =
+Fixed an error where users were erroneously being told their comment was marked as spam
 
 = 1.1.0 =
 Added JavaScript textarea save states when hitting the cancel button.  Allow commenters to delete their comments when they leave an empty comment.

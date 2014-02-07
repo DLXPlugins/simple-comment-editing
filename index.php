@@ -4,10 +4,10 @@ Plugin Name: Simple Comment Editing
 Plugin URI: http://wordpress.org/extend/plugins/simple-comment-editing/
 Description: Simple comment editing for your users.
 Author: ronalfy
-Version: 1.1.0
+Version: 1.1.1
 Requires at least: 3.5
 Author URI: http://www.ronalfy.com
-Contributors: ronalfy, metronet
+Contributors: ronalfy
 */ 
 class Simple_Comment_Editing {
 	private static $instance = null;
@@ -313,7 +313,7 @@ class Simple_Comment_Editing {
 		wp_update_comment( $comment_to_save );
 		
 		//If the comment was marked as spam, return an error
-		if ( $comment_to_save['comment_approved'] == 'spam' ) {
+		if ( $comment_to_save['comment_approved'] === 'spam' ) {
 			$return[ 'errors' ] = true;
 			$return[ 'remove' ] = true;
 			$return[ 'error' ] = $this->errors->get_error_message( 'comment_marked_spam' );
@@ -408,7 +408,7 @@ class Simple_Comment_Editing {
 		$comment_status = $comment->comment_approved;
 		
 		//Do some initial checks to weed out those who shouldn't be able to have editable comments
-		if ( 'spam' == $comment_status ) return; //Marked as spam - no editing allowed
+		if ( 'spam' === $comment_status ) return; //Marked as spam - no editing allowed
 		if ( current_user_can( 'moderate_comments' ) ) return; //They can edit comments anyway, don't do anything
 		if ( current_user_can( 'edit_post', $post_id ) ) return; //Post author - User can edit comments for the post anyway
 		
