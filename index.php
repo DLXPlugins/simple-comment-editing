@@ -1,7 +1,7 @@
 <?php
 /*
-Plugin Name: Simple Comment Editing
-Plugin URI: http://wordpress.org/extend/plugins/simple-comment-editing/
+Plugin Name: Always Edit Comments
+Plugin URI: https://github.com/jamzth/simple-comment-editing/
 Description: Simple comment editing for your users.
 Author: ronalfy
 Version: 1.1.1
@@ -100,8 +100,8 @@ class Simple_Comment_Editing {
 		//Edit Button
 		$comment_content .= '<div class="sce-edit-button" style="display:none;">';
 		$ajax_edit_url = add_query_arg( array( 'cid' => $comment_id, 'pid' => $post_id ) , wp_nonce_url( admin_url( 'admin-ajax.php' ), 'sce-edit-comment' . $comment_id ) );
-		$comment_content .= sprintf( '<a href="%s">%s</a>', $ajax_edit_url, esc_html__( 'Click to Edit', 'sce' ) );
-		$comment_content .= '<span class="sce-timer"></span>';
+		$comment_content .= sprintf( '<a href="%s">%s</a>', $ajax_edit_url, esc_html__( 'Edit Note', 'sce' ) );
+		$comment_content .= '';
 		$comment_content .= '</div><!-- .sce-edit-button -->';
 		
 		//Loading button
@@ -117,8 +117,8 @@ class Simple_Comment_Editing {
 		$comment_content .= sprintf( '<textarea class="sce-comment-text" cols="45" rows="8">%s</textarea>', esc_textarea( $raw_content ) );
 		$comment_content .= '</div><!-- .sce-comment-textarea -->';
 		$comment_content .= '<div class="sce-comment-edit-buttons">';
-		$comment_content .= sprintf( '<button class="sce-comment-save">%s</button>', esc_html__( 'Save', 'sce' ) );
-		$comment_content .= sprintf( '<button class="sce-comment-cancel">%s</button>', esc_html__( 'Cancel', 'sce' ) );
+		$comment_content .= sprintf( '<button class="sce-comment-save" style="background:#999;color:#fdfdfd;">%s</button>', esc_html__( 'Save', 'sce' ) );
+		$comment_content .= sprintf( '<button class="sce-comment-cancel" style="background:#999;color:#fdfdfd;">%s</button>', esc_html__( 'Cancel', 'sce' ) );
 		$comment_content .= '</div><!-- .sce-comment-edit-buttons -->';
 		$comment_content .= '</div><!-- .sce-textarea -->';
 		
@@ -143,10 +143,10 @@ class Simple_Comment_Editing {
 	 	
 	 	//Check if there are any cookies present, otherwise don't load the scripts
 	 	if ( !isset( $_COOKIE ) || empty( $_COOKIE ) ) return;
-	 	$has_cookie = false;
+	 	$has_cookie = true;
 	 	foreach( $_COOKIE as $cookie_name => $cookie_value ) {
 	 		if ( substr( $cookie_name , 0, 20 ) == 'SimpleCommentEditing' ) {
-				$has_cookie = true;
+				$has_cookie = false;
 				break;	 		
 	 		}
 	 	}
@@ -166,8 +166,8 @@ class Simple_Comment_Editing {
 	 		'and' => __( 'and', 'sce' ),
 	 		'seconds' => __( 'seconds', 'sce' ),
 	 		'second' => __( 'second', 'sce' ),
-	 		'confirm_delete' => __( 'Do you want to delete this comment?', 'sce' ),
-	 		'comment_deleted' => __( 'Your comment has been removed.', 'sce' ),
+	 		'confirm_delete' => __( 'Do you want to delete this note?', 'sce' ),
+	 		'comment_deleted' => __( 'Your note has been removed.', 'sce' ),
 	 		'empty_comment' => $this->errors->get_error_message( 'comment_empty' ),
 	 		'allow_delete' => $this->allow_delete
 	 	) );
@@ -370,24 +370,9 @@ class Simple_Comment_Editing {
 		if ( !is_object( $comment ) ) $comment = get_comment( $comment_id, OBJECT );
 		
 		//Check to see if time has elapsed for the comment
-		$comment_timestamp = strtotime( $comment->comment_date );
-		$time_elapsed = current_time( 'timestamp', get_option( 'gmt_offset' ) ) - $comment_timestamp;
-		$minuted_elapsed = round( ( ( ( $time_elapsed % 604800 ) % 86400 )  % 3600 ) / 60 );
-		if ( ( $minuted_elapsed - $this->comment_time ) > 0 ) return false;
 		
-		//Now check to see if the cookie is present
-		if ( !isset( $_COOKIE ) || !is_array( $_COOKIE ) || empty( $_COOKIE ) ) return false;
-		
-		//Now check for post meta and cookie values being the same
-		$cookie_hash = md5( $comment->comment_author_IP . $comment->comment_date_gmt );
-		if ( !isset( $_COOKIE[ 'SimpleCommentEditing' . $comment_id . $cookie_hash] ) ) return false;
-		$post_meta_hash = get_post_meta( $post_id, '_' . $comment_id, true );
-		
-		
-		
-		//Check to see if the cookie value matches the post meta hash
-		$cookie_value = $_COOKIE[ 'SimpleCommentEditing' . $comment_id . $cookie_hash ];
-		if ( $cookie_value !== $post_meta_hash ) return false;
+		if ( $this->comment_time > 0 ) return true;
+
 		
 		//All is well, the person/place/thing can edit the comment
 		return true;
@@ -412,35 +397,7 @@ class Simple_Comment_Editing {
 		if ( current_user_can( 'moderate_comments' ) ) return; //They can edit comments anyway, don't do anything
 		if ( current_user_can( 'edit_post', $post_id ) ) return; //Post author - User can edit comments for the post anyway
 		
-		//Get hash and random security key - Stored in the style of Ajax Edit Comments
-		$hash = md5( $comment->comment_author_IP . $comment->comment_date_gmt );
-		$rand = '_wpAjax' . $hash . md5( wp_generate_password( 30, true, true ) );
-		update_post_meta( $post_id, '_' . $comment_id, $rand );
 		
-		//Now store a cookie
-		$cookie_name = 'SimpleCommentEditing' . $comment_id . $hash;
-		$cookie_value = $rand;
-		$cookie_expire = time() + (  60 * $this->comment_time );
-		setcookie( $cookie_name, $cookie_value, $cookie_expire, COOKIEPATH,COOKIE_DOMAIN);
-		
-		//Update the security key count (use the same names/techniques as Ajax Edit Comments
-		$security_key_count = absint( get_option( 'ajax-edit-comments_security_key_count' ) ); 
-		if ( !$security_key_count ) {
-			$security_key_count = 1;
-		} else {
-			$security_key_count += 1;
-		}
-		
-		//Now delete security keys (use the same names/techniques as Ajax Edit Comments
-		$min_security_keys = absint( apply_filters( 'sce_security_key_min', 100 ) );
-		if ( $security_key_count >= $min_security_keys ) {
-			global $wpdb;
-			$comment_id_to_exclude = "_" . $comment_id;
-			/* Only delete the first 50 to make sure the bottom 50 aren't suddenly without to the ability to edit comments - Props Marco Pereirinha */
-			$wpdb->query( $wpdb->prepare( "delete from {$wpdb->postmeta} where left(meta_value, 6) = 'wpAjax' and meta_key <> %s ORDER BY {$wpdb->postmeta}.meta_id ASC LIMIT 50 ", $comment_id_to_exclude ) ); 
-			$security_key_count = 1;
-		}
-		update_option( 'ajax-edit-comments_security_key_count', $security_key_count );
 	} //end comment_posted
 	
 	
