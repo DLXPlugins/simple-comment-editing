@@ -6,6 +6,7 @@ Always Edit Comments for WordPress 3.5+
 ## Description
 
 This is a stripped down version of <a href="https://wordpress.org/plugins/simple-comment-editing/">Simple Comment Editing</a>.
+This has particularly been adapted to my needs on hiddenword.org for user based note taking. Hence, the notices and links containing "Note" instead of "Comment". But, hey, this is GitHub. Do whatever you want to the code.
 
 The biggest differences:
 <ol>
