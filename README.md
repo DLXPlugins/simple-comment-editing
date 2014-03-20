@@ -1,29 +1,26 @@
-Simple Comment Editing for WordPress
+Always Edit Comments for WordPress
 ======================
 
-Simple Comment Editing for WordPress 3.5+
+Always Edit Comments for WordPress 3.5+
 
 ## Description
 
-Simple Comment Editing is a stripped down version of <a href="http://wordpress.org/plugins/wp-ajax-edit-comments/">Ajax Edit Comments</a>.
+This is a stripped down version of <a href="https://wordpress.org/plugins/simple-comment-editing/">Simple Comment Editing</a>.
+This has particularly been adapted to my needs on hiddenword.org for user based note taking. Hence, the notices and links containing "Note" instead of "Comment". But, hey, this is GitHub. Do whatever you want to the code.
 
 The biggest differences:
 <ol>
-<li>Only anonymous users (and logged in users who don't have permission to edit comments) can edit their comments for a period of time (the default is 5 minutes).</li>
+<li>Comments are always editable.</li>
 <li>There are no styles included with this plugin.  For most themes, the appearance is acceptable.  For advanced customization, see the "Styles" section.</li>
 <li>There are no options.  Some defaults can be overwritten using filters.</li>
 </ol>
 
 ## Installation
 
-1. Just unzip and upload the "simple-comment-editor" folder to your '/wp-content/plugins/' directory
+1. Just unzip and upload the plugin folder to your '/wp-content/plugins/' directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
 ## Frequently Asked Questions
-###Why doesn't this plugin come with any styles?
-It's impossible to style an inline comment editor for every theme.  We've included basic HTML markup that is easily stylable to fit your theme.
-### Where are the options? =
-No options :) - Just simple comment editing.
 
 ### How do you adjust the comment time?
 Place and edit the following into your theme's `functions.php` file:
@@ -53,16 +50,6 @@ See "Styles" section.
 <li>IE 6-10</li>
 <li>Latest versions of Chrome, Firefox, and Safari</li>
 <li>iOS Safari</li>
-</ul>
-
-### What Themes Have You Tested This In?
-<ul>
-<li>Twenty Ten</li>
-<li>Twenty Eleven</li>
-<li>Twenty Twelve</li>
-<li>Twenty Thirteen</li>
-<li>Genesis</li>
-<li>Genesis Mindstream</li>
 </ul>
 
 
