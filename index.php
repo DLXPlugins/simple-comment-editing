@@ -172,37 +172,7 @@ class Simple_Comment_Editing {
 	 		'allow_delete' => $this->allow_delete
 	 	) );
 	 } //end add_scripts
-	 
-	 /**
-	 * ajax_get_time_left - Returns a JSON object of minutes/seconds of the time left to edit a comment
-	 * 
-	 * Returns a JSON object of minutes/seconds of the time left to edit a comment
-	 *
-	 * @since 1.0
-	 *
-	 * @param int $_POST[ 'comment_id' ] The Comment ID
-	 * @param int $_POST[ 'post_id' ] The Comment's Post ID
-	 * @return JSON object e.g. {minutes:4,seconds:5}
-	 */
-	 public function ajax_get_time_left() {
-	 	global $wpdb;
-	 	$comment_id = absint( $_POST[ 'comment_id' ] );
-	 	$post_id = absint( $_POST[ 'post_id' ] );
-	 	
-	 	$comment_time = absint( $this->comment_time );
-	 	$query = $wpdb->prepare( "SELECT ( $comment_time * 60 - (UNIX_TIMESTAMP('" . current_time('mysql') . "') - UNIX_TIMESTAMP(comment_date))) comment_time FROM {$wpdb->comments} where comment_ID = %d", $comment_id );
-	 	$comment_time_result = $wpdb->get_row( $query, ARRAY_A );
-	 	
-	 	$time_left = absint( $comment_time_result[ 'comment_time' ] );
-	 	$minutes = floor( $time_left / 60 );
-		$seconds = $time_left - ( $minutes * 60 );
-		$response = array(
-			'minutes' => $minutes,
-			'comment_id' => $comment_id, 
-			'seconds' => $seconds
-		);
-		die( json_encode( $response ) );
-	 } //end ajax_get_time_left
+
 	 
 	 /**
 	 * ajax_delete_comment- Removes a WordPress comment, but saves it to the trash
