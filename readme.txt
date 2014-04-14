@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 3.5
 Tested up to: 3.9
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,16 @@ function edit_sce_loading_img( $default_url ) {
 add_filter( 'sce_allow_delete', '__return_false' );
 `
 
+= Do you work with other plugins? =
+Yes, the plugin will work with WP-Ajaxify-Comments (http://wordpress.org/plugins/wp-ajaxify-comments/)
+
+Simply enable WP-Ajaxify-Comments, get it working per their settings, and add the Simple Comment Editing callback in the plugin's options.
+
+The callback is:
+`
+SCE_comments_updated();
+`
+
 = I want to style the editing interface.  Where do I start? =
 See "Other Notes".
 
@@ -103,6 +113,10 @@ See "Other Notes".
 2. Textarea and Save/Cancel buttons.
 
 == Changelog ==
+
+= 1.1.2 =
+* Released 2014-04-14
+* Added support for WP-Ajaxify-Comments
 
 = 1.1.1 =
 * Released 2014-02-06
@@ -145,6 +159,9 @@ See "Other Notes".
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.1.2 =
+Added support for WP-Ajaxify-Comments
 
 = 1.1.1 =
 Fixed an error where users were erroneously being told their comment was marked as spam

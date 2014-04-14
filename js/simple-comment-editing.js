@@ -162,4 +162,9 @@ jQuery( document ).ready( function( $ ) {
 	sce.timers = new Array();
 	sce.textareas = new Array();
 	$( '.sce-edit-button' ).simplecommentediting();
+	
 } );
+//Callback when comments have been updated (for wp-ajaxify-comments compatibility) - http://wordpress.org/plugins/wp-ajaxify-comments/faq/
+function SCE_comments_updated() {
+	jQuery( '.sce-edit-button' ).simplecommentediting();
+};
