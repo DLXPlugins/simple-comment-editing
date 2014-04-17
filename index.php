@@ -141,16 +141,18 @@ class Simple_Comment_Editing {
 	 public function add_scripts() {
 	 	if ( !is_single() && !is_page() ) return;
 	 	
-	 	//Check if there are any cookies present, otherwise don't load the scripts
-	 	if ( !isset( $_COOKIE ) || empty( $_COOKIE ) ) return;
-	 	$has_cookie = false;
-	 	foreach( $_COOKIE as $cookie_name => $cookie_value ) {
-	 		if ( substr( $cookie_name , 0, 20 ) == 'SimpleCommentEditing' ) {
-				$has_cookie = true;
-				break;	 		
-	 		}
-	 	}
-	 	if ( !$has_cookie ) return;
+	 	//Check if there are any cookies present, otherwise don't load the scripts - WPAC_PLUGIN_NAME is for wp-ajaxify-comments (if the plugin is installed, load the JavaScript file)
+	 	if ( !defined( 'WPAC_PLUGIN_NAME' ) ) {
+		 	if ( !isset( $_COOKIE ) || empty( $_COOKIE ) ) return;
+		 	$has_cookie = false;
+		 	foreach( $_COOKIE as $cookie_name => $cookie_value ) {
+		 		if ( substr( $cookie_name , 0, 20 ) == 'SimpleCommentEditing' ) {
+					$has_cookie = true;
+					break;	 		
+		 		}
+		 	}
+		 	if ( !$has_cookie ) return;
+		 }
 	 	
 	 	
 	 	$main_script_uri = $this->get_plugin_url( '/js/simple-comment-editing.min.js' );
