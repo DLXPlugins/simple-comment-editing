@@ -4,10 +4,12 @@ Plugin Name: Simple Comment Editing
 Plugin URI: http://wordpress.org/extend/plugins/simple-comment-editing/
 Description: Simple comment editing for your users.
 Author: ronalfy
-Version: 1.1.2
+Version: 1.2.0
 Requires at least: 3.5
 Author URI: http://www.ronalfy.com
 Contributors: ronalfy
+Text Domain: simple-comment-editing
+Domain Path: /languages
 */ 
 class Simple_Comment_Editing {
 	private static $instance = null;
@@ -28,14 +30,14 @@ class Simple_Comment_Editing {
 		add_action( 'init', array( $this, 'init' ), 9 );
 		
 		//* Localization Code */
-		load_plugin_textdomain( 'sce', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+		load_plugin_textdomain( 'simple-comment-editing', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 		
 		//Initialize errors
 		$this->errors = new WP_Error();
-		$this->errors->add( 'nonce_fail', __( 'You do not have permission to edit this comment.', 'sce' ) );
-		$this->errors->add( 'edit_fail', __( 'You can no longer edit this comment', 'sce' ) );
-		$this->errors->add( 'comment_empty', __( 'Your comment cannot be empty', 'sce' ) );
-		$this->errors->add( 'comment_marked_spam', __( 'This comment was marked as spam', 'sce' ) );
+		$this->errors->add( 'nonce_fail', __( 'You do not have permission to edit this comment.', 'simple-comment-editing' ) );
+		$this->errors->add( 'edit_fail', __( 'You can no longer edit this comment', 'simple-comment-editing' ) );
+		$this->errors->add( 'comment_empty', __( 'Your comment cannot be empty', 'simple-comment-editing' ) );
+		$this->errors->add( 'comment_marked_spam', __( 'This comment was marked as spam', 'simple-comment-editing' ) );
 	} //end constructor
 	
 	public function init() {
@@ -100,13 +102,13 @@ class Simple_Comment_Editing {
 		//Edit Button
 		$comment_content .= '<div class="sce-edit-button" style="display:none;">';
 		$ajax_edit_url = add_query_arg( array( 'cid' => $comment_id, 'pid' => $post_id ) , wp_nonce_url( admin_url( 'admin-ajax.php' ), 'sce-edit-comment' . $comment_id ) );
-		$comment_content .= sprintf( '<a href="%s">%s</a>', $ajax_edit_url, esc_html__( 'Click to Edit', 'sce' ) );
+		$comment_content .= sprintf( '<a href="%s">%s</a>', $ajax_edit_url, esc_html__( 'Click to Edit', 'simple-comment-editing' ) );
 		$comment_content .= '<span class="sce-timer"></span>';
 		$comment_content .= '</div><!-- .sce-edit-button -->';
 		
 		//Loading button
 		$comment_content .= '<div class="sce-loading" style="display: none;">';
-		$comment_content .= sprintf( '<img src="%1$s" title="%2$s" alt="%2$s" />', $this->loading_img, esc_attr__( 'Loading', 'sce' ) );
+		$comment_content .= sprintf( '<img src="%1$s" title="%2$s" alt="%2$s" />', $this->loading_img, esc_attr__( 'Loading', 'simple-comment-editing' ) );
 		$comment_content .= '</div><!-- sce-loading -->';
 		
 		//Textarea
@@ -117,8 +119,8 @@ class Simple_Comment_Editing {
 		$comment_content .= sprintf( '<textarea class="sce-comment-text" cols="45" rows="8">%s</textarea>', esc_textarea( $raw_content ) );
 		$comment_content .= '</div><!-- .sce-comment-textarea -->';
 		$comment_content .= '<div class="sce-comment-edit-buttons">';
-		$comment_content .= sprintf( '<button class="sce-comment-save">%s</button>', esc_html__( 'Save', 'sce' ) );
-		$comment_content .= sprintf( '<button class="sce-comment-cancel">%s</button>', esc_html__( 'Cancel', 'sce' ) );
+		$comment_content .= sprintf( '<button class="sce-comment-save">%s</button>', esc_html__( 'Save', 'simple-comment-editing' ) );
+		$comment_content .= sprintf( '<button class="sce-comment-cancel">%s</button>', esc_html__( 'Cancel', 'simple-comment-editing' ) );
 		$comment_content .= '</div><!-- .sce-comment-edit-buttons -->';
 		$comment_content .= '</div><!-- .sce-textarea -->';
 		
@@ -154,7 +156,6 @@ class Simple_Comment_Editing {
 		 	if ( !$has_cookie ) return;
 		 }
 	 	
-	 	
 	 	$main_script_uri = $this->get_plugin_url( '/js/simple-comment-editing.min.js' );
 	 	if ( defined( 'SCRIPT_DEBUG' ) ) {
 	 		if ( SCRIPT_DEBUG == true ) {
@@ -163,13 +164,13 @@ class Simple_Comment_Editing {
 	 	}
 	 	wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery', 'wp-ajax-response' ), '20140414', true );
 	 	wp_localize_script( 'simple-comment-editing', 'simple_comment_editing', array(
-	 		'minutes' => __( 'minutes', 'sce' ),
-	 		'minute' => __( 'minute', 'sce' ),
-	 		'and' => __( 'and', 'sce' ),
-	 		'seconds' => __( 'seconds', 'sce' ),
-	 		'second' => __( 'second', 'sce' ),
-	 		'confirm_delete' => __( 'Do you want to delete this comment?', 'sce' ),
-	 		'comment_deleted' => __( 'Your comment has been removed.', 'sce' ),
+	 		'minutes' => __( 'minutes', 'simple-comment-editing' ),
+	 		'minute' => __( 'minute', 'simple-comment-editing' ),
+	 		'and' => __( 'and', 'simple-comment-editing' ),
+	 		'seconds' => __( 'seconds', 'simple-comment-editing' ),
+	 		'second' => __( 'second', 'simple-comment-editing' ),
+	 		'confirm_delete' => __( 'Do you want to delete this comment?', 'simple-comment-editing' ),
+	 		'comment_deleted' => __( 'Your comment has been removed.', 'simple-comment-editing' ),
 	 		'empty_comment' => $this->errors->get_error_message( 'comment_empty' ),
 	 		'allow_delete' => $this->allow_delete
 	 	) );
@@ -411,8 +412,8 @@ class Simple_Comment_Editing {
 		
 		//Do some initial checks to weed out those who shouldn't be able to have editable comments
 		if ( 'spam' === $comment_status ) return; //Marked as spam - no editing allowed
-		if ( current_user_can( 'moderate_comments' ) ) return; //They can edit comments anyway, don't do anything
-		if ( current_user_can( 'edit_post', $post_id ) ) return; //Post author - User can edit comments for the post anyway
+		//if ( current_user_can( 'moderate_comments' ) ) return; //They can edit comments anyway, don't do anything
+		//if ( current_user_can( 'edit_post', $post_id ) ) return; //Post author - User can edit comments for the post anyway
 		
 		//Get hash and random security key - Stored in the style of Ajax Edit Comments
 		$hash = md5( $comment->comment_author_IP . $comment->comment_date_gmt );

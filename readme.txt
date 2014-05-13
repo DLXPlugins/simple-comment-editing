@@ -2,8 +2,8 @@
 Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 3.5
-Tested up to: 3.9
-Stable tag: 1.1.2
+Tested up to: 3.9.1
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,6 +33,7 @@ If you like this plugin, please help spread the word.  Rate the plugin.  Write a
 <li>Persian - Thanks <a href="http://www.wordpress98.com/">Ali HajiMohamadi</a>.</li>
 <li>Portuguese (European) - Thanks <a href="https://twitter.com/porreirinha">Marco Pereirinha</a>.</li>
 <li>Serbian - Thanks <a href="https://twitter.com/lanche86">Milan Ivanovic</a>.</li>
+<li>Swedish - Thanks Håkan Persson.</li>
 </ul>
 
 If you would like to contribute a translation, please <a href="http://www.ronalfy.com/contact/">get in touch</a>.
@@ -114,6 +115,12 @@ See "Other Notes".
 
 == Changelog ==
 
+= 1.2.0 =
+* Released 2014-05-13
+* Added Swedish translation
+* Added better support for internationalization
+* Removed barrier for admins/editors/authors to edit comments
+
 = 1.1.2 =
 * Released 2014-04-14
 * Added support for WP-Ajaxify-Comments
@@ -159,6 +166,9 @@ See "Other Notes".
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.2.0 =
+Added Swedish translation.  Added better support for internationalization.  Removed barrier for admins/editors/authors to edit comments.
 
 = 1.1.2 =
 Added support for WP-Ajaxify-Comments
