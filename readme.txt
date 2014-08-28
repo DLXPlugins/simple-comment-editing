@@ -2,8 +2,8 @@
 Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 3.5
-Tested up to: 3.9.1
-Stable tag: 1.2.0
+Tested up to: 4.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,6 +27,8 @@ If you like this plugin, please help spread the word.  Rate the plugin.  Write a
 
 <h3>Translations</h3>
 <ul>
+<li>Arabic - Thanks Soufiane Sabiri.</li>
+<li>Czech - Thanks <a href="http://blog.doprofilu.cz/">Petr Baloun</a>.</li>
 <li>German - Thanks Wilfried Kahrs.</li>
 <li>Norwegian Bokmål - Thanks <a href="http://www.metronet.no/menneskene/jan-hagen/">Jan Hagen</a>.</li>
 <li>Norwegian Nynorsk - Thanks <a href="http://www.metronet.no/menneskene/jan-hagen/">Jan Hagen</a>.</li>
@@ -115,6 +117,11 @@ See "Other Notes".
 
 == Changelog ==
 
+= 1.2.1 =
+* Released 2014-08-27
+* Added Arabic and Czech languages
+* Ensuring WordPress 4.0 compatibility
+
 = 1.2.0 =
 * Released 2014-05-13
 * Added Swedish translation
@@ -166,6 +173,9 @@ See "Other Notes".
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.2.1 =
+Added Arabic and Czech languages.  Ensuring WordPress 4.0 compatibility.
 
 = 1.2.0 =
 Added Swedish translation.  Added better support for internationalization.  Removed barrier for admins/editors/authors to edit comments.
