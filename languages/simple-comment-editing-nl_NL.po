@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Simple Comment Editing\n"
 "POT-Creation-Date: 2014-01-21 14:38+0800\n"
-"PO-Revision-Date: 2014-01-21 14:42+0800\n"
+"PO-Revision-Date: 2014-09-03 13:30+0800\n"
 "Last-Translator: Piet Bos <piet@senlinonline.com>\n"
 "Language-Team: Piet Bos <piet@senlinonline.com>\n"
 "Language: nl\n"
@@ -69,3 +69,11 @@ msgstr "seconden"
 #: index.php:164
 msgid "second"
 msgstr "seconde"
+
+#: ../index.php:169
+msgid "Do you want to delete this comment?"
+msgstr "Wil je deze reactie verwijderen?"
+
+#: ../index.php:170
+msgid "Your comment has been removed."
+msgstr "Je reactie is verwijderd."
