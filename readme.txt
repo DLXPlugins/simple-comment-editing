@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 3.5
 Tested up to: 4.0
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,7 @@ If you like this plugin, please help spread the word.  Rate the plugin.  Write a
 <li>Norwegian Nynorsk - Thanks <a href="http://www.metronet.no/menneskene/jan-hagen/">Jan Hagen</a>.</li>
 <li>Persian - Thanks <a href="http://www.wordpress98.com/">Ali HajiMohamadi</a>.</li>
 <li>Portuguese (European) - Thanks <a href="https://twitter.com/porreirinha">Marco Pereirinha</a>.</li>
+<li>Romanian (with diacritics) - Thanks Vasile Ruscior.</li>
 <li>Serbian - Thanks <a href="https://twitter.com/lanche86">Milan Ivanovic</a>.</li>
 <li>Swedish - Thanks Håkan Persson.</li>
 </ul>
@@ -117,6 +118,12 @@ See "Other Notes".
 
 == Changelog ==
 
+= 1.2.2 =
+* Released 2014-09-02
+* Added Romanian language
+* Added better support for cached pages
+* Fixed a bug where cached pages showed other users they could edit a comment, but in reality, they could not (saving would have failed, so this is not a severe security problem, although upgrading is highly recommended).
+
 = 1.2.1 =
 * Released 2014-08-27
 * Added Arabic and Czech languages
@@ -173,6 +180,9 @@ See "Other Notes".
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.2.2 =
+Added Romanian language.  Fixed a bug where cached pages showed other users they could edit a comment, but in reality, they could not (saving would have failed, so this is not a severe security problem, although upgrading is highly recommended).
 
 = 1.2.1 =
 Added Arabic and Czech languages.  Ensuring WordPress 4.0 compatibility.

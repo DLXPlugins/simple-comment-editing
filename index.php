@@ -4,7 +4,7 @@ Plugin Name: Simple Comment Editing
 Plugin URI: http://wordpress.org/extend/plugins/simple-comment-editing/
 Description: Simple comment editing for your users.
 Author: ronalfy
-Version: 1.2.1
+Version: 1.2.2
 Requires at least: 3.5
 Author URI: http://www.ronalfy.com
 Contributors: ronalfy
@@ -162,7 +162,7 @@ class Simple_Comment_Editing {
 	 			$main_script_uri = $this->get_plugin_url( '/js/simple-comment-editing.js' );
 	 		}
 	 	}
-	 	wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery', 'wp-ajax-response' ), '20140414', true );
+	 	wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery', 'wp-ajax-response' ), '20140902', true );
 	 	wp_localize_script( 'simple-comment-editing', 'simple_comment_editing', array(
 	 		'minutes' => __( 'minutes', 'simple-comment-editing' ),
 	 		'minute' => __( 'minute', 'simple-comment-editing' ),
@@ -192,6 +192,17 @@ class Simple_Comment_Editing {
 	 	$comment_id = absint( $_POST[ 'comment_id' ] );
 	 	$post_id = absint( $_POST[ 'post_id' ] );
 	 	
+	 	//Check if user can edit comment
+	 	if ( !$this->can_edit( $comment_id, $post_id ) ) {
+	 		$response = array(
+	 			'minutes' => 0,
+	 			'seconds' => 0,
+	 			'comment_id' => 0,
+	 			'can_edit' => false
+	 		);
+	 		die( json_encode( $response ) );
+	 	}
+	 	
 	 	$comment_time = absint( $this->comment_time );
 	 	$query = $wpdb->prepare( "SELECT ( $comment_time * 60 - (UNIX_TIMESTAMP('" . current_time('mysql') . "') - UNIX_TIMESTAMP(comment_date))) comment_time FROM {$wpdb->comments} where comment_ID = %d", $comment_id );
 	 	$comment_time_result = $wpdb->get_row( $query, ARRAY_A );
@@ -202,7 +213,9 @@ class Simple_Comment_Editing {
 		$response = array(
 			'minutes' => $minutes,
 			'comment_id' => $comment_id, 
-			'seconds' => $seconds
+			'seconds' => $seconds,
+			'can_edit' => true
+			
 		);
 		die( json_encode( $response ) );
 	 } //end ajax_get_time_left

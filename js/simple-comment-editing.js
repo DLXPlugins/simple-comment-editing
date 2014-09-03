@@ -108,6 +108,20 @@ jQuery( document ).ready( function( $ ) {
 				var minutes = parseInt( response.minutes );
 				var seconds = parseInt( response.seconds );
 				var timer_text = sce.get_timer_text( minutes, seconds );
+				
+				//Determine via JS if a user can edit a comment - Note that if someone were to finnagle with this, there is still a server side check when saving the comment
+				var can_edit = response.can_edit;
+				if ( !can_edit ) {
+					//Remove event handlers
+					$( element ).siblings( '.sce-textarea' ).off();	
+					$( element ).off();
+						
+					//Remove elements
+					$( element ).parent().remove();
+					return;
+				}
+				
+				//Update the timer and show the editing interface
 				$( element ).find( '.sce-timer' ).html( timer_text );
 				$( element ).show();
 				
