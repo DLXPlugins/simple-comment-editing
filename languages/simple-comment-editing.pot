@@ -1,12 +1,7 @@
-# Translation of the WordPress plugin Posts 2 Posts 1.1.4 by scribu.
-# Copyright (C) 2011 scribu
-# This file is distributed under the same license as the Posts 2 Posts package.
-# ÖNDER CEYLAN <ondercey@yahoo.com>, 2011.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: Simple Comment Editing\n"
-"Report-Msgid-Bugs-To: http://wordpress.org/tag/posts-to-posts\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/simple-comment-editing\n"
 "POT-Creation-Date: 2014-02-06 13:48-0600\n"
 "PO-Revision-Date: 2014-02-06 13:48-0600\n"
 "Last-Translator: Ronald Huereca <ron@ronalfy.com>\n"
@@ -79,76 +74,3 @@ msgstr ""
 #: ../index.php:170
 msgid "Your comment has been removed."
 msgstr ""
-
-#~ msgid "Create connections:"
-#~ msgstr "Bağlantı yarat:"
-
-#~ msgid "Search"
-#~ msgstr "Ara"
-
-#~ msgid "View All"
-#~ msgstr "Tümünü Listele"
-
-#~ msgid "previous"
-#~ msgstr "önceki"
-
-#~ msgid "next"
-#~ msgstr "sonraki"
-
-#~ msgid "of"
-#~ msgstr "arasından"
-
-#~ msgid "Create connection"
-#~ msgstr "Bağlantı ekle"
-
-#~ msgid "Delete all connections"
-#~ msgstr "Tüm bağlantıları kaldır"
-
-#~ msgid "Delete connection"
-#~ msgstr "Bağlantıyı kaldır"
-
-#~ msgid "Users"
-#~ msgstr "Kullanıcılar"
-
-#~ msgid "User"
-#~ msgstr "Kullanıcı"
-
-#~ msgid "Search Users"
-#~ msgstr "Kullanıcı Ara"
-
-#~ msgid "No users found."
-#~ msgstr "Kullanıcı bulunamadı."
-
-#~ msgid "Upgraded %d connections."
-#~ msgstr "%d bağlantı güncellendi."
-
-#~ msgid ""
-#~ "The Posts 2 Posts connections need to be upgraded. <a href='%s'>Proceed.</"
-#~ "a>"
-#~ msgstr ""
-#~ "Posts 2 Posts bağlantılarının güncellenmesi gerekiyor. <a href='%s'>Devam "
-#~ "et.</a>"
-
-#~ msgid "Connected %s"
-#~ msgstr "%s Bağlandı"
-
-#~ msgid "Posts 2 Posts"
-#~ msgstr "Posts 2 Posts"
-
-#~ msgid "A list of posts connected to the current post"
-#~ msgstr "Mevcut sayfayla bağlantılı sayfalar"
-
-#~ msgid "Connection type:"
-#~ msgstr "Bağlantı türü:"
-
-#~ msgid "Connection listing:"
-#~ msgstr "Bağlantı listesi:"
-
-#~ msgid "connected"
-#~ msgstr "bağlı"
-
-#~ msgid "related"
-#~ msgstr "benzer"
-
-#~ msgid "Related %s"
-#~ msgstr "Benzer %s"
