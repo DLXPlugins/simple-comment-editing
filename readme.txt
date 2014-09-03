@@ -1,9 +1,9 @@
 === Simple Comment Editing ===
-Contributors: ronalfy, metronet
+Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 3.5
-Tested up to: 3.6.1
-Stable tag: 1.0.7
+Tested up to: 4.0
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -11,7 +11,7 @@ Simple Comment Editing for your website.
 
 == Description ==
 
-Simple Comment Editing gives anonymous users the ability to edit their comments for a period of time.
+Simple Comment Editing gives anonymous users the ability to edit and/or delete their comments for a period of time.
 
 Simple Comment Editing is a stripped down version of <a href="http://wordpress.org/plugins/wp-ajax-edit-comments/">Ajax Edit Comments</a>.
 
@@ -27,13 +27,21 @@ If you like this plugin, please help spread the word.  Rate the plugin.  Write a
 
 <h3>Translations</h3>
 <ul>
+<li>Arabic - Thanks Soufiane Sabiri.</li>
+<li>Czech - Thanks <a href="http://blog.doprofilu.cz/">Petr Baloun</a>.</li>
+<li>Dutch (Netherlands) - Thanks <a href="https://github.com/senlin">Senlin</a></li>
+<li>French (France) - Thanks <a href="http://wordpress.org/support/profile/colin101">colin101</a>.</li>
 <li>German - Thanks Wilfried Kahrs.</li>
 <li>Norwegian Bokmål - Thanks <a href="http://www.metronet.no/menneskene/jan-hagen/">Jan Hagen</a>.</li>
 <li>Norwegian Nynorsk - Thanks <a href="http://www.metronet.no/menneskene/jan-hagen/">Jan Hagen</a>.</li>
 <li>Persian - Thanks <a href="http://www.wordpress98.com/">Ali HajiMohamadi</a>.</li>
 <li>Portuguese (European) - Thanks <a href="https://twitter.com/porreirinha">Marco Pereirinha</a>.</li>
+<li>Romanian (with diacritics) - Thanks Vasile Ruscior.</li>
 <li>Serbian - Thanks <a href="https://twitter.com/lanche86">Milan Ivanovic</a>.</li>
+<li>Swedish - Thanks Håkan Persson.</li>
 </ul>
+
+If you would like to contribute a translation, please <a href="http://www.ronalfy.com/contact/">get in touch</a>.
 
 You are welcome to help us out and <a href="https://github.com/ronalfy/simple-comment-editing">contribute on GitHub</a>.
 
@@ -68,6 +76,22 @@ function edit_sce_loading_img( $default_url ) {
 }
 `
 
+= How do you disable the delete comment functionality? =
+`
+//Simple Comment Editing
+add_filter( 'sce_allow_delete', '__return_false' );
+`
+
+= Do you work with other plugins? =
+Yes, the plugin will work with WP-Ajaxify-Comments (http://wordpress.org/plugins/wp-ajaxify-comments/)
+
+Simply enable WP-Ajaxify-Comments, get it working per their settings, and add the Simple Comment Editing callback in the plugin's options.
+
+The callback is:
+`
+SCE_comments_updated();
+`
+
 = I want to style the editing interface.  Where do I start? =
 See "Other Notes".
 
@@ -95,6 +119,38 @@ See "Other Notes".
 2. Textarea and Save/Cancel buttons.
 
 == Changelog ==
+
+= 1.2.2 =
+* Released 2014-09-02
+* Added Romanian language
+* Added French language
+* Added Dutch language
+* Added better support for cached pages
+* Fixed a bug where cached pages showed other users they could edit a comment, but in reality, they could not (saving would have failed, so this is not a severe security problem, although upgrading is highly recommended).
+
+= 1.2.1 =
+* Released 2014-08-27
+* Added Arabic and Czech languages
+* Ensuring WordPress 4.0 compatibility
+
+= 1.2.0 =
+* Released 2014-05-13
+* Added Swedish translation
+* Added better support for internationalization
+* Removed barrier for admins/editors/authors to edit comments
+
+= 1.1.2 =
+* Released 2014-04-14
+* Added support for WP-Ajaxify-Comments
+
+= 1.1.1 =
+* Released 2014-02-06
+* Fixed an error where users were erroneously being told their comment was marked as spam
+
+= 1.1.0 =
+* Released 2014-02-05
+* Added JavaScript textarea save states when hitting the cancel button
+* Allow commenters to delete their comments when they leave an empty comment
 
 = 1.0.7 =
 * Released 2013-09-15
@@ -128,6 +184,24 @@ See "Other Notes".
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.2.2 =
+Added Romanian and French languages.  Fixed a bug where cached pages showed other users they could edit a comment, but in reality, they could not (saving would have failed, so this is not a severe security problem, although upgrading is highly recommended).
+
+= 1.2.1 =
+Added Arabic and Czech languages.  Ensuring WordPress 4.0 compatibility.
+
+= 1.2.0 =
+Added Swedish translation.  Added better support for internationalization.  Removed barrier for admins/editors/authors to edit comments.
+
+= 1.1.2 =
+Added support for WP-Ajaxify-Comments
+
+= 1.1.1 =
+Fixed an error where users were erroneously being told their comment was marked as spam
+
+= 1.1.0 =
+Added JavaScript textarea save states when hitting the cancel button.  Allow commenters to delete their comments when they leave an empty comment.
 
 = 1.0.7 =
 Added Persian translation file
