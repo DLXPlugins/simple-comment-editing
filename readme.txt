@@ -29,6 +29,7 @@ If you like this plugin, please help spread the word.  Rate the plugin.  Write a
 <ul>
 <li>Arabic - Thanks Soufiane Sabiri.</li>
 <li>Czech - Thanks <a href="http://blog.doprofilu.cz/">Petr Baloun</a>.</li>
+<li>French (France) - Thanks <a href="http://wordpress.org/support/profile/colin101">colin101</a>.</li>
 <li>German - Thanks Wilfried Kahrs.</li>
 <li>Norwegian Bokmål - Thanks <a href="http://www.metronet.no/menneskene/jan-hagen/">Jan Hagen</a>.</li>
 <li>Norwegian Nynorsk - Thanks <a href="http://www.metronet.no/menneskene/jan-hagen/">Jan Hagen</a>.</li>
@@ -121,6 +122,7 @@ See "Other Notes".
 = 1.2.2 =
 * Released 2014-09-02
 * Added Romanian language
+* Added French language
 * Added better support for cached pages
 * Fixed a bug where cached pages showed other users they could edit a comment, but in reality, they could not (saving would have failed, so this is not a severe security problem, although upgrading is highly recommended).
 
@@ -182,7 +184,7 @@ See "Other Notes".
 == Upgrade Notice ==
 
 = 1.2.2 =
-Added Romanian language.  Fixed a bug where cached pages showed other users they could edit a comment, but in reality, they could not (saving would have failed, so this is not a severe security problem, although upgrading is highly recommended).
+Added Romanian and French languages.  Fixed a bug where cached pages showed other users they could edit a comment, but in reality, they could not (saving would have failed, so this is not a severe security problem, although upgrading is highly recommended).
 
 = 1.2.1 =
 Added Arabic and Czech languages.  Ensuring WordPress 4.0 compatibility.
