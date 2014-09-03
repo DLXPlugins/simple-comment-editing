@@ -29,6 +29,7 @@ If you like this plugin, please help spread the word.  Rate the plugin.  Write a
 <ul>
 <li>Arabic - Thanks Soufiane Sabiri.</li>
 <li>Czech - Thanks <a href="http://blog.doprofilu.cz/">Petr Baloun</a>.</li>
+<li>Dutch (Netherlands) - Thanks <a href="https://github.com/senlin">Senlin</a></li>
 <li>French (France) - Thanks <a href="http://wordpress.org/support/profile/colin101">colin101</a>.</li>
 <li>German - Thanks Wilfried Kahrs.</li>
 <li>Norwegian Bokmål - Thanks <a href="http://www.metronet.no/menneskene/jan-hagen/">Jan Hagen</a>.</li>
@@ -123,6 +124,7 @@ See "Other Notes".
 * Released 2014-09-02
 * Added Romanian language
 * Added French language
+* Added Dutch language
 * Added better support for cached pages
 * Fixed a bug where cached pages showed other users they could edit a comment, but in reality, they could not (saving would have failed, so this is not a severe security problem, although upgrading is highly recommended).
 
