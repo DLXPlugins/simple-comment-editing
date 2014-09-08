@@ -41,7 +41,7 @@ If you like this plugin, please help spread the word.  Rate the plugin.  Write a
 <li>Swedish - Thanks Håkan Persson.</li>
 </ul>
 
-If you would like to contribute a translation, please <a href="http://www.ronalfy.com/contact/">get in touch</a>.
+If you would like to contribute a translation, please leave a support request with a link to your translation  or <a href="http://www.ronalfy.com/contact/">get in touch</a>.  If you would like to update an existing translation, please visit <a href="https://poeditor.com/join/project?hash=b65f6d06a1d423e3d4713a9f4a304d5c">POEditor.com and request access</a>.
 
 You are welcome to help us out and <a href="https://github.com/ronalfy/simple-comment-editing">contribute on GitHub</a>.
 
