@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 3.5
 Tested up to: 4.1
-Stable tag: 1.2.2
+Stable tag: 1.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -120,6 +120,11 @@ See "Other Notes".
 
 == Changelog ==
 
+= 1.2.4 =
+* Released 2015-02-04
+* Added status error message area
+* Added filter for custom error messages when saving a comment
+
 = 1.2.2 =
 * Updated 2014-12-11 - Ensuring WordPress 4.1 compatibility 
 * Released 2014-09-02
@@ -185,6 +190,9 @@ See "Other Notes".
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.2.4 =
+Added status error message area.  Added filter for custom error messages when saving a comment.
 
 = 1.2.2 =
 Added Romanian and French languages.  Fixed a bug where cached pages showed other users they could edit a comment, but in reality, they could not (saving would have failed, so this is not a severe security problem, although upgrading is highly recommended).
