@@ -9,7 +9,7 @@ jQuery( document ).ready( function( $ ) {
 			//Set up event for when the edit button is clicked
 			$( element ).on( 'click', 'a', function( e ) { 
 				e.preventDefault();
-				
+				$( '#sce-edit-comment-status' + ajax_params.cid ).removeClass().addClass( 'sce-status' ).css( 'display', 'none' );
 				//Hide the edit button and show the textarea
 				$( element ).fadeOut( 'fast', function() {
 					$( element ).siblings( '.sce-textarea' ).find( 'button' ).prop( 'disabled', false );
@@ -54,8 +54,8 @@ jQuery( document ).ready( function( $ ) {
 							//Remove elements
 							$( element ).parent().remove();
 							$.post( ajax_url, { action: 'sce_delete_comment', comment_id: ajax_params.cid, post_id: ajax_params.pid, nonce: ajax_params._wpnonce }, function( response ) {
-									alert( simple_comment_editing.comment_deleted );
-									$( "#comment-" + ajax_params.cid ).slideUp(); //Attempt to remove the comment from the theme interface
+									$( '#sce-edit-comment-status' + ajax_params.cid ).removeClass().addClass( 'sce-status updated' ).html( simple_comment_editing.comment_deleted ).show();
+									setTimeout( function() { $( "#comment-" + ajax_params.cid ).slideUp(); }, 5000 ); //Attempt to remove the comment from the theme interface
 							}, 'json' );
 							return;
 						} else {
@@ -88,7 +88,7 @@ jQuery( document ).ready( function( $ ) {
 										//Remove elements
 										$( element ).parent().remove();
 									}
-									alert( response.error ); //Alerts may be evil, but they work here - Drawback, they stop the timer, which may result in the user thinking they have more time
+									$( '#sce-edit-comment-status' + ajax_params.cid ).removeClass().addClass( 'sce-status error' ).html( response.error ).show();
 								}
 							} );
 						} );
