@@ -45,6 +45,21 @@ function edit_sce_loading_img( $default_url ) {
 }
 ```
 
+### Can I catch the comment before saving and add my own error message?
+Yes!  Here's an example:
+```php
+add_filter( 'sce_comment_check_errors', 'custom_sce_check_comment_length', 15, 2 );
+function custom_sce_check_comment_length( $return = false, $comment = array() ) {
+	$comment_content = trim( wp_strip_all_tags( $comment[ 'comment_content' ] ) );
+	$comment_length = strlen( $comment_content );
+	if ( $comment_length < 50 ) {
+		return 'Comment must be at least 50 characters';
+	}
+	return false;
+}
+
+```
+
 ### I want to style the editing interface.  Where do I start?
 See "Styles" section.
 
@@ -105,6 +120,29 @@ The save/cancel buttons have been wrapped in a `div` with class `sce-comment-edi
 .sce-comment-edit-buttons { /* styles here */ }
 .sce-comment-edit-buttons .sce-comment-save { /* styles here */ }
 .sce-comment-edit-buttons .sce-comment-cancel { /* styles here */ }
+```
+
+### Styling the Status Message
+The status message has been wrapped in a `div` with class `sce-status`.
+
+Here's some sample styles that mimic how error messages are displayed in the WordPress admin area:
+
+```css
+.sce-status {
+	border-left: 4px solid #FFF;
+	-webkit-box-shadow: 0 1px 1px 0 rgba( 0, 0, 0, 0.1 );
+	box-shadow: 0 1px 1px 0 rgba( 0, 0, 0, 0.1 );
+	background: #fff;
+	color: #333;
+	padding: 10px;	
+	margin-top: 10px;
+}
+.sce-status.error {
+	border-color: #dd3d36;
+}
+.sce-status.updated {
+	border-color: #7ad03a;
+}
 ```
 
 ### Testing the Styles
