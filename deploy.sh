@@ -80,8 +80,10 @@ echo "Versions match in readme.txt and $MAINFILE. Let's proceed..."
 
 echo "Changing to $GITPATH"
 cd $GITPATH
-echo -e "Enter a commit message for this new version: \c"
-read $COMMITMSG
+
+read -e -p "Enter a commit message for this new version: " input
+COMMITMSG="${input:-''}"
+echo "Commit message: $COMMITMSG"
 
 # GaryJ: git flow release finish already covers this tag creation.
 echo "Tagging new version in git"
