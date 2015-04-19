@@ -2,7 +2,7 @@
 Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 3.5
-Tested up to: 4.1
+Tested up to: 4.2
 Stable tag: 1.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -121,6 +121,7 @@ See "Other Notes".
 == Changelog ==
 
 = 1.2.4 =
+* Updated 2015-04-19 - Ensuring WordPress 4.2 compatibility
 * Released 2015-02-04
 * Added status error message area
 * Added filter for custom error messages when saving a comment
