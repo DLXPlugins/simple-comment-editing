@@ -164,12 +164,13 @@ jQuery( document ).ready( function( $ ) {
 		//Create timer text
 		var text = '&nbsp;&ndash;&nbsp;';
 		if (minutes >= 1) {
-		if (minutes >= 2) { text += minutes + " " + simple_comment_editing.minutes; } else { text += minutes + " " + simple_comment_editing.minute; }
-		if (seconds > 0) { text += " " + simple_comment_editing.and + " "; }
+			text += minutes + " " + simple_comment_editing.timer.minutes[ minutes ];
+			if ( seconds > 0 ) { 
+				text += " " + simple_comment_editing.and + " "; 
+			}
 		}
 		if (seconds > 0) {
-			if (seconds >= 2) { text += seconds + " " + simple_comment_editing.seconds; } else { text += seconds + " " + simple_comment_editing.second; }
-		
+			text += seconds + " " + simple_comment_editing.timer.seconds [ seconds ]; 
 		}
 		return text;
 	};
