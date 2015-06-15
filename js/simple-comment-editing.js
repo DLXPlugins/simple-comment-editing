@@ -123,7 +123,9 @@ jQuery( document ).ready( function( $ ) {
 				
 				//Update the timer and show the editing interface
 				$( element ).find( '.sce-timer' ).html( timer_text );
-				$( element ).show();
+				$( element ).show( 400, function() {
+					$( element ).trigger( 'sce.timer.loaded' );
+				} );
 				
 				//Save state in textarea
 				sce.textareas[ response.comment_id ] = $( '#sce-edit-comment' + response.comment_id + ' textarea' ).val();
@@ -178,8 +180,19 @@ jQuery( document ).ready( function( $ ) {
 	sce.textareas = new Array();
 	$( '.sce-edit-button' ).simplecommentediting();
 	
+	$( '.sce-edit-button' ).on( 'sce.timer.loaded', SCE_comment_scroll );
 } );
 //Callback when comments have been updated (for wp-ajaxify-comments compatibility) - http://wordpress.org/plugins/wp-ajaxify-comments/faq/
+
+function SCE_comment_scroll() {
+	var location = "" + window.location;
+	var pattern = /(#[^-]*\-[^&]*)/;
+	if ( pattern.test( location ) ) {
+		location = jQuery( "" + window.location.hash );
+		var targetOffset = location.offset().top;
+		jQuery( 'html,body' ).animate( {scrollTop: targetOffset}, 1000 );
+	}	
+}
 function SCE_comments_updated() {
 	jQuery( '.sce-edit-button' ).simplecommentediting();
 };
