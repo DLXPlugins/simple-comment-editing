@@ -124,7 +124,7 @@ jQuery( document ).ready( function( $ ) {
 				//Update the timer and show the editing interface
 				$( element ).find( '.sce-timer' ).html( timer_text );
 				$( element ).show( 400, function() {
-					$( element ).trigger( 'sce.timer.loaded' );
+					$( element ).trigger( 'sce.timer.loaded', element );
 				} );
 				
 				//Save state in textarea
@@ -183,7 +183,7 @@ jQuery( document ).ready( function( $ ) {
 	$( '.sce-edit-button' ).on( 'sce.timer.loaded', SCE_comment_scroll );
 } );
 
-function SCE_comment_scroll() {
+function SCE_comment_scroll( e, element ) {
 	var location = "" + window.location;
 	var pattern = /(#[^-]*\-[^&]*)/;
 	if ( pattern.test( location ) ) {
