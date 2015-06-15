@@ -67,7 +67,7 @@
 		$comment_minutes = $this->get_comment_time();
 		$minutes = array();
 		for( $i = 0; $i <= $comment_minutes; $i++ ) {
-			$minutes[ $i ] = _n( 'minute', 'minutes', $i );
+			$minutes[ $i ] = _n( 'minute', 'minutes', $i, 'simple-comment-editing' );
 		}
 		return $minutes;
 	}
@@ -85,7 +85,7 @@
 	private function get_seconds() {
 		$seconds = array();
 		for( $i = 0; $i < 60; $i++ ) {
-			$seconds[ $i ] = _n( 'second', 'seconds', $i );
+			$seconds[ $i ] = _n( 'second', 'seconds', $i, 'simple-comment-editing' );
 		}
 		return $seconds;
 	}
