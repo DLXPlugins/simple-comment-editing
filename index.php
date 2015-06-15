@@ -164,13 +164,16 @@ class Simple_Comment_Editing {
 	 			$main_script_uri = $this->get_plugin_url( '/js/simple-comment-editing.js' );
 	 		}
 	 	}
+	 	include( 'class-sce-timer.php' );
+	 	$timer_internationalized = new SCE_Timer();
 	 	wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery', 'wp-ajax-response' ), '20150204', true );
 	 	wp_localize_script( 'simple-comment-editing', 'simple_comment_editing', array(
 	 		'and' => __( 'and', 'simple-comment-editing' ),
 	 		'confirm_delete' => __( 'Do you want to delete this comment?', 'simple-comment-editing' ),
 	 		'comment_deleted' => __( 'Your comment has been removed.', 'simple-comment-editing' ),
 	 		'empty_comment' => $this->errors->get_error_message( 'comment_empty' ),
-	 		'allow_delete' => $this->allow_delete
+	 		'allow_delete' => $this->allow_delete,
+	 		'timer' => $timer_internationalized->get_timer_vars()
 	 	) );
 	 } //end add_scripts
 	 
