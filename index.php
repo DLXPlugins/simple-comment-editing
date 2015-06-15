@@ -117,7 +117,6 @@ class Simple_Comment_Editing {
 		$textarea_content .= sprintf( '<textarea class="sce-comment-text" cols="45" rows="8">%s</textarea>', esc_textarea( $raw_content ) );
 		$textarea_content .= '</div><!-- .sce-comment-textarea -->';
 		$textarea_content .= '%s</div><!-- .sce-textarea -->';
-		$textarea_content = apply_filters( 'sce_textarea', $textarea_content );
 		$textarea_buttons = '<div class="sce-comment-edit-buttons">';
 		$textarea_buttons .= sprintf( '<button class="sce-comment-save">%s</button>', esc_html__( 'Save', 'simple-comment-editing' ) );
 		$textarea_buttons .= sprintf( '<button class="sce-comment-cancel">%s</button>', esc_html__( 'Cancel', 'simple-comment-editing' ) );
@@ -131,6 +130,8 @@ class Simple_Comment_Editing {
 		
 		//Status Area
 		$comment_content .= sprintf( '<div id="sce-edit-comment-status%d" class="sce-status" style="display: none;"></div><!-- .sce-status -->', $comment_id );
+		
+		$comment_content = apply_filters( 'sce_comment_content', $comment_content );
 		
 		return $comment_content;
 	
