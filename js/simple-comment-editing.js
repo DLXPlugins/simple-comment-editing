@@ -182,7 +182,6 @@ jQuery( document ).ready( function( $ ) {
 	
 	$( '.sce-edit-button' ).on( 'sce.timer.loaded', SCE_comment_scroll );
 } );
-//Callback when comments have been updated (for wp-ajaxify-comments compatibility) - http://wordpress.org/plugins/wp-ajaxify-comments/faq/
 
 function SCE_comment_scroll() {
 	var location = "" + window.location;
@@ -193,6 +192,7 @@ function SCE_comment_scroll() {
 		jQuery( 'html,body' ).animate( {scrollTop: targetOffset}, 1000 );
 	}	
 }
+//Callback when comments have been updated (for wp-ajaxify-comments compatibility) - http://wordpress.org/plugins/wp-ajaxify-comments/faq/
 function SCE_comments_updated() {
 	jQuery( '.sce-edit-button' ).simplecommentediting();
 };
