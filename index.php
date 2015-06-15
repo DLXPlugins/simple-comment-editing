@@ -83,8 +83,8 @@ class Simple_Comment_Editing {
 	public function add_edit_interface( $comment_content, $comment = false) {
 		if ( !$comment ) return $comment_content;
 				
-		$comment_id = $comment->comment_ID;
-		$post_id = $comment->comment_post_ID;
+		$comment_id = absint( $comment->comment_ID );
+		$post_id = absint( $comment->comment_post_ID );
 		
 		//Check to see if a user can edit their comment
 		if ( !$this->can_edit( $comment_id, $post_id ) ) return $comment_content;
@@ -102,30 +102,32 @@ class Simple_Comment_Editing {
 		//Edit Button
 		$comment_content .= '<div class="sce-edit-button" style="display:none;">';
 		$ajax_edit_url = add_query_arg( array( 'cid' => $comment_id, 'pid' => $post_id ) , wp_nonce_url( admin_url( 'admin-ajax.php' ), 'sce-edit-comment' . $comment_id ) );
-		$comment_content .= sprintf( '<a href="%s">%s</a>', $ajax_edit_url, esc_html__( 'Click to Edit', 'simple-comment-editing' ) );
+		$comment_content .= sprintf( '<a href="%s">%s</a>', esc_url( $ajax_edit_url ), esc_html__( 'Click to Edit', 'simple-comment-editing' ) );
 		$comment_content .= '<span class="sce-timer"></span>';
 		$comment_content .= '</div><!-- .sce-edit-button -->';
 		
 		//Loading button
 		$comment_content .= '<div class="sce-loading" style="display: none;">';
-		$comment_content .= sprintf( '<img src="%1$s" title="%2$s" alt="%2$s" />', $this->loading_img, esc_attr__( 'Loading', 'simple-comment-editing' ) );
+		$comment_content .= sprintf( '<img src="%1$s" title="%2$s" alt="%2$s" />', esc_url( $this->loading_img ), esc_attr__( 'Loading', 'simple-comment-editing' ) );
 		$comment_content .= '</div><!-- sce-loading -->';
 		
 		//Textarea
-		$comment_content .= '<div class="sce-textarea" style="display: none;">';
-		$textarea_content = format_to_edit( $raw_content, 1 );
-		$textarea_content = apply_filters( 'comment_edit_pre', $textarea_content );
-		$comment_content .= '<div class="sce-comment-textarea">';
-		$comment_content .= sprintf( '<textarea class="sce-comment-text" cols="45" rows="8">%s</textarea>', esc_textarea( $raw_content ) );
-		$comment_content .= '</div><!-- .sce-comment-textarea -->';
-		$comment_content .= '<div class="sce-comment-edit-buttons">';
-		$comment_content .= sprintf( '<button class="sce-comment-save">%s</button>', esc_html__( 'Save', 'simple-comment-editing' ) );
-		$comment_content .= sprintf( '<button class="sce-comment-cancel">%s</button>', esc_html__( 'Cancel', 'simple-comment-editing' ) );
-		$comment_content .= '</div><!-- .sce-comment-edit-buttons -->';
-		$comment_content .= '</div><!-- .sce-textarea -->';
+		$textarea_content = '<div class="sce-textarea" style="display: none;">';
+		$textarea_content .= '<div class="sce-comment-textarea">';
+		$textarea_content .= sprintf( '<textarea class="sce-comment-text" cols="45" rows="8">%s</textarea>', esc_textarea( $raw_content ) );
+		$textarea_content .= '</div><!-- .sce-comment-textarea -->';
+		$textarea_content .= '%s</div><!-- .sce-textarea -->';
+		$textarea_content = apply_filters( 'sce_textarea', $textarea_content );
+		$textarea_buttons = '<div class="sce-comment-edit-buttons">';
+		$textarea_buttons .= sprintf( '<button class="sce-comment-save">%s</button>', esc_html__( 'Save', 'simple-comment-editing' ) );
+		$textarea_buttons .= sprintf( '<button class="sce-comment-cancel">%s</button>', esc_html__( 'Cancel', 'simple-comment-editing' ) );
+		$textarea_buttons .= '</div><!-- .sce-comment-edit-buttons -->';
+		$textarea_buttons = apply_filters( 'sce_buttons', $textarea_buttons );
+		$textarea_content = sprintf( $textarea_content, $textarea_buttons );
+		
 		
 		//End
-		$comment_content .= '</div><!-- .sce-edit-comment -->';
+		$comment_content .= $textarea_content . '</div><!-- .sce-edit-comment -->';
 		
 		//Status Area
 		$comment_content .= sprintf( '<div id="sce-edit-comment-status%d" class="sce-status" style="display: none;"></div><!-- .sce-status -->', $comment_id );
