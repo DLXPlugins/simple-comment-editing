@@ -45,7 +45,7 @@ class Simple_Comment_Editing {
 		if ( is_admin() && !defined( 'DOING_AJAX' ) ) return false;
 		
 		//Set plugin defaults
-		$this->comment_time = intval( apply_filters( 'sce_comment_time', 5 ) );
+		$this->comment_time = $this->get_comment_time();
 		$this->loading_img = esc_url( apply_filters( 'sce_loading_img', $this->get_plugin_url( '/images/loading.gif' ) ) );
 		$this->allow_delete = (bool)apply_filters( 'sce_allow_delete', $this->allow_delete );
 		
@@ -166,11 +166,7 @@ class Simple_Comment_Editing {
 	 	}
 	 	wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery', 'wp-ajax-response' ), '20150204', true );
 	 	wp_localize_script( 'simple-comment-editing', 'simple_comment_editing', array(
-	 		'minutes' => __( 'minutes', 'simple-comment-editing' ),
-	 		'minute' => __( 'minute', 'simple-comment-editing' ),
 	 		'and' => __( 'and', 'simple-comment-editing' ),
-	 		'seconds' => __( 'seconds', 'simple-comment-editing' ),
-	 		'second' => __( 'second', 'simple-comment-editing' ),
 	 		'confirm_delete' => __( 'Do you want to delete this comment?', 'simple-comment-editing' ),
 	 		'comment_deleted' => __( 'Your comment has been removed.', 'simple-comment-editing' ),
 	 		'empty_comment' => $this->errors->get_error_message( 'comment_empty' ),
@@ -471,6 +467,26 @@ class Simple_Comment_Editing {
 		update_option( 'ajax-edit-comments_security_key_count', $security_key_count );
 	} //end comment_posted
 	
+	
+	/**
+	 * get_comment_time - Gets the comment time for editing - max 90 minutes
+	 * 
+	 *
+	 * @since 1.3.0
+	 *
+	 */
+	 public function get_comment_time() {
+		 if ( $this->comment_time > 0 ) {
+			return $this->comment_time;	 
+		}
+		$comment_time = absint( apply_filters( 'sce_comment_time', 5 ) );
+		if ( $comment_time > 90 ) {
+			$this->comment_time = 90; 	
+		} else {
+			$this->comment_time = $comment_time;
+		}
+		return $this->comment_time;
+	}
 	
 	
 	public function get_plugin_dir( $path = '' ) {
