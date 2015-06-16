@@ -181,7 +181,7 @@ jQuery( document ).ready( function( $ ) {
 			}
 		}
 		if (seconds > 0) {
-			text += seconds + " " + simple_comment_editing.timer.seconds [ seconds ]; 
+			text += seconds + " " + simple_comment_editing.timer.seconds[ seconds ]; 
 		}
 		return text;
 	};
