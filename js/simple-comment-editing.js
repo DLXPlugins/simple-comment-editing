@@ -134,11 +134,13 @@ jQuery( document ).ready( function( $ ) {
 				sce.timers[ response.comment_id ] = {
 					minutes: minutes,
 					seconds: seconds,
-					timer: setInterval( function() {
+					start: new Date().getTime(),
+					time: 0,
+					timer: function() {
+						
 						timer_seconds = sce.timers[ response.comment_id ].seconds - 1;
 						timer_minutes = sce.timers[ response.comment_id ].minutes;
 						if ( timer_minutes <=0 && timer_seconds <= 0) { 
-							clearInterval( sce.timers[ response.comment_id ].timer );
 							
 							//Remove event handlers
 							$( element ).siblings( '.sce-textarea' ).off();	
@@ -146,6 +148,7 @@ jQuery( document ).ready( function( $ ) {
 								
 							//Remove elements
 							$( element ).parent().remove();
+							return;
 						} else {
 							if ( timer_seconds < 0 ) { 
 								timer_minutes -= 1; timer_seconds = 59;
@@ -154,8 +157,14 @@ jQuery( document ).ready( function( $ ) {
 							sce.timers[ response.comment_id ].seconds = timer_seconds;
 							sce.timers[ response.comment_id ].minutes = timer_minutes;
 						}
-					}, 1000 )
+						//Get accurate time
+						var timer_obj = sce.timers[ response.comment_id ];
+						timer_obj.time += 1000;
+						var diff = ( new Date().getTime() - timer_obj.start ) - timer_obj.time;
+						window.setTimeout( timer_obj.timer, ( 1000 - diff ) );
+					} 
 				};
+				window.setTimeout( sce.timers[ response.comment_id ].timer, 1000 );
 				
 				
 			}, 'json' );
