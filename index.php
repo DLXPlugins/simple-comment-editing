@@ -46,7 +46,25 @@ class Simple_Comment_Editing {
 		
 		//Set plugin defaults
 		$this->comment_time = $this->get_comment_time();
+		/**
+		* Filter: sce_loading_img
+		*
+		* Replace the loading image with a custom version.
+		*
+		* @since 1.0.0
+		*
+		* @param string  $image_url URL path to the loading image.
+		*/
 		$this->loading_img = esc_url( apply_filters( 'sce_loading_img', $this->get_plugin_url( '/images/loading.gif' ) ) );
+		/**
+		* Filter: sce_allow_delete
+		*
+		* Determine if users can delete their comments
+		*
+		* @since 1.1.0
+		*
+		* @param bool  $allow_delete True allows deletion, false does not
+		*/
 		$this->allow_delete = (bool)apply_filters( 'sce_allow_delete', $this->allow_delete );
 		
 		/* BEGIN ACTIONS */
@@ -332,6 +350,16 @@ class Simple_Comment_Editing {
 		$comment_to_save[ 'comment_content' ] = $new_comment_content;
 		
 		//Before save comment
+		/**
+		* Filter: sce_comment_check_errors
+		*
+		* Return a custom error message based on the saved comment
+		*
+		* @since 1.2.4
+		*
+		* @param bool  $custom_error Default custom error. Overwrite with a string
+		* @param array $comment_to_save Associative array of comment attributes
+		*/
 		$custom_error = apply_filters( 'sce_comment_check_errors', false, $comment_to_save ); //Filter expects a string returned - $comment_to_save is an associative array
 		if ( is_string( $custom_error ) && !empty( $custom_error ) ) {
 			$return[ 'errors' ] = true;
@@ -462,6 +490,15 @@ class Simple_Comment_Editing {
 		}
 		
 		//Now delete security keys (use the same names/techniques as Ajax Edit Comments
+		/**
+		* Filter: sce_security_key_min
+		*
+		* Determine how many security keys should be stored as post meta before garbage collection
+		*
+		* @since 1.0.0
+		*
+		* @param int  $num_keys How many keys to store
+		*/
 		$min_security_keys = absint( apply_filters( 'sce_security_key_min', 100 ) );
 		if ( $security_key_count >= $min_security_keys ) {
 			global $wpdb;
@@ -485,6 +522,15 @@ class Simple_Comment_Editing {
 		 if ( $this->comment_time > 0 ) {
 			return $this->comment_time;	 
 		}
+		/**
+		* Filter: sce_comment_time
+		*
+		* How long in minutes to edit a comment
+		*
+		* @since 1.0.0
+		*
+		* @param int  $minutes Time in minutes - Max 90 minutes
+		*/
 		$comment_time = absint( apply_filters( 'sce_comment_time', 5 ) );
 		if ( $comment_time > 90 ) {
 			$this->comment_time = 90; 	
