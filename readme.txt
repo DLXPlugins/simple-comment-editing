@@ -2,8 +2,8 @@
 Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 3.5
-Tested up to: 4.2
-Stable tag: 1.2.4
+Tested up to: 4.2.2
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,6 +37,7 @@ If you like this plugin, please help spread the word.  Rate the plugin.  Write a
 <li>Persian - Thanks <a href="http://www.wordpress98.com/">Ali HajiMohamadi</a>.</li>
 <li>Portuguese (European) - Thanks <a href="https://twitter.com/porreirinha">Marco Pereirinha</a>.</li>
 <li>Romanian (with diacritics) - Thanks Vasile Ruscior.</li>
+<li>Russian - Thanks Natali_Z.</li>
 <li>Serbian - Thanks <a href="https://twitter.com/lanche86">Milan Ivanovic</a>.</li>
 <li>Swedish - Thanks Håkan Persson.</li>
 </ul>
@@ -120,6 +121,15 @@ See "Other Notes".
 
 == Changelog ==
 
+= 1.3.0 =
+* Released 2015-06-18
+* Improved timer internationalization to accept languages with plurality variations (e.g., Russian)
+* Added Russian translation
+* Improved the timer to be significantly more accurate
+* Added filters to the SCE HTML in order to add custom attributes
+* Improved inline documentation
+* Added smooth scrolling to the comment after a page load
+
 = 1.2.4 =
 * Updated 2015-04-19 - Ensuring WordPress 4.2 compatibility
 * Released 2015-02-04
@@ -191,6 +201,9 @@ See "Other Notes".
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.3.0 =
+Better timer internationalization, improved timer accuracy, custom content filters, and smooth scrolling.
 
 = 1.2.4 =
 Added status error message area.  Added filter for custom error messages when saving a comment.
