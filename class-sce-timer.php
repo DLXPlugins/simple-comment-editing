@@ -24,8 +24,8 @@
 	* @return associative array of seconds/minutes internationalized variables
 	*/
 	public function get_timer_vars( $force_transient = false ) {
-		$locale = get_locale();
-		$timer_vars_transient = get_transient( 'sce_timer_' . $locale );
+		$transient_name = sprintf( 'sce_timer_%d_%s', $this->get_comment_time(), get_locale() ); //Transient is stored based on the locale and comment time, so that if either changes, a new transient is generated
+		$timer_vars_transient = get_transient( $transient_name );
 		if ( $timer_vars_transient && false === $force_transient ) {
 			return $timer_vars_transient;
 		} else {
@@ -33,7 +33,7 @@
 				'minutes' => $this->get_minutes(),
 				'seconds' => $this->get_seconds()
 			);
-			set_transient( 'sce_timer_' . $locale, $timer_vars, 12 * HOUR_IN_SECONDS );
+			set_transient( $transient_name, $timer_vars, 12 * HOUR_IN_SECONDS );
 			return $timer_vars;
 		}
 		return array();
