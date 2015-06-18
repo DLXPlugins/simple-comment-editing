@@ -112,22 +112,22 @@ class Simple_Comment_Editing {
 		$raw_content = $comment->comment_content; //For later usage in the textarea
 		
 		//Yay, user can edit - Add the initial wrapper
-		$comment_content = sprintf( '<div id="sce-comment%d" class="sce-comment">%s</div>', $comment_id, $comment_content );	
+		$comment_wrapper = sprintf( '<div id="sce-comment%d" class="sce-comment">%s</div>', $comment_id, $comment_content );	
 		
 		//Create Overall wrapper for JS interface
-		$comment_content .= sprintf( '<div id="sce-edit-comment%d" class="sce-edit-comment">', $comment_id );
+		$sce_content = sprintf( '<div id="sce-edit-comment%d" class="sce-edit-comment">', $comment_id );
 		
 		//Edit Button
-		$comment_content .= '<div class="sce-edit-button" style="display:none;">';
+		$sce_content .= '<div class="sce-edit-button" style="display:none;">';
 		$ajax_edit_url = add_query_arg( array( 'cid' => $comment_id, 'pid' => $post_id ) , wp_nonce_url( admin_url( 'admin-ajax.php' ), 'sce-edit-comment' . $comment_id ) );
-		$comment_content .= sprintf( '<a href="%s">%s</a>', esc_url( $ajax_edit_url ), esc_html__( 'Click to Edit', 'simple-comment-editing' ) );
-		$comment_content .= '<span class="sce-timer"></span>';
-		$comment_content .= '</div><!-- .sce-edit-button -->';
+		$sce_content .= sprintf( '<a href="%s">%s</a>', esc_url( $ajax_edit_url ), esc_html__( 'Click to Edit', 'simple-comment-editing' ) );
+		$sce_content .= '<span class="sce-timer"></span>';
+		$sce_content .= '</div><!-- .sce-edit-button -->';
 		
 		//Loading button
-		$comment_content .= '<div class="sce-loading" style="display: none;">';
-		$comment_content .= sprintf( '<img src="%1$s" title="%2$s" alt="%2$s" />', esc_url( $this->loading_img ), esc_attr__( 'Loading', 'simple-comment-editing' ) );
-		$comment_content .= '</div><!-- sce-loading -->';
+		$sce_content .= '<div class="sce-loading" style="display: none;">';
+		$sce_content .= sprintf( '<img src="%1$s" title="%2$s" alt="%2$s" />', esc_url( $this->loading_img ), esc_attr__( 'Loading', 'simple-comment-editing' ) );
+		$sce_content .= '</div><!-- sce-loading -->';
 		
 		//Textarea
 		$textarea_content = '<div class="sce-textarea" style="display: none;">';
@@ -135,22 +135,44 @@ class Simple_Comment_Editing {
 		$textarea_content .= sprintf( '<textarea class="sce-comment-text" cols="45" rows="8">%s</textarea>', esc_textarea( $raw_content ) );
 		$textarea_content .= '</div><!-- .sce-comment-textarea -->';
 		$textarea_content .= '%s</div><!-- .sce-textarea -->';
-		$textarea_buttons = '<div class="sce-comment-edit-buttons">';
-		$textarea_buttons .= sprintf( '<button class="sce-comment-save">%s</button>', esc_html__( 'Save', 'simple-comment-editing' ) );
+		$textarea_button_content = '<div class="sce-comment-edit-buttons">';
+		$textarea_buttons = sprintf( '<button class="sce-comment-save">%s</button>', esc_html__( 'Save', 'simple-comment-editing' ) );
 		$textarea_buttons .= sprintf( '<button class="sce-comment-cancel">%s</button>', esc_html__( 'Cancel', 'simple-comment-editing' ) );
-		$textarea_buttons .= '</div><!-- .sce-comment-edit-buttons -->';
-		$textarea_buttons = apply_filters( 'sce_buttons', $textarea_buttons );
-		$textarea_content = sprintf( $textarea_content, $textarea_buttons );
+		/**
+		* Filter: sce_buttons
+		*
+		* Filter to add button content
+		*
+		* @since 1.3.0
+		*
+		* @param string  $textarea_buttons Button HTML
+		* @param int       $comment_id        Comment ID
+		*/
+		$textarea_buttons = apply_filters( 'sce_buttons', $textarea_buttons, $comment_id );
+		$textarea_button_content .= $textarea_buttons . '</div><!-- .sce-comment-edit-buttons -->';
+		$textarea_content = sprintf( $textarea_content, $textarea_button_content );
 		
 		
 		//End
-		$comment_content .= $textarea_content . '</div><!-- .sce-edit-comment -->';
+		$sce_content .= $textarea_content . '</div><!-- .sce-edit-comment -->';
 		
 		//Status Area
-		$comment_content .= sprintf( '<div id="sce-edit-comment-status%d" class="sce-status" style="display: none;"></div><!-- .sce-status -->', $comment_id );
+		$sce_content .= sprintf( '<div id="sce-edit-comment-status%d" class="sce-status" style="display: none;"></div><!-- .sce-status -->', $comment_id );
 		
-		$comment_content = apply_filters( 'sce_comment_content', $comment_content );
+		/**
+		* Filter: sce_content
+		*
+		* Filter to overral sce output
+		*
+		* @since 1.3.0
+		*
+		* @param string  $sce_content SCE content 
+		* @param int       $comment_id Comment ID of the comment
+		*/
+		$sce_content = apply_filters( 'sce_content', $sce_content, $comment_id );
 		
+		//Return content
+		$comment_content = $comment_wrapper . $sce_content;
 		return $comment_content;
 	
 	} //end add_edit_interface
