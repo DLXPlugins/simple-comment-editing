@@ -209,7 +209,7 @@ class Simple_Comment_Editing {
 	 	}
 	 	include( 'class-sce-timer.php' );
 	 	$timer_internationalized = new SCE_Timer();
-	 	wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery', 'wp-ajax-response' ), '20150204', true );
+	 	wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery', 'wp-ajax-response' ), '20150618', true );
 	 	wp_localize_script( 'simple-comment-editing', 'simple_comment_editing', array(
 	 		'and' => __( 'and', 'simple-comment-editing' ),
 	 		'confirm_delete' => __( 'Do you want to delete this comment?', 'simple-comment-editing' ),
