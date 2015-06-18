@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Simple Comment Editing\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/simple-comment-editing\n"
-"POT-Creation-Date: 2015-06-15 13:51-0600\n"
-"PO-Revision-Date: 2015-06-15 14:14-0600\n"
+"POT-Creation-Date: 2015-06-18 10:17-0600\n"
+"PO-Revision-Date: 2015-06-18 10:17-0600\n"
 "Last-Translator: Ronald Huereca <ron@ronalfy.com>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -23,16 +23,16 @@ msgstr ""
 #: ../class-sce-timer.php:70
 msgid "minute"
 msgid_plural "minutes"
-msgstr[0] "Минута"
-msgstr[1] "Минуты"
-msgstr[2] "Минут"
+msgstr[0] "минута"
+msgstr[1] "минуты"
+msgstr[2] "минут"
 
 #: ../class-sce-timer.php:88
 msgid "second"
 msgid_plural "seconds"
-msgstr[0] "Секунда"
-msgstr[1] "Секунды"
-msgstr[2] "Секунд"
+msgstr[0] "секунда"
+msgstr[1] "секунды"
+msgstr[2] "секунд"
 
 #: ../index.php:37
 msgid "You do not have permission to edit this comment."
@@ -50,31 +50,31 @@ msgstr "Комментарий не может быть пустым"
 msgid "This comment was marked as spam"
 msgstr "Этот комментарий был отмечен как спам"
 
-#: ../index.php:105
+#: ../index.php:123
 msgid "Click to Edit"
 msgstr "Редактировать"
 
-#: ../index.php:111
+#: ../index.php:129
 msgid "Loading"
 msgstr "идет загрузка..."
 
-#: ../index.php:122
+#: ../index.php:139
 msgid "Save"
 msgstr "Сохранить"
 
-#: ../index.php:123
+#: ../index.php:140
 msgid "Cancel"
 msgstr "Отменить"
 
-#: ../index.php:171
+#: ../index.php:214
 msgid "and"
 msgstr "и"
 
-#: ../index.php:172
+#: ../index.php:215
 msgid "Do you want to delete this comment?"
 msgstr "Вы хотите удалить этот комментарий?"
 
-#: ../index.php:173
+#: ../index.php:216
 msgid "Your comment has been removed."
 msgstr "Комментарий удалён"
 
