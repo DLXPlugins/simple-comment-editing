@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 3.5
 Tested up to: 4.2.2
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -121,6 +121,10 @@ See "Other Notes".
 
 == Changelog ==
 
+= 1.3.1 =
+* Released 2015-06-26
+* Fixed debug error that stated there were two few arguments when there was a percentage sign (%) in a comment. Thank you <a href="https://github.com/ronalfy/simple-comment-editing/issues/7">bernie-simon</a>.
+
 = 1.3.0 =
 * Released 2015-06-18
 * Improved timer internationalization to accept languages with plurality variations (e.g., Russian)
@@ -201,6 +205,9 @@ See "Other Notes".
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.3.1 =
+Recommended upgrade. Fixes PHP warning when there is a percentage sign in a comment.
 
 = 1.3.0 =
 Better timer internationalization, improved timer accuracy, custom content filters, and smooth scrolling.
