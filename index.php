@@ -4,7 +4,7 @@ Plugin Name: Simple Comment Editing
 Plugin URI: http://wordpress.org/extend/plugins/simple-comment-editing/
 Description: Simple comment editing for your users.
 Author: ronalfy
-Version: 1.3.0
+Version: 1.3.1
 Requires at least: 3.5
 Author URI: http://www.ronalfy.com
 Contributors: ronalfy
@@ -132,7 +132,7 @@ class Simple_Comment_Editing {
 		//Textarea
 		$textarea_content = '<div class="sce-textarea" style="display: none;">';
 		$textarea_content .= '<div class="sce-comment-textarea">';
-		$textarea_content .= sprintf( '<textarea class="sce-comment-text" cols="45" rows="8">%s</textarea>', esc_textarea( $raw_content ) );
+		$textarea_content .= '<textarea class="sce-comment-text" cols="45" rows="8">%s</textarea>';
 		$textarea_content .= '</div><!-- .sce-comment-textarea -->';
 		$textarea_content .= '%s</div><!-- .sce-textarea -->';
 		$textarea_button_content = '<div class="sce-comment-edit-buttons">';
@@ -150,7 +150,7 @@ class Simple_Comment_Editing {
 		*/
 		$textarea_buttons = apply_filters( 'sce_buttons', $textarea_buttons, $comment_id );
 		$textarea_button_content .= $textarea_buttons . '</div><!-- .sce-comment-edit-buttons -->';
-		$textarea_content = sprintf( $textarea_content, $textarea_button_content );
+		$textarea_content = sprintf( $textarea_content, esc_textarea( $raw_content ), $textarea_button_content );
 		
 		
 		//End
