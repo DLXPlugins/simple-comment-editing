@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 3.5
 Tested up to: 4.2.2
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,6 +12,8 @@ Simple Comment Editing for your website.
 == Description ==
 
 Simple Comment Editing gives anonymous users the ability to edit and/or delete their comments for a period of time.
+
+[youtube https://www.youtube.com/watch?v=KfKTVzEdClw]
 
 Simple Comment Editing is a stripped down version of <a href="http://wordpress.org/plugins/wp-ajax-edit-comments/">Ajax Edit Comments</a>.
 
@@ -32,19 +34,22 @@ If you like this plugin, please help spread the word.  Rate the plugin.  Write a
 <li>Dutch (Netherlands) - Thanks <a href="https://github.com/senlin">Senlin</a></li>
 <li>French (France) - Thanks <a href="http://wordpress.org/support/profile/colin101">colin101</a>.</li>
 <li>German - Thanks Wilfried Kahrs.</li>
-<li>Norwegian Bokmål - Thanks <a href="http://www.metronet.no/menneskene/jan-hagen/">Jan Hagen</a>.</li>
-<li>Norwegian Nynorsk - Thanks <a href="http://www.metronet.no/menneskene/jan-hagen/">Jan Hagen</a>.</li>
+<li>Norwegian Bokmål - Thanks Jan Hagen.</li>
+<li>Norwegian Nynorsk - Thanks Jan Hagen.</li>
 <li>Persian - Thanks <a href="http://www.wordpress98.com/">Ali HajiMohamadi</a>.</li>
 <li>Portuguese (European) - Thanks <a href="https://twitter.com/porreirinha">Marco Pereirinha</a>.</li>
 <li>Romanian (with diacritics) - Thanks Vasile Ruscior.</li>
-<li>Russian - Thanks Natali_Z.</li>
+<li>Russian - Thanks Nataliya Zav'yalova (Наталия Завьялова).</li>
 <li>Serbian - Thanks <a href="https://twitter.com/lanche86">Milan Ivanovic</a>.</li>
+<li>Spanish - Thanks Google Translate :P</li>
 <li>Swedish - Thanks Håkan Persson.</li>
 </ul>
 
 If you would like to contribute a translation, please leave a support request with a link to your translation  or <a href="http://www.ronalfy.com/contact/">get in touch</a>.  If you would like to update an existing translation, please visit <a href="https://poeditor.com/join/project?hash=b65f6d06a1d423e3d4713a9f4a304d5c">POEditor.com and request access</a>.
 
 You are welcome to help us out and <a href="https://github.com/ronalfy/simple-comment-editing">contribute on GitHub</a>.
+
+YouTube review courtesy of <a href="http://www.wpbeginner.com/plugins/allow-users-edit-comments-wordpress/">WPBeginner</a>.
 
 == Installation ==
 
@@ -120,6 +125,11 @@ See "Other Notes".
 2. Textarea and Save/Cancel buttons.
 
 == Changelog ==
+
+= 1.3.2 =
+* Released 2015-07-13
+* Added filter sce_can_edit for more control over who can or cannot edit a comment.
+* Updated translations (Arabic, Dutch, French, German, Norwegian, Persian, Portuguese, Romanian, Russian, Serbian, Spanish, and Swedish).
 
 = 1.3.1 =
 * Released 2015-06-26
@@ -205,6 +215,9 @@ See "Other Notes".
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.3.2 =
+Adding filter for editing permissions and updating translations.
 
 = 1.3.1 =
 Recommended upgrade. Fixes PHP warning when there is a percentage sign in a comment.

@@ -4,7 +4,7 @@ Plugin Name: Simple Comment Editing
 Plugin URI: http://wordpress.org/extend/plugins/simple-comment-editing/
 Description: Simple comment editing for your users.
 Author: ronalfy
-Version: 1.3.1
+Version: 1.3.2
 Requires at least: 3.5
 Author URI: http://www.ronalfy.com
 Contributors: ronalfy
@@ -470,7 +470,19 @@ class Simple_Comment_Editing {
 		if ( $cookie_value !== $post_meta_hash ) return false;
 		
 		//All is well, the person/place/thing can edit the comment
-		return true;
+		/**
+		* Filter: sce_can_edit
+		*
+		* Determine if a user can edit the comment
+		*
+		* @since 1.3.2
+		*
+		* @param bool  true If user can edit the comment
+		* @param object $comment Comment object user has left
+		* @param int $comment_id Comment ID of the comment
+		* @param int $post_id Post ID of the comment
+		*/
+		return apply_filters( 'sce_can_edit', true, $comment, $comment_id, $post_id );
 	} //end can_edit
 	
 	/**
