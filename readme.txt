@@ -15,13 +15,14 @@ Simple Comment Editing gives anonymous users the ability to edit and/or delete t
 
 [youtube https://www.youtube.com/watch?v=KfKTVzEdClw]
 
-Simple Comment Editing is a stripped down version of <a href="http://wordpress.org/plugins/wp-ajax-edit-comments/">Ajax Edit Comments</a>.
+YouTube video review from <a href="http://www.wpbeginner.com/plugins/allow-users-edit-comments-wordpress/">WPBeginner</a>.
 
-The biggest differences:
+Simple Comment Editing features:
 <ol>
-<li>Only anonymous users (and logged in users who don't have permission to edit comments) can edit their comments for a period of time (the default is 5 minutes).</li>
-<li>There are no styles included with this plugin.  For most themes, the appearance is acceptable.  For advanced customization, see the "Other Notes" section.</li>
-<li>There are no options.  Some defaults can be overwritten using filters.</li>
+<li>No options. Install the plugin. It just works.
+<li>Anonymous users can edit comments for 5 minutes.</li>
+<li>No styling is necessary. For advanced customization, see the "Other Notes" section.</li>
+<li>Advanced customization can be achieved using filters.</li>
 </ol>
 
 <h3>Spread the Word</h3>
@@ -48,8 +49,6 @@ If you like this plugin, please help spread the word.  Rate the plugin.  Write a
 If you would like to contribute a translation, please leave a support request with a link to your translation  or <a href="http://www.ronalfy.com/contact/">get in touch</a>.  If you would like to update an existing translation, please visit <a href="https://poeditor.com/join/project?hash=b65f6d06a1d423e3d4713a9f4a304d5c">POEditor.com and request access</a>.
 
 You are welcome to help us out and <a href="https://github.com/ronalfy/simple-comment-editing">contribute on GitHub</a>.
-
-YouTube review courtesy of <a href="http://www.wpbeginner.com/plugins/allow-users-edit-comments-wordpress/">WPBeginner</a>.
 
 == Installation ==
 
