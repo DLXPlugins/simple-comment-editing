@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 3.5
 Tested up to: 4.2.2
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -125,6 +125,10 @@ See "Other Notes".
 
 == Changelog ==
 
+= 1.3.3 =
+* Released 2015-07-22
+* Fixing JavaScript error that prevented editing if a certain ID wasn't wrapped around a comment.
+
 = 1.3.2 =
 * Released 2015-07-13
 * Added filter sce_can_edit for more control over who can or cannot edit a comment.
@@ -214,6 +218,9 @@ See "Other Notes".
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.3.3 =
+Fixing JavaScript error that prevented editing a comment.
 
 = 1.3.2 =
 Adding filter for editing permissions and updating translations.

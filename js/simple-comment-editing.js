@@ -197,8 +197,10 @@ function SCE_comment_scroll( e, element ) {
 	var pattern = /(#[^-]*\-[^&]*)/;
 	if ( pattern.test( location ) ) {
 		location = jQuery( "" + window.location.hash );
-		var targetOffset = location.offset().top;
-		jQuery( 'html,body' ).animate( {scrollTop: targetOffset}, 1000 );
+		if ( location.length > 0 ) {
+			var targetOffset = location.offset().top;
+			jQuery( 'html,body' ).animate( {scrollTop: targetOffset}, 1000 );
+		}
 	}	
 }
 //Callback when comments have been updated (for wp-ajaxify-comments compatibility) - http://wordpress.org/plugins/wp-ajaxify-comments/faq/
