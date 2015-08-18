@@ -81,8 +81,8 @@ class Simple_Comment_Editing {
 		add_action( 'wp_ajax_nopriv_sce_save_comment', array( $this, 'ajax_save_comment' ) );
 		add_action( 'wp_ajax_sce_delete_comment', array( $this, 'ajax_delete_comment' ) );
 		add_action( 'wp_ajax_nopriv_sce_delete_comment', array( $this, 'ajax_delete_comment' ) );
-		add_action( 'wp_ajax_sce_get_cookie_var', array( $this, 'get_cookie_data' ) );
-		add_action( 'wp_ajax_nopriv_sce_get_cookie_var', array( $this, 'get_cookie_data' ) );
+		add_action( 'wp_ajax_sce_get_cookie_var', array( $this, 'generate_cookie_data' ) );
+		add_action( 'wp_ajax_nopriv_sce_get_cookie_var', array( $this, 'generate_cookie_data' ) );
 		add_action( 'wp_ajax_sce_epoch_get_comment', array( $this, 'ajax_epoch_get_comment' ) );
 		add_action( 'wp_ajax_nopriv_sce_epoch_get_comment', array( $this, 'ajax_epoch_get_comment' ) );
 		
@@ -549,7 +549,20 @@ class Simple_Comment_Editing {
 		}
 	}
 	
-	public function get_cookie_data( $post_id = 0, $comment_id = 0, $return_action = 'ajax' ) {
+	/**
+	 * generate_cookie_data - Generate or remove a comment cookie
+	 * 
+	 * Generate or remove a comment cookie - Stored as post meta
+	 *
+	 * @access public
+	 * @since 1.3.3
+	 *
+	 * @param int $post_id Post ID 
+	 * @param int $comment_id Comment ID
+	 * @param string $return_action 'ajax', 'setcookie, 'removecookie'
+	 * @return JSON Array of cookie data only returned during Ajax requests
+	 */
+	public function generate_cookie_data( $post_id = 0, $comment_id = 0, $return_action = 'ajax' ) {
 		if ( $return_action == 'ajax' ) {
 			check_ajax_referer( 'sce-general-ajax-nonce' );	
 		}
@@ -570,13 +583,16 @@ class Simple_Comment_Editing {
 		$comment_date_gmt = current_time( 'Y-m-d', 1 );
 		$hash = md5( $comment_author_ip . $comment_date_gmt );
 		$rand = '_wpAjax' . $hash . md5( wp_generate_password( 30, true, true ) );
-		$maybe_rand = get_post_meta( $post_id, '_' . $comment_id, true );
-		if ( !$maybe_rand ) {
+		$maybe_save_meta = get_post_meta( $post_id, '_' . $comment_id, true );
+		if ( !$maybe_save_meta ) {
+			//Make sure we don't set post meta again for security reasons and subsequent calls to this method will generate a new key, so no calling it twice unless you want to remove a cookie
 			update_post_meta( $post_id, '_' . $comment_id, $rand );
 		} else {
-			$rand = $maybe_rand;	
+			//Kinda evil, but if you try to call this method twice, removes the cookie
+			setcookie( $cookie_name, $cookie_value, time() - 60, COOKIEPATH,COOKIE_DOMAIN);
+			return;
+			die( '' );
 		}
-		
 		
 		//Now store a cookie
 		$cookie_name = 'SimpleCommentEditing' . $comment_id . $hash;
@@ -600,11 +616,9 @@ class Simple_Comment_Editing {
 			die( json_encode( $return ) );
 			exit();
 		} else {
-			return $return;
-			die( 'test' );
+			return;
 		}
-		
-			
+		die(''); //Should never reach this point, but just in case I suppose
 	}
 	/**
 	 * comment_posted - WordPress action comment_post
@@ -625,7 +639,10 @@ class Simple_Comment_Editing {
 		//if ( current_user_can( 'moderate_comments' ) ) return; //They can edit comments anyway, don't do anything
 		//if ( current_user_can( 'edit_post', $post_id ) ) return; //Post author - User can edit comments for the post anyway
 		
-		$cookie_data = $this->get_cookie_data( $post_id, $comment_id, 'setcookie' );
+		//Don't set a cookie if a comment is posted via Ajax
+		if ( defined( 'DOING_AJAX' ) ) {
+			 $this->generate_cookie_data( $post_id, $comment_id, 'setcookie' );
+		}
 		
 		
 		//Update the security key count (use the same names/techniques as Ajax Edit Comments
@@ -714,7 +731,7 @@ class Simple_Comment_Editing {
 	private function remove_comment_cookie( $comment ) {
 		if ( !is_array( $comment ) ) return;
 		
-		$this->get_cookie_data( $comment[ 'comment_post_ID' ], $comment[ 'comment_ID' ], 'removecookie' );
+		$this->generate_cookie_data( $comment[ 'comment_post_ID' ], $comment[ 'comment_ID' ], 'removecookie' );
 	
 	} //end remove_comment_cookie
 	
