@@ -103,7 +103,7 @@ jQuery( document ).ready( function( $ ) {
 			2.  Display the result
 			3.  Set Interval
 			*/
-			$.post( ajax_url, { action: 'sce_get_time_left', comment_id: ajax_params.cid, post_id: ajax_params.pid }, function( response ) {
+			$.post( ajax_url, { action: 'sce_get_time_left', comment_id: ajax_params.cid, post_id: ajax_params.pid, _ajax_nonce: simple_comment_editing.nonce }, function( response ) {
 				//Set initial timer text
 				var minutes = parseInt( response.minutes );
 				var seconds = parseInt( response.seconds );
@@ -190,6 +190,26 @@ jQuery( document ).ready( function( $ ) {
 	$( '.sce-edit-button' ).simplecommentediting();
 	
 	$( '.sce-edit-button' ).on( 'sce.timer.loaded', SCE_comment_scroll );
+	
+	//EPOCH Compability
+	$( 'body' ).on( 'epoch.comment.posted', function( event, pid, cid ) {
+		//Ajax call to set SCE cookie
+		$.post( simple_comment_editing.ajax_url, { action: 'sce_get_cookie_var', post_id: pid, comment_id: cid, _ajax_nonce: simple_comment_editing.nonce	 }, function( response ) {
+			var date = new Date( response.expires );
+			date = date.toGMTString();
+			document.cookie = response.name+"="+response.value+ "; expires=" + date+"; path=" + response.path;
+			
+			//Ajax call to get new comment and load it
+			$.post( simple_comment_editing.ajax_url, { action: 'sce_epoch_get_comment', comment_id: cid, _ajax_nonce: simple_comment_editing.nonce }, function( response ) {
+				comment = Epoch.parse_comment( response );
+				$( '#comment-' + cid ).replaceWith( comment );
+				$( '#comment-' + cid ).find( '.sce-edit-button' ).simplecommentediting();
+			}, 'json' );
+		}, 'json' );
+	} );
+	$( 'body' ).on( 'epoch.comments.loaded', function( e ) {
+		$( '.sce-edit-button' ).simplecommentediting();
+	} );
 } );
 
 function SCE_comment_scroll( e, element ) {
