@@ -4,7 +4,7 @@ Plugin Name: Simple Comment Editing
 Plugin URI: http://wordpress.org/extend/plugins/simple-comment-editing/
 Description: Simple comment editing for your users.
 Author: ronalfy
-Version: 1.3.3
+Version: 1.4.0
 Requires at least: 3.5
 Author URI: http://www.ronalfy.com
 Contributors: ronalfy
@@ -321,7 +321,8 @@ class Simple_Comment_Editing {
 	 * 
 	 * Returns a JSON object of the Epoch comment
 	 *
-	 * @since 1.3.2
+	 * @access public
+	 * @since 1.4.0
 	 *
 	 * @param int $_POST[ 'comment_id' ] The Comment ID
 	 * @return JSON object 
@@ -518,7 +519,8 @@ class Simple_Comment_Editing {
 	 * 
 	 * Adds Simple Comment Editing to Epoch iFrame
 	 *
-	 * @since 1.3.2
+	 * @access public
+	 * @since 1.4.0
 	 *
 	 * @param array $scripts Epoch Scripts Array
 	 * @return array Added script
@@ -536,7 +538,7 @@ class Simple_Comment_Editing {
 	 * Return a cookie's value
 	 *
 	 * @access private
-	 * @since 1.3.3
+	 * @since 1.4.0
 	 *
 	 * @param string $name Cookie name
 	 * @return string $value Cookie value
@@ -555,7 +557,7 @@ class Simple_Comment_Editing {
 	 * Generate or remove a comment cookie - Stored as post meta
 	 *
 	 * @access public
-	 * @since 1.3.3
+	 * @since 1.4.0
 	 *
 	 * @param int $post_id Post ID 
 	 * @param int $comment_id Comment ID
@@ -584,6 +586,7 @@ class Simple_Comment_Editing {
 		$hash = md5( $comment_author_ip . $comment_date_gmt );
 		$rand = '_wpAjax' . $hash . md5( wp_generate_password( 30, true, true ) );
 		$maybe_save_meta = get_post_meta( $post_id, '_' . $comment_id, true );
+		
 		if ( !$maybe_save_meta ) {
 			//Make sure we don't set post meta again for security reasons and subsequent calls to this method will generate a new key, so no calling it twice unless you want to remove a cookie
 			update_post_meta( $post_id, '_' . $comment_id, $rand );
@@ -640,7 +643,7 @@ class Simple_Comment_Editing {
 		//if ( current_user_can( 'edit_post', $post_id ) ) return; //Post author - User can edit comments for the post anyway
 		
 		//Don't set a cookie if a comment is posted via Ajax
-		if ( defined( 'DOING_AJAX' ) ) {
+		if ( !defined( 'DOING_AJAX' ) ) {
 			 $this->generate_cookie_data( $post_id, $comment_id, 'setcookie' );
 		}
 		
