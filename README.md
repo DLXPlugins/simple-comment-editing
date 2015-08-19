@@ -62,6 +62,8 @@ See "Styles" section.
 */
 ```
 
+Example:
+
 ```php
 //Simple Comment Editing
 add_filter( 'sce_loading_img', 'edit_sce_loading_img' );
@@ -85,7 +87,7 @@ function edit_sce_loading_img( $default_url ) {
 */
 ```
 
-Yes!  Here's an example:
+Here's an example:
 ```php
 add_filter( 'sce_comment_check_errors', 'custom_sce_check_comment_length', 15, 2 );
 function custom_sce_check_comment_length( $return = false, $comment = array() ) {
