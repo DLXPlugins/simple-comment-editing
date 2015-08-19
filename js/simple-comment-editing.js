@@ -72,6 +72,16 @@ jQuery( document ).ready( function( $ ) {
 						}
 					}
 					
+					/**
+					* Event: sce.comment.save.pre
+					*
+					* Event triggered before a comment is saved
+					*
+					* @since 1.4.0
+					*
+					* @param int $comment_id The Comment ID
+					* @param int $post_id The Post ID
+					*/
 					jQuery( 'body' ).triggerHandler( 'sce.comment.save.pre', [ ajax_params.cid, ajax_params.pid ] );
 					var ajax_save_params = {
 						action: 'sce_save_comment',
@@ -80,6 +90,16 @@ jQuery( document ).ready( function( $ ) {
 						post_id: ajax_params.pid, 
 						nonce: ajax_params._wpnonce
 					};
+					
+					/**
+					* JSFilter: sce.comment.save.data
+					*
+					* Event triggered before a comment is saved
+					*
+					* @since 1.4.0
+					*
+					* @param object $ajax_save_params
+					*/
 					ajax_save_params = wp.hooks.applyFilters( 'sce.comment.save.data', ajax_save_params );
 					
 					$.post( ajax_url, ajax_save_params, function( response ) {
@@ -89,6 +109,16 @@ jQuery( document ).ready( function( $ ) {
 									$( '#sce-comment' + ajax_params.cid ).html( response.comment_text ); //Update comment HTML
 									sce.textareas[ ajax_params.cid  ] = $( '#sce-edit-comment' + ajax_params.cid  + ' textarea' ).val(); //Update textarea placeholder
 									
+									/**
+									* Event: sce.comment.save
+									*
+									* Event triggered after a comment is saved
+									*
+									* @since 1.4.0
+									*
+									* @param int $comment_id The Comment ID
+									* @param int $post_id The Post ID
+									*/
 									jQuery( 'body' ).triggerHandler( 'sce.comment.save', [ ajax_params.cid, ajax_params.pid ] );
 								} else {
 									//Output error, maybe kill interface
@@ -136,6 +166,15 @@ jQuery( document ).ready( function( $ ) {
 				//Update the timer and show the editing interface
 				$( element ).find( '.sce-timer' ).html( timer_text );
 				$( element ).show( 400, function() {
+					/**
+					* Event: sce.timer.loaded
+					*
+					* Event triggered after a commen's timer has been loaded
+					*
+					* @since 1.3.0
+					*
+					* @param jQuery Element of the comment
+					*/
 					$( element ).trigger( 'sce.timer.loaded', element );
 				} );
 				
