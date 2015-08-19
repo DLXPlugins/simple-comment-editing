@@ -171,7 +171,7 @@ function custom_sce_check_comment_length( $return = false, $comment = array() ) 
 * @param int $post_id The Post ID
 * @param int $comment_id The Comment ID
 */
-`
+```
 
 ### sce_can_edit - Override the boolean whether a user can edit a comment or not
 ```php
