@@ -689,7 +689,7 @@ class Simple_Comment_Editing {
 		//if ( current_user_can( 'edit_post', $post_id ) ) return; //Post author - User can edit comments for the post anyway
 		
 		//Don't set a cookie if a comment is posted via Ajax
-		if ( !defined( 'DOING_AJAX' ) ) {
+		if ( !defined( 'DOING_AJAX' ) && !defined( 'EPOCH_API' ) ) {
 			 $this->generate_cookie_data( $post_id, $comment_id, 'setcookie' );
 		}
 		
