@@ -14,7 +14,7 @@ jQuery( document ).ready( function( $ ) {
 				$( element ).fadeOut( 'fast', function() {
 					$( element ).siblings( '.sce-textarea' ).find( 'button' ).prop( 'disabled', false );
 					$( element ).siblings( '.sce-textarea' ).fadeIn( 'fast', function() {
-						$( element ).siblings( '.sce-textarea' ).find( 'textarea' ).focus();
+						$( element ).siblings( '.sce-textarea' ).find( 'textarea:first' ).focus();
 					} );
 				} );
 			} );
@@ -72,12 +72,24 @@ jQuery( document ).ready( function( $ ) {
 						}
 					}
 					
-					$.post( ajax_url, { action: 'sce_save_comment', comment_content: comment_to_save, comment_id: ajax_params.cid, post_id: ajax_params.pid, nonce: ajax_params._wpnonce }, function( response ) {
+					jQuery( 'body' ).triggerHandler( 'sce.comment.save.pre', [ ajax_params.cid, ajax_params.pid ] );
+					var ajax_save_params = {
+						action: 'sce_save_comment',
+						comment_content: comment_to_save, 
+						comment_id: ajax_params.cid, 
+						post_id: ajax_params.pid, 
+						nonce: ajax_params._wpnonce
+					};
+					ajax_save_params = wp.hooks.applyFilters( 'sce.comment.save.data', ajax_save_params );
+					
+					$.post( ajax_url, ajax_save_params, function( response ) {
 						$( element ).siblings( '.sce-loading' ).fadeOut( 'fast', function() {
 							$( element ).fadeIn( 'fast', function() {
 								if ( !response.errors ) {
 									$( '#sce-comment' + ajax_params.cid ).html( response.comment_text ); //Update comment HTML
 									sce.textareas[ ajax_params.cid  ] = $( '#sce-edit-comment' + ajax_params.cid  + ' textarea' ).val(); //Update textarea placeholder
+									
+									jQuery( 'body' ).triggerHandler( 'sce.comment.save', [ ajax_params.cid, ajax_params.pid ] );
 								} else {
 									//Output error, maybe kill interface
 									if ( response.remove == true ) {

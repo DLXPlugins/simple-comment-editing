@@ -87,7 +87,7 @@ class Simple_Comment_Editing {
 		add_action( 'wp_ajax_nopriv_sce_epoch_get_comment', array( $this, 'ajax_epoch_get_comment' ) );
 		
 		/* Begin Filters */
-		if ( !is_feed() ) {
+		if ( !is_feed() && !defined( 'DOING_SCE' ) ) {
 			add_filter( 'comment_excerpt', array( $this, 'add_edit_interface'), 1000, 2 );
 			add_filter( 'comment_text', array( $this, 'add_edit_interface'), 1000,2 );
 			//Notice Thesis compatibility not here?  It's not an accident.
@@ -141,6 +141,20 @@ class Simple_Comment_Editing {
 		$textarea_content .= '<div class="sce-comment-textarea">';
 		$textarea_content .= '<textarea class="sce-comment-text" cols="45" rows="8">%s</textarea>';
 		$textarea_content .= '</div><!-- .sce-comment-textarea -->';
+		
+		/**
+		* Filter: sce_extra_fields
+		*
+		* Filter to add additional form fields
+		*
+		* @since 1.4.0
+		*
+		* @param string Empty string
+		* @param int post_id POST ID
+		* @param int comment_id Comment ID
+		*/
+		$textarea_content .= apply_filters( 'sce_extra_fields', '', $post_id, $comment_id );
+		
 		$textarea_content .= '%s</div><!-- .sce-textarea -->';
 		$textarea_button_content = '<div class="sce-comment-edit-buttons">';
 		$textarea_buttons = sprintf( '<button class="sce-comment-save">%s</button>', esc_html__( 'Save', 'simple-comment-editing' ) );
@@ -216,6 +230,7 @@ class Simple_Comment_Editing {
 	 	}
 	 	include( 'class-sce-timer.php' );
 	 	$timer_internationalized = new SCE_Timer();
+	 	wp_enqueue_script( 'wp-js-hooks', $this->get_plugin_url( '/js/event-manager.js' ) );
 	 	wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery', 'wp-ajax-response' ), '20150818', true );
 	 	wp_localize_script( 'simple-comment-editing', 'simple_comment_editing', array(
 	 		'and' => __( 'and', 'simple-comment-editing' ),
@@ -352,6 +367,7 @@ class Simple_Comment_Editing {
 	 * @return JSON object 
 	 */
 	 public function ajax_save_comment() {
+		define( 'DOING_SCE', true );
 	 	$new_comment_content = trim( $_POST[ 'comment_content' ] );
 	 	$comment_id = absint( $_POST[ 'comment_id' ] );
 	 	$post_id = absint( $_POST[ 'post_id' ] );
@@ -422,8 +438,36 @@ class Simple_Comment_Editing {
 	 		die( json_encode( $return ) );		
 		}
 		
+		/**
+		* Filter: sce_save_before
+		*
+		* Allow third parties to modify comment
+		*
+		* @since 1.4.0
+		*
+		* @param object $comment_to_save The Comment Object
+		* @param int $post_id The Post ID
+		* @param int $comment_id The Comment ID
+		*/
+		$comment_to_save = apply_filters( 'sce_save_before', $comment_to_save, $post_id, $comment_id );
+		
 		//Save the comment
 		wp_update_comment( $comment_to_save );
+		
+		/**
+		* Action: sce_save_after
+		*
+		* Allow third parties to save content after a comment has been updated
+		*
+		* @since 1.4.0
+		*
+		* @param object $comment_to_save The Comment Object
+		* @param int $post_id The Post ID
+		* @param int $comment_id The Comment ID
+		*/
+		ob_start();
+		do_action( 'sce_save_after', $comment_to_save, $post_id, $comment_id );
+		ob_end_clean();
 		
 		//If the comment was marked as spam, return an error
 		if ( $comment_to_save['comment_approved'] === 'spam' ) {
@@ -451,14 +495,15 @@ class Simple_Comment_Editing {
 		
 		//Now get the new comment again for security
 		if ( isset( $GLOBALS['comment'] ) ) unset( $GLOBALS['comment'] );	//caching
-		$comment_to_return = get_comment ( $comment_id ); //todo - cached
+		$comment_to_return = get_comment ( $comment_id ); 
+		$GLOBALS['comment'] = $comment_to_return;
 		$comment_content_to_return = $comment_to_return->comment_content;
 		
 		//Format the comment for returning
 		if ( function_exists( 'mb_convert_encoding' ) ) {
 			$comment_content_to_return = mb_convert_encoding( $comment_content_to_return, ''. get_option( 'blog_charset' ) . '', mb_detect_encoding( $comment_content_to_return, "UTF-8, ISO-8859-1, ISO-8859-15", true ) );
 		}
-		$comment_content_to_return = apply_filters( 'comment_text', apply_filters( 'get_comment_text', $comment_content_to_return ) );
+		$comment_content_to_return = apply_filters( 'comment_text', apply_filters( 'get_comment_text', $comment_content_to_return, $comment_to_return ), $comment_to_return );
 		
 		//Ajax response
 		$return[ 'comment_text' ] = $comment_content_to_return;
@@ -528,6 +573,7 @@ class Simple_Comment_Editing {
 	public function epoch_add_sce( $scripts = array() ) {
 		$scripts[] = 'jquery-core';
 		$scripts[] = 'wp-ajax-response';
+		$scripts[] = 'wp-js-hooks';
 		$scripts[] = 'simple-comment-editing';
 		return $scripts;
 	} //end epoch_add_sce
