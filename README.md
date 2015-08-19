@@ -20,45 +20,12 @@ The biggest differences:
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
 ## Frequently Asked Questions
+
 ###Why doesn't this plugin come with any styles?
 It's impossible to style an inline comment editor for every theme.  We've included basic HTML markup that is easily stylable to fit your theme.
+
 ### Where are the options? =
 No options :) - Just simple comment editing.
-
-### How do you adjust the comment time?
-Place and edit the following into your theme's `functions.php` file:
-```php
-//Simple Comment Editing
-add_filter( 'sce_comment_time', 'edit_sce_comment_time' );
-function edit_sce_comment_time( $time_in_minutes ) {
-	return 60;
-}
-```
-
-
-### How do you change the loading Image?
-```php
-//Simple Comment Editing
-add_filter( 'sce_loading_img', 'edit_sce_loading_img' );
-function edit_sce_loading_img( $default_url ) {
-	return 'http://domain.com/new_loading_image.gif';
-}
-```
-
-### Can I catch the comment before saving and add my own error message?
-Yes!  Here's an example:
-```php
-add_filter( 'sce_comment_check_errors', 'custom_sce_check_comment_length', 15, 2 );
-function custom_sce_check_comment_length( $return = false, $comment = array() ) {
-	$comment_content = trim( wp_strip_all_tags( $comment[ 'comment_content' ] ) );
-	$comment_length = strlen( $comment_content );
-	if ( $comment_length < 50 ) {
-		return 'Comment must be at least 50 characters';
-	}
-	return false;
-}
-
-```
 
 ### I want to style the editing interface.  Where do I start?
 See "Styles" section.
@@ -79,6 +46,275 @@ See "Styles" section.
 <li>Genesis</li>
 <li>Genesis Mindstream</li>
 </ul>
+
+## WordPress Filters
+
+### sce_loading_img - Change the loading image
+```php
+/**
+* Filter: sce_loading_img
+*
+* Replace the loading image with a custom version.
+*
+* @since 1.0.0
+*
+* @param string  $image_url URL path to the loading image.
+*/
+```
+
+```php
+//Simple Comment Editing
+add_filter( 'sce_loading_img', 'edit_sce_loading_img' );
+function edit_sce_loading_img( $default_url ) {
+	return 'http://domain.com/new_loading_image.gif';
+}
+```
+
+### sce_comment_check_errors - Add custom error messages
+
+```php
+/**
+* Filter: sce_comment_check_errors
+*
+* Return a custom error message based on the saved comment
+*
+* @since 1.2.4
+*
+* @param bool  $custom_error Default custom error. Overwrite with a string
+* @param array $comment_to_save Associative array of comment attributes
+*/
+```
+
+Yes!  Here's an example:
+```php
+add_filter( 'sce_comment_check_errors', 'custom_sce_check_comment_length', 15, 2 );
+function custom_sce_check_comment_length( $return = false, $comment = array() ) {
+	$comment_content = trim( wp_strip_all_tags( $comment[ 'comment_content' ] ) );
+	$comment_length = strlen( $comment_content );
+	if ( $comment_length < 50 ) {
+		return 'Comment must be at least 50 characters';
+	}
+	return false;
+}
+
+```
+
+### sce_allow_delete - Whether to allow comment deletion or not
+
+```php
+/**
+* Filter: sce_allow_delete
+*
+* Determine if users can delete their comments
+*
+* @since 1.1.0
+*
+* @param bool  $allow_delete True allows deletion, false does not
+*/
+```
+
+### sce_extra_fields - Add extra HTML to the editing interface 
+```php
+/**
+* Filter: sce_extra_fields
+*
+* Filter to add additional form fields
+*
+* @since 1.4.0
+*
+* @param string Empty string
+* @param int post_id POST ID
+* @param int comment_id Comment ID
+*/
+```
+
+### sce_buttons - Add extra buttons to the editing interface (aside from Cancel and Save)
+```php
+/**
+* Filter: sce_buttons
+*
+* Filter to add button content
+*
+* @since 1.3.0
+*
+* @param string  $textarea_buttons Button HTML
+* @param int       $comment_id        Comment ID
+*/
+```
+
+### sce_content - Modify the edit output HTML
+```php
+/**
+* Filter: sce_content
+*
+* Filter to overral sce output
+*
+* @since 1.3.0
+*
+* @param string  $sce_content SCE content 
+* @param int       $comment_id Comment ID of the comment
+*/
+```
+
+### sce_save_before - Modify the comment object before saving via AJAX
+```php
+/**
+* Filter: sce_save_before
+*
+* Allow third parties to modify comment
+*
+* @since 1.4.0
+*
+* @param object $comment_to_save The Comment Object
+* @param int $post_id The Post ID
+* @param int $comment_id The Comment ID
+*/
+`
+
+### sce_can_edit - Override the boolean whether a user can edit a comment or not
+```php
+/**
+* Filter: sce_can_edit
+*
+* Determine if a user can edit the comment
+*
+* @since 1.3.2
+*
+* @param bool  true If user can edit the comment
+* @param object $comment Comment object user has left
+* @param int $comment_id Comment ID of the comment
+* @param int $post_id Post ID of the comment
+*/
+```
+
+Example: https://gist.github.com/ronalfy/6b4fec8b3ac55bc47f3f
+
+### sce_security_key_min - How many security keys will be stored as post meta
+```php
+/**
+* Filter: sce_security_key_min
+*
+* Determine how many security keys should be stored as post meta before garbage collection
+*
+* @since 1.0.0
+*
+* @param int  $num_keys How many keys to store
+*/
+```
+
+### sce_comment_time - How long in minutes to allow comment editing
+```php
+/**
+* Filter: sce_comment_time
+*
+* How long in minutes to edit a comment
+*
+* @since 1.0.0
+*
+* @param int  $minutes Time in minutes - Max 90 minutes
+*/
+```
+
+Example:
+
+```php
+//Simple Comment Editing
+add_filter( 'sce_comment_time', 'edit_sce_comment_time' );
+function edit_sce_comment_time( $time_in_minutes ) {
+	return 60;
+}
+```
+
+## WordPress Actions
+
+### sce_save_after - Triggered via Ajax after a comment has been saved
+
+Useful for custom comment fields
+
+```php
+/**
+* Action: sce_save_after
+*
+* Allow third parties to save content after a comment has been updated
+*
+* @since 1.4.0
+*
+* @param object $comment_to_save The Comment Object
+* @param int $post_id The Post ID
+* @param int $comment_id The Comment ID
+*/
+```
+
+## JavaScript Events
+
+### sce.comment.save.pre - Before a comment is submitted via Ajax
+
+```php
+/**
+* Event: sce.comment.save.pre
+*
+* Event triggered before a comment is saved
+*
+* @since 1.4.0
+*
+* @param int $comment_id The Comment ID
+* @param int $post_id The Post ID
+*/
+```
+
+### sce.comment.save - After a comment has been saved via Ajax
+
+```php
+/**
+* Event: sce.comment.save
+*
+* Event triggered after a comment is saved
+*
+* @since 1.4.0
+*
+* @param int $comment_id The Comment ID
+* @param int $post_id The Post ID
+*/
+```
+
+### sce.timer.loaded - After a timer has been loaded
+
+```php
+/**
+* Event: sce.timer.loaded
+*
+* Event triggered after a commen's timer has been loaded
+*
+* @since 1.3.0
+*
+* @param jQuery Element of the comment
+*/
+```
+
+## JavaScript Hooks
+
+JS hooks are using WP-JS-Hooks: https://github.com/carldanley/WP-JS-Hooks
+
+Please use handle *wp-hooks* when enqueueing for consistency and to prevent conflicts.
+
+### sce.comment.save.data - Before a comment is submitted via Ajax
+
+Used to modify POST object before being sent via Ajax. This is useful for adding extra fields.
+
+```php
+/**
+* JSFilter: sce.comment.save.data
+*
+* Event triggered before a comment is saved
+*
+* @since 1.4.0
+*
+* @param object $ajax_save_params
+*/
+```
+
+
+
 
 
 
