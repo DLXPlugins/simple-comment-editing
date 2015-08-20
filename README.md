@@ -115,6 +115,22 @@ function custom_sce_check_comment_length( $return = false, $comment = array() ) 
 */
 ```
 
+### sce_get_comment - Add extra data to the comment object 
+
+This is only used when retrieving a comment via Ajax and can be used by third-party plugins who post comments using Ajax
+
+```php
+/**
+* Filter: sce_get_comment
+*
+* Modify comment object
+*
+* @since 1.5.0
+*
+* @param object Comment Object
+*/
+```
+
 ### sce_extra_fields - Add extra HTML to the editing interface 
 ```php
 /**
@@ -290,6 +306,22 @@ Useful for custom comment fields
 * @since 1.3.0
 *
 * @param jQuery Element of the comment
+*/
+```
+
+### sce.comment.loaded - After a comment has been loaded via Ajax
+
+This hook is useful for third-party plugins who post comments via Ajax.
+
+```php
+/**
+* Event: sce.comment.loaded
+*
+* Event triggered after SCE has loaded a comment.
+*
+* @since 1.5.0
+*
+* @param object Comment Object
 */
 ```
 

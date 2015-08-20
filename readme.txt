@@ -1,9 +1,9 @@
 === Simple Comment Editing ===
 Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
-Requires at least: 3.5
-Tested up to: 4.2.2
-Stable tag: 1.3.3
+Requires at least: 4.0
+Tested up to: 4.3.0
+Stable tag: 1.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,64 +58,13 @@ You are welcome to help us out and <a href="https://github.com/ronalfy/simple-co
 == Frequently Asked Questions ==
 = Why doesn't this plugin come with any styles? =
 It's impossible to style an inline comment editor for every theme.  We've included basic HTML markup that is easily stylable to fit your theme.
+
 = Where are the options? =
 No options :) - Just simple comment editing.
 
-= How do you adjust the comment time? =
-Place and edit the following into your theme's `functions.php` file:
-`
-//Simple Comment Editing
-add_filter( 'sce_comment_time', 'edit_sce_comment_time' );
-function edit_sce_comment_time( $time_in_minutes ) {
-	return 60;
-}
-`
+= How do I customize this plugin? =
+For advanced options, please see the <a href="https://github.com/ronalfy/simple-comment-editing#wordpress-filters">SCE Filter/Action reference</a>. 
 
-
-= How do you change the loading Image? =
-`
-//Simple Comment Editing
-add_filter( 'sce_loading_img', 'edit_sce_loading_img' );
-function edit_sce_loading_img( $default_url ) {
-	return 'http://domain.com/new_loading_image.gif';
-}
-`
-
-= How do you disable the delete comment functionality? =
-`
-//Simple Comment Editing
-add_filter( 'sce_allow_delete', '__return_false' );
-`
-
-= Do you work with other plugins? =
-Yes, the plugin will work with WP-Ajaxify-Comments (http://wordpress.org/plugins/wp-ajaxify-comments/)
-
-Simply enable WP-Ajaxify-Comments, get it working per their settings, and add the Simple Comment Editing callback in the plugin's options.
-
-The callback is:
-`
-SCE_comments_updated();
-`
-
-= I want to style the editing interface.  Where do I start? =
-See "Other Notes".
-
-= What Browsers Have You Tested This In? =
-<ul>
-<li>IE 6-10</li>
-<li>Latest versions of Chrome, Firefox, and Safari</li>
-<li>iOS Safari</li>
-</ul>
-
-= What Themes Have You Tested This In? =
-<ul>
-<li>Twenty Ten</li>
-<li>Twenty Eleven</li>
-<li>Twenty Twelve</li>
-<li>Twenty Thirteen</li>
-<li>Genesis</li>
-<li>Genesis Mindstream</li>
-</ul>
 
 
 == Screenshots ==
@@ -124,6 +73,11 @@ See "Other Notes".
 2. Textarea and Save/Cancel buttons.
 
 == Changelog ==
+
+= 1.5.0 =
+* Released 2015-08-19
+* Adding hooks for the capability to add extra comment fields.
+* Added Epoch compatibility.
 
 = 1.3.3 =
 * Released 2015-07-22
