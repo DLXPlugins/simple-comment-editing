@@ -4,7 +4,7 @@ Plugin Name: Simple Comment Editing
 Plugin URI: http://wordpress.org/extend/plugins/simple-comment-editing/
 Description: Simple comment editing for your users.
 Author: Ronald Huereca
-Version: 1.5.0
+Version: 1.5.1
 Requires at least: 3.5
 Author URI: http://www.ronalfy.com
 Contributors: ronalfy
