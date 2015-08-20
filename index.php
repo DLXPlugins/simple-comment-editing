@@ -838,7 +838,7 @@ class Simple_Comment_Editing {
 	/**
 	 * get_user_id - Get a user ID
 	 * 
-	 * Generate or remove a comment cookie - Stored as post meta
+	 * Get a logged in user's ID
 	 *
 	 * @access private
 	 * @since 1.5.0
