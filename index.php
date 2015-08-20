@@ -3,7 +3,7 @@
 Plugin Name: Simple Comment Editing
 Plugin URI: http://wordpress.org/extend/plugins/simple-comment-editing/
 Description: Simple comment editing for your users.
-Author: ronalfy
+Author: Ronald Huereca
 Version: 1.5.0
 Requires at least: 3.5
 Author URI: http://www.ronalfy.com
@@ -72,6 +72,7 @@ class Simple_Comment_Editing {
 		add_action( 'comment_post', array( $this, 'comment_posted' ),100,1 );
 		
 		//Loading scripts
+		add_filter( 'sce_load_scripts', array( $this, 'maybe_load_scripts' ), 5, 1 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'add_scripts' ) );
 		
 		//Ajax
@@ -201,6 +202,32 @@ class Simple_Comment_Editing {
 	} //end add_edit_interface
 	
 	/**
+	 * maybe_load_scripts - Whether to load scripts or not
+	 * 
+	 * Called via the sce_load_scripts filter
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param bool $yes True or False
+	 *
+	 * @return bool True to load scripts, false if not
+	 */
+	public function maybe_load_scripts( $yes ) {
+		if ( defined( 'WPAC_PLUGIN_NAME' ) || defined( 'EPOCH_VER' ) ) {
+			return true; 	
+		}
+	 	
+	 	if ( !isset( $_COOKIE ) || empty( $_COOKIE ) ) return;
+	 	$has_cookie = false;
+	 	foreach( $_COOKIE as $cookie_name => $cookie_value ) {
+	 		if ( substr( $cookie_name , 0, 20 ) == 'SimpleCommentEditing' ) {
+				$has_cookie = true;
+				break;	 		
+	 		}
+	 	}
+	 	return $has_cookie;
+	}
+	/**
 	 * add_scripts - Adds the necessary JavaScript for the plugin (only loads on posts/pages)
 	 * 
 	 * Called via the wp_enqueue_scripts
@@ -212,17 +239,19 @@ class Simple_Comment_Editing {
 	 	if ( !is_single() && !is_page() ) return;
 	 	
 	 	//Check if there are any cookies present, otherwise don't load the scripts - WPAC_PLUGIN_NAME is for wp-ajaxify-comments (if the plugin is installed, load the JavaScript file)
-	 	if ( !defined( 'WPAC_PLUGIN_NAME' ) && !defined( 'EPOCH_VER' ) ) {
-		 	if ( !isset( $_COOKIE ) || empty( $_COOKIE ) ) return;
-		 	$has_cookie = false;
-		 	foreach( $_COOKIE as $cookie_name => $cookie_value ) {
-		 		if ( substr( $cookie_name , 0, 20 ) == 'SimpleCommentEditing' ) {
-					$has_cookie = true;
-					break;	 		
-		 		}
-		 	}
-		 	if ( !$has_cookie ) return;
-		 }
+	 	
+	 	/**
+		* Filter: sce_load_scripts
+		*
+		* Boolean to decide whether to load SCE scripts or not
+		*
+		* @since 1.5.0
+		*
+		* @param bool  true to load scripts, false not
+		*/
+	 	$check_cookie = apply_filters( 'sce_load_scripts', false );
+	 	if ( !$check_cookie ) return;
+	 	
 	 	
 	 	$main_script_uri = $this->get_plugin_url( '/js/simple-comment-editing.min.js' );
 	 	if ( defined( 'SCRIPT_DEBUG' ) ) {

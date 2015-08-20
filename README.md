@@ -220,6 +220,19 @@ Example: https://gist.github.com/ronalfy/6b4fec8b3ac55bc47f3f
 */
 ```
 
+### sce_load_scripts - Whether to load SCE scripts or not
+```php
+/**
+* Filter: sce_load_scripts
+*
+* Boolean to decide whether to load SCE scripts or not
+*
+* @since 1.5.0
+*
+* @param bool  true to load scripts, false not
+*/
+```
+
 ### sce_comment_time - How long in minutes to allow comment editing
 ```php
 /**
