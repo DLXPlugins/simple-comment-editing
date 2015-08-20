@@ -559,7 +559,7 @@ class Simple_Comment_Editing {
 		
 		//Now check for post meta and cookie values being the same
 		$comment_date_gmt = date( 'Y-m-d', strtotime( $comment->comment_date_gmt ) );
-		$cookie_hash = md5( $comment->comment_author_IP . $comment_date_gmt );
+		$cookie_hash = md5( $comment->comment_author_IP . $comment_date_gmt . $comment->user_id );
 		$cookie_value = $this->get_cookie_value( 'SimpleCommentEditing' . $comment_id . $cookie_hash );
 		if ( !$cookie_value ) return false;
 		$post_meta_hash = get_post_meta( $post_id, '_' . $comment_id, true );
@@ -746,7 +746,7 @@ class Simple_Comment_Editing {
 			$comment_author_ip = $_SERVER[ 'REMOTE_ADDR' ];	
 		}
 		$comment_date_gmt = current_time( 'Y-m-d', 1 );
-		$hash = md5( $comment_author_ip . $comment_date_gmt );
+		$hash = md5( $comment_author_ip . $comment_date_gmt . $this->get_user_id() );
 		$rand = '_wpAjax' . $hash . md5( wp_generate_password( 30, true, true ) );
 		$maybe_save_meta = get_post_meta( $post_id, '_' . $comment_id, true );
 		$cookie_name = 'SimpleCommentEditing' . $comment_id . $hash;
@@ -829,6 +829,25 @@ class Simple_Comment_Editing {
 		if ( !empty( $path ) && is_string( $path) )
 			$dir .= '/' . ltrim( $path, '/' );
 		return $dir;	
+	}
+	
+	/**
+	 * get_user_id - Get a user ID
+	 * 
+	 * Generate or remove a comment cookie - Stored as post meta
+	 *
+	 * @access private
+	 * @since 1.5.0
+	 *
+	 * @return int user id
+	 */
+	private function get_user_id() {
+		$user_id = 0;
+		if ( is_user_logged_in() ) {
+			$current_user = wp_get_current_user();
+			$user_id = $current_user->ID;	
+		}
+		return $user_id;
 	}
 	
 	/**
