@@ -202,32 +202,6 @@ class Simple_Comment_Editing {
 	} //end add_edit_interface
 	
 	/**
-	 * maybe_load_scripts - Whether to load scripts or not
-	 * 
-	 * Called via the sce_load_scripts filter
-	 *
-	 * @since 1.5.0
-	 *
-	 * @param bool $yes True or False
-	 *
-	 * @return bool True to load scripts, false if not
-	 */
-	public function maybe_load_scripts( $yes ) {
-		if ( defined( 'WPAC_PLUGIN_NAME' ) || defined( 'EPOCH_VER' ) ) {
-			return true; 	
-		}
-	 	
-	 	if ( !isset( $_COOKIE ) || empty( $_COOKIE ) ) return;
-	 	$has_cookie = false;
-	 	foreach( $_COOKIE as $cookie_name => $cookie_value ) {
-	 		if ( substr( $cookie_name , 0, 20 ) == 'SimpleCommentEditing' ) {
-				$has_cookie = true;
-				break;	 		
-	 		}
-	 	}
-	 	return $has_cookie;
-	}
-	/**
 	 * add_scripts - Adds the necessary JavaScript for the plugin (only loads on posts/pages)
 	 * 
 	 * Called via the wp_enqueue_scripts
@@ -249,8 +223,8 @@ class Simple_Comment_Editing {
 		*
 		* @param bool  true to load scripts, false not
 		*/
-	 	$check_cookie = apply_filters( 'sce_load_scripts', false );
-	 	if ( !$check_cookie ) return;
+	 	$load_scripts = apply_filters( 'sce_load_scripts', false );
+	 	if ( !$load_scripts ) return;
 	 	
 	 	
 	 	$main_script_uri = $this->get_plugin_url( '/js/simple-comment-editing.min.js' );
@@ -878,6 +852,33 @@ class Simple_Comment_Editing {
 			$user_id = $current_user->ID;	
 		}
 		return $user_id;
+	}
+	
+	/**
+	 * maybe_load_scripts - Whether to load scripts or not
+	 * 
+	 * Called via the sce_load_scripts filter
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param bool $yes True or False
+	 *
+	 * @return bool True to load scripts, false if not
+	 */
+	public function maybe_load_scripts( $yes ) {
+		if ( defined( 'WPAC_PLUGIN_NAME' ) || defined( 'EPOCH_VER' ) ) {
+			return true; 	
+		}
+	 	
+	 	if ( !isset( $_COOKIE ) || empty( $_COOKIE ) ) return;
+	 	$has_cookie = false;
+	 	foreach( $_COOKIE as $cookie_name => $cookie_value ) {
+	 		if ( substr( $cookie_name , 0, 20 ) == 'SimpleCommentEditing' ) {
+				$has_cookie = true;
+				break;	 		
+	 		}
+	 	}
+	 	return $has_cookie;
 	}
 	
 	/**
