@@ -4,7 +4,7 @@ Plugin Name: Simple Comment Editing
 Plugin URI: http://wordpress.org/extend/plugins/simple-comment-editing/
 Description: Simple comment editing for your users.
 Author: ronalfy
-Version: 1.4.0
+Version: 1.5.0
 Requires at least: 3.5
 Author URI: http://www.ronalfy.com
 Contributors: ronalfy
@@ -85,6 +85,8 @@ class Simple_Comment_Editing {
 		add_action( 'wp_ajax_nopriv_sce_get_cookie_var', array( $this, 'generate_cookie_data' ) );
 		add_action( 'wp_ajax_sce_epoch_get_comment', array( $this, 'ajax_epoch_get_comment' ) );
 		add_action( 'wp_ajax_nopriv_sce_epoch_get_comment', array( $this, 'ajax_epoch_get_comment' ) );
+		add_action( 'wp_ajax_sce_get_comment', array( $this, 'ajax_get_comment' ) );
+		add_action( 'wp_ajax_nopriv_sce_get_comment', array( $this, 'ajax_get_comment' ) );
 		
 		/* Begin Filters */
 		if ( !is_feed() && !defined( 'DOING_SCE' ) ) {
@@ -147,7 +149,7 @@ class Simple_Comment_Editing {
 		*
 		* Filter to add additional form fields
 		*
-		* @since 1.4.0
+		* @since 1.5.0
 		*
 		* @param string Empty string
 		* @param int post_id POST ID
@@ -330,6 +332,37 @@ class Simple_Comment_Editing {
 		die( json_encode( $return ) );
 	 } //end ajax_delete_comment
 	
+	/**
+	 * ajax_get_comment - Gets a Comment
+	 * 
+	 * Returns a JSON object of the comment and comment text
+	 *
+	 * @access public
+	 * @since 1.5.0
+	 *
+	 * @param int $_POST[ 'comment_id' ] The Comment ID
+	 * @return JSON object 
+	 */ 
+	public function ajax_get_comment() {
+		check_ajax_referer( 'sce-general-ajax-nonce' );
+		$comment_id = absint( $_POST[ 'comment_id' ] );
+		
+		/**
+		* Filter: sce_get_comment
+		*
+		* Modify comment object
+		*
+		* @since 1.5.0
+		*
+		* @param array Comment array
+		*/
+		$comment = apply_filters( 'sce_get_comment', get_comment( $comment_id, ARRAY_A ) );
+		
+		if ( $comment ) {
+			die( json_encode( $comment ) );	
+		}
+		die( '' );
+	}
 	
 	/**
 	 * ajax_epoch_get_comment - Gets a Epoch formatted comment
@@ -337,7 +370,7 @@ class Simple_Comment_Editing {
 	 * Returns a JSON object of the Epoch comment
 	 *
 	 * @access public
-	 * @since 1.4.0
+	 * @since 1.5.0
 	 *
 	 * @param int $_POST[ 'comment_id' ] The Comment ID
 	 * @return JSON object 
@@ -443,7 +476,7 @@ class Simple_Comment_Editing {
 		*
 		* Allow third parties to modify comment
 		*
-		* @since 1.4.0
+		* @since 1.5.0
 		*
 		* @param object $comment_to_save The Comment Object
 		* @param int $post_id The Post ID
@@ -459,7 +492,7 @@ class Simple_Comment_Editing {
 		*
 		* Allow third parties to save content after a comment has been updated
 		*
-		* @since 1.4.0
+		* @since 1.5.0
 		*
 		* @param object $comment_to_save The Comment Object
 		* @param int $post_id The Post ID
@@ -493,17 +526,8 @@ class Simple_Comment_Editing {
 			}
 		}
 		
-		//Now get the new comment again for security
-		if ( isset( $GLOBALS['comment'] ) ) unset( $GLOBALS['comment'] );	//caching
-		$comment_to_return = get_comment ( $comment_id ); 
-		$GLOBALS['comment'] = $comment_to_return;
-		$comment_content_to_return = $comment_to_return->comment_content;
-		
-		//Format the comment for returning
-		if ( function_exists( 'mb_convert_encoding' ) ) {
-			$comment_content_to_return = mb_convert_encoding( $comment_content_to_return, ''. get_option( 'blog_charset' ) . '', mb_detect_encoding( $comment_content_to_return, "UTF-8, ISO-8859-1, ISO-8859-15", true ) );
-		}
-		$comment_content_to_return = apply_filters( 'comment_text', apply_filters( 'get_comment_text', $comment_content_to_return, $comment_to_return ), $comment_to_return );
+		$comment_to_return = $this->get_comment( $comment_id );
+		$comment_content_to_return = $this->get_comment_content( $comment_to_return );		
 		
 		//Ajax response
 		$return[ 'comment_text' ] = $comment_content_to_return;
@@ -560,116 +584,6 @@ class Simple_Comment_Editing {
 	} //end can_edit
 	
 	/**
-	 * epoch_add_sce - Adds Simple Comment Editing to Epoch iFrame
-	 * 
-	 * Adds Simple Comment Editing to Epoch iFrame
-	 *
-	 * @access public
-	 * @since 1.4.0
-	 *
-	 * @param array $scripts Epoch Scripts Array
-	 * @return array Added script
-	 */
-	public function epoch_add_sce( $scripts = array() ) {
-		$scripts[] = 'jquery-core';
-		$scripts[] = 'wp-ajax-response';
-		$scripts[] = 'wp-js-hooks';
-		$scripts[] = 'simple-comment-editing';
-		return $scripts;
-	} //end epoch_add_sce
-	
-	/**
-	 * get_cookie_value - Return a cookie's value
-	 * 
-	 * Return a cookie's value
-	 *
-	 * @access private
-	 * @since 1.4.0
-	 *
-	 * @param string $name Cookie name
-	 * @return string $value Cookie value
-	 */
-	private function get_cookie_value( $name ) {
-		if( isset( $_COOKIE[ $name ] ) ) {
-			return $_COOKIE[ $name ];
-		} else {
-			return false;	
-		}
-	}
-	
-	/**
-	 * generate_cookie_data - Generate or remove a comment cookie
-	 * 
-	 * Generate or remove a comment cookie - Stored as post meta
-	 *
-	 * @access public
-	 * @since 1.4.0
-	 *
-	 * @param int $post_id Post ID 
-	 * @param int $comment_id Comment ID
-	 * @param string $return_action 'ajax', 'setcookie, 'removecookie'
-	 * @return JSON Array of cookie data only returned during Ajax requests
-	 */
-	public function generate_cookie_data( $post_id = 0, $comment_id = 0, $return_action = 'ajax' ) {
-		if ( $return_action == 'ajax' ) {
-			check_ajax_referer( 'sce-general-ajax-nonce' );	
-		}
-		if ( $post_id == 0 ) {
-			$post_id = isset( $_POST[ 'post_id' ] ) ? absint( $_POST[ 'post_id' ] ) : 0;
-		}
-			
-		//Get comment ID
-		if ( $comment_id == 0 ) {
-			$comment_id = isset( $_POST[ 'comment_id' ] ) ? absint( $_POST[ 'comment_id' ] ) : 0;
-		}
-		
-		//Get hash and random security key - Stored in the style of Ajax Edit Comments
-		$comment_author_ip = $comment_date_gmt = '';
-		if ( isset( $_SERVER[ 'REMOTE_ADDR' ] ) ) {
-			$comment_author_ip = $_SERVER[ 'REMOTE_ADDR' ];	
-		}
-		$comment_date_gmt = current_time( 'Y-m-d', 1 );
-		$hash = md5( $comment_author_ip . $comment_date_gmt );
-		$rand = '_wpAjax' . $hash . md5( wp_generate_password( 30, true, true ) );
-		$maybe_save_meta = get_post_meta( $post_id, '_' . $comment_id, true );
-		
-		if ( !$maybe_save_meta ) {
-			//Make sure we don't set post meta again for security reasons and subsequent calls to this method will generate a new key, so no calling it twice unless you want to remove a cookie
-			update_post_meta( $post_id, '_' . $comment_id, $rand );
-		} else {
-			//Kinda evil, but if you try to call this method twice, removes the cookie
-			setcookie( $cookie_name, $cookie_value, time() - 60, COOKIEPATH,COOKIE_DOMAIN);
-			return;
-			die( '' );
-		}
-		
-		//Now store a cookie
-		$cookie_name = 'SimpleCommentEditing' . $comment_id . $hash;
-		$cookie_value = $rand;
-		$cookie_expire = time() + (  60 * $this->comment_time );
-		if ( 'setcookie' == $return_action ) {
-			setcookie( $cookie_name, $cookie_value, $cookie_expire, COOKIEPATH,COOKIE_DOMAIN);
-		} elseif( 'removecookie' == $return_action ) {
-			setcookie( $cookie_name, $cookie_value, time() - 60, COOKIEPATH,COOKIE_DOMAIN);
-		}
-		
-		$return = array(
-			'name' => $cookie_name,
-			'value' => $cookie_value,
-			'expires' => ( current_time( 'timestamp', 1 ) + (  60 * $this->comment_time ) ) * 1000,
-			'post_id' => $post_id,
-			'comment_id' => $comment_id,
-			'path' => COOKIEPATH
-		);
-		if ( 'ajax' == $return_action ) {
-			die( json_encode( $return ) );
-			exit();
-		} else {
-			return;
-		}
-		die(''); //Should never reach this point, but just in case I suppose
-	}
-	/**
 	 * comment_posted - WordPress action comment_post
 	 * 
 	 * Called when a comment has been posted - Stores a cookie for later editing
@@ -722,6 +636,155 @@ class Simple_Comment_Editing {
 		}
 		update_option( 'ajax-edit-comments_security_key_count', $security_key_count );
 	} //end comment_posted
+	
+	/**
+	 * epoch_add_sce - Adds Simple Comment Editing to Epoch iFrame
+	 * 
+	 * Adds Simple Comment Editing to Epoch iFrame
+	 *
+	 * @access public
+	 * @since 1.5.0
+	 *
+	 * @param array $scripts Epoch Scripts Array
+	 * @return array Added script
+	 */
+	public function epoch_add_sce( $scripts = array() ) {
+		$scripts[] = 'jquery-core';
+		$scripts[] = 'wp-ajax-response';
+		$scripts[] = 'wp-hooks';
+		$scripts[] = 'simple-comment-editing';
+		return $scripts;
+	} //end epoch_add_sce
+	
+	/**
+	 * get_cookie_value - Return a cookie's value
+	 * 
+	 * Return a cookie's value
+	 *
+	 * @access private
+	 * @since 1.5.0
+	 *
+	 * @param string $name Cookie name
+	 * @return string $value Cookie value
+	 */
+	private function get_cookie_value( $name ) {
+		if( isset( $_COOKIE[ $name ] ) ) {
+			return $_COOKIE[ $name ];
+		} else {
+			return false;	
+		}
+	}
+	
+	/**
+	 * get_comment - Return a comment object
+	 * 
+	 * Return a comment object
+	 *
+	 * @access private
+	 * @since 1.5.0
+	 *
+	 * @param int $comment_id Comment ID
+	 * @return obj Comment Object
+	*/
+	private function get_comment( $comment_id ) {
+		if ( isset( $GLOBALS['comment'] ) ) unset( $GLOBALS['comment'] );	//caching
+		$comment_to_return = get_comment ( $comment_id ); 
+		$GLOBALS['comment'] = $comment_to_return;
+		return $comment_to_return;
+	}
+	
+	/**
+	 * get_comment_content - Return a string of the comment's text
+	 * 
+	 * Return formatted comment text
+	 *
+	 * @access private
+	 * @since 1.5.0
+	 *
+	 * @param object $comment Comment Object
+	 * @return string Comment text
+	*/
+	private function get_comment_content( $comment ) {
+		$comment_content_to_return = $comment->comment_content;
+		
+		//Format the comment for returning
+		if ( function_exists( 'mb_convert_encoding' ) ) {
+			$comment_content_to_return = mb_convert_encoding( $comment_content_to_return, ''. get_option( 'blog_charset' ) . '', mb_detect_encoding( $comment_content_to_return, "UTF-8, ISO-8859-1, ISO-8859-15", true ) );
+		}
+		return apply_filters( 'comment_text', apply_filters( 'get_comment_text', $comment_content_to_return, $comment ), $comment );	
+	}
+	
+	/**
+	 * generate_cookie_data - Generate or remove a comment cookie
+	 * 
+	 * Generate or remove a comment cookie - Stored as post meta
+	 *
+	 * @access public
+	 * @since 1.5.0
+	 *
+	 * @param int $post_id Post ID 
+	 * @param int $comment_id Comment ID
+	 * @param string $return_action 'ajax', 'setcookie, 'removecookie'
+	 * @return JSON Array of cookie data only returned during Ajax requests
+	 */
+	public function generate_cookie_data( $post_id = 0, $comment_id = 0, $return_action = 'ajax' ) {
+		if ( $return_action == 'ajax' ) {
+			check_ajax_referer( 'sce-general-ajax-nonce' );	
+		}
+		if ( $post_id == 0 ) {
+			$post_id = isset( $_POST[ 'post_id' ] ) ? absint( $_POST[ 'post_id' ] ) : 0;
+		}
+			
+		//Get comment ID
+		if ( $comment_id == 0 ) {
+			$comment_id = isset( $_POST[ 'comment_id' ] ) ? absint( $_POST[ 'comment_id' ] ) : 0;
+		}
+		
+		//Get hash and random security key - Stored in the style of Ajax Edit Comments
+		$comment_author_ip = $comment_date_gmt = '';
+		if ( isset( $_SERVER[ 'REMOTE_ADDR' ] ) ) {
+			$comment_author_ip = $_SERVER[ 'REMOTE_ADDR' ];	
+		}
+		$comment_date_gmt = current_time( 'Y-m-d', 1 );
+		$hash = md5( $comment_author_ip . $comment_date_gmt );
+		$rand = '_wpAjax' . $hash . md5( wp_generate_password( 30, true, true ) );
+		$maybe_save_meta = get_post_meta( $post_id, '_' . $comment_id, true );
+		$cookie_name = 'SimpleCommentEditing' . $comment_id . $hash;
+		$cookie_value = $rand;
+		$cookie_expire = time() + (  60 * $this->comment_time );
+		
+		if ( !$maybe_save_meta ) {
+			//Make sure we don't set post meta again for security reasons and subsequent calls to this method will generate a new key, so no calling it twice unless you want to remove a cookie
+			update_post_meta( $post_id, '_' . $comment_id, $rand );
+		} else {
+			//Kinda evil, but if you try to call this method twice, removes the cookie
+			setcookie( $cookie_name, $cookie_value, time() - 60, COOKIEPATH,COOKIE_DOMAIN);
+			die( json_encode( array() ) );
+		}
+		
+		//Now store a cookie
+		if ( 'setcookie' == $return_action ) {
+			setcookie( $cookie_name, $cookie_value, $cookie_expire, COOKIEPATH,COOKIE_DOMAIN);
+		} elseif( 'removecookie' == $return_action ) {
+			setcookie( $cookie_name, $cookie_value, time() - 60, COOKIEPATH,COOKIE_DOMAIN);
+		}
+		
+		$return = array(
+			'name' => $cookie_name,
+			'value' => $cookie_value,
+			'expires' => ( current_time( 'timestamp', 1 ) + (  60 * $this->comment_time ) ) * 1000,
+			'post_id' => $post_id,
+			'comment_id' => $comment_id,
+			'path' => COOKIEPATH
+		);
+		if ( 'ajax' == $return_action ) {
+			die( json_encode( $return ) );
+			exit();
+		} else {
+			return;
+		}
+		die(''); //Should never reach this point, but just in case I suppose
+	}
 	
 	
 	/**

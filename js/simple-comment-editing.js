@@ -236,27 +236,62 @@ jQuery( document ).ready( function( $ ) {
 		}
 		return text;
 	};
+	sce.set_comment_cookie = function( pid, cid, callback ) {
+		$.post( simple_comment_editing.ajax_url, { action: 'sce_get_cookie_var', post_id: pid, comment_id: cid, _ajax_nonce: simple_comment_editing.nonce	 }, function( response ) {
+			var date = new Date( response.expires );
+			date = date.toGMTString();
+			document.cookie = response.name+"="+response.value+ "; expires=" + date+"; path=" + response.path;
+				
+			if ( typeof callback == "function" ) {
+				callback( cid );	
+			}
+			
+		}, 'json' );
+	};
+	
 	sce.timers = new Array();
 	sce.textareas = new Array();
 	$( '.sce-edit-button' ).simplecommentediting();
 	
 	$( '.sce-edit-button' ).on( 'sce.timer.loaded', SCE_comment_scroll );
 	
+	//Third-party plugin compatibility
+	$( 'body' ).on( 'comment.posted', function( event, post_id, comment_id ) {
+		sce.set_comment_cookie( post_id, comment_id, function( comment_id ) {
+			$.post( simple_comment_editing.ajax_url, { action: 'sce_get_comment', comment_id: comment_id, _ajax_nonce: simple_comment_editing.nonce }, function( response ) {
+								
+				/**
+				* Event: sce.comment.loaded
+				*
+				* Event triggered after SCE has loaded a comment.
+				*
+				* @since 1.3.0
+				*
+				* @param object Comment Object
+				*/
+				$( 'body' ).trigger( 'sce.comment.loaded', [ response ] );
+				
+				/*
+				Once you capture the sce.comment.loaded event, you can replace the comment and enable SCE
+				$( '#comment-' + comment_id ).replaceWith( comment_html );
+				$( '#comment-' + comment_id ).find( '.sce-edit-button' ).simplecommentediting();
+				*/
+				
+			}, 'json' );	
+		} );
+	} );
+	
 	//EPOCH Compability
 	$( 'body' ).on( 'epoch.comment.posted', function( event, pid, cid ) {
 		//Ajax call to set SCE cookie
-		$.post( simple_comment_editing.ajax_url, { action: 'sce_get_cookie_var', post_id: pid, comment_id: cid, _ajax_nonce: simple_comment_editing.nonce	 }, function( response ) {
-			var date = new Date( response.expires );
-			date = date.toGMTString();
-			document.cookie = response.name+"="+response.value+ "; expires=" + date+"; path=" + response.path;
-			
+		sce.set_comment_cookie( pid, cid, function( comment_id ) {
 			//Ajax call to get new comment and load it
-			$.post( simple_comment_editing.ajax_url, { action: 'sce_epoch_get_comment', comment_id: cid, _ajax_nonce: simple_comment_editing.nonce }, function( response ) {
+			$.post( simple_comment_editing.ajax_url, { action: 'sce_epoch_get_comment', comment_id: comment_id, _ajax_nonce: simple_comment_editing.nonce }, function( response ) {
 				comment = Epoch.parse_comment( response );
-				$( '#comment-' + cid ).replaceWith( comment );
-				$( '#comment-' + cid ).find( '.sce-edit-button' ).simplecommentediting();
-			}, 'json' );
-		}, 'json' );
+				$( '#comment-' + comment_id ).replaceWith( comment );
+				$( '#comment-' + comment_id ).find( '.sce-edit-button' ).simplecommentediting();
+			}, 'json' );	
+		} );
 	} );
 	$( 'body' ).on( 'epoch.comments.loaded', function( e ) {
 		$( '.sce-edit-button' ).simplecommentediting();
