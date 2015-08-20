@@ -78,6 +78,7 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 * Released 2015-08-19
 * Adding hooks for the capability to add extra comment fields.
 * Added Epoch compatibility.
+* Added JS events so third-party plugins can integrate with SCE.
 
 = 1.3.3 =
 * Released 2015-07-22
@@ -173,112 +174,9 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 
 == Upgrade Notice ==
 
-= 1.3.3 =
-Fixing JavaScript error that prevented editing a comment.
+= 1.5.0 =
+Integration update for third-party plugins. Extra fields and Ajax comment posting/editing are now possible.
 
-= 1.3.2 =
-Adding filter for editing permissions and updating translations.
+== Customization ==
 
-= 1.3.1 =
-Recommended upgrade. Fixes PHP warning when there is a percentage sign in a comment.
-
-= 1.3.0 =
-Better timer internationalization, improved timer accuracy, custom content filters, and smooth scrolling.
-
-= 1.2.4 =
-Added status error message area.  Added filter for custom error messages when saving a comment.
-
-= 1.2.2 =
-Added Romanian and French languages.  Fixed a bug where cached pages showed other users they could edit a comment, but in reality, they could not (saving would have failed, so this is not a severe security problem, although upgrading is highly recommended).
-
-= 1.2.1 =
-Added Arabic and Czech languages.  Ensuring WordPress 4.0 compatibility.
-
-= 1.2.0 =
-Added Swedish translation.  Added better support for internationalization.  Removed barrier for admins/editors/authors to edit comments.
-
-= 1.1.2 =
-Added support for WP-Ajaxify-Comments
-
-= 1.1.1 =
-Fixed an error where users were erroneously being told their comment was marked as spam
-
-= 1.1.0 =
-Added JavaScript textarea save states when hitting the cancel button.  Allow commenters to delete their comments when they leave an empty comment.
-
-= 1.0.7 =
-Added Persian translation file
-
-= 1.0.6 =
-Added Serbian translation file
-
-= 1.0.5 =
-Added Portuguese translation file
-
-= 1.0.4 =
-Added German translation file
-
-= 1.0.3 =
-Fixed slashes being removed in the plugin
-
-= 1.0.2 =
-Fixed an internationalization bug and added Norwegian translations
-
-= 1.0.1 =
-Improved script loading performance
-
-= 1.0 =
-Initial Release
-
-== Styling ==
-The plugin doesn't come with any styles.  We leave it up to you to style the interface.  It doesn't look horribly ugly on most themes, but we leave the advanced customization up to you.
-
-== Styling the Edit Interface ==
-The overall editing interface has been wrapped in a `div` with class `sce-edit-comment`.
-
-`
-.sce-edit-comment { /* styles here */ }
-`
-
-== Styling the Edit Button ==
-The edit button and timer have been wrapped in a `div` with class `sce-edit-button`.
-
-`
-.sce-edit-button { /* styles here */ }
-.sce-edit-button a { /* styles here */ }
-.sce-edit-button .sce-timer { /* styles here */ }
-`
-
-== Styling the Loading Icon ==
-The loading icon has been wrapped in a `div` with class `sce-loading`.
-`
-.sce-loading { /* styles here */ }
-.sce-loading img { /* styles here */ }
-`
-
-== Styling the Textarea ==
-The textarea interface has been wrapped in a `div` with class `sce-textarea`.
-
-The actual `textarea` has been wrapped in a `div` with class `sce-comment-textarea`.
-The save/cancel buttons have been wrapped in a `div` with class `sce-comment-edit-buttons`.
-
-`
-.sce-textarea { /* styles here */ }
-.sce-textarea .sce-comment-textarea textarea { /* styles here */ }
-.sce-comment-edit-buttons { /* styles here */ }
-.sce-comment-edit-buttons .sce-comment-save { /* styles here */ }
-.sce-comment-edit-buttons .sce-comment-cancel { /* styles here */ }
-`
-
-== Testing the Styles ==
-Since most of the interface is hidden, it's a little hard to style.  Just place this into your stylesheet, and remove when you're done.
-`
-/* todo - remove me when done styling */
-.sce-edit-button,
-.sce-loading,
-.sce-textarea {
-	display: block !important;
-}
-`
-Have fun leaving lots of test comments :) - Recommended is to use the filter (in the FAQ section) to temporarily increase the comment editing time.  Make sure you leave the test comments when you're not logged in.
-
+For advanced options, please see the <a href="https://github.com/ronalfy/simple-comment-editing#wordpress-filters">SCE Filter/Action reference</a>. 
