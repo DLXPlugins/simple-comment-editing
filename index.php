@@ -4,7 +4,7 @@ Plugin Name: Simple Comment Editing
 Plugin URI: http://wordpress.org/extend/plugins/simple-comment-editing/
 Description: Simple comment editing for your users.
 Author: Ronald Huereca
-Version: 1.5.1
+Version: 1.5.3
 Requires at least: 3.5
 Author URI: http://www.ronalfy.com
 Contributors: ronalfy
@@ -383,7 +383,8 @@ class Simple_Comment_Editing {
 		 $comment_id = absint( $_POST[ 'comment_id' ] );
 		 $comment = get_comment( $comment_id, ARRAY_A );
 		if ( $comment ) {
-			$comment = postmatic\epoch\front\api_helper::add_data_to_comment( $comment, false );	 
+			$function = 'postmatic\epoch\front\api_helper::add_data_to_comment';
+			$comment = call_user_func( $function, $comment, false );	 
 			die( json_encode( $comment ) );
 		}
 		die( '' );
