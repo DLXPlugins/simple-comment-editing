@@ -360,6 +360,7 @@ class Simple_Comment_Editing {
 		* @param array Comment array
 		*/
 		$comment = apply_filters( 'sce_get_comment', get_comment( $comment_id, ARRAY_A ) );
+		$comment[ 'comment_html' ] = $this->get_comment_content( (object)$comment );
 		
 		if ( $comment ) {
 			die( json_encode( $comment ) );	
