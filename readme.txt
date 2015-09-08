@@ -35,6 +35,7 @@ If you like this plugin, please help spread the word.  Rate the plugin.  Write a
 <li>Dutch (Netherlands) - Thanks <a href="https://github.com/senlin">Senlin</a></li>
 <li>French (France) - Thanks <a href="http://wordpress.org/support/profile/colin101">colin101</a>.</li>
 <li>German - Thanks Wilfried Kahrs.</li>
+<li>Latvian - Thanks Kaspars.</li>
 <li>Norwegian Bokmål - Thanks Jan Hagen.</li>
 <li>Norwegian Nynorsk - Thanks Jan Hagen.</li>
 <li>Persian - Thanks <a href="http://www.wordpress98.com/">Ali HajiMohamadi</a>.</li>
