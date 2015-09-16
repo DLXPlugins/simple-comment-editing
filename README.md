@@ -49,6 +49,8 @@ See "Styles" section.
 
 ## WordPress Filters
 
+### sce_timer_output - Add custom timer output
+
 ```php
 /**
 * Filter: sce_timer_output
