@@ -49,6 +49,26 @@ See "Styles" section.
 
 ## WordPress Filters
 
+```php
+/**
+* Filter: sce_timer_output
+*
+* Modify time output
+*
+* @since 1.6.0
+*
+* @param string New Timer Format
+*/
+$timer_format = "{minutes_time} {minutes_text}{sce_and}{seconds_time} {seconds_text}";
+$timer_format = apply_filters( 'sce_timer_output', $timer_format );
+
+/*
+{minutes_time}, {minutes_text}, {sce_and}, {seconds_time}, and {seconds_text} are your only variables here.
+*/
+```
+
+Example:
+
 ### sce_loading_img - Change the loading image
 ```php
 /**

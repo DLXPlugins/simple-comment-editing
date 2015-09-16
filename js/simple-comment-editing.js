@@ -225,14 +225,23 @@ jQuery( document ).ready( function( $ ) {
 		if (seconds < 0) { minutes -= 1; seconds = 59; }
 		//Create timer text
 		var text = '&nbsp;&ndash;&nbsp;';
+		text += simple_comment_editing.timer_format;
+		
 		if (minutes >= 1) {
-			text += minutes + " " + simple_comment_editing.timer.minutes[ minutes ];
+			text = text.replace( '{minutes_time}', minutes );
+			text = text.replace( '{minutes_text}', simple_comment_editing.timer.minutes[ minutes ] );
 			if ( seconds > 0 ) { 
-				text += " " + simple_comment_editing.and + " "; 
+				text = text.replace( '{sce_and}', " " + simple_comment_editing.and + " " ); 
 			}
 		}
-		if (seconds > 0) {
-			text += seconds + " " + simple_comment_editing.timer.seconds[ seconds ]; 
+		if (seconds >= 0) {
+			if( seconds < 10 ) {
+				seconds = '' + '0' + seconds;	
+				text = text.replace( '{seconds_time}', seconds );
+			} else {
+				text = text.replace( '{seconds_time}', seconds );
+			}
+			text = text.replace( '{seconds_text}', simple_comment_editing.timer.seconds[ seconds ] );
 		}
 		return text;
 	};
