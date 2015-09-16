@@ -1,9 +1,9 @@
 === Simple Comment Editing ===
 Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
-Requires at least: 4.0
+Requires at least: 4.1
 Tested up to: 4.3.0
-Stable tag: 1.5.5
+Stable tag: 1.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,6 +74,12 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 2. Textarea and Save/Cancel buttons.
 
 == Changelog ==
+
+= 1.6.0 =
+* Released 2015-09-16
+* Added filter for custom timer output
+* Added support for logged in users to bypass cookie checks
+* Added support for custom post types
 
 = 1.5.5 =
 * Released 2015-09-07
@@ -188,6 +194,9 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.6.0 =
+ Added filter for custom timer output. Added support for logged in users to bypass cookie checks. Added support for custom post types
 
 = 1.5.5 =
 Latvian translation and internal code cleanup.
