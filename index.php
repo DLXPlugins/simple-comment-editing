@@ -210,7 +210,7 @@ class Simple_Comment_Editing {
 	 *
 	 */
 	 public function add_scripts() {
-	 	if ( !is_single() && !is_page() ) return;
+	 	if ( !is_single() && !is_singular() && !is_page() ) return;
 	 	
 	 	//Check if there are any cookies present, otherwise don't load the scripts - WPAC_PLUGIN_NAME is for wp-ajaxify-comments (if the plugin is installed, load the JavaScript file)
 	 	
@@ -576,15 +576,32 @@ class Simple_Comment_Editing {
 		$minuted_elapsed = round( ( ( ( $time_elapsed % 604800 ) % 86400 )  % 3600 ) / 60 );
 		if ( ( $minuted_elapsed - $this->comment_time ) > 0 ) return false;
 		
-		//Now check for post meta and cookie values being the same
 		$comment_date_gmt = date( 'Y-m-d', strtotime( $comment->comment_date_gmt ) );
 		$cookie_hash = md5( $comment->comment_author_IP . $comment_date_gmt . $comment->user_id . $comment->comment_agent );
-		$cookie_value = $this->get_cookie_value( 'SimpleCommentEditing' . $comment_id . $cookie_hash );
-		if ( !$cookie_value ) return false;
-		$post_meta_hash = get_post_meta( $post_id, '_' . $comment_id, true );
+			
+		if ( !is_user_logged_in() ) {
+			//Now check for post meta and cookie values being the same
+			
+			$cookie_value = $this->get_cookie_value( 'SimpleCommentEditing' . $comment_id . $cookie_hash );
+			if ( !$cookie_value ) return false;
+			$post_meta_hash = get_post_meta( $post_id, '_' . $comment_id, true );
+			
+			//Check to see if the cookie value matches the post meta hash
+			if ( $cookie_value !== $post_meta_hash ) return false;
+		} else {
+			$user = wp_get_current_user();
+			
+			if ( $user->ID != $comment->user_id ) {
+				return false;
+			}						
+
+			$meta_hash = get_user_meta( $user->ID, '_' . $comment_id, true );	
+			if ( $meta_hash !== $cookie_hash ) {
+				return false;	
+			}
+			
+		}
 		
-		//Check to see if the cookie value matches the post meta hash
-		if ( $cookie_value !== $post_meta_hash ) return false;
 		
 		//All is well, the person/place/thing can edit the comment
 		/**
@@ -767,11 +784,26 @@ class Simple_Comment_Editing {
 		$comment_date_gmt = current_time( 'Y-m-d', 1 );
 		$user_agent = substr( isset( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '', 0, 254 );
 		$hash = md5( $comment_author_ip . $comment_date_gmt . $this->get_user_id() . $user_agent );
+		
+		
+		
 		$rand = '_wpAjax' . $hash . md5( wp_generate_password( 30, true, true ) );
 		$maybe_save_meta = get_post_meta( $post_id, '_' . $comment_id, true );
 		$cookie_name = 'SimpleCommentEditing' . $comment_id . $hash;
 		$cookie_value = $rand;
 		$cookie_expire = time() + (  60 * $this->comment_time );
+		
+		/* Check to see if user is logged in and skip cookie checks */
+		if ( is_user_logged_in() ) {
+			$user = wp_get_current_user();
+			update_user_meta( $user->ID, '_' . $comment_id, $hash );
+			if ( 'ajax' == $return_action ) {
+				die( array() );
+				exit();
+			} else {
+				return;
+			}
+		}
 		
 		if ( !$maybe_save_meta ) {
 			//Make sure we don't set post meta again for security reasons and subsequent calls to this method will generate a new key, so no calling it twice unless you want to remove a cookie
@@ -882,8 +914,13 @@ class Simple_Comment_Editing {
 	 * @return bool True to load scripts, false if not
 	 */
 	public function maybe_load_scripts( $yes ) {
-		if ( defined( 'WPAC_PLUGIN_NAME' ) || defined( 'EPOCH_VER' ) ) {
+		if ( defined( 'WPAC_PLUGIN_NAME' ) || defined( 'EPOCH_VER' ) || is_user_logged_in() ) {
 			return true; 	
+		}
+		
+		/* Return True if user is logged in */
+		if ( is_user_logged_in() ) {
+			return true;	
 		}
 	 	
 	 	if ( !isset( $_COOKIE ) || empty( $_COOKIE ) ) return;

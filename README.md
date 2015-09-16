@@ -69,6 +69,12 @@ $timer_format = apply_filters( 'sce_timer_output', $timer_format );
 
 Example:
 
+```php
+add_filter( 'sce_timer_output', function( $string ) {
+	return "{minutes_time}:{seconds_time}"; //format minute:seconds
+}, 11, 1 );
+```
+
 ### sce_loading_img - Change the loading image
 ```php
 /**
