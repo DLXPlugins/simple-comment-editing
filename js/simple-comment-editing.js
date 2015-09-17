@@ -228,10 +228,18 @@ jQuery( document ).ready( function( $ ) {
 		text += simple_comment_editing.timer_format;
 		
 		if (minutes >= 1) {
+			text = text.replace( '{colon}', ':' );
 			text = text.replace( '{minutes_time}', minutes );
 			text = text.replace( '{minutes_text}', simple_comment_editing.timer.minutes[ minutes ] );
 			if ( seconds >= 0 ) { 
 				text = text.replace( '{sce_and}', " " + simple_comment_editing.and + " " ); 
+			}
+		} else {
+			text = text.replace( '{colon}', '' );
+			text = text.replace( '{minutes_time}', '' );
+			text = text.replace( '{minutes_text}', '' );
+			if ( seconds >= 0 ) { 
+				text = text.replace( '{sce_and}', '' ); 
 			}
 		}
 		if (seconds >= 0) {

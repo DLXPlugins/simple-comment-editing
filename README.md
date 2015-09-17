@@ -73,7 +73,8 @@ Example:
 
 ```php
 add_filter( 'sce_timer_output', function( $string ) {
-	return "{minutes_time}:{seconds_time}"; //format minute:seconds
+	return $string;
+    return "{minutes_time}{colon}{seconds_time}"; //format minute:seconds
 }, 11, 1 );
 ```
 
