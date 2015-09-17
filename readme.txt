@@ -2,7 +2,7 @@
 Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 4.1
-Tested up to: 4.3.0
+Tested up to: 4.3
 Stable tag: 1.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -74,6 +74,10 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 2. Textarea and Save/Cancel buttons.
 
 == Changelog ==
+
+= 1.6.1 =
+* Released 2015-09-16
+* Fixed undefined JavaScript errors in timer. Sorry about that.
 
 = 1.6.0 =
 * Released 2015-09-16
@@ -194,6 +198,9 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.6.1 =
+ Fixing undefined errors.
 
 = 1.6.0 =
  Added filter for custom timer output. Added support for logged in users to bypass cookie checks. Added support for custom post types
