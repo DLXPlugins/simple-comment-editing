@@ -75,7 +75,7 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 
 == Changelog ==
 
-= 1.6.3 =
+= 1.6.5 =
 * Released 2015-09-17
 * Fixing strings that are not replaced in the timer. Sorry I didn't catch this error.
 
@@ -203,7 +203,7 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 
 == Upgrade Notice ==
 
-= 1.6.3 =
+= 1.6.5 =
 Fixing strings that are not replaced in the timer. Sorry I didn't catch this error.
 
 = 1.6.1 =
