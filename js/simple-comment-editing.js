@@ -230,16 +230,17 @@ jQuery( document ).ready( function( $ ) {
 		if (minutes >= 1) {
 			text = text.replace( '{minutes_time}', minutes );
 			text = text.replace( '{minutes_text}', simple_comment_editing.timer.minutes[ minutes ] );
-			if ( seconds > 0 ) { 
+			if ( seconds >= 0 ) { 
 				text = text.replace( '{sce_and}', " " + simple_comment_editing.and + " " ); 
 			}
 		}
 		if (seconds >= 0) {
 			if( seconds < 10 ) {
-				seconds = '' + '0' + seconds;	
-				text = text.replace( '{seconds_time}', seconds );
+				seconds_text = '' + '0' + seconds;	
+				text = text.replace( '{seconds_time}', seconds_text );
 			} else {
-				text = text.replace( '{seconds_time}', seconds );
+				seconds_text = seconds;
+				text = text.replace( '{seconds_time}', seconds_text );
 			}
 			text = text.replace( '{seconds_text}', simple_comment_editing.timer.seconds[ seconds ] );
 		}
