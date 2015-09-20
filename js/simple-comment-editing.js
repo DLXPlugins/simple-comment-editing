@@ -225,33 +225,25 @@ jQuery( document ).ready( function( $ ) {
 		if (seconds < 0) { minutes -= 1; seconds = 59; }
 		//Create timer text
 		var text = '&nbsp;&ndash;&nbsp;';
-		text += simple_comment_editing.timer_format;
-		
 		if (minutes >= 1) {
-			text = text.replace( '{colon}', ':' );
-			text = text.replace( '{minutes_time}', minutes );
-			text = text.replace( '{minutes_text}', simple_comment_editing.timer.minutes[ minutes ] );
-			if ( seconds >= 0 ) { 
-				text = text.replace( '{sce_and}', " " + simple_comment_editing.and + " " ); 
-			}
-		} else {
-			text = text.replace( '{colon}', '' );
-			text = text.replace( '{minutes_time}', '' );
-			text = text.replace( '{minutes_text}', '' );
-			if ( seconds >= 0 ) { 
-				text = text.replace( '{sce_and}', '' ); 
+			text += minutes + " " + simple_comment_editing.timer.minutes[ minutes ];
+			if ( seconds > 0 ) { 
+				text += " " + simple_comment_editing.and + " "; 
 			}
 		}
-		if (seconds >= 0) {
-			if( seconds < 10 ) {
-				seconds_text = '' + '0' + seconds;	
-				text = text.replace( '{seconds_time}', seconds_text );
-			} else {
-				seconds_text = seconds;
-				text = text.replace( '{seconds_time}', seconds_text );
-			}
-			text = text.replace( '{seconds_text}', simple_comment_editing.timer.seconds[ seconds ] );
+		if (seconds > 0) {
+			text += seconds + " " + simple_comment_editing.timer.seconds[ seconds ]; 
 		}
+		/**
+		* JSFilter: sce.comment.timer.text
+		*
+		* Filter triggered before a timer is returned
+		*
+		* @since 1.4.0
+		*
+		* @param object $ajax_save_params
+		*/
+		text = wp.hooks.applyFilters( 'sce.comment.timer.text', text,  simple_comment_editing.timer.minutes[ minutes ], simple_comment_editing.timer.seconds[ seconds ], minutes, seconds );
 		return text;
 	};
 	sce.set_comment_cookie = function( pid, cid, callback ) {

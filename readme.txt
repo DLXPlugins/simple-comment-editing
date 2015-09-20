@@ -75,7 +75,12 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 
 == Changelog ==
 
-= Released 2015-09-20
+= 1.6.9 =
+* Released 2015-09-20
+* Fixed timer issue on many sites. New JS hook for allowing customization of output.
+
+= 1.6.7 =
+* Released 2015-09-20
 * Fixing PHP bug declaring fatal error for multiple class instances. Props volresource.
 
 = 1.6.5 =
@@ -205,6 +210,9 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.6.9 =
+Fixed timer issue on many sites. New JS hook for allowing customization of output.
 
 = 1.6.7 =
 Fixing PHP bug declaring fatal error for multiple class instances.

@@ -4,7 +4,7 @@ Plugin Name: Simple Comment Editing
 Plugin URI: http://wordpress.org/extend/plugins/simple-comment-editing/
 Description: Simple comment editing for your users.
 Author: Ronald Huereca
-Version: 1.6.7
+Version: 1.6.9
 Requires at least: 4.1
 Author URI: http://www.ronalfy.com
 Contributors: ronalfy
@@ -236,19 +236,7 @@ class Simple_Comment_Editing {
 	 	require_once( 'class-sce-timer.php' );
 	 	$timer_internationalized = new SCE_Timer();
 	 	wp_enqueue_script( 'wp-hooks', $this->get_plugin_url( '/js/event-manager.js' ) ); //https://core.trac.wordpress.org/attachment/ticket/21170/21170-2.patch
-	 	wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery', 'wp-ajax-response' ), '20150918', true );
-	 	
-	 	/**
-		* Filter: sce_timer_output
-		*
-		* Modify time output
-		*
-		* @since 1.6.0
-		*
-		* @param string New Timer Format
-		*/
-	 	$timer_format = "{minutes_time} {minutes_text}{sce_and}{seconds_time} {seconds_text}";
-	 	$timer_format = apply_filters( 'sce_timer_output', $timer_format );
+	 	wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery', 'wp-ajax-response' ), '20150920', true );
 	 	
 	 	wp_localize_script( 'simple-comment-editing', 'simple_comment_editing', array(
 	 		'and' => __( 'and', 'simple-comment-editing' ),
@@ -259,7 +247,6 @@ class Simple_Comment_Editing {
 	 		'timer' => $timer_internationalized->get_timer_vars(),
 	 		'ajax_url' => admin_url( 'admin-ajax.php' ),
 	 		'nonce' => wp_create_nonce( 'sce-general-ajax-nonce' ),
-	 		'timer_format' => $timer_format
 	 	) );
 	 } //end add_scripts
 	 
