@@ -49,35 +49,6 @@ See "Styles" section.
 
 ## WordPress Filters
 
-### sce_timer_output - Add custom timer output
-
-```php
-/**
-* Filter: sce_timer_output
-*
-* Modify time output
-*
-* @since 1.6.0
-*
-* @param string New Timer Format
-*/
-$timer_format = "{minutes_time} {minutes_text}{sce_and}{seconds_time} {seconds_text}";
-$timer_format = apply_filters( 'sce_timer_output', $timer_format );
-
-/*
-{minutes_time}, {minutes_text}, {sce_and}, {seconds_time}, and {seconds_text} are your only variables here.
-*/
-```
-
-Example:
-
-```php
-add_filter( 'sce_timer_output', function( $string ) {
-	return $string;
-    return "{minutes_time}{colon}{seconds_time}"; //format minute:seconds
-}, 11, 1 );
-```
-
 ### sce_loading_img - Change the loading image
 ```php
 /**
@@ -387,6 +358,55 @@ Used to modify POST object before being sent via Ajax. This is useful for adding
 *
 * @param object $ajax_save_params
 */
+```
+
+### sce.comment.timer.text - Before a timer is outputted in JavaScript.
+
+Used to modify POST object before being sent via Ajax. This is useful for adding extra fields.
+
+```php
+/**
+* JSFilter: sce.comment.timer.text
+*
+* Filter triggered before a timer is returned
+*
+* @since 1.4.0
+*
+* @param string Timer text
+* @param string Minutes text (internationalized)
+* @param string Seconds text (internationalized)
+* @param int minutes
+* @param int seconds
+*/
+```
+
+Example placed in `functions.php`:
+
+```php
+add_action( 'wp_footer', function() {
+    ?>
+    <script type="text/javascript">
+        jQuery( document ).ready( function( $ ) {
+            var new_timer;
+            if (typeof wp.hooks != 'undefined') {
+                wp.hooks.addFilter( 'sce.comment.timer.text', function( timer_text, minutes_text, seconds_text, minutes, seconds ) {
+                    timer_text = '&nbsp;&nbsp;&nbsp;&nbsp;' + minutes;
+                    timer_text += ":";
+                    if (seconds >= 0) {
+            			if( seconds < 10 ) {
+            				timer_text += '' + '0' + seconds;	
+                        } else {
+                          timer_text += seconds;  
+                        }
+                    }
+                    return timer_text;
+                } );
+            }    
+        } );
+    </script>
+    <?php
+} );
+
 ```
 
 
