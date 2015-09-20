@@ -362,7 +362,7 @@ Used to modify POST object before being sent via Ajax. This is useful for adding
 
 ### sce.comment.timer.text - Before a timer is outputted in JavaScript.
 
-Used to modify POST object before being sent via Ajax. This is useful for adding extra fields.
+Used to modify timer output.
 
 ```php
 /**
