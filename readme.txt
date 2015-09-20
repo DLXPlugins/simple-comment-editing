@@ -75,7 +75,7 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 
 == Changelog ==
 
-= 1.6.9 =
+= 1.7.0 =
 * Released 2015-09-20
 * Fixed timer issue on many sites. New JS hook for allowing customization of output.
 
