@@ -387,6 +387,7 @@ add_action( 'wp_footer', function() {
     ?>
     <script type="text/javascript">
         jQuery( document ).ready( function( $ ) {
+            /* Will give you format of minutes:seconds (e.g., 2:58) */
             if (typeof wp.hooks != 'undefined') {
                 wp.hooks.addFilter( 'sce.comment.timer.text', function( timer_text, minutes_text, seconds_text, minutes, seconds ) {
                     timer_text = '&nbsp;&nbsp;&nbsp;&nbsp;' + minutes;
