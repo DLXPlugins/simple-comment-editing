@@ -387,7 +387,6 @@ add_action( 'wp_footer', function() {
     ?>
     <script type="text/javascript">
         jQuery( document ).ready( function( $ ) {
-            var new_timer;
             if (typeof wp.hooks != 'undefined') {
                 wp.hooks.addFilter( 'sce.comment.timer.text', function( timer_text, minutes_text, seconds_text, minutes, seconds ) {
                     timer_text = '&nbsp;&nbsp;&nbsp;&nbsp;' + minutes;
