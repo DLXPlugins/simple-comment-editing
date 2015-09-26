@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 4.1
 Tested up to: 4.3
-Stable tag: 1.7.0
+Stable tag: 1.7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,6 +74,10 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 2. Textarea and Save/Cancel buttons.
 
 == Changelog ==
+
+= 1.7.1 =
+* Released 20150926
+* Fixed Epoch+SCE user logged in dilemma 
 
 = 1.7.0 =
 * Released 2015-09-20
@@ -210,6 +214,9 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.7.1 =
+Fixed Epoch+SCE user logged in dilemma 
 
 = 1.6.9 =
 Fixed timer issue on many sites. New JS hook for allowing customization of output.
