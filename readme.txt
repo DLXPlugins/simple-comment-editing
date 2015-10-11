@@ -82,7 +82,7 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 * Updated translations for language packs
 
 = 1.7.1 =
-* Released 20150926
+* Released 2015-09-26
 * Fixed Epoch+SCE user logged in dilemma 
 
 = 1.7.0 =
