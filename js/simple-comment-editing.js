@@ -30,6 +30,26 @@ jQuery( document ).ready( function( $ ) {
 				} );
 			} );
 			
+			function sce_delete_comment( element, ajax_params ) {
+                $( element ).siblings( '.sce-textarea' ).off();	
+				$( element ).off();
+					
+				//Remove elements
+				$( element ).parent().remove();
+				$.post( ajax_url, { action: 'sce_delete_comment', comment_id: ajax_params.cid, post_id: ajax_params.pid, nonce: ajax_params._wpnonce }, function( response ) {
+						$( '#sce-edit-comment-status' + ajax_params.cid ).removeClass().addClass( 'sce-status updated' ).html( simple_comment_editing.comment_deleted ).show();
+						setTimeout( function() { $( "#comment-" + ajax_params.cid ).slideUp(); }, 5000 ); //Attempt to remove the comment from the theme interface
+				}, 'json' );
+            };
+			
+			$( element ).siblings( '.sce-textarea' ).on( 'click', '.sce-comment-delete', function( e ) {
+    			e.preventDefault();
+    			if ( confirm( simple_comment_editing.confirm_delete ) ) {
+        		    sce_delete_comment( element, ajax_params );	
+                }
+    			
+            } );
+			
 			//Save button
 			$( element ).siblings( '.sce-textarea' ).on( 'click', '.sce-comment-save', function( e ) {
 				e.preventDefault();
@@ -48,15 +68,7 @@ jQuery( document ).ready( function( $ ) {
 					//If the comment is blank, see if the user wants to delete their comment
 					if ( comment_to_save == '' && simple_comment_editing.allow_delete == true  ) {
 						if ( confirm( simple_comment_editing.confirm_delete ) ) {
-							$( element ).siblings( '.sce-textarea' ).off();	
-							$( element ).off();
-								
-							//Remove elements
-							$( element ).parent().remove();
-							$.post( ajax_url, { action: 'sce_delete_comment', comment_id: ajax_params.cid, post_id: ajax_params.pid, nonce: ajax_params._wpnonce }, function( response ) {
-									$( '#sce-edit-comment-status' + ajax_params.cid ).removeClass().addClass( 'sce-status updated' ).html( simple_comment_editing.comment_deleted ).show();
-									setTimeout( function() { $( "#comment-" + ajax_params.cid ).slideUp(); }, 5000 ); //Attempt to remove the comment from the theme interface
-							}, 'json' );
+    						sce_delete_comment( element, ajax_params );
 							return;
 						} else {
 							$( '#sce-edit-comment' + ajax_params.cid  + ' textarea' ).val( sce.textareas[ ajax_params.cid  ] ); //revert value
