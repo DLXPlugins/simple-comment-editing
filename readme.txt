@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 4.1
 Tested up to: 4.3
-Stable tag: 1.7.1
+Stable tag: 1.8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,6 +74,11 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 2. Textarea and Save/Cancel buttons.
 
 == Changelog ==
+
+= 1.8.0 =
+* Released 2015-10-11
+* Logged in users who log out can no longer edit comments
+* Added Delete button.
 
 = 1.7.1 =
 * Released 20150926
