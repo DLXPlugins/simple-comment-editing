@@ -162,6 +162,7 @@ class Simple_Comment_Editing {
 		$textarea_button_content = '<div class="sce-comment-edit-buttons">';
 		$textarea_buttons = sprintf( '<button class="sce-comment-save">%s</button>', esc_html__( 'Save', 'simple-comment-editing' ) );
 		$textarea_buttons .= sprintf( '<button class="sce-comment-cancel">%s</button>', esc_html__( 'Cancel', 'simple-comment-editing' ) );
+		$textarea_buttons .= sprintf( '<button class="sce-comment-delete">%s</button>', esc_html__( 'Delete', 'simple-comment-editing' ) );
 		/**
 		* Filter: sce_buttons
 		*
@@ -784,6 +785,7 @@ class Simple_Comment_Editing {
 		if ( is_user_logged_in() ) {
 			$user = wp_get_current_user();
 			update_user_meta( $user->ID, '_' . $comment_id, $hash );
+			return;
 		}
 		
 		if ( !$maybe_save_meta ) {
