@@ -78,7 +78,8 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 = 1.8.0 =
 * Released 2015-10-11
 * Logged in users who log out can no longer edit comments
-* Added Delete button.
+* Added Delete button
+* Updated translations for language packs
 
 = 1.7.1 =
 * Released 20150926
@@ -220,35 +221,8 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 
 == Upgrade Notice ==
 
-= 1.7.1 =
-Fixed Epoch+SCE user logged in dilemma 
-
-= 1.6.9 =
-Fixed timer issue on many sites. New JS hook for allowing customization of output.
-
-= 1.6.7 =
-Fixing PHP bug declaring fatal error for multiple class instances.
-
-= 1.6.5 =
-Fixing strings that are not replaced in the timer. Sorry I didn't catch this error.
-
-= 1.6.1 =
- Fixing undefined errors.
-
-= 1.6.0 =
- Added filter for custom timer output. Added support for logged in users to bypass cookie checks. Added support for custom post types
-
-= 1.5.5 =
-Latvian translation and internal code cleanup.
-
-= 1.5.3 =
-Fixing PHP parse error.
-
-= 1.5.1 =
-Minified JS updated. Integration update for third-party plugins. Extra fields and Ajax comment posting/editing are now possible.
-
-= 1.5.0 =
-Integration update for third-party plugins. Extra fields and Ajax comment posting/editing are now possible.
+= 1.8.0 =
+Added delete button.
 
 == Customization ==
 
