@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 4.1
 Tested up to: 4.3
-Stable tag: 1.8.0
+Stable tag: 1.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -75,8 +75,8 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 
 == Changelog ==
 
-= 1.8.0 =
-* Released 2015-10-11
+= 1.8.1 =
+* Released 2015-10-12
 * Logged in users who log out can no longer edit comments
 * Added Delete button
 * Updated translations for language packs
@@ -220,6 +220,9 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.8.1 =
+Added delete button.
 
 = 1.8.0 =
 Added delete button.
