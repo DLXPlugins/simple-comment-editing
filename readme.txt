@@ -222,7 +222,7 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 == Upgrade Notice ==
 
 = 1.8.1 =
-Added delete button.
+Forgot to add deletion script. Added delete button.
 
 = 1.8.0 =
 Added delete button.
