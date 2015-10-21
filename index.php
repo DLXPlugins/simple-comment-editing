@@ -570,9 +570,9 @@ class Simple_Comment_Editing {
 		//Check to see if time has elapsed for the comment
 		$comment_timestamp = strtotime( $comment->comment_date );
 		$time_elapsed = current_time( 'timestamp', get_option( 'gmt_offset' ) ) - $comment_timestamp;
-		$minutes_elapsed = round( ( ( ( $time_elapsed % 604800 ) % 86400 )  % 3600 ) / 60 );
+		$minutes_elapsed = ( ( ( $time_elapsed % 604800 ) % 86400 )  % 3600 ) / 60;
 		
-		if ( ( $minutes_elapsed - $this->comment_time ) > 0 ) return false;
+		if ( ( $minutes_elapsed - $this->comment_time ) >= 0 ) return false;
 		
 		$comment_date_gmt = date( 'Y-m-d', strtotime( $comment->comment_date_gmt ) );
 		$cookie_hash = md5( $comment->comment_author_IP . $comment_date_gmt . $comment->user_id . $comment->comment_agent );
