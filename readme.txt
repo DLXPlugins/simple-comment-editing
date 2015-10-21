@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 4.1
 Tested up to: 4.3
-Stable tag: 1.8.1
+Stable tag: 1.8.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,6 +74,10 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 2. Textarea and Save/Cancel buttons.
 
 == Changelog ==
+
+= 1.8.3 =
+* Released 2015-10-20
+* Fixing user logged in issue where unusual timer values are being shown, and the comment appears editable, but is not
 
 = 1.8.1 =
 * Released 2015-10-12
@@ -220,6 +224,9 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.8.3 =
+Fixing user logged in issue where unusual timer values are being shown, and the comment appears editable, but is not
 
 = 1.8.1 =
 Forgot to add deletion script. Added delete button.
