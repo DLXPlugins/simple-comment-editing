@@ -283,7 +283,16 @@ class Simple_Comment_Editing {
 	 	$query = $wpdb->prepare( "SELECT ( $comment_time * 60 - (UNIX_TIMESTAMP('" . current_time('mysql') . "') - UNIX_TIMESTAMP(comment_date))) comment_time FROM {$wpdb->comments} where comment_ID = %d", $comment_id );
 	 	$comment_time_result = $wpdb->get_row( $query, ARRAY_A );
 	 	
-	 	$time_left = absint( $comment_time_result[ 'comment_time' ] );
+	 	$time_left = $comment_time_result[ 'comment_time' ];
+	 	if ( $time_left < 0 ) {
+    	 	$response = array(
+    			'minutes' => 0,
+    			'comment_id' => $comment_id, 
+    			'seconds' => 0,
+    			'can_edit' => false
+    		);
+    		die( json_encode( $response ) );
+        }
 	 	$minutes = floor( $time_left / 60 );
 		$seconds = $time_left - ( $minutes * 60 );
 		$response = array(
