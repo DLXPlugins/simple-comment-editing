@@ -327,7 +327,7 @@ function SCE_comment_scroll( e, element ) {
 		location = jQuery( "" + window.location.hash );
 		if ( location.length > 0 ) {
 			var targetOffset = location.offset().top;
-			jQuery( 'html,body' ).animate( {scrollTop: targetOffset}, 1000 );
+			jQuery( 'html,body' ).animate( {scrollTop: targetOffset}, 1 );
 		}
 	}	
 }
