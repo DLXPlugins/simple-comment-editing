@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 4.1
 Tested up to: 4.3
-Stable tag: 1.8.3
+Stable tag: 1.8.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -36,6 +36,7 @@ If you like this plugin, please help spread the word.  Rate the plugin.  Write a
 <li>French (France) - Thanks <a href="http://wordpress.org/support/profile/colin101">colin101</a>.</li>
 <li>German - Thanks Wilfried Kahrs.</li>
 <li>Latvian - Thanks Kaspars.</li>
+<li>Lithuanian - Thanks MamasLT</li>
 <li>Norwegian Bokmål - Thanks Jan Hagen.</li>
 <li>Norwegian Nynorsk - Thanks Jan Hagen.</li>
 <li>Persian - Thanks <a href="http://www.wordpress98.com/">Ali HajiMohamadi</a>.</li>
@@ -74,6 +75,12 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 2. Textarea and Save/Cancel buttons.
 
 == Changelog ==
+
+= 1.8.5 =
+* Released 2015-10-21
+* Fixed Portuguese translation (thanks Marco Santos)
+* Added Lithuanian translation
+* Fixed timer scroll issue where the delay was too long (thanks MamasLT) 
 
 = 1.8.3 =
 * Released 2015-10-20
@@ -224,6 +231,9 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.8.5 =
+Updated translations (Portuguese and Lithuanian). Scroll after comment issue is now much faster.
 
 = 1.8.3 =
 Fixing user logged in issue where unusual timer values are being shown, and the comment appears editable, but is not
