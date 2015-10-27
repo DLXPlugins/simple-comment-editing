@@ -177,6 +177,7 @@ jQuery( document ).ready( function( $ ) {
 				
 				//Update the timer and show the editing interface
 				$( element ).find( '.sce-timer' ).html( timer_text );
+				$( element ).siblings( '.sce-textarea' ).find( '.sce-timer' ).html( timer_text );
 				$( element ).show( 400, function() {
 					/**
 					* Event: sce.timer.loaded
@@ -215,8 +216,10 @@ jQuery( document ).ready( function( $ ) {
 						} else {
 							if ( timer_seconds < 0 ) { 
 								timer_minutes -= 1; timer_seconds = 59;
-							} 
-							$( element ).find( '.sce-timer' ).html(  sce.get_timer_text( timer_minutes, timer_seconds ) );
+							}
+							var timer_text = sce.get_timer_text( timer_minutes, timer_seconds );
+							$( element ).find( '.sce-timer' ).html(  timer_text );
+							$( element ).siblings( '.sce-textarea' ).find( '.sce-timer' ).html( timer_text );
 							sce.timers[ response.comment_id ].seconds = timer_seconds;
 							sce.timers[ response.comment_id ].minutes = timer_minutes;
 						}
@@ -236,7 +239,7 @@ jQuery( document ).ready( function( $ ) {
 	sce.get_timer_text = function( minutes, seconds ) {
 		if (seconds < 0) { minutes -= 1; seconds = 59; }
 		//Create timer text
-		var text = '&nbsp;&ndash;&nbsp;';
+		var text = '';
 		if (minutes >= 1) {
 			text += minutes + " " + simple_comment_editing.timer.minutes[ minutes ];
 			if ( seconds > 0 ) { 

@@ -131,6 +131,7 @@ class Simple_Comment_Editing {
 		$sce_content .= '<div class="sce-edit-button" style="display:none;">';
 		$ajax_edit_url = add_query_arg( array( 'cid' => $comment_id, 'pid' => $post_id ) , wp_nonce_url( admin_url( 'admin-ajax.php' ), 'sce-edit-comment' . $comment_id ) );
 		$sce_content .= sprintf( '<a href="%s">%s</a>', esc_url( $ajax_edit_url ), esc_html__( 'Click to Edit', 'simple-comment-editing' ) );
+		$sce_content .= '&nbsp;&ndash;&nbsp;';
 		$sce_content .= '<span class="sce-timer"></span>';
 		$sce_content .= '</div><!-- .sce-edit-button -->';
 		
@@ -163,6 +164,7 @@ class Simple_Comment_Editing {
 		$textarea_buttons = sprintf( '<button class="sce-comment-save">%s</button>', esc_html__( 'Save', 'simple-comment-editing' ) );
 		$textarea_buttons .= sprintf( '<button class="sce-comment-cancel">%s</button>', esc_html__( 'Cancel', 'simple-comment-editing' ) );
 		$textarea_buttons .= sprintf( '<button class="sce-comment-delete">%s</button>', esc_html__( 'Delete', 'simple-comment-editing' ) );
+		$textarea_buttons .= '<div class="sce-timer"></div>';
 		/**
 		* Filter: sce_buttons
 		*
