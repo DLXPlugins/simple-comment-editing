@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 4.1
 Tested up to: 4.3
-Stable tag: 1.9.0
+Stable tag: 1.9.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,8 +76,12 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 
 == Changelog ==
 
+= 1.9.1 =
+* Released 2015-11-04
+* Added minified script for events hooks
+
 = 1.9.0 =
-* Released 2014-10-27
+* Released 2015-10-27
 * Timer now shows below save/cancel/delete buttons for convenience
 
 = 1.8.5 =
@@ -235,6 +239,9 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.9.1 =
+Added minified script for events hooks
 
 = 1.9.0 =
 Timer now shows below save/cancel/delete buttons for convenience
