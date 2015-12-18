@@ -17,6 +17,7 @@ class Simple_Comment_Editing {
 	private $loading_img = '';
 	private $allow_delete = true;
 	private $errors;
+	private $scheme;
 	
 	//Singleton
 	public static function get_instance() {
@@ -38,6 +39,9 @@ class Simple_Comment_Editing {
 		$this->errors->add( 'edit_fail', __( 'You can no longer edit this comment', 'simple-comment-editing' ) );
 		$this->errors->add( 'comment_empty', __( 'Your comment cannot be empty', 'simple-comment-editing' ) );
 		$this->errors->add( 'comment_marked_spam', __( 'This comment was marked as spam', 'simple-comment-editing' ) );
+		
+		//Determine http/https admin-ajax issue
+		$this->scheme = is_ssl() ? 'https' : 'http';
 	} //end constructor
 	
 	public function init() {
@@ -129,7 +133,7 @@ class Simple_Comment_Editing {
 		
 		//Edit Button
 		$sce_content .= '<div class="sce-edit-button" style="display:none;">';
-		$ajax_edit_url = add_query_arg( array( 'cid' => $comment_id, 'pid' => $post_id ) , wp_nonce_url( admin_url( 'admin-ajax.php' ), 'sce-edit-comment' . $comment_id ) );
+		$ajax_edit_url = add_query_arg( array( 'cid' => $comment_id, 'pid' => $post_id ) , wp_nonce_url( admin_url( 'admin-ajax.php', $this->scheme ), 'sce-edit-comment' . $comment_id ) );
 		$sce_content .= sprintf( '<a href="%s">%s</a>', esc_url( $ajax_edit_url ), esc_html__( 'Click to Edit', 'simple-comment-editing' ) );
 		$sce_content .= '&nbsp;&ndash;&nbsp;';
 		$sce_content .= '<span class="sce-timer"></span>';
@@ -250,7 +254,7 @@ class Simple_Comment_Editing {
 	 		'empty_comment' => $this->errors->get_error_message( 'comment_empty' ),
 	 		'allow_delete' => $this->allow_delete,
 	 		'timer' => $timer_internationalized->get_timer_vars(),
-	 		'ajax_url' => admin_url( 'admin-ajax.php' ),
+	 		'ajax_url' => admin_url( 'admin-ajax.php', $this->scheme ),
 	 		'nonce' => wp_create_nonce( 'sce-general-ajax-nonce' ),
 	 	) );
 	 } //end add_scripts
