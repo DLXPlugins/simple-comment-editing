@@ -308,6 +308,9 @@ jQuery( document ).ready( function( $ ) {
 	
 	//EPOCH Compability
 	$( 'body' ).on( 'epoch.comment.posted', function( event, pid, cid ) {
+    	if ( typeof pid == 'undefined' ) {
+	    	return;
+    	}
 		//Ajax call to set SCE cookie
 		sce.set_comment_cookie( pid, cid, function( comment_id ) {
 			//Ajax call to get new comment and load it
