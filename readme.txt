@@ -2,8 +2,8 @@
 Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 4.1
-Tested up to: 4.4
-Stable tag: 1.9.1
+Tested up to: 4.5
+Stable tag: 1.9.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -75,6 +75,12 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 2. Textarea and Save/Cancel buttons.
 
 == Changelog ==
+
+= 1.9.3 =
+* Released 2016-03-23
+* Fixes issue where Ajax call wouldn't work on non-SSL site but SSL admin
+* Resolves double query issue with Epoch
+* Resolves comment ghosting with Epoch
 
 = 1.9.1 =
 * Released 2015-11-04
@@ -239,6 +245,9 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.9.3 =
+Fixes Ajax calls to SSL admin and Epoch incompatibility issues
 
 = 1.9.1 =
 Added minified script for events hooks
