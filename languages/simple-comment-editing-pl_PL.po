@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/simple-comment-"
 "editing\n"
 "POT-Creation-Date: 2015-10-11 16:41-0600\n"
-"PO-Revision-Date: 2016-03-24 11:40+0100\n"
+"PO-Revision-Date: 2016-03-31 14:20+0200\n"
 "Last-Translator: Marek eM <monter@techlog.pl>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -47,7 +47,7 @@ msgstr "Twój komentarz nie może być pusty"
 
 #: ../index.php:40
 msgid "This comment was marked as spam"
-msgstr "Ten komnentarz został oznaczony jako Spam"
+msgstr "Ten komentarz został oznaczony jako Spam"
 
 #: ../index.php:133
 msgid "Click to Edit"
