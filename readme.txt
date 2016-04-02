@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 4.1
 Tested up to: 4.5
-Stable tag: 1.9.3
+Stable tag: 1.9.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,28 +28,6 @@ Simple Comment Editing features:
 <h3>Spread the Word</h3>
 If you like this plugin, please help spread the word.  Rate the plugin.  Write about the plugin.  Something :)
 
-<h3>Translations</h3>
-<ul>
-<li>Arabic - Thanks Soufiane Sabiri.</li>
-<li>Czech - Thanks <a href="http://blog.doprofilu.cz/">Petr Baloun</a>.</li>
-<li>Dutch (Netherlands) - Thanks <a href="https://github.com/senlin">Senlin</a></li>
-<li>French (France) - Thanks <a href="http://wordpress.org/support/profile/colin101">colin101</a>.</li>
-<li>German - Thanks Wilfried Kahrs.</li>
-<li>Latvian - Thanks Kaspars.</li>
-<li>Lithuanian - Thanks MamasLT</li>
-<li>Norwegian Bokmål - Thanks Jan Hagen.</li>
-<li>Norwegian Nynorsk - Thanks Jan Hagen.</li>
-<li>Persian - Thanks <a href="http://www.wordpress98.com/">Ali HajiMohamadi</a>.</li>
-<li>Portuguese (European) - Thanks <a href="https://twitter.com/porreirinha">Marco Pereirinha</a>.</li>
-<li>Romanian (with diacritics) - Thanks Vasile Ruscior.</li>
-<li>Russian - Thanks Nataliya Zav'yalova (Наталия Завьялова).</li>
-<li>Serbian - Thanks <a href="https://twitter.com/lanche86">Milan Ivanovic</a>.</li>
-<li>Spanish - Thanks Google Translate :P</li>
-<li>Swedish - Thanks Håkan Persson.</li>
-</ul>
-
-If you would like to contribute a translation, please leave a support request with a link to your translation  or <a href="http://www.ronalfy.com/contact/">get in touch</a>.  If you would like to update an existing translation, please visit <a href="https://poeditor.com/join/project?hash=b65f6d06a1d423e3d4713a9f4a304d5c">POEditor.com and request access</a>.
-
 You are welcome to help us out and <a href="https://github.com/ronalfy/simple-comment-editing">contribute on GitHub</a>.
 
 == Installation ==
@@ -67,14 +45,16 @@ No options :) - Just simple comment editing.
 = How do I customize this plugin? =
 For advanced options, please see the <a href="https://github.com/ronalfy/simple-comment-editing#wordpress-filters">SCE Filter/Action reference</a>. 
 
-
-
 == Screenshots ==
 
 1. Edit button and timer.
 2. Textarea and Save/Cancel buttons.
 
 == Changelog ==
+
+= 1.9.4 =
+* Released 2015-04-02
+* Polish translation added
 
 = 1.9.3 =
 * Released 2016-03-23
@@ -245,6 +225,9 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.9.4 =
+Translations updated
 
 = 1.9.3 =
 Fixes Ajax calls to SSL admin and Epoch incompatibility issues
