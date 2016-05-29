@@ -323,8 +323,8 @@ jQuery( document ).ready( function( $ ) {
 	} );
 	$( 'body' ).on( 'epoch.comments.loaded, epoch.two.comments.loaded', function( e ) {
 		setTimeout( function() {
-            $( '.sce-edit-button' ).simplecommentediting();
-        }, 1000 );
+			$( '.sce-edit-button' ).simplecommentediting();
+		}, 1000 );
 	} );
 	$( 'body' ).on( 'epoch.two.comment.posted', function( event ) {
     	//Ajax call to set SCE cookie
