@@ -321,8 +321,21 @@ jQuery( document ).ready( function( $ ) {
 			}, 'json' );	
 		} );
 	} );
-	$( 'body' ).on( 'epoch.comments.loaded', function( e ) {
-		$( '.sce-edit-button' ).simplecommentediting();
+	$( 'body' ).on( 'epoch.comments.loaded, epoch.two.comments.loaded', function( e ) {
+		setTimeout( function() {
+            $( '.sce-edit-button' ).simplecommentediting();
+        }, 1000 );
+	} );
+	$( 'body' ).on( 'epoch.two.comment.posted', function( event ) {
+    	//Ajax call to set SCE cookie
+    	comment_id = event.comment_id;
+		sce.set_comment_cookie( event.post, comment_id, function( comment_id ) {
+			//Ajax call to get new comment and load it
+			$.post( simple_comment_editing.ajax_url, { action: 'sce_epoch2_get_comment', comment_id: comment_id, _ajax_nonce: simple_comment_editing.nonce }, function( response ) {
+				$( '#comment-' + comment_id ).find( 'p' ).parent().html( response );
+				$( '#comment-' + comment_id ).find( '.sce-edit-button' ).simplecommentediting();
+			} );	
+		} );
 	} );
 } );
 

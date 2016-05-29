@@ -90,6 +90,8 @@ class Simple_Comment_Editing {
 		add_action( 'wp_ajax_nopriv_sce_get_cookie_var', array( $this, 'generate_cookie_data' ) );
 		add_action( 'wp_ajax_sce_epoch_get_comment', array( $this, 'ajax_epoch_get_comment' ) );
 		add_action( 'wp_ajax_nopriv_sce_epoch_get_comment', array( $this, 'ajax_epoch_get_comment' ) );
+		add_action( 'wp_ajax_sce_epoch2_get_comment', array( $this, 'ajax_epoch2_get_comment' ) );
+		add_action( 'wp_ajax_nopriv_sce_epoch2_get_comment', array( $this, 'ajax_epoch2_get_comment' ) );
 		add_action( 'wp_ajax_sce_get_comment', array( $this, 'ajax_get_comment' ) );
 		add_action( 'wp_ajax_nopriv_sce_get_comment', array( $this, 'ajax_get_comment' ) );
 		
@@ -113,14 +115,13 @@ class Simple_Comment_Editing {
 	 *
 	 */
 	public function add_edit_interface( $comment_content, $comment = false) {
-		if ( !$comment ) return $comment_content;
-				
+		if ( ! $comment || empty( $comment_content ) ) return $comment_content;
 		$comment_id = absint( $comment->comment_ID );
 		$post_id = absint( $comment->comment_post_ID );
 		
 		//Check to see if a user can edit their comment
 		if ( !$this->can_edit( $comment_id, $post_id ) ) return $comment_content;
-		
+
 		//Variables for later
 		$original_content = $comment_content;
 		$raw_content = $comment->comment_content; //For later usage in the textarea
@@ -410,6 +411,27 @@ class Simple_Comment_Editing {
 		die( '' );
 	}
 	
+	/**
+	 * ajax_epoch2_get_comment - Gets a Epoch formatted comment
+	 * 
+	 * Returns a JSON object of the Epoch comment
+	 *
+	 * @access public
+	 * @since 2.0.0
+	 *
+	 * @param int $_POST[ 'comment_id' ] The Comment ID
+	 * @return JSON object 
+	 */ 
+	public function ajax_epoch2_get_comment() {
+		check_ajax_referer( 'sce-general-ajax-nonce' );
+		 $comment_id = absint( $_POST[ 'comment_id' ] );
+		 $comment = get_comment( $comment_id, OBJECT );
+		if ( $comment ) {
+			die( $this->get_comment_content( $comment ) );
+		}
+		die( '' );
+	}
+	
 	 /**
 	 * ajax_save_comment - Saves a comment to the database, returns the updated comment via JSON
 	 * 
@@ -581,7 +603,6 @@ class Simple_Comment_Editing {
 		$minutes_elapsed = ( ( ( $time_elapsed % 604800 ) % 86400 )  % 3600 ) / 60;
 		
 		if ( ( $minutes_elapsed - $this->comment_time ) >= 0 ) return false;
-		
 		$comment_date_gmt = date( 'Y-m-d', strtotime( $comment->comment_date_gmt ) );
 		$cookie_hash = md5( $comment->comment_author_IP . $comment_date_gmt . $comment->user_id . $comment->comment_agent );
 			
@@ -773,6 +794,7 @@ class Simple_Comment_Editing {
 		if ( $return_action == 'ajax' ) {
 			check_ajax_referer( 'sce-general-ajax-nonce' );	
 		}
+		
 		if ( $post_id == 0 ) {
 			$post_id = isset( $_POST[ 'post_id' ] ) ? absint( $_POST[ 'post_id' ] ) : 0;
 		}
@@ -915,7 +937,7 @@ class Simple_Comment_Editing {
 	 * @return bool True to load scripts, false if not
 	 */
 	public function maybe_load_scripts( $yes ) {
-		if ( defined( 'WPAC_PLUGIN_NAME' ) || defined( 'EPOCH_VER' ) || is_user_logged_in() ) {
+		if ( defined( 'WPAC_PLUGIN_NAME' ) || defined( 'EPOCH_VER' ) || defined( 'EPOCH_VERSION' ) || is_user_logged_in() ) {
 			return true; 	
 		}
 		

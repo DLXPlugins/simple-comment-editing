@@ -102,6 +102,9 @@ svn propset svn:ignore "README.md
 deploy.sh
 Thumbs.db
 .git
+wp-org-assets
+.DS_STORE
+.ds_store
 .gitignore" "$SVNPATH/trunk/"
 
 echo "Exporting the HEAD of master from git to the trunk of SVN"
