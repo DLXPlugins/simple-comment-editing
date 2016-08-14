@@ -37,8 +37,15 @@ jQuery( document ).ready( function( $ ) {
 				//Remove elements
 				$( element ).parent().remove();
 				$.post( ajax_url, { action: 'sce_delete_comment', comment_id: ajax_params.cid, post_id: ajax_params.pid, nonce: ajax_params._wpnonce }, function( response ) {
-						$( '#sce-edit-comment-status' + ajax_params.cid ).removeClass().addClass( 'sce-status updated' ).html( simple_comment_editing.comment_deleted ).show();
-						setTimeout( function() { $( "#comment-" + ajax_params.cid ).slideUp(); }, 5000 ); //Attempt to remove the comment from the theme interface
+						if ( response.errors ) {
+							alert( simple_comment_editing.comment_deleted_error );
+							$( element ).siblings( '.sce-textarea' ).on();	
+							$( element ).on();
+						} else {
+							$( '#sce-edit-comment-status' + ajax_params.cid ).removeClass().addClass( 'sce-status updated' ).html( simple_comment_editing.comment_deleted ).show();
+							setTimeout( function() { $( "#comment-" + ajax_params.cid ).slideUp(); }, 3000 ); //Attempt to remove the comment from the theme interface
+						}
+						
 				}, 'json' );
             };
 			
