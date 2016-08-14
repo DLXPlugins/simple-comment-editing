@@ -115,6 +115,15 @@ function custom_sce_check_comment_length( $return = false, $comment = array() ) 
 */
 ```
 
+Example: 
+
+```php
+// Disable delete functionality
+add_filter( 'sce_allow_delete', function( $can_delete ) {
+	return false;
+} );
+```
+
 ### sce_get_comment - Add extra data to the comment object 
 
 This is only used when retrieving a comment via Ajax and can be used by third-party plugins who post comments using Ajax
