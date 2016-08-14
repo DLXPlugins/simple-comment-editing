@@ -27,7 +27,7 @@
     	public function get_timer_vars( $force_transient = false ) {
     		$transient_name = sprintf( 'sce_timer_%d_%s', $this->get_comment_time(), get_locale() ); //Transient is stored based on the locale and comment time, so that if either changes, a new transient is generated
     		$timer_vars_transient = get_transient( $transient_name );
-    		if ( $timer_vars_transient && false === $force_transient ) {
+    		if ( $timer_vars_transient && false === $force_transient && $timer_vars_transient == $this->get_comment_time() ) {
     			return $timer_vars_transient;
     		} else {
     			$timer_vars = array(
