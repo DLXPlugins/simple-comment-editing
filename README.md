@@ -256,6 +256,96 @@ function edit_sce_comment_time( $time_in_minutes ) {
 }
 ```
 
+### sce_edit_text - Change the "Click to Edit" text.
+
+```php
+/**
+* Filter: sce_text_edit
+*
+* Filter allow editing of edit text
+*
+* @since 2.0.0
+*
+* @param string Translated click to edit text
+*/
+```
+
+Example:
+
+```php
+add_filter( 'sce_text_edit', function( $translated_text ) {
+	return "Custom Edit Text";
+} );
+```
+
+### sce_edit_save - Change the "Save" button text.
+
+```php
+/**
+* Filter: sce_text_save
+*
+* Filter allow editing of save text
+*
+* @since 2.0.0
+*
+* @param string Translated save text
+*/
+```
+
+Example: 
+
+```php
+add_filter( 'sce_text_save', function( $translated_text ) {
+	return "Custom Save";
+} );
+```
+
+### sce_edit_cancel - Change the "Cancel" button text.
+
+```php
+/**
+* Filter: sce_text_cancel
+*
+* Filter allow editing of cancel text
+*
+* @since 2.0.0
+*
+* @param string Translated cancel text
+*/
+
+```
+
+Example: 
+
+```php
+add_filter( 'sce_text_cancel', function( $translated_text ) {
+	return "Custom Cancel";
+} );
+```
+
+### sce_edit_delete - Change the "Delete" button text.
+
+```php
+/**
+* Filter: sce_text_delete
+*
+* Filter allow editing of delete text
+*
+* @since 2.0.0
+*
+* @param string Translated delete text
+*/
+
+```
+
+Example: 
+
+```php
+add_filter( 'sce_text_delete', function( $translated_text ) {
+	return "Custom Delete";
+} );
+```
+
 ## WordPress Actions
 
 ### sce_save_after - Triggered via Ajax after a comment has been saved

@@ -123,7 +123,19 @@ class Simple_Comment_Editing {
 		//Edit Button
 		$sce_content .= '<div class="sce-edit-button" style="display:none;">';
 		$ajax_edit_url = add_query_arg( array( 'cid' => $comment_id, 'pid' => $post_id ) , wp_nonce_url( admin_url( 'admin-ajax.php', $this->scheme ), 'sce-edit-comment' . $comment_id ) );
-		$sce_content .= sprintf( '<a href="%s">%s</a>', esc_url( $ajax_edit_url ), esc_html__( 'Click to Edit', 'simple-comment-editing' ) );
+		
+		/**
+		* Filter: sce_text_edit
+		*
+		* Filter allow editing of edit text
+		*
+		* @since 2.0.0
+		*
+		* @param string Translated click to edit text
+		*/
+		$click_to_edit_text = apply_filters( 'sce_text_edit', __( 'Click to Edit', 'simple-comment-editing' ) );
+		
+		$sce_content .= sprintf( '<a href="%s">%s</a>', esc_url( $ajax_edit_url ), esc_html( $click_to_edit_text ) );
 		$sce_content .= '&nbsp;&ndash;&nbsp;';
 		$sce_content .= '<span class="sce-timer"></span>';
 		$sce_content .= '</div><!-- .sce-edit-button -->';
@@ -154,9 +166,43 @@ class Simple_Comment_Editing {
 		
 		$textarea_content .= '%s</div><!-- .sce-textarea -->';
 		$textarea_button_content = '<div class="sce-comment-edit-buttons">';
-		$textarea_buttons = sprintf( '<button class="sce-comment-save">%s</button>', esc_html__( 'Save', 'simple-comment-editing' ) );
-		$textarea_buttons .= sprintf( '<button class="sce-comment-cancel">%s</button>', esc_html__( 'Cancel', 'simple-comment-editing' ) );
-		$textarea_buttons .= sprintf( '<button class="sce-comment-delete">%s</button>', esc_html__( 'Delete', 'simple-comment-editing' ) );
+		
+		/**
+		* Filter: sce_text_save
+		*
+		* Filter allow editing of save text
+		*
+		* @since 2.0.0
+		*
+		* @param string Translated save text
+		*/
+		$save_text = apply_filters( 'sce_text_save', __( 'Save', 'simple-comment-editing' ) );
+		
+		/**
+		* Filter: sce_text_cancel
+		*
+		* Filter allow editing of cancel text
+		*
+		* @since 2.0.0
+		*
+		* @param string Translated cancel text
+		*/
+		$cancel_text = apply_filters( 'sce_text_cancel', __( 'Cancel', 'simple-comment-editing' ) );
+		
+		/**
+		* Filter: sce_text_delete
+		*
+		* Filter allow editing of delete text
+		*
+		* @since 2.0.0
+		*
+		* @param string Translated delete text
+		*/
+		$delete_text = apply_filters( 'sce_text_delete', __( 'Delete', 'simple-comment-editing' ) );
+		
+		$textarea_buttons = sprintf( '<button class="sce-comment-save">%s</button>', esc_html( $save_text ) );
+		$textarea_buttons .= sprintf( '<button class="sce-comment-cancel">%s</button>', esc_html( $cancel_text ) );
+		$textarea_buttons .= sprintf( '<button class="sce-comment-delete">%s</button>', esc_html( $delete_text ) );
 		$textarea_buttons .= '<div class="sce-timer"></div>';
 		/**
 		* Filter: sce_buttons
