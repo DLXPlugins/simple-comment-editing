@@ -611,7 +611,7 @@ class Simple_Comment_Editing {
 		$comment_to_return = $this->get_comment( $comment_id );
 		
 		/**
-		* Filter: sce_return_comment
+		* Filter: sce_return_comment_text
 		*
 		* Allow comment manipulation before the comment is returned
 		*
@@ -623,7 +623,7 @@ class Simple_Comment_Editing {
 		* @param int     Comment ID
 		* @param array $comment_to_save Associative array of comment attributes
 		*/
-		$comment_content_to_return = apply_filters( 'sce_return_comment', $this->get_comment_content( $comment_to_return ), $comment_to_return, $post_id, $comment_id );		
+		$comment_content_to_return = apply_filters( 'sce_return_comment_text', $this->get_comment_content( $comment_to_return ), $comment_to_return, $post_id, $comment_id );		
 		
 		//Ajax response
 		$return[ 'comment_text' ] = $comment_content_to_return;
