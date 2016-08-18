@@ -621,7 +621,6 @@ class Simple_Comment_Editing {
 		* @param object  Comment Object
 		* @param int     Post ID
 		* @param int     Comment ID
-		* @param array $comment_to_save Associative array of comment attributes
 		*/
 		$comment_content_to_return = apply_filters( 'sce_return_comment_text', $this->get_comment_content( $comment_to_return ), $comment_to_return, $post_id, $comment_id );		
 		
