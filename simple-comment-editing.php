@@ -698,12 +698,15 @@ class Simple_Comment_Editing {
 		//Do some initial checks to weed out those who shouldn't be able to have editable comments
 		if ( 'spam' === $comment_status ) return; //Marked as spam - no editing allowed
 		
+		// Remove expired comments
+		$this->remove_security_keys();
+		
 		//Don't set a cookie if a comment is posted via Ajax
-		if ( !defined( 'DOING_AJAX' ) && !defined( 'EPOCH_API' ) ) {
+		if ( ! defined( 'DOING_AJAX' ) && ! defined( 'EPOCH_API' ) ) {
 			 $this->generate_cookie_data( $post_id, $comment_id, 'setcookie' );
 		}
 		
-		$this->remove_security_keys();
+		
 	} //end comment_posted
 	
 	/**
