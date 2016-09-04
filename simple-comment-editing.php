@@ -643,7 +643,6 @@ class Simple_Comment_Editing {
 			
 		
 		$cookie_value = $this->get_cookie_value( 'SimpleCommentEditing' . $comment_id . $cookie_hash );
-		error_log( $cookie_value );
 		$comment_meta_hash = get_comment_meta( $comment_id, '_sce', true );
 		if ( $cookie_value !== $comment_meta_hash ) return false;
 		
@@ -982,9 +981,6 @@ class Simple_Comment_Editing {
 			global $wpdb;
 			$query = $wpdb->prepare( "delete from {$wpdb->commentmeta} where meta_key = '_sce' AND CAST( SUBSTRING(meta_value, LOCATE('-',meta_value ) +1 ) AS UNSIGNED) < %d", time() - ( $this->comment_time * MINUTE_IN_SECONDS ) );
 			$wpdb->query( $query );
-			
-		} else {
-			error_log( 'test' );
 			set_transient( 'sce_security_keys', true, HOUR_IN_SECONDS );
 		}
 	}
