@@ -1001,7 +1001,7 @@ class Simple_Comment_Editing {
 			if ( $security_key_count ) {
 				global $wpdb;
 				delete_option( 'ajax-edit-comments_security_key_count' );
-				$wpdb->query( $wpdb->prepare( "delete from {$wpdb->postmeta} where left(meta_value, 7) = '_wpAjax' ORDER BY {$wpdb->postmeta}.meta_id ASC" );
+				$wpdb->query( $wpdb->prepare( "delete from {$wpdb->postmeta} where left(meta_value, 7) = '_wpAjax' ORDER BY {$wpdb->postmeta}.meta_id ASC" ) );
 			}
 			// Delete expired meta
 			global $wpdb;
@@ -1010,6 +1010,7 @@ class Simple_Comment_Editing {
 		} else {
 			set_transient( 'sce_security_keys', true, HOUR_IN_SECONDS );
 		}
+	}
 	
 } //end class Simple_Comment_Editing
 
