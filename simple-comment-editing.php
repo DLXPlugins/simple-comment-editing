@@ -212,7 +212,7 @@ class Simple_Comment_Editing {
 		* @since 1.3.0
 		*
 		* @param string  $textarea_buttons Button HTML
-		* @param int       $comment_id        Comment ID
+		* @param int     $comment_id       Comment ID
 		*/
 		$textarea_buttons = apply_filters( 'sce_buttons', $textarea_buttons, $comment_id );
 		$textarea_button_content .= $textarea_buttons . '</div><!-- .sce-comment-edit-buttons -->';
@@ -233,7 +233,7 @@ class Simple_Comment_Editing {
 		* @since 1.3.0
 		*
 		* @param string  $sce_content SCE content 
-		* @param int       $comment_id Comment ID of the comment
+		* @param int     $comment_id  Comment ID of the comment
 		*/
 		$sce_content = apply_filters( 'sce_content', $sce_content, $comment_id );
 		
@@ -711,42 +711,13 @@ class Simple_Comment_Editing {
 		
 		//Do some initial checks to weed out those who shouldn't be able to have editable comments
 		if ( 'spam' === $comment_status ) return; //Marked as spam - no editing allowed
-		//if ( current_user_can( 'moderate_comments' ) ) return; //They can edit comments anyway, don't do anything
-		//if ( current_user_can( 'edit_post', $post_id ) ) return; //Post author - User can edit comments for the post anyway
 		
 		//Don't set a cookie if a comment is posted via Ajax
 		if ( !defined( 'DOING_AJAX' ) && !defined( 'EPOCH_API' ) ) {
 			 $this->generate_cookie_data( $post_id, $comment_id, 'setcookie' );
 		}
 		
-		
-		//Update the security key count (use the same names/techniques as Ajax Edit Comments
-		$security_key_count = absint( get_option( 'ajax-edit-comments_security_key_count' ) ); 
-		if ( !$security_key_count ) {
-			$security_key_count = 1;
-		} else {
-			$security_key_count += 1;
-		}
-		
-		//Now delete security keys (use the same names/techniques as Ajax Edit Comments
-		/**
-		* Filter: sce_security_key_min
-		*
-		* Determine how many security keys should be stored as post meta before garbage collection
-		*
-		* @since 1.0.0
-		*
-		* @param int  $num_keys How many keys to store
-		*/
-		$min_security_keys = absint( apply_filters( 'sce_security_key_min', 100 ) );
-		if ( $security_key_count >= $min_security_keys ) {
-			global $wpdb;
-			$comment_id_to_exclude = "_" . $comment_id;
-			/* Only delete the first 50 to make sure the bottom 50 aren't suddenly without to the ability to edit comments - Props Marco Pereirinha */
-			$wpdb->query( $wpdb->prepare( "delete from {$wpdb->postmeta} where left(meta_value, 6) = 'wpAjax' and meta_key <> %s ORDER BY {$wpdb->postmeta}.meta_id ASC LIMIT 50 ", $comment_id_to_exclude ) ); 
-			$security_key_count = 1;
-		}
-		update_option( 'ajax-edit-comments_security_key_count', $security_key_count );
+		$this->remove_security_keys();
 	} //end comment_posted
 	
 	/**
@@ -1021,6 +992,19 @@ class Simple_Comment_Editing {
 		$this->generate_cookie_data( $comment[ 'comment_post_ID' ], $comment[ 'comment_ID' ], 'removecookie' );
 	
 	} //end remove_comment_cookie
+	
+	/**
+	 * remove_security_keys - Remove security keys
+	 * 
+	 * When a comment is posted, remove security keys
+	 *
+	 * @access private
+	 * @since 2.0.2
+	 *
+	 */
+	private function remove_security_keys() {
+		
+	}
 	
 } //end class Simple_Comment_Editing
 
