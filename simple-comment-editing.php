@@ -641,30 +641,11 @@ class Simple_Comment_Editing {
 		$comment_date_gmt = date( 'Y-m-d', strtotime( $comment->comment_date_gmt ) );
 		$cookie_hash = md5( $comment->comment_author_IP . $comment_date_gmt . $comment->user_id . $comment->comment_agent );
 			
-		if ( !is_user_logged_in() ) {
-			//Now check for post meta and cookie values being the same
-			
-			$cookie_value = $this->get_cookie_value( 'SimpleCommentEditing' . $comment_id . $cookie_hash );
-			if ( !$cookie_value ) return false;
-			$comment_meta_hash = get_comment_meta( $comment_id, '_sce', true );
-			error_log( $comment_meta_hash );
-			
-			//Check to see if the cookie value matches the post meta hash
-			if ( $cookie_value !== $comment_meta_hash ) return false;
-		} else {
-			$user = wp_get_current_user();
-			
-			if ( $user->ID != $comment->user_id ) {
-				return false;
-			}				
-
-			$meta_hash = get_comment_meta( $comment_id, '_sce', true );	
-			if ( $meta_hash !== $cookie_hash ) {
-				return false;	
-			}
-			
-		}
 		
+		$cookie_value = $this->get_cookie_value( 'SimpleCommentEditing' . $comment_id . $cookie_hash );
+		error_log( $cookie_value );
+		$comment_meta_hash = get_comment_meta( $comment_id, '_sce', true );
+		if ( $cookie_value !== $comment_meta_hash ) return false;
 		
 		//All is well, the person/place/thing can edit the comment
 		/**
@@ -825,18 +806,11 @@ class Simple_Comment_Editing {
 		
 		
 		
-		$rand = '_wpAjax' . $hash . md5( wp_generate_password( 30, true, true ) );
+		$rand = '_wpAjax' . $hash . md5( wp_generate_password( 30, true, true ) ) . '-' . time();
 		$maybe_save_meta = get_comment_meta( $comment_id, '_sce', true );
 		$cookie_name = 'SimpleCommentEditing' . $comment_id . $hash;
 		$cookie_value = $rand;
 		$cookie_expire = time() + (  60 * $this->comment_time );
-		
-		/* Check to see if user is logged in and skip cookie checks */
-		if ( is_user_logged_in() ) {
-			$user = wp_get_current_user();
-			update_comment_meta( $comment_id, '_sce', $rand );
-			return;
-		}
 		
 		if ( !$maybe_save_meta ) {
 			//Make sure we don't set post meta again for security reasons and subsequent calls to this method will generate a new key, so no calling it twice unless you want to remove a cookie
@@ -1006,9 +980,11 @@ class Simple_Comment_Editing {
 			}
 			// Delete expired meta
 			global $wpdb;
-			$wpdb->query( $wpdb->prepare( "delete from {$wpdb->commentmeta} where meta_key = '_sce' AND CAST( SUBSTRING(meta_value, LOCATE('-',meta_value ) +1 ) AS UNSIGNED) < %d", time() - $this->comment_time ) );
+			$query = $wpdb->prepare( "delete from {$wpdb->commentmeta} where meta_key = '_sce' AND CAST( SUBSTRING(meta_value, LOCATE('-',meta_value ) +1 ) AS UNSIGNED) < %d", time() - ( $this->comment_time * MINUTE_IN_SECONDS ) );
+			$wpdb->query( $query );
 			
 		} else {
+			error_log( 'test' );
 			set_transient( 'sce_security_keys', true, HOUR_IN_SECONDS );
 		}
 	}
