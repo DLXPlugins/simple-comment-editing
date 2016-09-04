@@ -606,23 +606,9 @@ class Simple_Comment_Editing {
 				}
 			}
 		}
-		 
-		// Get comment object
-		$comment_to_return = $this->get_comment( $comment_id );
 		
-		/**
-		* Filter: sce_return_comment_text
-		*
-		* Allow comment manipulation before the comment is returned
-		*
-		* @since 2.1.0
-		*
-		* @param string  Comment Content
-		* @param object  Comment Object
-		* @param int     Post ID
-		* @param int     Comment ID
-		*/
-		$comment_content_to_return = apply_filters( 'sce_return_comment_text', $this->get_comment_content( $comment_to_return ), $comment_to_return, $post_id, $comment_id );		
+		$comment_to_return = $this->get_comment( $comment_id );
+		$comment_content_to_return = $this->get_comment_content( $comment_to_return );		
 		
 		//Ajax response
 		$return[ 'comment_text' ] = $comment_content_to_return;
@@ -660,10 +646,10 @@ class Simple_Comment_Editing {
 			
 			$cookie_value = $this->get_cookie_value( 'SimpleCommentEditing' . $comment_id . $cookie_hash );
 			if ( !$cookie_value ) return false;
-			$post_meta_hash = get_post_meta( $post_id, '_' . $comment_id, true );
+			$comment_meta_hash = get_comment_meta( $comment_id, '_sce', true );
 			
 			//Check to see if the cookie value matches the post meta hash
-			if ( $cookie_value !== $post_meta_hash ) return false;
+			if ( $cookie_value !== $comment_meta_hash ) return false;
 		} else {
 			$user = wp_get_current_user();
 			
@@ -671,7 +657,7 @@ class Simple_Comment_Editing {
 				return false;
 			}				
 
-			$meta_hash = get_user_meta( $user->ID, '_' . $comment_id, true );	
+			$meta_hash = get_comment_meta( $comment_id, '_sce', true );	
 			if ( $meta_hash !== $cookie_hash ) {
 				return false;	
 			}
@@ -836,7 +822,7 @@ class Simple_Comment_Editing {
 		
 		
 		$rand = '_wpAjax' . $hash . md5( wp_generate_password( 30, true, true ) );
-		$maybe_save_meta = get_post_meta( $post_id, '_' . $comment_id, true );
+		$maybe_save_meta = get_comment_meta( $comment_id, '_sce', true );
 		$cookie_name = 'SimpleCommentEditing' . $comment_id . $hash;
 		$cookie_value = $rand;
 		$cookie_expire = time() + (  60 * $this->comment_time );
@@ -844,13 +830,13 @@ class Simple_Comment_Editing {
 		/* Check to see if user is logged in and skip cookie checks */
 		if ( is_user_logged_in() ) {
 			$user = wp_get_current_user();
-			update_user_meta( $user->ID, '_' . $comment_id, $hash );
+			update_comment_meta( $comment_id, '_sce', $rand );
 			return;
 		}
 		
 		if ( !$maybe_save_meta ) {
 			//Make sure we don't set post meta again for security reasons and subsequent calls to this method will generate a new key, so no calling it twice unless you want to remove a cookie
-			update_post_meta( $post_id, '_' . $comment_id, $rand );
+			update_comment_meta( $post_id, '_sce', $rand );
 		} else {
 			//Kinda evil, but if you try to call this method twice, removes the cookie
 			setcookie( $cookie_name, $cookie_value, time() - 60, COOKIEPATH,COOKIE_DOMAIN);
@@ -1003,8 +989,24 @@ class Simple_Comment_Editing {
 	 *
 	 */
 	private function remove_security_keys() {
-		
-	}
+
+		$sce_security = get_transient( 'sce_security_keys' );
+		if ( ! $sce_security ) {
+
+			// Remove old SCE keys
+			$security_key_count = get_option( 'ajax-edit-comments_security_key_count' );
+			if ( $security_key_count ) {
+				global $wpdb;
+				delete_option( 'ajax-edit-comments_security_key_count' );
+				$wpdb->query( $wpdb->prepare( "delete from {$wpdb->postmeta} where left(meta_value, 7) = '_wpAjax' ORDER BY {$wpdb->postmeta}.meta_id ASC" );
+			}
+			// Delete expired meta
+			global $wpdb;
+			$wpdb->query( $wpdb->prepare( "delete from {$wpdb->commentmeta} where meta_key like '_sce_%' AND CAST( SUBSTRING(meta_value, LOCATE('-',meta_value ) +1 ) AS UNSIGNED) < %d", time() - $this->comment_time ) );
+			
+		} else {
+			set_transient( 'sce_security_keys', true, HOUR_IN_SECONDS );
+		}
 	
 } //end class Simple_Comment_Editing
 
