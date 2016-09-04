@@ -647,6 +647,7 @@ class Simple_Comment_Editing {
 			$cookie_value = $this->get_cookie_value( 'SimpleCommentEditing' . $comment_id . $cookie_hash );
 			if ( !$cookie_value ) return false;
 			$comment_meta_hash = get_comment_meta( $comment_id, '_sce', true );
+			error_log( $comment_meta_hash );
 			
 			//Check to see if the cookie value matches the post meta hash
 			if ( $cookie_value !== $comment_meta_hash ) return false;
@@ -839,7 +840,7 @@ class Simple_Comment_Editing {
 		
 		if ( !$maybe_save_meta ) {
 			//Make sure we don't set post meta again for security reasons and subsequent calls to this method will generate a new key, so no calling it twice unless you want to remove a cookie
-			update_comment_meta( $post_id, '_sce', $rand );
+			update_comment_meta( $comment_id, '_sce', $rand );
 		} else {
 			//Kinda evil, but if you try to call this method twice, removes the cookie
 			setcookie( $cookie_name, $cookie_value, time() - 60, COOKIEPATH,COOKIE_DOMAIN);
@@ -1001,11 +1002,11 @@ class Simple_Comment_Editing {
 			if ( $security_key_count ) {
 				global $wpdb;
 				delete_option( 'ajax-edit-comments_security_key_count' );
-				$wpdb->query( $wpdb->prepare( "delete from {$wpdb->postmeta} where left(meta_value, 7) = '_wpAjax' ORDER BY {$wpdb->postmeta}.meta_id ASC" ) );
+				$wpdb->query( "delete from {$wpdb->postmeta} where left(meta_value, 7) = '_wpAjax' ORDER BY {$wpdb->postmeta}.meta_id ASC" );
 			}
 			// Delete expired meta
 			global $wpdb;
-			$wpdb->query( $wpdb->prepare( "delete from {$wpdb->commentmeta} where meta_key like '_sce_%' AND CAST( SUBSTRING(meta_value, LOCATE('-',meta_value ) +1 ) AS UNSIGNED) < %d", time() - $this->comment_time ) );
+			$wpdb->query( $wpdb->prepare( "delete from {$wpdb->commentmeta} where meta_key = '_sce' AND CAST( SUBSTRING(meta_value, LOCATE('-',meta_value ) +1 ) AS UNSIGNED) < %d", time() - $this->comment_time ) );
 			
 		} else {
 			set_transient( 'sce_security_keys', true, HOUR_IN_SECONDS );
