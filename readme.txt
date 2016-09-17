@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 4.1
 Tested up to: 4.6
-Stable tag: 2.0.0
+Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/contribute/
@@ -26,10 +26,11 @@ Simple Comment Editing features:
 <li>Advanced customization can be achieved using filters.</li>
 </ol>
 
-<h3>Spread the Word</h3>
-If you like this plugin, please help spread the word.  Rate the plugin.  Write about the plugin.  Something :)
+<h3>Help Contribute</h3>
 
-You are welcome to help us out and <a href="https://github.com/ronalfy/simple-comment-editing">contribute on GitHub</a>.
+* Leave a star rating
+* <a href="https://translate.wordpress.org/projects/wp-plugins/simple-comment-editing">Contribute a translation</a>
+* <a href="https://github.com/ronalfy/simple-comment-editing">Contribute some code</a>
 
 == Installation ==
 
@@ -52,6 +53,10 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 2. Textarea and Save/Cancel buttons.
 
 == Changelog ==
+
+= 2.1.0 =
+* Released 2016-09-17
+* Post meta is no longer used and comment meta is used instead
 
 = 2.0.0 =
 * Released 2016-08-14
@@ -234,6 +239,9 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.1.0 =
+Post meta is no longer used and comment meta is used instead (better reliability and less database bloat).
 
 = 2.0.0 =
 New filters and bug fixes. See changelog for more information.
