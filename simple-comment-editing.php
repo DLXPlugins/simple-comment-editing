@@ -102,9 +102,12 @@ class Simple_Comment_Editing {
 	 * @since 1.0
 	 *
 	 */
-	public function add_edit_interface( $comment_content, $comment = false) {
-		global $comment;
-		if ( ! $comment || empty( $comment_content ) ) return $comment_content;
+	public function add_edit_interface( $comment_content, $passed_comment = false) {
+		global $comment; // For Thesis
+		if ( ( ! $comment && ! $passed_comment ) || empty( $comment_content ) ) return $comment_content;
+		if ( $passed_comment ) {
+			$comment = $passed_comment;
+		}
 		$comment_id = absint( $comment->comment_ID );
 		$post_id = absint( $comment->comment_post_ID );
 				

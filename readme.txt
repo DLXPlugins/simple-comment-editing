@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 4.1
 Tested up to: 4.7
-Stable tag: 2.1.3
+Stable tag: 2.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/contribute/
@@ -53,6 +53,10 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 2. Textarea and Save/Cancel buttons.
 
 == Changelog ==
+
+= 2.1.5 = 
+* Released 2017-01-20
+* Resolving Epoch 1.0 conflict
 
 = 2.1.3 =
 * Released 2016-12-07
@@ -245,26 +249,6 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 
 = 1.0 =
 * Initial release.
-
-== Upgrade Notice ==
-
-= 2.1.1 =
-Re-added filter `sce_return_comment_text`
-
-= 2.1.0 =
-Post meta is no longer used and comment meta is used instead (better reliability and less database bloat).
-
-= 2.0.0 =
-New filters and bug fixes. See changelog for more information.
-
-= 1.9.4 =
-Translations updated
-
-= 1.9.3 =
-Fixes Ajax calls to SSL admin and Epoch incompatibility issues
-
-= 1.9.1 =
-Added minified script for events hooks
 
 == Customization ==
 
