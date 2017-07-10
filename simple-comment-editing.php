@@ -106,7 +106,7 @@ class Simple_Comment_Editing {
 		global $comment; // For Thesis
 		if ( ( ! $comment && ! $passed_comment ) || empty( $comment_content ) ) return $comment_content;
 		if ( $passed_comment ) {
-			$comment = $passed_comment;
+			$comment = (object)$passed_comment;
 		}
 		$comment_id = absint( $comment->comment_ID );
 		$post_id = absint( $comment->comment_post_ID );
