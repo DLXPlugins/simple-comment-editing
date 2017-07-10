@@ -108,6 +108,9 @@ class Simple_Comment_Editing {
 		if ( $passed_comment ) {
 			$comment = (object)$passed_comment;
 		}
+		if ( ! is_object( $comment ) ) {
+			$comment = (object)$comment;
+		}
 		$comment_id = absint( $comment->comment_ID );
 		$post_id = absint( $comment->comment_post_ID );
 				
