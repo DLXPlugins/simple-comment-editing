@@ -51,8 +51,10 @@ jQuery( document ).ready( function( $ ) {
 			
 			$( element ).siblings( '.sce-textarea' ).on( 'click', '.sce-comment-delete', function( e ) {
     			e.preventDefault();
-    			if ( confirm( simple_comment_editing.confirm_delete ) ) {
+    			if ( simple_comment_editing.allow_delete_confirmation && confirm( simple_comment_editing.confirm_delete ) ) {
         		    sce_delete_comment( element, ajax_params );	
+                } else {
+	               sce_delete_comment( element, ajax_params ); 
                 }
     			
             } );

@@ -262,14 +262,14 @@ class Simple_Comment_Editing {
 	 	//Check if there are any cookies present, otherwise don't load the scripts - WPAC_PLUGIN_NAME is for wp-ajaxify-comments (if the plugin is installed, load the JavaScript file)
 	 	
 	 	/**
-		* Filter: sce_load_scripts
-		*
-		* Boolean to decide whether to load SCE scripts or not
-		*
-		* @since 1.5.0
-		*
-		* @param bool  true to load scripts, false not
-		*/
+		 * Filter: sce_load_scripts
+		 *
+		 * Boolean to decide whether to load SCE scripts or not
+		 *
+		 * @since 1.5.0
+		 *
+		 * @param bool  true to load scripts, false not
+		 */
 	 	$load_scripts = apply_filters( 'sce_load_scripts', false );
 	 	if ( !$load_scripts ) return;
 	 	
@@ -285,18 +285,30 @@ class Simple_Comment_Editing {
 	 	require_once( 'class-sce-timer.php' );
 	 	$timer_internationalized = new SCE_Timer();
 	 	wp_enqueue_script( 'wp-hooks', $hooks_script_url, array(), '20151103', true ); //https://core.trac.wordpress.org/attachment/ticket/21170/21170-2.patch
-	 	wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery', 'wp-ajax-response' ), '20151021', true );
+	 	wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery', 'wp-ajax-response' ), '20170917', true );
+	 	
+	 	/**
+		 * Filter: sce_allow_delete_confirmation
+		 *
+		 * Boolean to decide whether to show a delete confirmation
+		 *
+		 * @since 2.1.7
+		 *
+		 * @param bool true to show a confirmation, false if not
+		 */
+	 	$allow_delete_confirmation = (bool)apply_filters( 'sce_allow_delete_confirmation', true );
 	 	
 	 	wp_localize_script( 'simple-comment-editing', 'simple_comment_editing', array(
-	 		'and'                   => __( 'and', 'simple-comment-editing' ),
-	 		'confirm_delete'        => __( 'Do you want to delete this comment?', 'simple-comment-editing' ),
-	 		'comment_deleted'       => __( 'Your comment has been removed.', 'simple-comment-editing' ),
-	 		'comment_deleted_error' => __( 'Your comment could not be deleted', 'simple-comment-editing' ),
-	 		'empty_comment'         => $this->errors->get_error_message( 'comment_empty' ),
-	 		'allow_delete'          => $this->allow_delete,
-	 		'timer'                 => $timer_internationalized->get_timer_vars(),
-	 		'ajax_url'              => admin_url( 'admin-ajax.php', $this->scheme ),
-	 		'nonce'                 => wp_create_nonce( 'sce-general-ajax-nonce' ),
+	 		'and'                       => __( 'and', 'simple-comment-editing' ),
+	 		'confirm_delete'            => __( 'Do you want to delete this comment?', 'simple-comment-editing' ),
+	 		'comment_deleted'           => __( 'Your comment has been removed.', 'simple-comment-editing' ),
+	 		'comment_deleted_error'     => __( 'Your comment could not be deleted', 'simple-comment-editing' ),
+	 		'empty_comment'             => $this->errors->get_error_message( 'comment_empty' ),
+	 		'allow_delete'              => $this->allow_delete,
+	 		'allow_delete_confirmation' => $allow_delete_confirmation,
+	 		'timer'                     => $timer_internationalized->get_timer_vars(),
+	 		'ajax_url'                  => admin_url( 'admin-ajax.php', $this->scheme ),
+	 		'nonce'                     => wp_create_nonce( 'sce-general-ajax-nonce' ),
 	 	) );
 	 } //end add_scripts
 	 

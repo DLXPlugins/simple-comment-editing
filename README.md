@@ -21,10 +21,10 @@ The biggest differences:
 
 ## Frequently Asked Questions
 
-###Why doesn't this plugin come with any styles?
+### Why doesn't this plugin come with any styles?
 It's impossible to style an inline comment editor for every theme.  We've included basic HTML markup that is easily stylable to fit your theme.
 
-### Where are the options? =
+### Where are the options?
 No options :) - Just simple comment editing.
 
 ### I want to style the editing interface.  Where do I start?
@@ -119,9 +119,27 @@ Example:
 
 ```php
 // Disable delete functionality
-add_filter( 'sce_allow_delete', function( $can_delete ) {
-	return false;
-} );
+add_filter( 'sce_allow_delete', '__return_false' );
+```
+
+### sce_allow_delete_confirmation - Whether to show a delete confirmation or not
+
+```php
+/**
+ * Filter: sce_allow_delete_confirmation
+ *
+ * Boolean to decide whether to show a delete confirmation
+ *
+ * @since 2.1.7
+ *
+ * @param bool true to show a confirmation, false if not
+ */
+```
+
+Example:
+
+```php
+add_filter( 'sce_allow_delete_confirmation', '__return_false' );
 ```
 
 ### sce_get_comment - Add extra data to the comment object 
