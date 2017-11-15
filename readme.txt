@@ -2,8 +2,8 @@
 Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 4.1
-Tested up to: 4.8
-Stable tag: 2.1.5
+Tested up to: 4.9
+Stable tag: 2.1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/contribute/
@@ -53,6 +53,10 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 2. Textarea and Save/Cancel buttons.
 
 == Changelog ==
+
+= 2.1.7 =
+* Released 2017-11-15
+* Added filter to remove the delete comment notifications
 
 = 2.1.5 = 
 * Released 2017-01-20
