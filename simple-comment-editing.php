@@ -826,9 +826,11 @@ class Simple_Comment_Editing {
 		
 		//Get hash and random security key - Stored in the style of Ajax Edit Comments
 		$comment_author_ip = $comment_date_gmt = '';
-		if ( isset( $_SERVER[ 'REMOTE_ADDR' ] ) ) {
-			$comment_author_ip = $_SERVER[ 'REMOTE_ADDR' ];	
-		}
+		if( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
+                	$comment_author_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+	        } elseif( isset( $_SERVER['REMOTE_ADDR'] ) ) {
+        	        $comment_author_ip = $_SERVER['REMOTE_ADDR'];
+        	}	
 		$comment_date_gmt = current_time( 'Y-m-d', 1 );
 		$user_agent = substr( isset( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '', 0, 254 );
 		$hash = md5( $comment_author_ip . $comment_date_gmt . $this->get_user_id() . $user_agent );
