@@ -682,7 +682,7 @@ class Simple_Comment_Editing {
 
 		// if we are logged in and are the comment author, bypass cookie check
 		$user_id = $this->get_user_id();
-		if ( $post->post_author == $user_id || $comment->user_id == $user_id ) {
+		if ( 0 != $user_id && ( $post->post_author == $user_id || $comment->user_id == $user_id ) ) {
 			$cookie_bypass = true;
 		}
 
@@ -731,6 +731,7 @@ class Simple_Comment_Editing {
 	public function comment_posted( $comment_id ) {
 		$comment = get_comment( $comment_id, OBJECT );
 		$post_id = $comment->comment_post_ID;
+		$post = get_post( $post_id, OBJECT );
 		$comment_status = $comment->comment_approved;
 		
 		//Do some initial checks to weed out those who shouldn't be able to have editable comments
@@ -743,7 +744,8 @@ class Simple_Comment_Editing {
 		$cookie_bypass = apply_filters( 'sce_can_edit_cookie_bypass', false, $comment, $comment_id, $post_id );
 		
 		// if we are logged in and are the comment author, bypass cookie check
-		if ( $comment->user_id != 0 && $comment->user_id == $this->get_user_id() ) {
+		$user_id = $this->get_user_id();
+		if ( 0 != $user_id && ( $post->post_author == $user_id || $comment->user_id == $user_id ) ) {
 			$cookie_bypass = true;
 		}
 		if ( ! defined( 'DOING_AJAX' ) && ! defined( 'EPOCH_API' ) ) {
