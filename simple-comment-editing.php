@@ -666,14 +666,17 @@ class Simple_Comment_Editing {
 		if ( $comment->comment_post_ID != $post_id ) return false;
 
 		/**
-		* Filter: sce_can_edit_cookie_bypass
-		*
-		* Bypass the cookie based user verification.
-		*
-		* @since 2.0.0
-		*
-		* @param boolean Whether
-		*/
+		 * Filter: sce_can_edit_cookie_bypass
+		 *
+		 * Bypass the cookie based user verification.
+		 *
+		 * @since 2.2.0
+		 *
+		 * @param boolean            Whether to bypass cookie authentication
+		 * @param object $comment    Comment object
+		 * @param int    $comment_id The comment ID
+		 * @param int    $post_id    The post ID of the comment
+		 */
 		$cookie_bypass = apply_filters( 'sce_can_edit_cookie_bypass', false, $comment, $comment_id, $post_id );
 
 		// if we are logged in and are the comment author, bypass cookie check
@@ -681,14 +684,14 @@ class Simple_Comment_Editing {
 			$cookie_bypass = true;
 		}
 
-		if ( false === $cookie_bypass ) {
+		//Check to see if time has elapsed for the comment
+		$comment_timestamp = strtotime( $comment->comment_date );
+		$time_elapsed = current_time( 'timestamp', get_option( 'gmt_offset' ) ) - $comment_timestamp;
+		$minutes_elapsed = ( ( ( $time_elapsed % 604800 ) % 86400 )  % 3600 ) / 60;
+		if ( ( $minutes_elapsed - $this->comment_time ) >= 0 ) return false;
 
-			//Check to see if time has elapsed for the comment
-			$comment_timestamp = strtotime( $comment->comment_date );
-			$time_elapsed = current_time( 'timestamp', get_option( 'gmt_offset' ) ) - $comment_timestamp;
-			$minutes_elapsed = ( ( ( $time_elapsed % 604800 ) % 86400 )  % 3600 ) / 60;
-		
-			if ( ( $minutes_elapsed - $this->comment_time ) >= 0 ) return false;
+		if ( false === $cookie_bypass ) {
+			// Set cookies for verification
 			$comment_date_gmt = date( 'Y-m-d', strtotime( $comment->comment_date_gmt ) );
 			$cookie_hash = md5( $comment->comment_author_IP . $comment_date_gmt . $comment->user_id . $comment->comment_agent );
 
@@ -735,8 +738,16 @@ class Simple_Comment_Editing {
 		$this->remove_security_keys();
 		
 		//Don't set a cookie if a comment is posted via Ajax
+		$cookie_bypass = apply_filters( 'sce_can_edit_cookie_bypass', false, $comment, $comment_id, $post_id );
+		
+		// if we are logged in and are the comment author, bypass cookie check
+		if ( $comment->user_id != 0 && $comment->user_id == $this->get_user_id() ) {
+			$cookie_bypass = true;
+		}
 		if ( ! defined( 'DOING_AJAX' ) && ! defined( 'EPOCH_API' ) ) {
-			 $this->generate_cookie_data( $post_id, $comment_id, 'setcookie' );
+			if( false === $cookie_bypass ) {
+				$this->generate_cookie_data( $post_id, $comment_id, 'setcookie' );
+			}
 		}
 		
 		
