@@ -659,9 +659,10 @@ class Simple_Comment_Editing {
 	 * @return bool true if can edit, false if not
 	 */
 	public function can_edit( $comment_id, $post_id ) {
-		global $comment;
+		global $comment, $post;
 
 		if ( !is_object( $comment ) ) $comment = get_comment( $comment_id, OBJECT );
+		if ( !is_object( $post ) ) $post = get_post( $post_id, OBJECT );
 
 		if ( $comment->comment_post_ID != $post_id ) return false;
 
@@ -680,7 +681,8 @@ class Simple_Comment_Editing {
 		$cookie_bypass = apply_filters( 'sce_can_edit_cookie_bypass', false, $comment, $comment_id, $post_id );
 
 		// if we are logged in and are the comment author, bypass cookie check
-		if ( $comment->user_id != 0 && $comment->user_id == $this->get_user_id() ) {
+		$user_id = $this->get_user_id();
+		if ( $post->post_author == $user_id || $comment->user_id == $user_id ) {
 			$cookie_bypass = true;
 		}
 
