@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 4.1
 Tested up to: 4.9
-Stable tag: 2.2.0
+Stable tag: 2.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/contribute/
@@ -53,6 +53,10 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 2. Textarea and Save/Cancel buttons.
 
 == Changelog ==
+
+= 2.2.1 =
+* Released 2018-10-21
+* Added CSS around seperator so it can be hidden
 
 = 2.2.0 =
 * Released 2018-10-13
@@ -268,8 +272,11 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 
 == Upgrade Notice ==
 
-= 2.0.0 =
-Allow logged in users (author of the post) t
+= 2.2.1 =
+Added CSS around seperator so it can be hidden
+
+= 2.2.0 =
+Allow logged in users (author of the post) to bypass cookie authentication
 
 == Customization ==
 
