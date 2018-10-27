@@ -1,6 +1,5 @@
 var __ = wp.i18n.__;
 var _n = wp.i18n._n;
-
 jQuery( document ).ready( function( $ ) {
 	var sce = $.simplecommentediting = $.fn.simplecommentediting = function() {
 		var $this = this;
@@ -251,13 +250,39 @@ jQuery( document ).ready( function( $ ) {
 		//Create timer text
 		var text = '';
 		if (minutes >= 1) {
-			text += minutes + " " + _n('minute', 'minutes', minutes, 'simple-comment-editing');
-			if ( seconds > 0 ) { 
-				text += " " + __('and', 'simple-comment-editing') + " "; 
+
+			// Get mniutes in seconds
+			var minute_to_seconds = Math.abs(minutes * 60);
+			var days = Math.floor(minute_to_seconds / 86400);
+
+			// Get Days
+			if( days > 0 ) {
+				// Get days
+				text += days + " " + _n('day', 'days', days, 'simple-comment-editing');
+				text += " " + ', ' + " ";
+				minute_to_seconds -= days * 86400;
 			}
-		}
-		if (seconds > 0) {
-			text += seconds + " " + _n('second', 'seconds', seconds, 'simple-comment-editing'); 
+
+			// Get hours
+			var hours = Math.floor(minute_to_seconds / 3600) % 24;
+			if( hours >= 0 ) {
+				text += hours + " " + _n('hour', 'hours', hours, 'simple-comment-editing');
+				text += " " + ', ' + " ";
+				minute_to_seconds -= hours * 3600;
+			}
+
+			// Get minutes
+			var minutes = Math.floor(minute_to_seconds / 60) % 60;
+			minute_to_seconds -= minutes;
+			if( minutes >= 0 ) {
+				text += minutes + " " + _n('minute', 'minutes', minutes, 'simple-comment-editing');
+			}
+
+			// Get seconds
+			if ( seconds > 0 ) { 
+				text += " " + __('and', 'simple-comment-editing') + " ";
+				text += seconds + " " + _n('second', 'seconds', seconds, 'simple-comment-editing'); 
+			}
 		}
 		/**
 		* JSFilter: sce.comment.timer.text
