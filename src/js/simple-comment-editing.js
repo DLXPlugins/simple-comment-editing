@@ -1,8 +1,8 @@
-var __ = wp.i8nn.__;
+var __ = wp.i18n.__;
 var _n = wp.i18n._n;
 
 jQuery( document ).ready( function( $ ) {
-	sce = $.simplecommentediting = $.fn.simplecommentediting = function() {
+	var sce = $.simplecommentediting = $.fn.simplecommentediting = function() {
 		var $this = this;
 		return this.each( function() {
 			var ajax_url = $( this ).find( 'a:first' ).attr( 'href' );
@@ -212,8 +212,8 @@ jQuery( document ).ready( function( $ ) {
 					time: 0,
 					timer: function() {
 						
-						timer_seconds = sce.timers[ response.comment_id ].seconds - 1;
-						timer_minutes = sce.timers[ response.comment_id ].minutes;
+						var timer_seconds = sce.timers[ response.comment_id ].seconds - 1;
+						var timer_minutes = sce.timers[ response.comment_id ].minutes;
 						if ( timer_minutes <=0 && timer_seconds <= 0) { 
 							
 							//Remove event handlers
@@ -251,13 +251,13 @@ jQuery( document ).ready( function( $ ) {
 		//Create timer text
 		var text = '';
 		if (minutes >= 1) {
-			text += minutes + " " + _n('Minute', 'Minutes', minutes, 'simple-comment-editing');
+			text += minutes + " " + _n('minute', 'minutes', minutes, 'simple-comment-editing');
 			if ( seconds > 0 ) { 
 				text += " " + __('and', 'simple-comment-editing') + " "; 
 			}
 		}
 		if (seconds > 0) {
-			text += seconds + " " + _n('Second', 'Seconds', seconds, 'simple-comment-editing'); 
+			text += seconds + " " + _n('second', 'seconds', seconds, 'simple-comment-editing'); 
 		}
 		/**
 		* JSFilter: sce.comment.timer.text
@@ -268,7 +268,7 @@ jQuery( document ).ready( function( $ ) {
 		*
 		* @param object $ajax_save_params
 		*/
-		text = wp.hooks.applyFilters( 'sce.comment.timer.text', text,  _n('Minute', 'Minutes', minutes, 'simple-comment-editing'), _n('Second', 'Seconds', seconds, 'simple-comment-editing') );
+		text = wp.hooks.applyFilters( 'sce.comment.timer.text', text,  _n('minute', 'minutes', minutes, 'simple-comment-editing'), _n('second', 'seconds', seconds, 'simple-comment-editing') );
 		return text;
 	};
 	sce.set_comment_cookie = function( pid, cid, callback ) {

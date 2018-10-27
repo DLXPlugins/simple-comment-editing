@@ -226,14 +226,13 @@ gulp.task('vendor', function(){
 
 gulp.task("babel", function () {
     return gulp.src(babelPaths)
-		.pipe(babel({ presets: ['babel-preset-env'] }))
+		.pipe(babel({ presets: ['idempotent-babel-polyfill', 'es2015', 'stage-0'] }))
         .pipe(gulp.dest("dist/js"));
 });
-
 gulp.task('babel_min', function(){
 	return gulp.src(babelPaths)
 		.pipe(sourcemaps.init())
-		.pipe(babel({ sourceType :"module", presets: ['babel-preset-env'] }))
+		.pipe(babel({ sourceType :"module", presets: ['idempotent-babel-polyfill', 'es2015', 'stage-0'] }))
         .pipe(babelMinify())
         .pipe(plumber(reportError))
         .pipe(rename({suffix: '.min'}))

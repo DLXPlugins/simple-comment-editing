@@ -1,22 +1,12 @@
 'use strict';
 
-var _iterator = require('babel-runtime/core-js/symbol/iterator');
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _iterator2 = _interopRequireDefault(_iterator);
-
-var _symbol = require('babel-runtime/core-js/symbol');
-
-var _symbol2 = _interopRequireDefault(_symbol);
-
-var _typeof = typeof _symbol2.default === "function" && typeof _iterator2.default === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj; };
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var __ = wp.i8nn.__;
+var __ = wp.i18n.__;
 var _n = wp.i18n._n;
 
 jQuery(document).ready(function ($) {
-	sce = $.simplecommentediting = $.fn.simplecommentediting = function () {
+	var sce = $.simplecommentediting = $.fn.simplecommentediting = function () {
 		var $this = this;
 		return this.each(function () {
 			var ajax_url = $(this).find('a:first').attr('href');
@@ -225,8 +215,8 @@ jQuery(document).ready(function ($) {
 					time: 0,
 					timer: function timer() {
 
-						timer_seconds = sce.timers[response.comment_id].seconds - 1;
-						timer_minutes = sce.timers[response.comment_id].minutes;
+						var timer_seconds = sce.timers[response.comment_id].seconds - 1;
+						var timer_minutes = sce.timers[response.comment_id].minutes;
 						if (timer_minutes <= 0 && timer_seconds <= 0) {
 
 							//Remove event handlers
@@ -264,13 +254,13 @@ jQuery(document).ready(function ($) {
 		//Create timer text
 		var text = '';
 		if (minutes >= 1) {
-			text += minutes + " " + _n('Minute', 'Minutes', minutes, 'simple-comment-editing');
+			text += minutes + " " + _n('minute', 'minutes', minutes, 'simple-comment-editing');
 			if (seconds > 0) {
 				text += " " + __('and', 'simple-comment-editing') + " ";
 			}
 		}
 		if (seconds > 0) {
-			text += seconds + " " + _n('Second', 'Seconds', seconds, 'simple-comment-editing');
+			text += seconds + " " + _n('second', 'seconds', seconds, 'simple-comment-editing');
 		}
 		/**
   * JSFilter: sce.comment.timer.text

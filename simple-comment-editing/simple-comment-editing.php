@@ -945,6 +945,7 @@ class Simple_Comment_Editing {
 		*/
 		$comment_time = absint( apply_filters( 'sce_comment_time', 5 ) );
 		$this->comment_time = $comment_time;
+		return 300000;
 		return $this->comment_time;
 	}
 	
