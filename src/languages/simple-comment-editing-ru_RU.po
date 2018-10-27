@@ -1,0 +1,72 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: POEditor.com\n"
+"Project-Id-Version: Simple Comment Editing\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: ../index.php:37
+msgid "You do not have permission to edit this comment."
+msgstr "У Вас недостаточно прав для изменения этого комментария"
+
+#: ../index.php:38
+msgid "You can no longer edit this comment"
+msgstr "Вы больше не можете редактировать этот комментарий"
+
+#: ../index.php:39
+msgid "Your comment cannot be empty"
+msgstr "Комментарий не может быть пустым"
+
+#: ../index.php:40
+msgid "This comment was marked as spam"
+msgstr "Этот комментарий был отмечен как спам"
+
+#: ../index.php:133
+msgid "Click to Edit"
+msgstr "Редактировать"
+
+#: ../index.php:139
+msgid "Loading"
+msgstr "идет загрузка..."
+
+#: ../index.php:163
+msgid "Save"
+msgstr "Сохранить"
+
+#: ../index.php:164
+msgid "Cancel"
+msgstr "Отменить"
+
+#: ../class-sce-timer.php:71
+msgid "minute"
+msgid_plural "minutes"
+msgstr[0] "минута"
+msgstr[1] "минуты"
+msgstr[2] "минут"
+
+#: ../index.php:243
+msgid "and"
+msgstr "и"
+
+#: ../class-sce-timer.php:89
+msgid "second"
+msgid_plural "seconds"
+msgstr[0] "секунда"
+msgstr[1] "секунды"
+msgstr[2] "секунд"
+
+#: ../index.php:244
+msgid "Do you want to delete this comment?"
+msgstr "Вы хотите удалить этот комментарий?"
+
+#: ../index.php:245
+msgid "Your comment has been removed."
+msgstr "Комментарий удалён"
+
+#: ../index.php:165
+msgid "Delete"
+msgstr "Удалить"
+

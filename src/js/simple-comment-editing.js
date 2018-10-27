@@ -1,3 +1,6 @@
+var __ = wp.i8nn.__;
+var _n = wp.i18n._n;
+
 jQuery( document ).ready( function( $ ) {
 	sce = $.simplecommentediting = $.fn.simplecommentediting = function() {
 		var $this = this;
@@ -38,11 +41,11 @@ jQuery( document ).ready( function( $ ) {
 				$( element ).parent().remove();
 				$.post( ajax_url, { action: 'sce_delete_comment', comment_id: ajax_params.cid, post_id: ajax_params.pid, nonce: ajax_params._wpnonce }, function( response ) {
 						if ( response.errors ) {
-							alert( simple_comment_editing.comment_deleted_error );
+							alert( __( 'Your comment could not be deleted', 'simple-comment-editing' ) );
 							$( element ).siblings( '.sce-textarea' ).on();	
 							$( element ).on();
 						} else {
-							$( '#sce-edit-comment-status' + ajax_params.cid ).removeClass().addClass( 'sce-status updated' ).html( simple_comment_editing.comment_deleted ).show();
+							$( '#sce-edit-comment-status' + ajax_params.cid ).removeClass().addClass( 'sce-status updated' ).html( __( 'Your comment has been removed.', 'simple-comment-editing' ) ).show();
 							setTimeout( function() { $( "#comment-" + ajax_params.cid ).slideUp(); }, 3000 ); //Attempt to remove the comment from the theme interface
 						}
 						
@@ -53,7 +56,7 @@ jQuery( document ).ready( function( $ ) {
     			e.preventDefault();
     			
     			if ( simple_comment_editing.allow_delete_confirmation ) {
-	    			if( confirm( simple_comment_editing.confirm_delete ) ) {
+	    			if( confirm( __( 'Do you want to delete this comment?', 'simple-comment-editing' ) ) ) {
 		    			sce_delete_comment( element, ajax_params );
 	    			}
     			} else {
@@ -79,7 +82,7 @@ jQuery( document ).ready( function( $ ) {
 					
 					//If the comment is blank, see if the user wants to delete their comment
 					if ( comment_to_save == '' && simple_comment_editing.allow_delete == true  ) {
-						if ( confirm( simple_comment_editing.confirm_delete ) ) {
+						if ( confirm( __( 'Do you want to delete this comment?', 'simple-comment-editing' ) ) ) {
     						sce_delete_comment( element, ajax_params );
 							return;
 						} else {
@@ -88,11 +91,6 @@ jQuery( document ).ready( function( $ ) {
 								$( element ).fadeIn( 'fast' );
 							} );
 							return;
-							/*
-							//todo - still buggy - defaults to ajax call / error message for now
-							alert( simple_comment_editing.empty_comment );
-							return;
-							*/
 						}
 					}
 					
@@ -253,13 +251,13 @@ jQuery( document ).ready( function( $ ) {
 		//Create timer text
 		var text = '';
 		if (minutes >= 1) {
-			text += minutes + " " + simple_comment_editing.timer.minutes[ minutes ];
+			text += minutes + " " + _n('Minute', 'Minutes', minutes, 'simple-comment-editing');
 			if ( seconds > 0 ) { 
-				text += " " + simple_comment_editing.and + " "; 
+				text += " " + __('and', 'simple-comment-editing') + " "; 
 			}
 		}
 		if (seconds > 0) {
-			text += seconds + " " + simple_comment_editing.timer.seconds[ seconds ]; 
+			text += seconds + " " + _n('Second', 'Seconds', seconds, 'simple-comment-editing'); 
 		}
 		/**
 		* JSFilter: sce.comment.timer.text
@@ -270,7 +268,7 @@ jQuery( document ).ready( function( $ ) {
 		*
 		* @param object $ajax_save_params
 		*/
-		text = wp.hooks.applyFilters( 'sce.comment.timer.text', text,  simple_comment_editing.timer.minutes[ minutes ], simple_comment_editing.timer.seconds[ seconds ], minutes, seconds );
+		text = wp.hooks.applyFilters( 'sce.comment.timer.text', text,  _n('Minute', 'Minutes', minutes, 'simple-comment-editing'), _n('Second', 'Seconds', seconds, 'simple-comment-editing') );
 		return text;
 	};
 	sce.set_comment_cookie = function( pid, cid, callback ) {

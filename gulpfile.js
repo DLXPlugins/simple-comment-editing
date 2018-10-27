@@ -29,61 +29,72 @@ var postcss = require('gulp-postcss');
 var sass = require('gulp-sass');
 var colorize = require('chalk');
 var notify = require("gulp-notify");
+var babelify = require("babelify");
+var browserify = require("browserify");
 
 // Webpack paths
-var JS_SOURCE_DIR = path.resolve(__dirname, 'js');
-var JS_BUILD_DIR = path.resolve(__dirname, 'js');
+var CSS_SOURCE_DIR = path.resolve(__dirname, 'src/css');
+var CSS_BUILD_DIR = path.resolve(__dirname, 'dist/css');
+var JS_SOURCE_DIR = path.resolve(__dirname, 'src/js');
+var JS_BUILD_DIR = path.resolve(__dirname, 'dist/js');
 
 var webpackJSPaths = [
-	'js/**/*.js'
+	'src/js/**/*.js'
+];
+
+var webpackCSSPaths = [
+	'src/css/**/*.css',
+	'src/css/**/*.scss'
 ];
 
 var languagePaths = [
-	'/**/*.mo',
-	'/**/*.po',
+	'src/**/*.mo',
+	'src/**/*.po',
 ];
 
 
 // set clean paths
-var cleanPaths = [,
+var cleanPaths = [
+	'dist/*',
 	'simple-comment-editing.zip'
 ];
 
 var phpPaths = [
-	'/**/*.php'
+	'src/**/*.php'
 ];
 
 var jsPaths = [
-	'/js/*.js',
+	'src/js/*.js',
+	'!src/js/*.js'
 ];
 
 var imgPaths = [
-	'images/**/*.png',
-	'images/**/*.gif',
-	'images/**/*.jpg',
-	'images/**/*.svg',
+	'src/**/*.png',
+	'src/**/*.gif',
+	'src/**/*.jpg',
+	'src/**/*.svg',
 ];
 
 var scssPaths = [
-	'/css/**/*.scss',
+	'src/css/**/*.scss',
 ];
 
 var cssPaths = [
-	'/css/*.css'
+	'src/css/*.css'
 ];
 
 var htmlPaths = [
-	'/**/*.html'
+	'src/**/*.html'
 ];
 
 var miscPaths = [
-	'/**/*.txt',
-	'/**/*.md',
-	'/.babelrc'
+	'src/**/*.txt',
+	'src/**/*.md',
+	'src/.babelrc'
 ];
 
 var babelPaths = [
-    '/js/*.js'
+    'src/js/*.js'
 ];
 
 //build type
@@ -100,34 +111,35 @@ gulp.copy = function (src, dest) {
 
 /* ==Translations=== */
 gulp.task('pot', function () {
-	return gulp.src(['/**/*.php', '/**/*.js'])
+	return gulp.src(['src/**/*.php', 'src/**/*.js'])
 	.pipe(plumber(reportError))
 	.pipe(sort())
 	.pipe(wpPot({
 		domain: 'simple-comment-editing',
 		destFile:'simple-comment-editing.pot',
-		package: 'Simple Comment Editing',
+		package: 'Metronet Tag Manager',
 		bugReport: 'https://wordpress.org/plugins/simple-comment-editing/',
 		lastTranslator: 'Ronald Huerca <ronald@mediaron.com>',
 		team: 'Ronald Huereca <ronald@mediaron.com'
 	}))
-	.pipe(gulp.dest('/languages'))
+	.pipe(gulp.dest('src/languages'))
+	.pipe(gulp.dest('dist/languages'));
 });
 
 /* ==Translations=== */
 gulp.task('move_mo_files', function () {
-	return gulp.src('/**/*.mo')
+	return gulp.src('src/**/*.mo')
 	.pipe(plumber(reportError))
 	.pipe(sort())
-	.pipe(gulp.dest('/'));
+	.pipe(gulp.dest('dist/'));
 });
 
 /* ==Translations=== */
 gulp.task('move_po_files', function () {
-	return gulp.src('/**/*.po')
+	return gulp.src('src/**/*.po')
 	.pipe(plumber(reportError))
 	.pipe(sort())
-	.pipe(gulp.dest('/'));
+	.pipe(gulp.dest('dist/'));
 });
 
 /* ===Sorting SCSS=== */
@@ -143,14 +155,14 @@ gulp.task('scss_compile', function(){
 	.pipe(rename({suffix: '.min'}))
 	.pipe(sourcemaps.write('.'))
 	.pipe(plumber.stop())
-	.pipe(gulp.dest('css'));
+	.pipe(gulp.dest('dist/css'));
 });
 
 /* ==CSS== */
 gulp.task('css_move', function () {
 	return gulp.src(cssPaths)
 		.pipe(plumber(reportError))
-		.pipe(gulp.dest('css'));
+		.pipe(gulp.dest('dist/css'));
 });
 
 gulp.task('css_min', function() {
@@ -163,28 +175,28 @@ gulp.task('css_min', function() {
         .pipe(rename({suffix: '.min'}))
         .pipe(sourcemaps.write('.'))
         .pipe(plumber.stop())
-        .pipe(gulp.dest('css'));
+        .pipe(gulp.dest('dist/css'));
 });
 
 /* ==JS== */
 gulp.task('js_move', function () {
     return gulp.src(jsPaths)
         .pipe(plumber(reportError))
-        .pipe(gulp.dest('js'));
+        .pipe(gulp.dest('dist/js'));
 });
 
 /* ==Images=== */
 gulp.task('imgs_move', function () {
 	return gulp.src(imgPaths)
 		.pipe(plumber(reportError))
-		.pipe(gulp.dest('images'));
+		.pipe(gulp.dest('dist'));
 });
 
 /* ==TXT=== */
 gulp.task('misc_move', function () {
 	return gulp.src(miscPaths)
 		.pipe(plumber(reportError))
-		.pipe(gulp.dest('/'));
+		.pipe(gulp.dest('dist'));
 });
 
 
@@ -192,14 +204,21 @@ gulp.task('misc_move', function () {
 gulp.task('html_move', function () {
 	return gulp.src(htmlPaths)
 		.pipe(plumber(reportError))
-		.pipe(gulp.dest('/'));
+		.pipe(gulp.dest('dist'));
 });
 
 // /* ====Sorting PHP======= */
 gulp.task('php_move', function () {
 	return gulp.src(phpPaths)
 		.pipe(plumber(reportError))
-		.pipe(gulp.dest('/'));
+		.pipe(gulp.dest('dist'));
+});
+
+/* ====Moving Vendor======= */
+gulp.task('vendor', function(){
+	return gulp.src('vendor/**')
+	.pipe(plumber(reportError))
+	.pipe(gulp.dest('dist/vendor/'));
 });
 
 
@@ -208,28 +227,27 @@ gulp.task('php_move', function () {
 gulp.task("babel", function () {
     return gulp.src(babelPaths)
 		.pipe(babel({ presets: ['babel-preset-env'] }))
-        .pipe(gulp.dest("js"));
+        .pipe(gulp.dest("dist/js"));
 });
 
 gulp.task('babel_min', function(){
 	return gulp.src(babelPaths)
 		.pipe(sourcemaps.init())
-		.pipe(babel({ presets: ['babel-preset-env'] }))
-        .pipe(plumber(reportError))
+		.pipe(babel({ sourceType :"module", presets: ['babel-preset-env'] }))
         .pipe(babelMinify())
         .pipe(plumber(reportError))
         .pipe(rename({suffix: '.min'}))
 		.pipe(plumber(reportError))
 		.pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('js'));
+        .pipe(gulp.dest('dist/js'));
 });
 
 
 gulp.task('check_upgrade_notice', function() {
-    gulp.src('readme.txt')
+    gulp.src('src/readme.txt')
       .pipe(gulpFn(function(file) {
 			// Read the readme
-			var text = fs.readFileSync('readme.txt', "utf8");
+			var text = fs.readFileSync('src/readme.txt', "utf8");
 
 			// Grab the stable version number
 			var stableTagRegex = /Stable tag: ([0-9.]*)/;
@@ -284,7 +302,7 @@ gulp.task('build_zip', function () {
 });
 
 gulp.task('clean_zip', function () {
-	return gulp.src('simple-comment-editing', { read: false }).pipe(clean())
+	return gulp.src('metronget-tag-manager', { read: false }).pipe(clean())
 		.pipe(plumber(reportError));
 });
 
@@ -304,7 +322,6 @@ gulp.task('build', function (done) {
 	runSequence(['clean'],
 		['build_type'],
 		['imgs_move', 'misc_move', 'html_move', 'php_move', 'scss_compile', 'css_move', 'css_min'],
-		['gutenberg', 'gutenbergmin'],
 		['babel', 'babel_min'],
 		['check_upgrade_notice'],
 		['pot'],
@@ -333,10 +350,10 @@ gulp.task('zip', function(done) {
 
 /*== Watch ==*/
 gulp.task('watch', function () {
-	gulp.watch(phpPaths, { interval: 500 }, function (event) { file_watcher(event, '/') });
-	gulp.watch(jsPaths, { interval: 500 }, function (event) { file_watcher(event, '/') });
-	gulp.watch(cssPaths, { interval: 500 }, function (event) { file_watcher(event, '/') });
-	gulp.watch(htmlPaths, { interval: 500 }, function (event) { file_watcher(event, '/') });
+	gulp.watch(phpPaths, { interval: 500 }, function (event) { file_watcher(event, 'src') });
+	gulp.watch(jsPaths, { interval: 500 }, function (event) { file_watcher(event, 'src') });
+	gulp.watch(cssPaths, { interval: 500 }, function (event) { file_watcher(event, 'src') });
+	gulp.watch(htmlPaths, { interval: 500 }, function (event) { file_watcher(event, 'src') });
 	gulp.watch(scssPaths, ['scss_compile']);
 	gulp.watch(babelPaths, ['babel', 'babel_min']);
 	gulp.watch(languagePaths, ['move_po_files', 'move_mo_files']);

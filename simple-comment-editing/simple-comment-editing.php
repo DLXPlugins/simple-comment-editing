@@ -282,10 +282,20 @@ class Simple_Comment_Editing {
 	 			$hooks_script_url = $this->get_plugin_url( '/js/event-manager.js' );
 	 		}
 	 	}
-	 	require_once( 'class-sce-timer.php' );
-	 	$timer_internationalized = new SCE_Timer();
 	 	wp_enqueue_script( 'wp-hooks', $hooks_script_url, array(), '20151103', true ); //https://core.trac.wordpress.org/attachment/ticket/21170/21170-2.patch
-	 	wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery', 'wp-ajax-response' ), '20180209', true );
+		 wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery', 'wp-ajax-response', 'wp-i18n' ), '20181026', true );
+		 
+		 /* For the Gutenberg plugin */
+		if ( function_exists( 'gutenberg_get_jed_locale_data' ) ) {
+			$locale  = gutenberg_get_jed_locale_data( 'simple-comment-editing' );
+			$content = 'wp.i18n.setLocaleData( ' . json_encode( $locale ) . ', "simple-comment-editing" );';
+			wp_script_add_data( 'simple-comment-editing', 'data', $content );
+		} elseif (function_exists('wp_get_jed_locale_data')) {
+			/* for 5.0 */
+			$locale  = wp_get_jed_locale_data( 'simple-comment-editing' );
+			$content = 'wp.i18n.setLocaleData( ' . json_encode( $locale ) . ', "simple-comment-editing" );';
+			wp_script_add_data( 'simple-comment-editing', 'data', $content );
+		}
 	 	
 	 	/**
 		 * Filter: sce_allow_delete_confirmation
@@ -306,7 +316,6 @@ class Simple_Comment_Editing {
 	 		'empty_comment'             => $this->errors->get_error_message( 'comment_empty' ),
 	 		'allow_delete'              => $this->allow_delete,
 	 		'allow_delete_confirmation' => $allow_delete_confirmation,
-	 		'timer'                     => $timer_internationalized->get_timer_vars(),
 	 		'ajax_url'                  => admin_url( 'admin-ajax.php', $this->scheme ),
 	 		'nonce'                     => wp_create_nonce( 'sce-general-ajax-nonce' ),
 	 	) );
@@ -935,11 +944,7 @@ class Simple_Comment_Editing {
 		* @param int  $minutes Time in minutes - Max 90 minutes
 		*/
 		$comment_time = absint( apply_filters( 'sce_comment_time', 5 ) );
-		if ( $comment_time > 90 ) {
-			$this->comment_time = 90; 	
-		} else {
-			$this->comment_time = $comment_time;
-		}
+		$this->comment_time = $comment_time;
 		return $this->comment_time;
 	}
 	

@@ -1,7 +1,7 @@
 {
-  "name": "emailoctopus",
+  "name": "simple-comment-editing",
   "version": "2.0.0",
-  "description": "EmailOctopus is the cheapest way to send your email marketing campaigns. Utilising the power of Amazon SES, the EmailOctopus platform allows you to send email marketing campaigns at a cost of up to 10x cheaper than other email marketing platforms.",
+  "description": "simple-comment-editing is the easiest way to edit comments in WordPress",
   "main": "gulpfile.js",
   "scripts": {
     "dev": "webpack -d --watch",
@@ -9,33 +9,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/threeheartsdigital/emailoctopus-wordpress-plugin"
+    "url": "https://wordpress.org/plugins/simple-comment-editing/"
   },
-  "author": "EmailOctopus",
+  "author": "simple-comment-editing",
   "license": "SEE LICENSE IN license.txt",
   "bugs": {
-    "url": "https://wordpress.org/plugins/emailoctopus/"
+    "url": "https://wordpress.org/plugins/simple-comment-editing/"
   },
-  "browserify": {
-    "transform": [
-      [
-        "babelify",
-        {
-          "presets": [
-            "es2016"
-          ]
-        }
-      ]
-    ]
-  },
-  "homepage": "https://emailoctopus.com/",
+  "homepage": "https://simple-comment-editing.com/",
   "devDependencies": {
-    "@babel/core": "^7.1.2",
-    "@babel/preset-env": "^7.1.0",
     "@wordpress/babel-plugin-makepot": "^2.1.2",
     "autoprefixer": "^8.5.0",
-    "babel": "^6.23.0",
-    "babel-core": "^6.26.3",
+    "babel-core": "^7.0.0.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-es2015-parameters": "^6.24.1",
@@ -44,9 +29,6 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
-    "babel-runtime": "^6.26.0",
-    "babelify": "^10.0.0",
-    "browserify": "^16.2.3",
     "chalk": "^2.4.1",
     "classnames": "^2.2.6",
     "concat-stream": "^1.6.2",
@@ -89,12 +71,12 @@
     "react-loaders": "^3.0.1",
     "run-sequence": "^2.2.1",
     "sass-loader": "^6.0.6",
-    "vinyl-source-stream": "^2.0.0",
     "webpack": "^3.12.0",
     "webpack-merge-and-include-globally": "^2.0.11",
     "webpack-stream": "^4.0.1"
   },
   "dependencies": {
+    "@babel/core": "^7.1.2",
     "@wordpress/i18n": "^3.0.1",
     "axios": "^0.18.0",
     "babel-preset-latest": "^6.24.1",
