@@ -1,9 +1,9 @@
 === Simple Comment Editing ===
 Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
-Requires at least: 4.1
-Tested up to: 4.9
-Stable tag: 2.2.1
+Requires at least: 5.0
+Tested up to: 5.0
+Stable tag: 2.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/contribute/
@@ -53,6 +53,12 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 2. Textarea and Save/Cancel buttons.
 
 == Changelog ==
+
+= 2.3.0 =
+* Released 2018-10-27
+* WordPress 5.0 compatible only
+* Enhancement: set the timer past the 90 minute mark
+* Enhancement: new filter to hide the timer
 
 = 2.2.1 =
 * Released 2018-10-21
@@ -271,6 +277,9 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.3.0 =
+Set the timer to whatever value you want (in minutes). WordPress 5.0 compatible only. Do not upgrade if you are not using WordPress 5.0.
 
 = 2.2.1 =
 Added CSS around seperator so it can be hidden

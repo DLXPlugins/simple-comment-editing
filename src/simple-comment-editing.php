@@ -141,8 +141,20 @@ class Simple_Comment_Editing {
 		$click_to_edit_text = apply_filters( 'sce_text_edit', __( 'Click to Edit', 'simple-comment-editing' ) );
 		
 		$sce_content .= sprintf( '<a href="%s">%s</a>', esc_url( $ajax_edit_url ), esc_html( $click_to_edit_text ) );
-		$sce_content .= '<span class="sce-seperator">&nbsp;&ndash;&nbsp;</span>';
-		$sce_content .= '<span class="sce-timer"></span>';
+		
+		/**
+		 * Filter: sce_show_timer
+		 *
+		 * Filter allow you to hide the timer
+		 *
+		 * @since 2.3.0
+		 *
+		 * @param bool Whether to show the timer or not
+		 */
+		if( apply_filters( 'sce_show_timer', true ) ) {
+			$sce_content .= '<span class="sce-seperator">&nbsp;&ndash;&nbsp;</span>';
+			$sce_content .= '<span class="sce-timer"></span>';
+		}
 		$sce_content .= '</div><!-- .sce-edit-button -->';
 		
 		//Loading button
@@ -208,7 +220,9 @@ class Simple_Comment_Editing {
 		$textarea_buttons = sprintf( '<button class="sce-comment-save">%s</button>', esc_html( $save_text ) );
 		$textarea_buttons .= sprintf( '<button class="sce-comment-cancel">%s</button>', esc_html( $cancel_text ) );
 		$textarea_buttons .= $this->allow_delete ? sprintf( '<button class="sce-comment-delete">%s</button>', esc_html( $delete_text ) ) : '';
-		$textarea_buttons .= '<div class="sce-timer"></div>';
+		if( apply_filters( 'sce_show_timer', true ) ) {
+			$textarea_buttons .= '<div class="sce-timer"></div>';
+		}
 		/**
 		* Filter: sce_buttons
 		*
