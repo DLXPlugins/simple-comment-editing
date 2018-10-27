@@ -282,7 +282,7 @@ function edit_sce_comment_time( $time_in_minutes ) {
 }
 ```
 
-### sce_comment_time - How long in minutes to allow comment editing
+### sce_show_timer - Show or hide the timer
 ```php
 /**
  * Filter: sce_show_timer
