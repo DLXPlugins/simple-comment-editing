@@ -261,7 +261,7 @@ jQuery( document ).ready( function( $ ) {
 			if( days > 0 ) {
 				// Get days
 				text += days + " " + _n('day', 'days', days, 'simple-comment-editing');
-				text += " " + ', ' + " ";
+				text += " " + __('and', 'simple-comment-editing') + " ";
 				minute_to_seconds -= days * 86400;
 			}
 
@@ -269,14 +269,14 @@ jQuery( document ).ready( function( $ ) {
 			var hours = Math.floor(minute_to_seconds / 3600) % 24;
 			if( hours >= 0 ) {
 				text += hours + " " + _n('hour', 'hours', hours, 'simple-comment-editing');
-				text += " " + ', ' + " ";
+				text += " " + __('and', 'simple-comment-editing') + " ";
 				minute_to_seconds -= hours * 3600;
 			}
 
 			// Get minutes
 			var minutes = Math.floor(minute_to_seconds / 60) % 60;
 			minute_to_seconds -= minutes;
-			if( minutes >= 0 ) {
+			if( minutes > 0 ) {
 				text += minutes + " " + _n('minute', 'minutes', minutes, 'simple-comment-editing');
 			}
 
