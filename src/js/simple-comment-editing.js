@@ -246,6 +246,8 @@ jQuery( document ).ready( function( $ ) {
 		} );
 	};
 	sce.get_timer_text = function( minutes, seconds ) {
+		var original_minutes = minutes;
+		var original_seconds = seconds;
 		if (seconds < 0) { minutes -= 1; seconds = 59; }
 		//Create timer text
 		var text = '';
@@ -291,9 +293,13 @@ jQuery( document ).ready( function( $ ) {
 		*
 		* @since 1.4.0
 		*
-		* @param object $ajax_save_params
+		* @param string comment text
+		* @param string minute text,
+		* @param string second text,
+		* @param int    number of minutes left
+		* @param int    seconds left
 		*/
-		text = wp.hooks.applyFilters( 'sce.comment.timer.text', text,  _n('minute', 'minutes', minutes, 'simple-comment-editing'), _n('second', 'seconds', seconds, 'simple-comment-editing') );
+		text = wp.hooks.applyFilters( 'sce.comment.timer.text', text,  _n('minute', 'minutes', minutes, 'simple-comment-editing'), _n('second', 'seconds', seconds, 'simple-comment-editing'), original_minutes, original_seconds );
 		return text;
 	};
 	sce.set_comment_cookie = function( pid, cid, callback ) {

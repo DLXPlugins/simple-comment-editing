@@ -955,7 +955,7 @@ class Simple_Comment_Editing {
 		*
 		* @since 1.0.0
 		*
-		* @param int  $minutes Time in minutes - Max 90 minutes
+		* @param int  $minutes Time in minutes
 		*/
 		$comment_time = absint( apply_filters( 'sce_comment_time', 5 ) );
 		$this->comment_time = $comment_time;
