@@ -300,7 +300,9 @@ class Simple_Comment_Editing {
 		 wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery', 'wp-ajax-response', 'wp-i18n' ), '20181026', true );
 		 
 		 /* For the Gutenberg plugin */
-		if ( function_exists( 'gutenberg_get_jed_locale_data' ) ) {
+		if ( function_exists( 'wp_set_script_translations' ) ) {
+			wp_set_script_translations( 'simple-comment-editing', 'simple-comment-editing' );
+		} elseif ( function_exists( 'gutenberg_get_jed_locale_data' ) ) {
 			$locale  = gutenberg_get_jed_locale_data( 'simple-comment-editing' );
 			$content = 'wp.i18n.setLocaleData( ' . json_encode( $locale ) . ', "simple-comment-editing" );';
 			wp_script_add_data( 'simple-comment-editing', 'data', $content );
