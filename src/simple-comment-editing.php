@@ -1,4 +1,5 @@
 <?php
+define('SCE_VERSION', '2.4.0');
 class Simple_Comment_Editing {
 	private static $instance = null;
 	private $comment_time = 0; //in minutes
@@ -296,8 +297,8 @@ class Simple_Comment_Editing {
 	 			$hooks_script_url = $this->get_plugin_url( '/js/event-manager.js' );
 	 		}
 	 	}
-	 	wp_enqueue_script( 'wp-hooks', $hooks_script_url, array(), '20151103', true ); //https://core.trac.wordpress.org/attachment/ticket/21170/21170-2.patch
-		 wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery', 'wp-ajax-response', 'wp-i18n' ), '20181026', true );
+	 	wp_enqueue_script( 'wp-hooks', $hooks_script_url, array(), SCE_VERSION, true ); //https://core.trac.wordpress.org/attachment/ticket/21170/21170-2.patch
+		 wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery', 'wp-ajax-response', 'wp-i18n' ), SCE_VERSION, true );
 		 
 		 /* For the Gutenberg plugin */
 		if ( function_exists( 'wp_set_script_translations' ) ) {
