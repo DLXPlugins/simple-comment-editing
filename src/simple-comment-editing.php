@@ -300,7 +300,7 @@ class Simple_Comment_Editing {
 	 	wp_enqueue_script( 'wp-hooks', $hooks_script_url, array(), SCE_VERSION, true ); //https://core.trac.wordpress.org/attachment/ticket/21170/21170-2.patch
 		 wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery', 'wp-ajax-response', 'wp-i18n' ), SCE_VERSION, true );
 		 
-		 /* For the Gutenberg plugin */
+		 /* For translations in JS */
 		if ( function_exists( 'wp_set_script_translations' ) ) {
 			wp_set_script_translations( 'simple-comment-editing', 'simple-comment-editing' );
 		} elseif ( function_exists( 'gutenberg_get_jed_locale_data' ) ) {
