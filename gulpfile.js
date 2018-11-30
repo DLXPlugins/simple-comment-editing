@@ -117,7 +117,7 @@ gulp.task('pot', function () {
 	.pipe(wpPot({
 		domain: 'simple-comment-editing',
 		destFile:'simple-comment-editing.pot',
-		package: 'Metronet Tag Manager',
+		package: 'Simple Comment Editing',
 		bugReport: 'https://wordpress.org/plugins/simple-comment-editing/',
 		lastTranslator: 'Ronald Huerca <ronald@mediaron.com>',
 		team: 'Ronald Huereca <ronald@mediaron.com'
