@@ -11,4 +11,5 @@ Contributors: ronalfy
 Text Domain: simple-comment-editing
 Domain Path: /languages
 */ 
+define( 'SCE_SLUG', plugin_basename(__FILE__) );
 require( 'simple-comment-editing.php' );
