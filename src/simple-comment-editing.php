@@ -327,15 +327,24 @@ class Simple_Comment_Editing {
 	 	
 	 	wp_localize_script( 'simple-comment-editing', 'simple_comment_editing', array(
 	 		'and'                       => __( 'and', 'simple-comment-editing' ),
-	 		'confirm_delete'            => __( 'Do you want to delete this comment?', 'simple-comment-editing' ),
-	 		'comment_deleted'           => __( 'Your comment has been removed.', 'simple-comment-editing' ),
-	 		'comment_deleted_error'     => __( 'Your comment could not be deleted', 'simple-comment-editing' ),
-	 		'empty_comment'             => $this->errors->get_error_message( 'comment_empty' ),
+	 		'confirm_delete'            => apply_filters( 'sce_confirm_delete', __( 'Do you want to delete this comment?', 'simple-comment-editing' ) ),
+	 		'comment_deleted'           => apply_filters( 'sce_comment_deleted', __( 'Your comment has been removed.', 'simple-comment-editing' ) ),
+	 		'comment_deleted_error'     => apply_filters( 'sce_comment_deleted_error', __( 'Your comment could not be deleted', 'simple-comment-editing' ) ),
+	 		'empty_comment'             => apply_filters( 'sce_empty_comment', $this->errors->get_error_message( 'comment_empty' ) ),
 	 		'allow_delete'              => $this->allow_delete,
 	 		'allow_delete_confirmation' => $allow_delete_confirmation,
 	 		'ajax_url'                  => admin_url( 'admin-ajax.php', $this->scheme ),
 	 		'nonce'                     => wp_create_nonce( 'sce-general-ajax-nonce' ),
-	 	) );
+		 ) );
+		 
+		 /**
+		 * Filter: sce_load_assets
+		 *
+		 * Allow other plugins to load scripts/styyles for SCE
+		 *
+		 * @since 2.3.0
+		 */
+		 dp_action('sce_load_assets');
 	 } //end add_scripts
 	 
 	 /**
