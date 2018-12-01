@@ -5,7 +5,7 @@ class Simple_Comment_Editing {
 	private $comment_time = 0; //in minutes
 	private $loading_img = '';
 	private $allow_delete = true;
-	private $errors;
+	public $errors;
 	private $scheme;
 	
 	//Singleton
