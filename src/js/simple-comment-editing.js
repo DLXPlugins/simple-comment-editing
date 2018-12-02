@@ -268,8 +268,10 @@ jQuery( document ).ready( function( $ ) {
 			// Get hours
 			var hours = Math.floor(minute_to_seconds / 3600) % 24;
 			if( hours >= 0 ) {
-				text += hours + " " + _n('hour', 'hours', hours, 'simple-comment-editing');
-				text += " " + __('and', 'simple-comment-editing') + " ";
+				if( hours > 0 ) {
+					text += hours + " " + _n('hour', 'hours', hours, 'simple-comment-editing');
+					text += " " + __('and', 'simple-comment-editing') + " ";
+				}
 				minute_to_seconds -= hours * 3600;
 			}
 
