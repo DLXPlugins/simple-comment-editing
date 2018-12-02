@@ -119,9 +119,23 @@ class Simple_Comment_Editing {
 		//Variables for later
 		$original_content = $comment_content;
 		$raw_content = $comment->comment_content; //For later usage in the textarea
+
+		$classes = array(
+			'sce-comment'
+		);
+		/**
+		 * Filter: sce_text_edit
+		 *
+		 * Filter allow editing of edit text
+		 *
+		 * @since 2.3.0
+		 *
+		 * @param array Array of classes for the initial wrapper
+		 */
+		$classes = apply_filter( 'sce_wrapper_class', $classes );
 		
 		//Yay, user can edit - Add the initial wrapper
-		$comment_wrapper = sprintf( '<div id="sce-comment%d" class="sce-comment">%s</div>', $comment_id, $comment_content );	
+		$comment_wrapper = sprintf( '<div id="sce-comment%d" class="%s">%s</div>', $comment_id, esc_attr( implode( ' ', $classes ) ), $comment_content );	
 		
 		//Create Overall wrapper for JS interface
 		$sce_content = sprintf( '<div id="sce-edit-comment%d" class="sce-edit-comment">', $comment_id );
