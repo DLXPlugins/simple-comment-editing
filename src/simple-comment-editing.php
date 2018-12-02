@@ -26,7 +26,7 @@ class Simple_Comment_Editing {
 		$this->errors = new WP_Error();
 		$this->errors->add( 'nonce_fail', __( 'You do not have permission to edit this comment.', 'simple-comment-editing' ) );
 		$this->errors->add( 'edit_fail', __( 'You can no longer edit this comment', 'simple-comment-editing' ) );
-		$this->errors->add( 'comment_empty', __( 'Your comment cannot be empty', 'simple-comment-editing' ) );
+		$this->errors->add( 'comment_empty', __( 'Your comment cannot be empty. Delete instead?', 'simple-comment-editing' ) );
 		$this->errors->add( 'comment_marked_spam', __( 'This comment was marked as spam', 'simple-comment-editing' ) );
 		
 		//Determine http/https admin-ajax issue
