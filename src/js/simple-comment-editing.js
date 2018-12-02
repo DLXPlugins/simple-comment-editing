@@ -40,11 +40,11 @@ jQuery( document ).ready( function( $ ) {
 				$( element ).parent().remove();
 				$.post( ajax_url, { action: 'sce_delete_comment', comment_id: ajax_params.cid, post_id: ajax_params.pid, nonce: ajax_params._wpnonce }, function( response ) {
 						if ( response.errors ) {
-							alert( __( 'Your comment could not be deleted', 'simple-comment-editing' ) );
+							alert( simple_comment_editing.comment_deleted_error );
 							$( element ).siblings( '.sce-textarea' ).on();	
 							$( element ).on();
 						} else {
-							$( '#sce-edit-comment-status' + ajax_params.cid ).removeClass().addClass( 'sce-status updated' ).html( __( 'Your comment has been removed.', 'simple-comment-editing' ) ).show();
+							$( '#sce-edit-comment-status' + ajax_params.cid ).removeClass().addClass( 'sce-status updated' ).html( simple_comment_editing.comment_deleted ).show();
 							setTimeout( function() { $( "#comment-" + ajax_params.cid ).slideUp(); }, 3000 ); //Attempt to remove the comment from the theme interface
 						}
 						
@@ -55,7 +55,7 @@ jQuery( document ).ready( function( $ ) {
     			e.preventDefault();
     			
     			if ( simple_comment_editing.allow_delete_confirmation ) {
-	    			if( confirm( __( 'Do you want to delete this comment?', 'simple-comment-editing' ) ) ) {
+	    			if( confirm( simple_comment_editing.confirm_delete ) ) {
 		    			sce_delete_comment( element, ajax_params );
 	    			}
     			} else {
@@ -81,7 +81,7 @@ jQuery( document ).ready( function( $ ) {
 					
 					//If the comment is blank, see if the user wants to delete their comment
 					if ( comment_to_save == '' && simple_comment_editing.allow_delete == true  ) {
-						if ( confirm( __( 'Do you want to delete this comment?', 'simple-comment-editing' ) ) ) {
+						if ( confirm( simple_comment_editing.empty_comment ) ) {
     						sce_delete_comment( element, ajax_params );
 							return;
 						} else {
