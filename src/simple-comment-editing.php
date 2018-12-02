@@ -124,9 +124,9 @@ class Simple_Comment_Editing {
 			'sce-comment'
 		);
 		/**
-		 * Filter: sce_text_edit
+		 * Filter: sce_wrapper_class
 		 *
-		 * Filter allow editing of edit text
+		 * Filter allow editing of wrapper class
 		 *
 		 * @since 2.3.0
 		 *
