@@ -450,7 +450,7 @@ class Simple_Comment_Editing {
 		 }
 		 
 		/**
-		 * Action: sce_comment_deleted
+		 * Action: sce_comment_is_deleted
 		 *
 		 * Allow third parties to take action when a comment has been deleted
 		 *
@@ -459,7 +459,7 @@ class Simple_Comment_Editing {
 		 * @param int $post_id The Post ID
 		 * @param int $comment_id The Comment ID
 		 */
-		do_action( 'sce_comment_deleted', $post_id, $comment_id );
+		do_action( 'sce_comment_is_deleted', $post_id, $comment_id );
 	 	
 	 	wp_delete_comment( $comment_id ); //Save to trash for admin retrieval
 	 	$return[ 'error' ] = '';
