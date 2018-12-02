@@ -119,10 +119,11 @@ class Simple_Comment_Editing {
 		//Variables for later
 		$original_content = $comment_content;
 		$raw_content = $comment->comment_content; //For later usage in the textarea
+		
+		//Yay, user can edit - Add the initial wrapper
+		$comment_wrapper = sprintf( '<div id="sce-comment%d" class="sce-comment">%s</div>', $comment_id, $comment_content );	
 
-		$classes = array(
-			'sce-comment'
-		);
+		$classes = array( 'sce-edit-comment' );
 		/**
 		 * Filter: sce_wrapper_class
 		 *
@@ -134,11 +135,8 @@ class Simple_Comment_Editing {
 		 */
 		$classes = apply_filters( 'sce_wrapper_class', $classes );
 		
-		//Yay, user can edit - Add the initial wrapper
-		$comment_wrapper = sprintf( '<div id="sce-comment%d" class="%s">%s</div>', $comment_id, esc_attr( implode( ' ', $classes ) ), $comment_content );	
-		
 		//Create Overall wrapper for JS interface
-		$sce_content = sprintf( '<div id="sce-edit-comment%d" class="sce-edit-comment">', $comment_id );
+		$sce_content = sprintf( '<div id="sce-edit-comment%d" class="%s">', $comment_id, esc_attr( implode( ' ', $classes ) ));
 		
 		//Edit Button
 		$sce_content .= '<div class="sce-edit-button" style="display:none;">';
@@ -352,7 +350,7 @@ class Simple_Comment_Editing {
 		 ) );
 		 
 		 /**
-		 * Filter: sce_load_assets
+		 * Action: sce_load_assets
 		 *
 		 * Allow other plugins to load scripts/styyles for SCE
 		 *
