@@ -132,7 +132,7 @@ class Simple_Comment_Editing {
 		 *
 		 * @param array Array of classes for the initial wrapper
 		 */
-		$classes = apply_filter( 'sce_wrapper_class', $classes );
+		$classes = apply_filters( 'sce_wrapper_class', $classes );
 		
 		//Yay, user can edit - Add the initial wrapper
 		$comment_wrapper = sprintf( '<div id="sce-comment%d" class="%s">%s</div>', $comment_id, esc_attr( implode( ' ', $classes ) ), $comment_content );	
@@ -964,7 +964,7 @@ class Simple_Comment_Editing {
 	
 	
 	/**
-	 * get_comment_time - Gets the comment time for editing - max 90 minutes
+	 * get_comment_time - Gets the comment time for editing
 	 * 
 	 *
 	 * @since 1.3.0
