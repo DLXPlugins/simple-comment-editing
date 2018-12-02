@@ -447,7 +447,19 @@ class Simple_Comment_Editing {
 	 		$return[ 'remove' ] = true;
 	 		$return[ 'error' ] = $this->errors->get_error_message( 'edit_fail' );
 	 		die( json_encode( $return ) );
-	 	}	
+		 }
+		 
+		/**
+		 * Action: sce_comment_deleted
+		 *
+		 * Allow third parties to take action when a comment has been deleted
+		 *
+		 * @since 2.3.0
+		 *
+		 * @param int $post_id The Post ID
+		 * @param int $comment_id The Comment ID
+		 */
+		do_action( 'sce_comment_deleted', $post_id, $comment_id );
 	 	
 	 	wp_delete_comment( $comment_id ); //Save to trash for admin retrieval
 	 	$return[ 'error' ] = '';
@@ -523,8 +535,8 @@ class Simple_Comment_Editing {
 	 */ 
 	public function ajax_epoch2_get_comment() {
 		check_ajax_referer( 'sce-general-ajax-nonce' );
-		 $comment_id = absint( $_POST[ 'comment_id' ] );
-		 $comment = get_comment( $comment_id, OBJECT );
+		$comment_id = absint( $_POST[ 'comment_id' ] );
+		$comment = get_comment( $comment_id, OBJECT );
 		if ( $comment ) {
 			die( $this->get_comment_content( $comment ) );
 		}
@@ -579,7 +591,7 @@ class Simple_Comment_Editing {
 	 	}
 	 	
 	 	//Get original comment
-	 	$comment_to_save = get_comment( $comment_id, ARRAY_A);
+	 	$comment_to_save = $original_comment = get_comment( $comment_id, ARRAY_A);
 	 	
 	 	//Check the comment
 	 	if ( $comment_to_save['comment_approved'] == 1 ) {
@@ -600,15 +612,15 @@ class Simple_Comment_Editing {
 		
 		//Before save comment
 		/**
-		* Filter: sce_comment_check_errors
-		*
-		* Return a custom error message based on the saved comment
-		*
-		* @since 1.2.4
-		*
-		* @param bool  $custom_error Default custom error. Overwrite with a string
-		* @param array $comment_to_save Associative array of comment attributes
-		*/
+		 * Filter: sce_comment_check_errors
+		 *
+		 * Return a custom error message based on the saved comment
+		 *
+		 * @since 1.2.4
+		 *
+		 * @param bool  $custom_error Default custom error. Overwrite with a string
+		 * @param array $comment_to_save Associative array of comment attributes
+		 */
 		$custom_error = apply_filters( 'sce_comment_check_errors', false, $comment_to_save ); //Filter expects a string returned - $comment_to_save is an associative array
 		if ( is_string( $custom_error ) && !empty( $custom_error ) ) {
 			$return[ 'errors' ] = true;
@@ -617,34 +629,35 @@ class Simple_Comment_Editing {
 		}
 		
 		/**
-		* Filter: sce_save_before
-		*
-		* Allow third parties to modify comment
-		*
-		* @since 1.5.0
-		*
-		* @param object $comment_to_save The Comment Object
-		* @param int $post_id The Post ID
-		* @param int $comment_id The Comment ID
-		*/
+		 * Filter: sce_save_before
+		 *
+		 * Allow third parties to modify comment
+		 *
+		 * @since 1.5.0
+		 *
+		 * @param array $comment_to_save The Comment array
+		 * @param int $post_id The Post ID
+		 * @param int $comment_id The Comment ID
+		 */
 		$comment_to_save = apply_filters( 'sce_save_before', $comment_to_save, $post_id, $comment_id );
 		
 		//Save the comment
 		wp_update_comment( $comment_to_save );
 		
 		/**
-		* Action: sce_save_after
-		*
-		* Allow third parties to save content after a comment has been updated
-		*
-		* @since 1.5.0
-		*
-		* @param object $comment_to_save The Comment Object
-		* @param int $post_id The Post ID
-		* @param int $comment_id The Comment ID
+		 * Action: sce_save_after
+		 *
+		 * Allow third parties to save content after a comment has been updated
+		 *
+		 * @since 1.5.0
+		 *
+		 * @param array $comment_to_save The Comment array
+		 * @param int $post_id The Post ID
+		 * @param int $comment_id The Comment ID
+		 * @param array $original_comment The original
 		*/
 		ob_start();
-		do_action( 'sce_save_after', $comment_to_save, $post_id, $comment_id );
+		do_action( 'sce_save_after', $comment_to_save, $post_id, $comment_id, $original_comment );
 		ob_end_clean();
 		
 		//If the comment was marked as spam, return an error
