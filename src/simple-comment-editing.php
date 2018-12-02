@@ -358,7 +358,7 @@ class Simple_Comment_Editing {
 		 *
 		 * @since 2.3.0
 		 */
-		 dp_action('sce_load_assets');
+		 do_action('sce_load_assets');
 	 } //end add_scripts
 	 
 	 /**
