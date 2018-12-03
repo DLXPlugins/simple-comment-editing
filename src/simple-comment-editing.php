@@ -230,9 +230,9 @@ class Simple_Comment_Editing {
 		*/
 		$delete_text = apply_filters( 'sce_text_delete', __( 'Delete', 'simple-comment-editing' ) );
 		
-		$textarea_buttons = sprintf( '<button class="sce-comment-save">%s</button>', esc_html( $save_text ) );
-		$textarea_buttons .= sprintf( '<button class="sce-comment-cancel">%s</button>', esc_html( $cancel_text ) );
-		$textarea_buttons .= $this->allow_delete ? sprintf( '<button class="sce-comment-delete">%s</button>', esc_html( $delete_text ) ) : '';
+		$textarea_buttons = sprintf( '<button class="sce-comment-save">%s%s</button>', apply_filters( 'sce_button_extra_save', '' ), esc_html( $save_text ) );
+		$textarea_buttons .= sprintf( '<button class="sce-comment-cancel">%s%s</button>', apply_filters( 'sce_button_extra_cancel', '' ), esc_html( $cancel_text ) );
+		$textarea_buttons .= $this->allow_delete ? sprintf( '<button class="sce-comment-delete">%s%s</button>', apply_filters( 'sce_button_extra_delete', '' ), esc_html( $delete_text ) ) : '';
 		if( apply_filters( 'sce_show_timer', true ) ) {
 			$textarea_buttons .= '<div class="sce-timer"></div>';
 		}
