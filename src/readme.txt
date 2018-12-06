@@ -61,7 +61,7 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 == Changelog ==
 
 = 2.3.0 =
-* Released 2018-10-27
+* Released 2018-11-06
 * WordPress 5.0 compatible only
 * Enhancement: set the timer past the 90 minute mark
 * Enhancement: new filter to hide the timer
