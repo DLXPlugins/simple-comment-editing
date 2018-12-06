@@ -24,6 +24,14 @@ Simple Comment Editing features:
 <li>Advanced customization can be achieved using filters.</li>
 </ol>
 
+<h3>Simple Comment Editing Options</h3>
+
+Introducing Simple Comment Editing Options. If you lack programming experience and want to customize Simple Comment Editing, then this plugin is for you. See a demo below.
+
+https://www.youtube.com/watch?v=dn6QOmzc9RM&rel=0
+
+> Get <a href="https://mediaron.com/simple-comment-editing-options">Simple Comment Editing Options</a> today!
+
 <h3>Help Contribute</h3>
 
 * Leave a star rating
