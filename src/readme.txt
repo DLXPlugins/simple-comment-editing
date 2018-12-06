@@ -14,9 +14,7 @@ Simple Comment Editing for your website.
 
 Simple Comment Editing gives anonymous users the ability to edit and/or delete their comments for a period of time.
 
-[youtube https://www.youtube.com/watch?v=KfKTVzEdClw]
-
-YouTube video review from <a href="http://www.wpbeginner.com/plugins/allow-users-edit-comments-wordpress/">WPBeginner</a>.
+[youtube https://www.youtube.com/watch?v=bNCDdQbwA-s&rel=0]
 
 Simple Comment Editing features:
 <ol>
