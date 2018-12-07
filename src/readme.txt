@@ -24,7 +24,7 @@ Simple Comment Editing features:
 <li>Advanced customization can be achieved using filters.</li>
 </ol>
 
-<h3>Simple Comment Editing Options</h3>
+<h3>Introducing Simple Comment Editing Options</h3>
 
 Introducing Simple Comment Editing Options. If you lack programming experience and want to customize Simple Comment Editing, then this plugin is for you. See a demo below.
 
@@ -48,15 +48,20 @@ https://www.youtube.com/watch?v=dn6QOmzc9RM&rel=0
 It's impossible to style an inline comment editor for every theme.  We've included basic HTML markup that is easily stylable to fit your theme.
 
 = Where are the options? =
-No options :) - Just simple comment editing.
+No options :) - Just simple comment editing. If you prefer options, try out the add-on <a href="https://mediaron.com/simple-comment-editing-options">Simple Comment Editing Options</a>.
 
 = How do I customize this plugin? =
-For advanced options, please see the <a href="https://github.com/ronalfy/simple-comment-editing#wordpress-filters">SCE Filter/Action reference</a>. 
+For advanced options, please see the <a href="https://github.com/ronalfy/simple-comment-editing#wordpress-filters">SCE Filter/Action reference</a> or get <a href="https://mediaron.com/simple-comment-editing-options">Simple Comment Editing Options</a>. 
+
+= What browsers have you tested this with? =
+Simple Comment Editing will work all the way back to IE10.
 
 == Screenshots ==
 
 1. Edit button and timer.
 2. Textarea and Save/Cancel buttons.
+3. Simple Comment Editing Options admin screen.
+4. Simple Comment Editing Options front-end.
 
 == Changelog ==
 
@@ -65,6 +70,7 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 * WordPress 5.0 compatible only
 * Enhancement: set the timer past the 90 minute mark
 * Enhancement: new filter to hide the timer
+* New add-on: <a href="https://mediaron.com/simple-comment-editing-options">Simple Comment Editing Options</a>
 
 = 2.2.1 =
 * Released 2018-10-21
