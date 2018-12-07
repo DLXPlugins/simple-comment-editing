@@ -1,9 +1,9 @@
 === Simple Comment Editing ===
 Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
-Requires at least: 4.1
-Tested up to: 4.9
-Stable tag: 2.2.0
+Requires at least: 5.0
+Tested up to: 5.0
+Stable tag: 2.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/contribute/
@@ -14,9 +14,7 @@ Simple Comment Editing for your website.
 
 Simple Comment Editing gives anonymous users the ability to edit and/or delete their comments for a period of time.
 
-[youtube https://www.youtube.com/watch?v=KfKTVzEdClw]
-
-YouTube video review from <a href="http://www.wpbeginner.com/plugins/allow-users-edit-comments-wordpress/">WPBeginner</a>.
+[youtube https://www.youtube.com/watch?v=bNCDdQbwA-s&rel=0]
 
 Simple Comment Editing features:
 <ol>
@@ -25,6 +23,14 @@ Simple Comment Editing features:
 <li>No styling is necessary. For advanced customization, see the "Other Notes" section.</li>
 <li>Advanced customization can be achieved using filters.</li>
 </ol>
+
+<h3>Introducing Simple Comment Editing Options</h3>
+
+Introducing Simple Comment Editing Options. If you lack programming experience and want to customize Simple Comment Editing, then this plugin is for you. See a demo below.
+
+https://www.youtube.com/watch?v=dn6QOmzc9RM&rel=0
+
+> Get <a href="https://mediaron.com/simple-comment-editing-options">Simple Comment Editing Options</a> today!
 
 <h3>Help Contribute</h3>
 
@@ -42,17 +48,33 @@ Simple Comment Editing features:
 It's impossible to style an inline comment editor for every theme.  We've included basic HTML markup that is easily stylable to fit your theme.
 
 = Where are the options? =
-No options :) - Just simple comment editing.
+No options :) - Just simple comment editing. If you prefer options, try out the add-on <a href="https://mediaron.com/simple-comment-editing-options">Simple Comment Editing Options</a>.
 
 = How do I customize this plugin? =
-For advanced options, please see the <a href="https://github.com/ronalfy/simple-comment-editing#wordpress-filters">SCE Filter/Action reference</a>. 
+For advanced options, please see the <a href="https://github.com/ronalfy/simple-comment-editing#wordpress-filters">SCE Filter/Action reference</a> or get <a href="https://mediaron.com/simple-comment-editing-options">Simple Comment Editing Options</a>. 
+
+= What browsers have you tested this with? =
+Simple Comment Editing will work all the way back to IE10.
 
 == Screenshots ==
 
 1. Edit button and timer.
 2. Textarea and Save/Cancel buttons.
+3. Simple Comment Editing Options admin screen.
+4. Simple Comment Editing Options front-end.
 
 == Changelog ==
+
+= 2.3.0 =
+* Released 2018-11-06
+* WordPress 5.0 compatible only
+* Enhancement: set the timer past the 90 minute mark
+* Enhancement: new filter to hide the timer
+* New add-on: <a href="https://mediaron.com/simple-comment-editing-options">Simple Comment Editing Options</a>
+
+= 2.2.1 =
+* Released 2018-10-21
+* Added CSS around seperator so it can be hidden
 
 = 2.2.0 =
 * Released 2018-10-13
@@ -268,8 +290,14 @@ For advanced options, please see the <a href="https://github.com/ronalfy/simple-
 
 == Upgrade Notice ==
 
-= 2.0.0 =
-Allow logged in users (author of the post) t
+= 2.3.0 =
+Set the timer to whatever value you want (in minutes). WordPress 5.0 compatible only. Do not upgrade if you are not using WordPress 5.0.
+
+= 2.2.1 =
+Added CSS around seperator so it can be hidden
+
+= 2.2.0 =
+Allow logged in users (author of the post) to bypass cookie authentication
 
 == Customization ==
 

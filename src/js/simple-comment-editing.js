@@ -1,5 +1,7 @@
+var __ = wp.i18n.__;
+var _n = wp.i18n._n;
 jQuery( document ).ready( function( $ ) {
-	sce = $.simplecommentediting = $.fn.simplecommentediting = function() {
+	var sce = $.simplecommentediting = $.fn.simplecommentediting = function() {
 		var $this = this;
 		return this.each( function() {
 			var ajax_url = $( this ).find( 'a:first' ).attr( 'href' );
@@ -79,7 +81,7 @@ jQuery( document ).ready( function( $ ) {
 					
 					//If the comment is blank, see if the user wants to delete their comment
 					if ( comment_to_save == '' && simple_comment_editing.allow_delete == true  ) {
-						if ( confirm( simple_comment_editing.confirm_delete ) ) {
+						if ( confirm( simple_comment_editing.empty_comment ) ) {
     						sce_delete_comment( element, ajax_params );
 							return;
 						} else {
@@ -88,11 +90,6 @@ jQuery( document ).ready( function( $ ) {
 								$( element ).fadeIn( 'fast' );
 							} );
 							return;
-							/*
-							//todo - still buggy - defaults to ajax call / error message for now
-							alert( simple_comment_editing.empty_comment );
-							return;
-							*/
 						}
 					}
 					
@@ -214,8 +211,8 @@ jQuery( document ).ready( function( $ ) {
 					time: 0,
 					timer: function() {
 						
-						timer_seconds = sce.timers[ response.comment_id ].seconds - 1;
-						timer_minutes = sce.timers[ response.comment_id ].minutes;
+						var timer_seconds = sce.timers[ response.comment_id ].seconds - 1;
+						var timer_minutes = sce.timers[ response.comment_id ].minutes;
 						if ( timer_minutes <=0 && timer_seconds <= 0) { 
 							
 							//Remove event handlers
@@ -249,17 +246,47 @@ jQuery( document ).ready( function( $ ) {
 		} );
 	};
 	sce.get_timer_text = function( minutes, seconds ) {
+		var original_minutes = minutes;
+		var original_seconds = seconds;
 		if (seconds < 0) { minutes -= 1; seconds = 59; }
 		//Create timer text
 		var text = '';
 		if (minutes >= 1) {
-			text += minutes + " " + simple_comment_editing.timer.minutes[ minutes ];
-			if ( seconds > 0 ) { 
-				text += " " + simple_comment_editing.and + " "; 
+
+			// Get mniutes in seconds
+			var minute_to_seconds = Math.abs(minutes * 60);
+			var days = Math.floor(minute_to_seconds / 86400);
+
+			// Get Days
+			if( days > 0 ) {
+				// Get days
+				text += days + " " + _n('day', 'days', days, 'simple-comment-editing');
+				text += " " + __('and', 'simple-comment-editing') + " ";
+				minute_to_seconds -= days * 86400;
 			}
-		}
-		if (seconds > 0) {
-			text += seconds + " " + simple_comment_editing.timer.seconds[ seconds ]; 
+
+			// Get hours
+			var hours = Math.floor(minute_to_seconds / 3600) % 24;
+			if( hours >= 0 ) {
+				if( hours > 0 ) {
+					text += hours + " " + _n('hour', 'hours', hours, 'simple-comment-editing');
+					text += " " + __('and', 'simple-comment-editing') + " ";
+				}
+				minute_to_seconds -= hours * 3600;
+			}
+
+			// Get minutes
+			var minutes = Math.floor(minute_to_seconds / 60) % 60;
+			minute_to_seconds -= minutes;
+			if( minutes > 0 ) {
+				text += minutes + " " + _n('minute', 'minutes', minutes, 'simple-comment-editing');
+			}
+
+			// Get seconds
+			if ( seconds > 0 ) { 
+				text += " " + __('and', 'simple-comment-editing') + " ";
+				text += seconds + " " + _n('second', 'seconds', seconds, 'simple-comment-editing'); 
+			}
 		}
 		/**
 		* JSFilter: sce.comment.timer.text
@@ -268,9 +295,13 @@ jQuery( document ).ready( function( $ ) {
 		*
 		* @since 1.4.0
 		*
-		* @param object $ajax_save_params
+		* @param string comment text
+		* @param string minute text,
+		* @param string second text,
+		* @param int    number of minutes left
+		* @param int    seconds left
 		*/
-		text = wp.hooks.applyFilters( 'sce.comment.timer.text', text,  simple_comment_editing.timer.minutes[ minutes ], simple_comment_editing.timer.seconds[ seconds ], minutes, seconds );
+		text = wp.hooks.applyFilters( 'sce.comment.timer.text', text,  _n('minute', 'minutes', minutes, 'simple-comment-editing'), _n('second', 'seconds', seconds, 'simple-comment-editing'), original_minutes, original_seconds );
 		return text;
 	};
 	sce.set_comment_cookie = function( pid, cid, callback ) {

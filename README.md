@@ -269,10 +269,9 @@ Example: https://gist.github.com/ronalfy/6b4fec8b3ac55bc47f3f
 *
 * @since 1.0.0
 *
-* @param int  $minutes Time in minutes - Max 90 minutes
+* @param int  $minutes Time in minutes
 */
 ```
-
 Example:
 
 ```php
@@ -281,6 +280,25 @@ add_filter( 'sce_comment_time', 'edit_sce_comment_time' );
 function edit_sce_comment_time( $time_in_minutes ) {
 	return 60;
 }
+```
+
+### sce_show_timer - Show or hide the timer
+```php
+/**
+ * Filter: sce_show_timer
+ *
+ * Filter allow you to hide the timer
+ *
+ * @since 2.3.0
+ *
+ * @param bool Whether to show the timer or not
+ */
+```
+Example:
+
+```php
+//Simple Comment Editing - Disable the timer
+add_filter( 'sce_show_timer', '__return_false' );
 ```
 
 ### sce_edit_text - Change the "Click to Edit" text.

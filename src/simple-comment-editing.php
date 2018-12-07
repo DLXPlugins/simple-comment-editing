@@ -1,10 +1,11 @@
 <?php
+define('SCE_VERSION', '2.3.0');
 class Simple_Comment_Editing {
 	private static $instance = null;
 	private $comment_time = 0; //in minutes
 	private $loading_img = '';
 	private $allow_delete = true;
-	private $errors;
+	public $errors;
 	private $scheme;
 	
 	//Singleton
@@ -25,7 +26,7 @@ class Simple_Comment_Editing {
 		$this->errors = new WP_Error();
 		$this->errors->add( 'nonce_fail', __( 'You do not have permission to edit this comment.', 'simple-comment-editing' ) );
 		$this->errors->add( 'edit_fail', __( 'You can no longer edit this comment', 'simple-comment-editing' ) );
-		$this->errors->add( 'comment_empty', __( 'Your comment cannot be empty', 'simple-comment-editing' ) );
+		$this->errors->add( 'comment_empty', __( 'Your comment cannot be empty. Delete instead?', 'simple-comment-editing' ) );
 		$this->errors->add( 'comment_marked_spam', __( 'This comment was marked as spam', 'simple-comment-editing' ) );
 		
 		//Determine http/https admin-ajax issue
@@ -121,9 +122,21 @@ class Simple_Comment_Editing {
 		
 		//Yay, user can edit - Add the initial wrapper
 		$comment_wrapper = sprintf( '<div id="sce-comment%d" class="sce-comment">%s</div>', $comment_id, $comment_content );	
+
+		$classes = array( 'sce-edit-comment' );
+		/**
+		 * Filter: sce_wrapper_class
+		 *
+		 * Filter allow editing of wrapper class
+		 *
+		 * @since 2.3.0
+		 *
+		 * @param array Array of classes for the initial wrapper
+		 */
+		$classes = apply_filters( 'sce_wrapper_class', $classes );
 		
 		//Create Overall wrapper for JS interface
-		$sce_content = sprintf( '<div id="sce-edit-comment%d" class="sce-edit-comment">', $comment_id );
+		$sce_content = sprintf( '<div id="sce-edit-comment%d" class="%s">', $comment_id, esc_attr( implode( ' ', $classes ) ));
 		
 		//Edit Button
 		$sce_content .= '<div class="sce-edit-button" style="display:none;">';
@@ -141,8 +154,20 @@ class Simple_Comment_Editing {
 		$click_to_edit_text = apply_filters( 'sce_text_edit', __( 'Click to Edit', 'simple-comment-editing' ) );
 		
 		$sce_content .= sprintf( '<a href="%s">%s</a>', esc_url( $ajax_edit_url ), esc_html( $click_to_edit_text ) );
-		$sce_content .= '&nbsp;&ndash;&nbsp;';
-		$sce_content .= '<span class="sce-timer"></span>';
+		
+		/**
+		 * Filter: sce_show_timer
+		 *
+		 * Filter allow you to hide the timer
+		 *
+		 * @since 2.3.0
+		 *
+		 * @param bool Whether to show the timer or not
+		 */
+		if( apply_filters( 'sce_show_timer', true ) ) {
+			$sce_content .= '<span class="sce-seperator">&nbsp;&ndash;&nbsp;</span>';
+			$sce_content .= '<span class="sce-timer"></span>';
+		}
 		$sce_content .= '</div><!-- .sce-edit-button -->';
 		
 		//Loading button
@@ -205,10 +230,12 @@ class Simple_Comment_Editing {
 		*/
 		$delete_text = apply_filters( 'sce_text_delete', __( 'Delete', 'simple-comment-editing' ) );
 		
-		$textarea_buttons = sprintf( '<button class="sce-comment-save">%s</button>', esc_html( $save_text ) );
-		$textarea_buttons .= sprintf( '<button class="sce-comment-cancel">%s</button>', esc_html( $cancel_text ) );
-		$textarea_buttons .= $this->allow_delete ? sprintf( '<button class="sce-comment-delete">%s</button>', esc_html( $delete_text ) ) : '';
-		$textarea_buttons .= '<div class="sce-timer"></div>';
+		$textarea_buttons = sprintf( '<button class="sce-comment-save">%s%s</button>', apply_filters( 'sce_button_extra_save', '' ), esc_html( $save_text ) );
+		$textarea_buttons .= sprintf( '<button class="sce-comment-cancel">%s%s</button>', apply_filters( 'sce_button_extra_cancel', '' ), esc_html( $cancel_text ) );
+		$textarea_buttons .= $this->allow_delete ? sprintf( '<button class="sce-comment-delete">%s%s</button>', apply_filters( 'sce_button_extra_delete', '' ), esc_html( $delete_text ) ) : '';
+		if( apply_filters( 'sce_show_timer', true ) ) {
+			$textarea_buttons .= '<div class="sce-timer"></div>';
+		}
 		/**
 		* Filter: sce_buttons
 		*
@@ -282,10 +309,22 @@ class Simple_Comment_Editing {
 	 			$hooks_script_url = $this->get_plugin_url( '/js/event-manager.js' );
 	 		}
 	 	}
-	 	require_once( 'class-sce-timer.php' );
-	 	$timer_internationalized = new SCE_Timer();
-	 	wp_enqueue_script( 'wp-hooks', $hooks_script_url, array(), '20151103', true ); //https://core.trac.wordpress.org/attachment/ticket/21170/21170-2.patch
-	 	wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery', 'wp-ajax-response' ), '20180209', true );
+	 	wp_enqueue_script( 'wp-hooks', $hooks_script_url, array(), SCE_VERSION, true ); //https://core.trac.wordpress.org/attachment/ticket/21170/21170-2.patch
+		 wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery', 'wp-ajax-response', 'wp-i18n' ), SCE_VERSION, true );
+		 
+		 /* For translations in JS */
+		if ( function_exists( 'wp_set_script_translations' ) ) {
+			wp_set_script_translations( 'simple-comment-editing', 'simple-comment-editing' );
+		} elseif ( function_exists( 'gutenberg_get_jed_locale_data' ) ) {
+			$locale  = gutenberg_get_jed_locale_data( 'simple-comment-editing' );
+			$content = 'wp.i18n.setLocaleData( ' . json_encode( $locale ) . ', "simple-comment-editing" );';
+			wp_script_add_data( 'simple-comment-editing', 'data', $content );
+		} elseif (function_exists('wp_get_jed_locale_data')) {
+			/* for 5.0 */
+			$locale  = wp_get_jed_locale_data( 'simple-comment-editing' );
+			$content = 'wp.i18n.setLocaleData( ' . json_encode( $locale ) . ', "simple-comment-editing" );';
+			wp_script_add_data( 'simple-comment-editing', 'data', $content );
+		}
 	 	
 	 	/**
 		 * Filter: sce_allow_delete_confirmation
@@ -300,16 +339,24 @@ class Simple_Comment_Editing {
 	 	
 	 	wp_localize_script( 'simple-comment-editing', 'simple_comment_editing', array(
 	 		'and'                       => __( 'and', 'simple-comment-editing' ),
-	 		'confirm_delete'            => __( 'Do you want to delete this comment?', 'simple-comment-editing' ),
-	 		'comment_deleted'           => __( 'Your comment has been removed.', 'simple-comment-editing' ),
-	 		'comment_deleted_error'     => __( 'Your comment could not be deleted', 'simple-comment-editing' ),
-	 		'empty_comment'             => $this->errors->get_error_message( 'comment_empty' ),
+	 		'confirm_delete'            => apply_filters( 'sce_confirm_delete', __( 'Do you want to delete this comment?', 'simple-comment-editing' ) ),
+	 		'comment_deleted'           => apply_filters( 'sce_comment_deleted', __( 'Your comment has been removed.', 'simple-comment-editing' ) ),
+	 		'comment_deleted_error'     => apply_filters( 'sce_comment_deleted_error', __( 'Your comment could not be deleted', 'simple-comment-editing' ) ),
+	 		'empty_comment'             => apply_filters( 'sce_empty_comment', $this->errors->get_error_message( 'comment_empty' ) ),
 	 		'allow_delete'              => $this->allow_delete,
 	 		'allow_delete_confirmation' => $allow_delete_confirmation,
-	 		'timer'                     => $timer_internationalized->get_timer_vars(),
 	 		'ajax_url'                  => admin_url( 'admin-ajax.php', $this->scheme ),
 	 		'nonce'                     => wp_create_nonce( 'sce-general-ajax-nonce' ),
-	 	) );
+		 ) );
+		 
+		 /**
+		 * Action: sce_load_assets
+		 *
+		 * Allow other plugins to load scripts/styyles for SCE
+		 *
+		 * @since 2.3.0
+		 */
+		 do_action('sce_load_assets');
 	 } //end add_scripts
 	 
 	 /**
@@ -400,7 +447,19 @@ class Simple_Comment_Editing {
 	 		$return[ 'remove' ] = true;
 	 		$return[ 'error' ] = $this->errors->get_error_message( 'edit_fail' );
 	 		die( json_encode( $return ) );
-	 	}	
+		 }
+		 
+		/**
+		 * Action: sce_comment_is_deleted
+		 *
+		 * Allow third parties to take action when a comment has been deleted
+		 *
+		 * @since 2.3.0
+		 *
+		 * @param int $post_id The Post ID
+		 * @param int $comment_id The Comment ID
+		 */
+		do_action( 'sce_comment_is_deleted', $post_id, $comment_id );
 	 	
 	 	wp_delete_comment( $comment_id ); //Save to trash for admin retrieval
 	 	$return[ 'error' ] = '';
@@ -476,8 +535,8 @@ class Simple_Comment_Editing {
 	 */ 
 	public function ajax_epoch2_get_comment() {
 		check_ajax_referer( 'sce-general-ajax-nonce' );
-		 $comment_id = absint( $_POST[ 'comment_id' ] );
-		 $comment = get_comment( $comment_id, OBJECT );
+		$comment_id = absint( $_POST[ 'comment_id' ] );
+		$comment = get_comment( $comment_id, OBJECT );
 		if ( $comment ) {
 			die( $this->get_comment_content( $comment ) );
 		}
@@ -532,7 +591,7 @@ class Simple_Comment_Editing {
 	 	}
 	 	
 	 	//Get original comment
-	 	$comment_to_save = get_comment( $comment_id, ARRAY_A);
+	 	$comment_to_save = $original_comment = get_comment( $comment_id, ARRAY_A);
 	 	
 	 	//Check the comment
 	 	if ( $comment_to_save['comment_approved'] == 1 ) {
@@ -553,15 +612,15 @@ class Simple_Comment_Editing {
 		
 		//Before save comment
 		/**
-		* Filter: sce_comment_check_errors
-		*
-		* Return a custom error message based on the saved comment
-		*
-		* @since 1.2.4
-		*
-		* @param bool  $custom_error Default custom error. Overwrite with a string
-		* @param array $comment_to_save Associative array of comment attributes
-		*/
+		 * Filter: sce_comment_check_errors
+		 *
+		 * Return a custom error message based on the saved comment
+		 *
+		 * @since 1.2.4
+		 *
+		 * @param bool  $custom_error Default custom error. Overwrite with a string
+		 * @param array $comment_to_save Associative array of comment attributes
+		 */
 		$custom_error = apply_filters( 'sce_comment_check_errors', false, $comment_to_save ); //Filter expects a string returned - $comment_to_save is an associative array
 		if ( is_string( $custom_error ) && !empty( $custom_error ) ) {
 			$return[ 'errors' ] = true;
@@ -570,34 +629,35 @@ class Simple_Comment_Editing {
 		}
 		
 		/**
-		* Filter: sce_save_before
-		*
-		* Allow third parties to modify comment
-		*
-		* @since 1.5.0
-		*
-		* @param object $comment_to_save The Comment Object
-		* @param int $post_id The Post ID
-		* @param int $comment_id The Comment ID
-		*/
+		 * Filter: sce_save_before
+		 *
+		 * Allow third parties to modify comment
+		 *
+		 * @since 1.5.0
+		 *
+		 * @param array $comment_to_save The Comment array
+		 * @param int $post_id The Post ID
+		 * @param int $comment_id The Comment ID
+		 */
 		$comment_to_save = apply_filters( 'sce_save_before', $comment_to_save, $post_id, $comment_id );
 		
 		//Save the comment
 		wp_update_comment( $comment_to_save );
 		
 		/**
-		* Action: sce_save_after
-		*
-		* Allow third parties to save content after a comment has been updated
-		*
-		* @since 1.5.0
-		*
-		* @param object $comment_to_save The Comment Object
-		* @param int $post_id The Post ID
-		* @param int $comment_id The Comment ID
+		 * Action: sce_save_after
+		 *
+		 * Allow third parties to save content after a comment has been updated
+		 *
+		 * @since 1.5.0
+		 *
+		 * @param array $comment_to_save The Comment array
+		 * @param int $post_id The Post ID
+		 * @param int $comment_id The Comment ID
+		 * @param array $original_comment The original
 		*/
 		ob_start();
-		do_action( 'sce_save_after', $comment_to_save, $post_id, $comment_id );
+		do_action( 'sce_save_after', $comment_to_save, $post_id, $comment_id, $original_comment );
 		ob_end_clean();
 		
 		//If the comment was marked as spam, return an error
@@ -915,7 +975,7 @@ class Simple_Comment_Editing {
 	
 	
 	/**
-	 * get_comment_time - Gets the comment time for editing - max 90 minutes
+	 * get_comment_time - Gets the comment time for editing
 	 * 
 	 *
 	 * @since 1.3.0
@@ -932,14 +992,10 @@ class Simple_Comment_Editing {
 		*
 		* @since 1.0.0
 		*
-		* @param int  $minutes Time in minutes - Max 90 minutes
+		* @param int  $minutes Time in minutes
 		*/
 		$comment_time = absint( apply_filters( 'sce_comment_time', 5 ) );
-		if ( $comment_time > 90 ) {
-			$this->comment_time = 90; 	
-		} else {
-			$this->comment_time = $comment_time;
-		}
+		$this->comment_time = $comment_time;
 		return $this->comment_time;
 	}
 	
