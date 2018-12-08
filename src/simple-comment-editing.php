@@ -1,5 +1,5 @@
 <?php
-define('SCE_VERSION', '2.3.0');
+define('SCE_VERSION', '2.3.2');
 class Simple_Comment_Editing {
 	private static $instance = null;
 	private $comment_time = 0; //in minutes
@@ -313,11 +313,8 @@ class Simple_Comment_Editing {
 		 wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery', 'wp-ajax-response', 'wp-i18n' ), SCE_VERSION, true );
 		 
 		 /* For translations in JS */
-		if ( function_exists( 'gutenberg_get_jed_locale_data' ) ) {
-			$locale  = gutenberg_get_jed_locale_data( 'simple-comment-editing' );
-			$content = 'wp.i18n.setLocaleData( ' . json_encode( $locale ) . ', "simple-comment-editing" );';
-			wp_script_add_data( 'simple-comment-editing', 'data', $content );
-		} elseif (function_exists('wp_get_jed_locale_data')) {
+		wp_set_script_translations( 'simple-comment-editing', 'simple-comment-editing' );
+		if (function_exists('wp_get_jed_locale_data')) {
 			/* for 5.0 */
 			$locale  = wp_get_jed_locale_data( 'simple-comment-editing' );
 			$content = 'wp.i18n.setLocaleData( ' . json_encode( $locale ) . ', "simple-comment-editing" );';
