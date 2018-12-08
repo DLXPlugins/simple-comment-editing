@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment, admin
 Requires at least: 5.0
 Tested up to: 5.0
-Stable tag: 2.3.0
+Stable tag: 2.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/contribute/
@@ -64,6 +64,10 @@ Simple Comment Editing will work all the way back to IE10.
 4. Simple Comment Editing Options front-end.
 
 == Changelog ==
+
+= 2.3.1 =
+* Released 2018-11-08
+* Fixing compatibility with WP Ajaxify Comments
 
 = 2.3.0 =
 * Released 2018-11-06
@@ -289,6 +293,9 @@ Simple Comment Editing will work all the way back to IE10.
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.3.1 =
+Fixing compatibility with WP Ajaxify Comments
 
 = 2.3.0 =
 Set the timer to whatever value you want (in minutes). WordPress 5.0 compatible only. Do not upgrade if you are not using WordPress 5.0.
