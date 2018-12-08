@@ -314,12 +314,6 @@ class Simple_Comment_Editing {
 		 
 		 /* For translations in JS */
 		wp_set_script_translations( 'simple-comment-editing', 'simple-comment-editing', plugin_dir_path( __FILE__ ) . 'languages' );
-		if (function_exists('wp_get_jed_locale_data')) {
-			/* for 5.0 */
-			$locale  = wp_get_jed_locale_data( 'simple-comment-editing' );
-			$content = 'wp.i18n.setLocaleData( ' . json_encode( $locale ) . ', "simple-comment-editing" );';
-			wp_script_add_data( 'simple-comment-editing', 'data', $content );
-		}
 	 	
 	 	/**
 		 * Filter: sce_allow_delete_confirmation

@@ -1,9 +1,9 @@
 === Simple Comment Editing ===
 Contributors: ronalfy
-Tags: ajax, comments,edit comments, edit, comment, admin
+Tags: ajax, comments,edit comments, edit, comment,
 Requires at least: 5.0
 Tested up to: 5.0
-Stable tag: 2.3.1
+Stable tag: 2.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/contribute/
@@ -64,6 +64,10 @@ Simple Comment Editing will work all the way back to IE10.
 4. Simple Comment Editing Options front-end.
 
 == Changelog ==
+
+= 2.3.2 =
+* Released 2018-11-08
+* Added better i18n with JavaScript files. Updated German translation.
 
 = 2.3.1 =
 * Released 2018-11-08
@@ -293,6 +297,9 @@ Simple Comment Editing will work all the way back to IE10.
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.3.2 =
+Added better i18n with JavaScript files. Updated German translation.
 
 = 2.3.1 =
 Fixing compatibility with WP Ajaxify Comments
