@@ -395,11 +395,11 @@ function SCE_comment_scroll( e, element ) {
 }
 //Callback when comments have been updated (for wp-ajaxify-comments compatibility) - http://wordpress.org/plugins/wp-ajaxify-comments/faq/
 function SCE_comments_updated( comment_url ) {
-	var match = comment_url.match(/#comment-(\d+)/)
+	var match = comment_url.match(/comment-(\d+)/)
 	if ( !match ) {
 		return;
 	}
-	comment_id = match[ 1 ];
+	var comment_id = match[ 1 ];
 	jQuery( '#comment-' + comment_id ).find( '.sce-edit-button' ).simplecommentediting();
 	
 };
