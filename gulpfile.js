@@ -50,6 +50,7 @@ var webpackCSSPaths = [
 var languagePaths = [
 	'src/**/*.mo',
 	'src/**/*.po',
+	'src/**/*.json',
 ];
 
 
@@ -127,6 +128,12 @@ gulp.task('pot', function () {
 });
 
 /* ==Translations=== */
+gulp.task('move_json_files', function () {
+	return gulp.src('src/**/*.json')
+	.pipe(plumber(reportError))
+	.pipe(sort())
+	.pipe(gulp.dest('dist/'));
+});
 gulp.task('move_mo_files', function () {
 	return gulp.src('src/**/*.mo')
 	.pipe(plumber(reportError))
@@ -324,7 +331,7 @@ gulp.task('build', function (done) {
 		['babel', 'babel_min'],
 		['check_upgrade_notice'],
 		['pot'],
-		['move_po_files', 'move_mo_files'],
+		['move_po_files', 'move_mo_files', 'move_json_files'],
 		done
 	);
 });
