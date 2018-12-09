@@ -112,7 +112,7 @@ gulp.copy = function (src, dest) {
 
 /* ==Translations=== */
 gulp.task('pot', function () {
-	return gulp.src(['src/**/*.php', 'src/**/*.js'])
+	return gulp.src(['src/**/*.php', 'dist/**/*.js'])
 	.pipe(plumber(reportError))
 	.pipe(sort())
 	.pipe(wpPot({
@@ -362,7 +362,7 @@ gulp.task('watch', function () {
 	gulp.watch(htmlPaths, { interval: 500 }, function (event) { file_watcher(event, 'src') });
 	gulp.watch(scssPaths, ['scss_compile']);
 	gulp.watch(babelPaths, ['babel', 'babel_min']);
-	gulp.watch(languagePaths, ['move_po_files', 'move_mo_files']);
+	gulp.watch(languagePaths, ['move_po_files', 'move_mo_files', 'move_json_files']);
 });
 
 // THis is an enhanced watch log to accuratly show which file has been changed

@@ -17,29 +17,29 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/js/simple-comment-editing.js:263
+#: dist/js/simple-comment-editing.js:266, dist/js/simple-comment-editing.min.js:1
 msgid "day"
 msgid_plural "days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/js/simple-comment-editing.js:264, src/js/simple-comment-editing.js:273, src/js/simple-comment-editing.js:287, src/simple-comment-editing.php:330
+#: dist/js/simple-comment-editing.js:267, dist/js/simple-comment-editing.js:276, dist/js/simple-comment-editing.js:290, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1, src/simple-comment-editing.php:330
 msgid "and"
 msgstr ""
 
-#: src/js/simple-comment-editing.js:272
+#: dist/js/simple-comment-editing.js:275, dist/js/simple-comment-editing.min.js:1
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/js/simple-comment-editing.js:282, src/js/simple-comment-editing.js:304
+#: dist/js/simple-comment-editing.js:285, dist/js/simple-comment-editing.js:307, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/js/simple-comment-editing.js:288, src/js/simple-comment-editing.js:304
+#: dist/js/simple-comment-editing.js:291, dist/js/simple-comment-editing.js:307, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] ""
