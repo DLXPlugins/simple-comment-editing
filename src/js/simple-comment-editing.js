@@ -287,6 +287,8 @@ jQuery( document ).ready( function( $ ) {
 				text += " " + __('and', 'simple-comment-editing') + " ";
 				text += seconds + " " + _n('second', 'seconds', seconds, 'simple-comment-editing'); 
 			}
+		} else {
+			text += seconds + " " + _n('second', 'seconds', seconds, 'simple-comment-editing');
 		}
 		/**
 		* JSFilter: sce.comment.timer.text
