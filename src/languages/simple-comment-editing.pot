@@ -33,13 +33,13 @@ msgid_plural "hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: dist/js/simple-comment-editing.js:285, dist/js/simple-comment-editing.js:307, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1
+#: dist/js/simple-comment-editing.js:285, dist/js/simple-comment-editing.js:309, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: dist/js/simple-comment-editing.js:291, dist/js/simple-comment-editing.js:307, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1
+#: dist/js/simple-comment-editing.js:291, dist/js/simple-comment-editing.js:294, dist/js/simple-comment-editing.js:309, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] ""
