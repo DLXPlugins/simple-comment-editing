@@ -9,7 +9,7 @@ jQuery( document ).ready( function( $ ) {
 			var element = this;
 
 			//Set up event for when the edit button is clicked
-			$( element ).on( 'click', 'a', function( e ) { 
+			$( element ).on( 'click', 'a:first', function( e ) {
 				e.preventDefault();
 				$( '#sce-edit-comment-status' + ajax_params.cid ).removeClass().addClass( 'sce-status' ).css( 'display', 'none' );
 				//Hide the edit button and show the textarea
@@ -20,40 +20,40 @@ jQuery( document ).ready( function( $ ) {
 					} );
 				} );
 			} );
-			
+
 			//Cancel button
 			$( element ).siblings( '.sce-textarea' ).on( 'click', '.sce-comment-cancel', function( e ) {
 				e.preventDefault();
-				
+
 				//Hide the textarea and show the edit button
 				$( element ).siblings( '.sce-textarea' ).fadeOut( 'fast', function() {
 					$( element ).fadeIn( 'fast' );
 					$( '#sce-edit-comment' + ajax_params.cid  + ' textarea' ).val( sce.textareas[ ajax_params.cid  ] );
 				} );
 			} );
-			
+
 			function sce_delete_comment( element, ajax_params ) {
-                $( element ).siblings( '.sce-textarea' ).off();	
+                $( element ).siblings( '.sce-textarea' ).off();
 				$( element ).off();
-					
+
 				//Remove elements
 				$( element ).parent().remove();
 				$.post( ajax_url, { action: 'sce_delete_comment', comment_id: ajax_params.cid, post_id: ajax_params.pid, nonce: ajax_params._wpnonce }, function( response ) {
 						if ( response.errors ) {
 							alert( simple_comment_editing.comment_deleted_error );
-							$( element ).siblings( '.sce-textarea' ).on();	
+							$( element ).siblings( '.sce-textarea' ).on();
 							$( element ).on();
 						} else {
 							$( '#sce-edit-comment-status' + ajax_params.cid ).removeClass().addClass( 'sce-status updated' ).html( simple_comment_editing.comment_deleted ).show();
 							setTimeout( function() { $( "#comment-" + ajax_params.cid ).slideUp(); }, 3000 ); //Attempt to remove the comment from the theme interface
 						}
-						
+
 				}, 'json' );
             };
-			
+
 			$( element ).siblings( '.sce-textarea' ).on( 'click', '.sce-comment-delete', function( e ) {
     			e.preventDefault();
-    			
+
     			if ( simple_comment_editing.allow_delete_confirmation ) {
 	    			if( confirm( simple_comment_editing.confirm_delete ) ) {
 		    			sce_delete_comment( element, ajax_params );
@@ -61,24 +61,24 @@ jQuery( document ).ready( function( $ ) {
     			} else {
 	    			sce_delete_comment( element, ajax_params );
     			}
-    			
+
             } );
-			
+
 			//Save button
 			$( element ).siblings( '.sce-textarea' ).on( 'click', '.sce-comment-save', function( e ) {
 				e.preventDefault();
-				
+
 				$( element ).siblings( '.sce-textarea' ).find( 'button' ).prop( 'disabled', true );
 				$( element ).siblings( '.sce-textarea' ).fadeOut( 'fast', function() {
 					$( element ).siblings( '.sce-loading' ).fadeIn( 'fast' );
-					
+
 					//Save the comment
 					var textarea_val = $( element ).siblings( '.sce-textarea' ).find( 'textarea' ).val();
 					var comment_to_save = $.trim( textarea_val );
 					if ( textarea_val == 'I am God' && typeof( console ) == 'object' ) {
 						console.log( "Isn't God perfect?  Why the need to edit?" );
 					}
-					
+
 					//If the comment is blank, see if the user wants to delete their comment
 					if ( comment_to_save == '' && simple_comment_editing.allow_delete == true  ) {
 						if ( confirm( simple_comment_editing.empty_comment ) ) {
@@ -92,7 +92,7 @@ jQuery( document ).ready( function( $ ) {
 							return;
 						}
 					}
-					
+
 					/**
 					* Event: sce.comment.save.pre
 					*
@@ -106,12 +106,12 @@ jQuery( document ).ready( function( $ ) {
 					jQuery( 'body' ).triggerHandler( 'sce.comment.save.pre', [ ajax_params.cid, ajax_params.pid ] );
 					var ajax_save_params = {
 						action: 'sce_save_comment',
-						comment_content: comment_to_save, 
-						comment_id: ajax_params.cid, 
-						post_id: ajax_params.pid, 
+						comment_content: comment_to_save,
+						comment_id: ajax_params.cid,
+						post_id: ajax_params.pid,
 						nonce: ajax_params._wpnonce
 					};
-					
+
 					/**
 					* JSFilter: sce.comment.save.data
 					*
@@ -122,14 +122,14 @@ jQuery( document ).ready( function( $ ) {
 					* @param object $ajax_save_params
 					*/
 					ajax_save_params = wp.hooks.applyFilters( 'sce.comment.save.data', ajax_save_params );
-					
+
 					$.post( ajax_url, ajax_save_params, function( response ) {
 						$( element ).siblings( '.sce-loading' ).fadeOut( 'fast', function() {
 							$( element ).fadeIn( 'fast', function() {
 								if ( !response.errors ) {
 									$( '#sce-comment' + ajax_params.cid ).html( response.comment_text ); //Update comment HTML
 									sce.textareas[ ajax_params.cid  ] = $( '#sce-edit-comment' + ajax_params.cid  + ' textarea' ).val(); //Update textarea placeholder
-									
+
 									/**
 									* Event: sce.comment.save
 									*
@@ -145,9 +145,9 @@ jQuery( document ).ready( function( $ ) {
 									//Output error, maybe kill interface
 									if ( response.remove == true ) {
 										//Remove event handlers
-										$( element ).siblings( '.sce-textarea' ).off();	
+										$( element ).siblings( '.sce-textarea' ).off();
 										$( element ).off();
-											
+
 										//Remove elements
 										$( element ).parent().remove();
 									}
@@ -155,11 +155,11 @@ jQuery( document ).ready( function( $ ) {
 								}
 							} );
 						} );
-						
+
 					}, 'json' );
 				} );
 			} );
-						
+
 			//Load timers
 			/*
 			1.  Use Ajax to get the amount of time left to edit the comment.
@@ -171,19 +171,19 @@ jQuery( document ).ready( function( $ ) {
 				var minutes = parseInt( response.minutes );
 				var seconds = parseInt( response.seconds );
 				var timer_text = sce.get_timer_text( minutes, seconds );
-				
+
 				//Determine via JS if a user can edit a comment - Note that if someone were to finnagle with this, there is still a server side check when saving the comment
 				var can_edit = response.can_edit;
 				if ( !can_edit ) {
 					//Remove event handlers
-					$( element ).siblings( '.sce-textarea' ).off();	
+					$( element ).siblings( '.sce-textarea' ).off();
 					$( element ).off();
-						
+
 					//Remove elements
 					$( element ).parent().remove();
 					return;
 				}
-				
+
 				//Update the timer and show the editing interface
 				$( element ).find( '.sce-timer' ).html( timer_text );
 				$( element ).siblings( '.sce-textarea' ).find( '.sce-timer' ).html( timer_text );
@@ -198,11 +198,12 @@ jQuery( document ).ready( function( $ ) {
 					* @param jQuery Element of the comment
 					*/
 					$( element ).trigger( 'sce.timer.loaded', element );
+					console.log( element );
 				} );
-				
+
 				//Save state in textarea
 				sce.textareas[ response.comment_id ] = $( '#sce-edit-comment' + response.comment_id + ' textarea' ).val();
-				
+
 				//Set interval
 				sce.timers[ response.comment_id ] = {
 					minutes: minutes,
@@ -210,25 +211,26 @@ jQuery( document ).ready( function( $ ) {
 					start: new Date().getTime(),
 					time: 0,
 					timer: function() {
-						
+
 						var timer_seconds = sce.timers[ response.comment_id ].seconds - 1;
 						var timer_minutes = sce.timers[ response.comment_id ].minutes;
-						if ( timer_minutes <=0 && timer_seconds <= 0) { 
-							
+						if ( timer_minutes <=0 && timer_seconds <= 0) {
+
 							//Remove event handlers
-							$( element ).siblings( '.sce-textarea' ).off();	
+							$( element ).siblings( '.sce-textarea' ).off();
 							$( element ).off();
-								
+
 							//Remove elements
 							$( element ).parent().remove();
 							return;
 						} else {
-							if ( timer_seconds < 0 ) { 
+							if ( timer_seconds < 0 ) {
 								timer_minutes -= 1; timer_seconds = 59;
 							}
 							var timer_text = sce.get_timer_text( timer_minutes, timer_seconds );
 							$( element ).find( '.sce-timer' ).html(  timer_text );
 							$( element ).siblings( '.sce-textarea' ).find( '.sce-timer' ).html( timer_text );
+							$( element ).trigger( 'sce.timer.countdown', element );
 							sce.timers[ response.comment_id ].seconds = timer_seconds;
 							sce.timers[ response.comment_id ].minutes = timer_minutes;
 						}
@@ -237,11 +239,11 @@ jQuery( document ).ready( function( $ ) {
 						timer_obj.time += 1000;
 						var diff = ( new Date().getTime() - timer_obj.start ) - timer_obj.time;
 						window.setTimeout( timer_obj.timer, ( 1000 - diff ) );
-					} 
+					}
 				};
 				window.setTimeout( sce.timers[ response.comment_id ].timer, 1000 );
-				
-				
+
+
 			}, 'json' );
 		} );
 	};
@@ -283,9 +285,9 @@ jQuery( document ).ready( function( $ ) {
 			}
 
 			// Get seconds
-			if ( seconds > 0 ) { 
+			if ( seconds > 0 ) {
 				text += " " + __('and', 'simple-comment-editing') + " ";
-				text += seconds + " " + _n('second', 'seconds', seconds, 'simple-comment-editing'); 
+				text += seconds + " " + _n('second', 'seconds', seconds, 'simple-comment-editing');
 			}
 		} else {
 			text += seconds + " " + _n('second', 'seconds', seconds, 'simple-comment-editing');
@@ -311,25 +313,25 @@ jQuery( document ).ready( function( $ ) {
 			var date = new Date( response.expires );
 			date = date.toGMTString();
 			document.cookie = response.name+"="+response.value+ "; expires=" + date+"; path=" + response.path;
-				
+
 			if ( typeof callback == "function" ) {
-				callback( cid );	
+				callback( cid );
 			}
-			
+
 		}, 'json' );
 	};
-	
+
 	sce.timers = new Array();
 	sce.textareas = new Array();
 	$( '.sce-edit-button' ).simplecommentediting();
-	
+
 	$( '.sce-edit-button' ).on( 'sce.timer.loaded', SCE_comment_scroll );
-	
+
 	//Third-party plugin compatibility
 	$( 'body' ).on( 'comment.posted', function( event, post_id, comment_id ) {
 		sce.set_comment_cookie( post_id, comment_id, function( comment_id ) {
 			$.post( simple_comment_editing.ajax_url, { action: 'sce_get_comment', comment_id: comment_id, _ajax_nonce: simple_comment_editing.nonce }, function( response ) {
-								
+
 				/**
 				* Event: sce.comment.loaded
 				*
@@ -340,17 +342,17 @@ jQuery( document ).ready( function( $ ) {
 				* @param object Comment Object
 				*/
 				$( 'body' ).trigger( 'sce.comment.loaded', [ response ] );
-				
+
 				/*
 				Once you capture the sce.comment.loaded event, you can replace the comment and enable SCE
 				$( '#comment-' + comment_id ).replaceWith( comment_html );
 				$( '#comment-' + comment_id ).find( '.sce-edit-button' ).simplecommentediting();
 				*/
-				
-			}, 'json' );	
+
+			}, 'json' );
 		} );
 	} );
-	
+
 	//EPOCH Compability
 	$( 'body' ).on( 'epoch.comment.posted', function( event, pid, cid ) {
     	if ( typeof pid == 'undefined' ) {
@@ -363,7 +365,7 @@ jQuery( document ).ready( function( $ ) {
 				comment = Epoch.parse_comment( response );
 				$( '#comment-' + comment_id ).replaceWith( comment );
 				$( '#comment-' + comment_id ).find( '.sce-edit-button' ).simplecommentediting();
-			}, 'json' );	
+			}, 'json' );
 		} );
 	} );
 	$( 'body' ).on( 'epoch.comments.loaded, epoch.two.comments.loaded', function( e ) {
@@ -379,7 +381,7 @@ jQuery( document ).ready( function( $ ) {
 			$.post( simple_comment_editing.ajax_url, { action: 'sce_epoch2_get_comment', comment_id: comment_id, _ajax_nonce: simple_comment_editing.nonce }, function( response ) {
 				$( '#comment-' + comment_id ).find( 'p' ).parent().html( response );
 				$( '#comment-' + comment_id ).find( '.sce-edit-button' ).simplecommentediting();
-			} );	
+			} );
 		} );
 	} );
 } );
@@ -393,7 +395,7 @@ function SCE_comment_scroll( e, element ) {
 			var targetOffset = location.offset().top;
 			jQuery( 'html,body' ).animate( {scrollTop: targetOffset}, 1 );
 		}
-	}	
+	}
 }
 //Callback when comments have been updated (for wp-ajaxify-comments compatibility) - http://wordpress.org/plugins/wp-ajaxify-comments/faq/
 function SCE_comments_updated( comment_url ) {
@@ -403,5 +405,5 @@ function SCE_comments_updated( comment_url ) {
 	}
 	var comment_id = match[ 1 ];
 	jQuery( '#comment-' + comment_id ).find( '.sce-edit-button' ).simplecommentediting();
-	
+
 };
