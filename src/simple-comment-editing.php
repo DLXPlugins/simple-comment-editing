@@ -25,9 +25,10 @@ class Simple_Comment_Editing {
 		//Initialize errors
 		$this->errors = new WP_Error();
 		$this->errors->add( 'nonce_fail', __( 'You do not have permission to edit this comment.', 'simple-comment-editing' ) );
-		$this->errors->add( 'edit_fail', __( 'You can no longer edit this comment', 'simple-comment-editing' ) );
+		$this->errors->add( 'edit_fail', __( 'You can no longer edit this comment.', 'simple-comment-editing' ) );
+		$this->errors->add( 'timer_fail', __( 'Timer could not be stopped.', 'simple-comment-editing' ) );
 		$this->errors->add( 'comment_empty', __( 'Your comment cannot be empty. Delete instead?', 'simple-comment-editing' ) );
-		$this->errors->add( 'comment_marked_spam', __( 'This comment was marked as spam', 'simple-comment-editing' ) );
+		$this->errors->add( 'comment_marked_spam', __( 'This comment was marked as spam.', 'simple-comment-editing' ) );
 
 		//Determine http/https admin-ajax issue
 		$this->scheme = is_ssl() ? 'https' : 'http';
@@ -83,6 +84,8 @@ class Simple_Comment_Editing {
 		add_action( 'wp_ajax_nopriv_sce_epoch2_get_comment', array( $this, 'ajax_epoch2_get_comment' ) );
 		add_action( 'wp_ajax_sce_get_comment', array( $this, 'ajax_get_comment' ) );
 		add_action( 'wp_ajax_nopriv_sce_get_comment', array( $this, 'ajax_get_comment' ) );
+		add_action( 'wp_ajax_sce_stop_timer', array( $this, 'ajax_stop_timer' ) );
+		add_action( 'wp_ajax_nopriv_sce_stop_timer', array( $this, 'ajax_stop_timer' ) );
 
 		/* Begin Filters */
 		if ( !is_feed() && !defined( 'DOING_SCE' ) ) {
@@ -413,17 +416,69 @@ class Simple_Comment_Editing {
 	 } //end ajax_get_time_left
 
 	 /**
-	 * ajax_delete_comment- Removes a WordPress comment, but saves it to the trash
-	 *
-	 * Returns a JSON object of the saved comment
-	 *
-	 * @since 1.1.0
-	 *
-	 * @param int $_POST[ 'comment_id' ] The Comment ID
-	 * @param int $_POST[ 'post_id' ] The Comment's Post ID
-	 * @param string $_POST[ 'nonce' ] The nonce to check against
-	 * @return JSON object
-	 */
+	  * ajax_stop_timer - Removes the timer and stops comment editing
+	  *
+	  * Removes the timer and stops comment editing
+	  *
+	  * @since 1.1.0
+	  *
+	  * @param int $_POST[ 'comment_id' ] The Comment ID
+	  * @param int $_POST[ 'post_id' ] The Comment's Post ID
+	  * @param string $_POST[ 'nonce' ] The nonce to check against
+	  * @return JSON object
+	  */
+	  public function ajax_stop_timer() {
+		$comment_id = absint( $_POST[ 'comment_id' ] );
+		$post_id = absint( $_POST[ 'post_id' ] );
+		$nonce = $_POST[ 'nonce' ];
+
+		$return = array();
+		$return[ 'errors' ] = false;
+
+		//Do a nonce check
+		if ( !wp_verify_nonce( $nonce, 'sce-edit-comment' . $comment_id ) ) {
+			$return[ 'errors' ] = true;
+			$return[ 'remove' ] = true;
+			$return[ 'error' ] = $this->errors->get_error_message( 'nonce_fail' );
+			die( json_encode( $return ) );
+		}
+
+		//Check to see if the user can edit the comment
+		if ( !$this->can_edit( $comment_id, $post_id ) ) {
+			$return[ 'errors' ] = true;
+			$return[ 'remove' ] = true;
+			$return[ 'error' ] = $this->errors->get_error_message( 'edit_fail' );
+			die( json_encode( $return ) );
+		}
+
+	   /**
+		* Action: sce_timer_stopped
+		*
+		* Allow third parties to take action a timer has been stopped
+		*
+		* @since 2.3.0
+		*
+		* @param int $post_id The Post ID
+		* @param int $comment_id The Comment ID
+		*/
+		do_action( 'sce_timer_stopped', $post_id, $comment_id );
+
+		delete_comment_meta( $comment_id, '_sce' );
+
+		$return[ 'error' ] = '';
+		die( json_encode( $return ) );
+	} //end ajax_delete_comment
+
+	 /**
+	  * ajax_delete_comment- Removes a WordPress comment, but saves it to the trash
+	  *
+	  * @since 1.1.0
+	  *
+	  * @param int $_POST[ 'comment_id' ] The Comment ID
+	  * @param int $_POST[ 'post_id' ] The Comment's Post ID
+	  * @param string $_POST[ 'nonce' ] The nonce to check against
+	  * @return JSON object
+	  */
 	 public function ajax_delete_comment() {
 	 	$comment_id = absint( $_POST[ 'comment_id' ] );
 	 	$post_id = absint( $_POST[ 'post_id' ] );
@@ -741,7 +796,7 @@ class Simple_Comment_Editing {
 
 		// if we are logged in and are the comment author, bypass cookie check
 		$user_id = $this->get_user_id();
-		if ( 0 != $user_id && ( $post->post_author == $user_id || $comment->user_id == $user_id ) ) {
+		if ( 0 != $user_id && ( $post->post_author == $user_id || $comment->user_id == $user_id ) && ! empty( get_comment_meta( $comment_id, '_sce', true ) ) ) {
 			$cookie_bypass = true;
 		}
 
@@ -806,6 +861,7 @@ class Simple_Comment_Editing {
 		$user_id = $this->get_user_id();
 		if ( 0 != $user_id && ( $post->post_author == $user_id || $comment->user_id == $user_id ) ) {
 			$cookie_bypass = true;
+			update_comment_meta( $comment_id, '_sce', 'post_author' );
 		}
 		if ( ! defined( 'DOING_AJAX' ) && ! defined( 'EPOCH_API' ) ) {
 			if( false === $cookie_bypass ) {

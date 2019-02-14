@@ -187,6 +187,7 @@ jQuery( document ).ready( function( $ ) {
 				//Update the timer and show the editing interface
 				$( element ).find( '.sce-timer' ).html( timer_text );
 				$( element ).siblings( '.sce-textarea' ).find( '.sce-timer' ).html( timer_text );
+
 				$( element ).show( 400, function() {
 					/**
 					* Event: sce.timer.loaded
