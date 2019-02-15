@@ -1,4 +1,4 @@
-# Copyright (C) 2018 Simple Comment Editing
+# Copyright (C) 2019 Simple Comment Editing
 # This file is distributed under the same license as the Simple Comment Editing package.
 msgid ""
 msgstr ""
@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2019-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Ronald Huerca <ronald@mediaron.com>\n"
 "Language-Team: Ronald Huereca <ronald@mediaron.com\n"
 "X-Poedit-Basepath: ..\n"
@@ -17,29 +17,29 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: dist/js/simple-comment-editing.js:266, dist/js/simple-comment-editing.min.js:1
+#: dist/js/simple-comment-editing.js:269, dist/js/simple-comment-editing.js:312, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1
 msgid "day"
 msgid_plural "days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: dist/js/simple-comment-editing.js:267, dist/js/simple-comment-editing.js:276, dist/js/simple-comment-editing.js:290, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1, src/simple-comment-editing.php:330
+#: dist/js/simple-comment-editing.js:270, dist/js/simple-comment-editing.js:279, dist/js/simple-comment-editing.js:293, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1, src/simple-comment-editing.php:343
 msgid "and"
 msgstr ""
 
-#: dist/js/simple-comment-editing.js:275, dist/js/simple-comment-editing.min.js:1
+#: dist/js/simple-comment-editing.js:278, dist/js/simple-comment-editing.js:312, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: dist/js/simple-comment-editing.js:285, dist/js/simple-comment-editing.js:309, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1
+#: dist/js/simple-comment-editing.js:288, dist/js/simple-comment-editing.js:312, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: dist/js/simple-comment-editing.js:291, dist/js/simple-comment-editing.js:294, dist/js/simple-comment-editing.js:309, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1
+#: dist/js/simple-comment-editing.js:294, dist/js/simple-comment-editing.js:297, dist/js/simple-comment-editing.js:312, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] ""
@@ -50,45 +50,49 @@ msgid "You do not have permission to edit this comment."
 msgstr ""
 
 #: src/simple-comment-editing.php:28
-msgid "You can no longer edit this comment"
+msgid "You can no longer edit this comment."
 msgstr ""
 
 #: src/simple-comment-editing.php:29
-msgid "Your comment cannot be empty. Delete instead?"
+msgid "Timer could not be stopped."
 msgstr ""
 
 #: src/simple-comment-editing.php:30
-msgid "This comment was marked as spam"
+msgid "Your comment cannot be empty. Delete instead?"
 msgstr ""
 
-#: src/simple-comment-editing.php:154
+#: src/simple-comment-editing.php:31
+msgid "This comment was marked as spam."
+msgstr ""
+
+#: src/simple-comment-editing.php:157
 msgid "Click to Edit"
 msgstr ""
 
-#: src/simple-comment-editing.php:175
+#: src/simple-comment-editing.php:178
 msgid "Loading"
 msgstr ""
 
-#: src/simple-comment-editing.php:209
+#: src/simple-comment-editing.php:212
 msgid "Save"
 msgstr ""
 
-#: src/simple-comment-editing.php:220
+#: src/simple-comment-editing.php:223
 msgid "Cancel"
 msgstr ""
 
-#: src/simple-comment-editing.php:231
+#: src/simple-comment-editing.php:234
 msgid "Delete"
 msgstr ""
 
-#: src/simple-comment-editing.php:331
+#: src/simple-comment-editing.php:344
 msgid "Do you want to delete this comment?"
 msgstr ""
 
-#: src/simple-comment-editing.php:332
+#: src/simple-comment-editing.php:345
 msgid "Your comment has been removed."
 msgstr ""
 
-#: src/simple-comment-editing.php:333
+#: src/simple-comment-editing.php:346
 msgid "Your comment could not be deleted"
 msgstr ""
