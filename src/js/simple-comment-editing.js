@@ -306,7 +306,7 @@ jQuery( document ).ready( function( $ ) {
 		* @param int    number of minutes left
 		* @param int    seconds left
 		*/
-		text = wp.hooks.applyFilters( 'sce.comment.timer.text', text,  _n('minute', 'minutes', minutes, 'simple-comment-editing'), _n('second', 'seconds', seconds, 'simple-comment-editing'), original_minutes, original_seconds );
+		text = wp.hooks.applyFilters( 'sce.comment.timer.text', text,  _n('day', 'days', days, 'simple-comment-editing'), _n('hour', 'hours', hours, 'simple-comment-editing'), _n('minute', 'minutes', minutes, 'simple-comment-editing'), _n('second', 'seconds', seconds, 'simple-comment-editing'), days, hours, minutes, seconds );
 		return text;
 	};
 	sce.set_comment_cookie = function( pid, cid, callback ) {

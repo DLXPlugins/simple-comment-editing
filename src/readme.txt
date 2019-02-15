@@ -26,9 +26,21 @@ Simple Comment Editing features:
 
 <h3>Introducing Simple Comment Editing Options</h3>
 
-Introducing Simple Comment Editing Options. If you lack programming experience and want to customize Simple Comment Editing, then this plugin is for you. See a demo below.
+Introducing Simple Comment Editing Options. If you lack programming experience and want to customize Simple Comment Editing, then this plugin is for you. See the features below.
 
-https://www.youtube.com/watch?v=dn6QOmzc9RM&rel=0
+<ul>
+<li>Set the comment timer</li>
+<li>Stop the timer</li>
+<li>Hide the timer</li>
+<li>Select button styles to match your theme</li>
+<li>Enable comment editing logging to show an editing history for the comment</li>
+<li>See how many people are editing comments</li>
+<li>Receive email notifications of edited or deleted comments</li>
+<li>Edit the messages and text shown to users</li>
+<li>Set a minimum comment length</li>
+<li>Disable/Enable comment deletion</li>
+<li>And More!</li>
+</ul>
 
 > Get <a href="https://mediaron.com/simple-comment-editing-options">Simple Comment Editing Options</a> today!
 
@@ -65,8 +77,8 @@ Simple Comment Editing will work all the way back to IE10.
 
 == Changelog ==
 
-= 2.4.4 =
-* Released 2019-02-13
+= 2.3.4 =
+* Released 2019-02-14
 * New hook to allow scripts to load after SCE scripts
 * Ability to stop the timer and finish editing
 
