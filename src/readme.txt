@@ -319,6 +319,9 @@ Simple Comment Editing will work all the way back to IE10.
 
 == Upgrade Notice ==
 
+= 2.3.4 =
+New hook to allow scripts to load after SCE scripts. Ability to stop the timer and finish editing.
+
 = 2.3.3 =
 Fixing timer when it's less than a minute and the timer disaappears
 
