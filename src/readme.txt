@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment,
 Requires at least: 5.0
 Tested up to: 5.1
-Stable tag: 2.3.4
+Stable tag: 2.3.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/contribute/
@@ -32,6 +32,7 @@ Introducing Simple Comment Editing Options. If you lack programming experience a
 <li>Set the comment timer</li>
 <li>Stop the timer</li>
 <li>Hide the timer</li>
+<li>Change the timer output to words or compact (e.g., 10:45)
 <li>Select button styles to match your theme</li>
 <li>Enable comment editing logging to show an editing history for the comment</li>
 <li>See how many people are editing comments</li>
@@ -76,6 +77,10 @@ Simple Comment Editing will work all the way back to IE10.
 4. Simple Comment Editing Options front-end.
 
 == Changelog ==
+
+= 2.3.5 =
+* Released 2019-02-17
+* Updating JavaScript hooks to work with WordPress 5.0+
 
 = 2.3.4 =
 * Released 2019-02-14
@@ -319,26 +324,8 @@ Simple Comment Editing will work all the way back to IE10.
 
 == Upgrade Notice ==
 
-= 2.3.4 =
-New hook to allow scripts to load after SCE scripts. Ability to stop the timer and finish editing.
-
-= 2.3.3 =
-Fixing timer when it's less than a minute and the timer disaappears
-
-= 2.3.2 =
-Added better i18n with JavaScript files. Updated German translation.
-
-= 2.3.1 =
-Fixing compatibility with WP Ajaxify Comments
-
-= 2.3.0 =
-Set the timer to whatever value you want (in minutes). WordPress 5.0 compatible only. Do not upgrade if you are not using WordPress 5.0.
-
-= 2.2.1 =
-Added CSS around seperator so it can be hidden
-
-= 2.2.0 =
-Allow logged in users (author of the post) to bypass cookie authentication
+= 2.3.5 =
+Updating JavaScript hooks to work with WordPress 5.0+
 
 == Customization ==
 
