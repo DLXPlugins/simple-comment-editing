@@ -1,5 +1,6 @@
 var __ = wp.i18n.__;
 var _n = wp.i18n._n;
+var sce_hooks = wp.hooks.createHooks();
 jQuery( document ).ready( function( $ ) {
 	var sce = $.simplecommentediting = $.fn.simplecommentediting = function() {
 		var $this = this;
@@ -121,7 +122,7 @@ jQuery( document ).ready( function( $ ) {
 					*
 					* @param object $ajax_save_params
 					*/
-					ajax_save_params = wp.hooks.applyFilters( 'sce.comment.save.data', ajax_save_params );
+					ajax_save_params = sce_hooks.applyFilters( 'sce.comment.save.data', ajax_save_params );
 
 					$.post( ajax_url, ajax_save_params, function( response ) {
 						$( element ).siblings( '.sce-loading' ).fadeOut( 'fast', function() {
@@ -306,7 +307,7 @@ jQuery( document ).ready( function( $ ) {
 		* @param int    number of minutes left
 		* @param int    seconds left
 		*/
-		text = wp.hooks.applyFilters( 'sce.comment.timer.text', text,  _n('day', 'days', days, 'simple-comment-editing'), _n('hour', 'hours', hours, 'simple-comment-editing'), _n('minute', 'minutes', minutes, 'simple-comment-editing'), _n('second', 'seconds', seconds, 'simple-comment-editing'), days, hours, minutes, seconds );
+		text = sce_hooks.applyFilters( 'sce.comment.timer.text', text,  _n('day', 'days', days, 'simple-comment-editing'), _n('hour', 'hours', hours, 'simple-comment-editing'), _n('minute', 'minutes', minutes, 'simple-comment-editing'), _n('second', 'seconds', seconds, 'simple-comment-editing'), days, hours, minutes, seconds );
 		return text;
 	};
 	sce.set_comment_cookie = function( pid, cid, callback ) {
