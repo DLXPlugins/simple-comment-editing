@@ -1,5 +1,5 @@
 <?php
-define('SCE_VERSION', '2.3.5');
+define('SCE_VERSION', '2.3.6');
 class Simple_Comment_Editing {
 	private static $instance = null;
 	private $comment_time = 0; //in minutes
@@ -167,7 +167,7 @@ class Simple_Comment_Editing {
 		 *
 		 * @param bool Whether to show the timer or not
 		 */
-		if( apply_filters( 'sce_show_timer', true ) ) {
+		if( apply_filters( 'sce_show_timer', true ) && false === apply_filters( 'sce_unlimited_editing', false, $comment ) ) {
 			$sce_content .= '<span class="sce-seperator">&nbsp;&ndash;&nbsp;</span>';
 			$sce_content .= '<span class="sce-timer"></span>';
 		}
@@ -376,7 +376,7 @@ class Simple_Comment_Editing {
 	 	global $wpdb;
 	 	$comment_id = absint( $_POST[ 'comment_id' ] );
 	 	$post_id = absint( $_POST[ 'post_id' ] );
-
+		$comment = get_comment( $comment_id, OBJECT );
 	 	//Check if user can edit comment
 	 	if ( !$this->can_edit( $comment_id, $post_id ) ) {
 	 		$response = array(
@@ -386,7 +386,28 @@ class Simple_Comment_Editing {
 	 			'can_edit' => false
 	 		);
 	 		die( json_encode( $response ) );
-	 	}
+		 }
+		 
+		 /**
+		  * Filter: sce_unlimited_editing
+		  *
+		  * Allow unlimited comment editing
+		  *
+		  * @since 2.3.6
+		  *
+		  * @param bool Whether to allow unlimited comment editing
+		  * @param object Comment object
+		  */
+		 $sce_unlimited_editing = apply_filters( 'sce_unlimited_editing', false, $comment );
+		 if( $sce_unlimited_editing ) {
+			 $response = array(
+				 'minutes' => 'unlimited',
+				 'seconds' => 'unlimited',
+				 'comment_id' => $comment_id,
+				 'can_edit' => true
+			 );
+			 die( json_encode( $response ) );
+		 }
 
 	 	$comment_time = absint( $this->comment_time );
 	 	$query = $wpdb->prepare( "SELECT ( $comment_time * 60 - (UNIX_TIMESTAMP('" . current_time('mysql') . "') - UNIX_TIMESTAMP(comment_date))) comment_time FROM {$wpdb->comments} where comment_ID = %d", $comment_id );
@@ -800,11 +821,15 @@ class Simple_Comment_Editing {
 			$cookie_bypass = true;
 		}
 
+		$sce_unlimited_editing = apply_filters( 'sce_unlimited_editing', false, $comment );
+
 		//Check to see if time has elapsed for the comment
-		$comment_timestamp = strtotime( $comment->comment_date );
-		$time_elapsed = current_time( 'timestamp', get_option( 'gmt_offset' ) ) - $comment_timestamp;
-		$minutes_elapsed = ( ( ( $time_elapsed % 604800 ) % 86400 )  % 3600 ) / 60;
-		if ( ( $minutes_elapsed - $this->comment_time ) >= 0 ) return false;
+		if( ! $sce_unlimited_editing ) {
+			$comment_timestamp = strtotime( $comment->comment_date );
+			$time_elapsed = current_time( 'timestamp', get_option( 'gmt_offset' ) ) - $comment_timestamp;
+			$minutes_elapsed = ( ( ( $time_elapsed % 604800 ) % 86400 )  % 3600 ) / 60;
+			if ( ( $minutes_elapsed - $this->comment_time ) >= 0 ) return false;
+		}
 
 		if ( false === $cookie_bypass ) {
 			// Set cookies for verification
@@ -819,17 +844,17 @@ class Simple_Comment_Editing {
 
 		//All is well, the person/place/thing can edit the comment
 		/**
-		* Filter: sce_can_edit
-		*
-		* Determine if a user can edit the comment
-		*
-		* @since 1.3.2
-		*
-		* @param bool  true If user can edit the comment
-		* @param object $comment Comment object user has left
-		* @param int $comment_id Comment ID of the comment
-		* @param int $post_id Post ID of the comment
-		*/
+		 * Filter: sce_can_edit
+		 *
+		 * Determine if a user can edit the comment
+		 *
+		 * @since 1.3.2
+		 *
+		 * @param bool  true If user can edit the comment
+		 * @param object $comment Comment object user has left
+		 * @param int $comment_id Comment ID of the comment
+		 * @param int $post_id Post ID of the comment
+		 */
 		return apply_filters( 'sce_can_edit', true, $comment, $comment_id, $post_id );
 	} //end can_edit
 
