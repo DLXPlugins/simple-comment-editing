@@ -778,7 +778,7 @@ class Simple_Comment_Editing {
 		if ( !is_object( $post ) ) $post = get_post( $post_id, OBJECT );
 
 		if ( $comment->comment_post_ID != $post_id ) return false;
-
+		$user_id = $this->get_user_id();
 		/**
 		 * Filter: sce_can_edit_cookie_bypass
 		 *
@@ -790,11 +790,11 @@ class Simple_Comment_Editing {
 		 * @param object $comment    Comment object
 		 * @param int    $comment_id The comment ID
 		 * @param int    $post_id    The post ID of the comment
+		 * @param int    $user_id    The logged in user ID
 		 */
-		$cookie_bypass = apply_filters( 'sce_can_edit_cookie_bypass', false, $comment, $comment_id, $post_id );
+		$cookie_bypass = apply_filters( 'sce_can_edit_cookie_bypass', false, $comment, $comment_id, $post_id, $user_id );
 
 		// if we are logged in and are the comment author, bypass cookie check
-		$user_id = $this->get_user_id();
 		$comment_meta = get_comment_meta( $comment_id, '_sce', true );
 		if ( 0 != $user_id && ( $post->post_author == $user_id || $comment->user_id == $user_id ) && ! empty( $comment_meta ) ) {
 			$cookie_bypass = true;
@@ -854,11 +854,12 @@ class Simple_Comment_Editing {
 		// Remove expired comments
 		$this->remove_security_keys();
 
+		$user_id = $this->get_user_id();
+
 		//Don't set a cookie if a comment is posted via Ajax
-		$cookie_bypass = apply_filters( 'sce_can_edit_cookie_bypass', false, $comment, $comment_id, $post_id );
+		$cookie_bypass = apply_filters( 'sce_can_edit_cookie_bypass', false, $comment, $comment_id, $post_id, $user_id );
 
 		// if we are logged in and are the comment author, bypass cookie check
-		$user_id = $this->get_user_id();
 		if ( 0 != $user_id && ( $post->post_author == $user_id || $comment->user_id == $user_id ) ) {
 			$cookie_bypass = true;
 			update_comment_meta( $comment_id, '_sce', 'post_author' );
