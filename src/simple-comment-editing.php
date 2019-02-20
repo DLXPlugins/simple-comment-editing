@@ -795,7 +795,8 @@ class Simple_Comment_Editing {
 
 		// if we are logged in and are the comment author, bypass cookie check
 		$user_id = $this->get_user_id();
-		if ( 0 != $user_id && ( $post->post_author == $user_id || $comment->user_id == $user_id ) && ! empty( get_comment_meta( $comment_id, '_sce', true ) ) ) {
+		$comment_meta = get_comment_meta( $comment_id, '_sce', true );
+		if ( 0 != $user_id && ( $post->post_author == $user_id || $comment->user_id == $user_id ) && ! empty( $comment_meta ) ) {
 			$cookie_bypass = true;
 		}
 
