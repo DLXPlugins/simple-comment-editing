@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment,
 Requires at least: 5.0
 Tested up to: 5.1
-Stable tag: 2.3.5
+Stable tag: 2.3.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/contribute/
@@ -26,12 +26,13 @@ Simple Comment Editing features:
 
 <h3>Introducing Simple Comment Editing Options</h3>
 
-Introducing Simple Comment Editing Options. If you lack programming experience and want to customize Simple Comment Editing, then this plugin is for you. See the features below.
+Introducing Simple Comment Editing Options (a paid add-on to Simple Comment Editing). If you lack programming experience and want to customize Simple Comment Editing, then this plugin is for you. See the features below.
 
 <ul>
 <li>Set the comment timer</li>
 <li>Stop the timer</li>
 <li>Hide the timer</li>
+<li>Allow unlimited editing for logged in users.</li>
 <li>Change the timer output to words or compact (e.g., 10:45)
 <li>Select button styles to match your theme</li>
 <li>Enable comment editing logging to show an editing history for the comment</li>
@@ -77,6 +78,11 @@ Simple Comment Editing will work all the way back to IE10.
 4. Simple Comment Editing Options front-end.
 
 == Changelog ==
+
+= 2.3.6 =
+* Released 2019-02-20
+* Added new filter for unlimited editing option.
+* Fixing PHP 5.3 fatal error when posting a comment.
 
 = 2.3.5 =
 * Released 2019-02-17
@@ -323,6 +329,9 @@ Simple Comment Editing will work all the way back to IE10.
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.3.6 =
+Added new filter for unlimited editing option. Fixing PHP 5.3 fatal error.
 
 = 2.3.5 =
 Updating JavaScript hooks to work with WordPress 5.0+
