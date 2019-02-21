@@ -17,29 +17,29 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: dist/js/simple-comment-editing.js:273, dist/js/simple-comment-editing.js:316, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1
+#: dist/js/simple-comment-editing.js:274, dist/js/simple-comment-editing.js:317, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1
 msgid "day"
 msgid_plural "days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: dist/js/simple-comment-editing.js:274, dist/js/simple-comment-editing.js:283, dist/js/simple-comment-editing.js:297, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1, src/simple-comment-editing.php:342
+#: dist/js/simple-comment-editing.js:275, dist/js/simple-comment-editing.js:284, dist/js/simple-comment-editing.js:298, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1, src/simple-comment-editing.php:342
 msgid "and"
 msgstr ""
 
-#: dist/js/simple-comment-editing.js:282, dist/js/simple-comment-editing.js:316, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1
+#: dist/js/simple-comment-editing.js:283, dist/js/simple-comment-editing.js:317, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: dist/js/simple-comment-editing.js:292, dist/js/simple-comment-editing.js:316, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1
+#: dist/js/simple-comment-editing.js:293, dist/js/simple-comment-editing.js:317, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: dist/js/simple-comment-editing.js:298, dist/js/simple-comment-editing.js:301, dist/js/simple-comment-editing.js:316, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1
+#: dist/js/simple-comment-editing.js:299, dist/js/simple-comment-editing.js:302, dist/js/simple-comment-editing.js:317, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1, dist/js/simple-comment-editing.min.js:1
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] ""
