@@ -387,7 +387,7 @@ class Simple_Comment_Editing {
 	 		);
 	 		die( json_encode( $response ) );
 		 }
-		 
+
 		 /**
 		  * Filter: sce_unlimited_editing
 		  *
@@ -800,6 +800,14 @@ class Simple_Comment_Editing {
 
 		if ( $comment->comment_post_ID != $post_id ) return false;
 		$user_id = $this->get_user_id();
+
+		// if we are logged in and are the comment author, bypass cookie check
+		$comment_meta = get_comment_meta( $comment_id, '_sce', true );
+		$cookie_bypass = false;
+		if ( 0 != $user_id && ( $post->post_author == $user_id || $comment->user_id == $user_id ) && ! empty( $comment_meta ) ) {
+			$cookie_bypass = true;
+		}
+
 		/**
 		 * Filter: sce_can_edit_cookie_bypass
 		 *
@@ -813,18 +821,12 @@ class Simple_Comment_Editing {
 		 * @param int    $post_id    The post ID of the comment
 		 * @param int    $user_id    The logged in user ID
 		 */
-		$cookie_bypass = apply_filters( 'sce_can_edit_cookie_bypass', false, $comment, $comment_id, $post_id, $user_id );
-
-		// if we are logged in and are the comment author, bypass cookie check
-		$comment_meta = get_comment_meta( $comment_id, '_sce', true );
-		if ( 0 != $user_id && ( $post->post_author == $user_id || $comment->user_id == $user_id ) && ! empty( $comment_meta ) ) {
-			$cookie_bypass = true;
-		}
+		$cookie_bypass = apply_filters( 'sce_can_edit_cookie_bypass', $cookie_bypass, $comment, $comment_id, $post_id, $user_id );
 
 		$sce_unlimited_editing = apply_filters( 'sce_unlimited_editing', false, $comment );
 
 		//Check to see if time has elapsed for the comment
-		if( ! $sce_unlimited_editing ) {
+		if( ! $sce_unlimited_editing || false === $cookie_bypass ) {
 			$comment_timestamp = strtotime( $comment->comment_date );
 			$time_elapsed = current_time( 'timestamp', get_option( 'gmt_offset' ) ) - $comment_timestamp;
 			$minutes_elapsed = ( ( ( $time_elapsed % 604800 ) % 86400 )  % 3600 ) / 60;
