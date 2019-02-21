@@ -241,7 +241,6 @@ gulp.task('babel_min', function(){
 		.pipe(sourcemaps.init())
 		.pipe(babel({ sourceType :"module", presets: ['idempotent-babel-polyfill', 'es2015', 'stage-0'] }))
         .pipe(babelMinify())
-        .pipe(plumber(reportError))
         .pipe(rename({suffix: '.min'}))
 		.pipe(plumber(reportError))
 		.pipe(sourcemaps.write('.'))

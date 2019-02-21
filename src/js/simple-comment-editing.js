@@ -169,7 +169,8 @@ jQuery( document ).ready( function( $ ) {
 			*/
 			$.post( ajax_url, { action: 'sce_get_time_left', comment_id: ajax_params.cid, post_id: ajax_params.pid, _ajax_nonce: simple_comment_editing.nonce }, function( response ) {
 				//Set initial timer text
-				if( 'unlimited' === minutes && 'unlimited' === seconds ) {
+				if( 'unlimited' === response.minutes && 'unlimited' === response.seconds ) {
+					$( element ).show( 400 );
 					return;
 				}
 				var minutes = parseInt( response.minutes );
