@@ -1202,6 +1202,8 @@ function sce_instantiate() {
 		include Simple_Comment_Editing::get_instance()->get_plugin_dir( '/includes/class-sce-admin.php' );
 		new SCE_Admin();
 	}
-	include Simple_Comment_Editing::get_instance()->get_plugin_dir( '/includes/class-sce-output.php' );
-	new SCE_Output();
+	if( apply_filters( 'sce_show_admin', true ) ) {
+		include Simple_Comment_Editing::get_instance()->get_plugin_dir( '/includes/class-sce-output.php' );
+		new SCE_Output();
+	}
 } //end sce_instantiate
