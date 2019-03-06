@@ -1,6 +1,6 @@
 <?php
 if (!defined('ABSPATH')) die('No direct access.');
-class SCE_Admin_Menu_Output {
+class SCE_Plugin_Admin_Menu_Output {
 
 	public function __construct() {
 		$this->output_options();

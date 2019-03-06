@@ -1,6 +1,6 @@
 <?php
 if (!defined('ABSPATH')) die('No direct access.');
-class SCE_Output {
+class SCE_Plugin_Output {
 
 	/**
 	 * Holds options for SCE Options

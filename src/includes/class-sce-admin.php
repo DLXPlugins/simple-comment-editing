@@ -1,6 +1,6 @@
 <?php
 if (!defined('ABSPATH')) die('No direct access.');
-class SCE_Admin {
+class SCE_Plugin_Admin {
 
 	/**
 	 * Holds the slug to the admin panel page
@@ -73,7 +73,7 @@ class SCE_Admin {
 	 */
 	public function sce_admin_page() {
 		include Simple_Comment_Editing::get_instance()->get_plugin_dir('/includes/class-sce-admin-menu-output.php');
-		new SCE_Admin_Menu_Output();
+		new SCE_Plugin_Admin_Menu_Output();
 	}
 
 	/**

@@ -1200,10 +1200,10 @@ function sce_instantiate() {
 	Simple_Comment_Editing::get_instance();
 	if( is_admin() && apply_filters( 'sce_show_admin', true ) ) {
 		include Simple_Comment_Editing::get_instance()->get_plugin_dir( '/includes/class-sce-admin.php' );
-		new SCE_Admin();
+		new SCE_Plugin_Admin();
 	}
 	if( apply_filters( 'sce_show_admin', true ) ) {
 		include Simple_Comment_Editing::get_instance()->get_plugin_dir( '/includes/class-sce-output.php' );
-		new SCE_Output();
+		new SCE_Plugin_Output();
 	}
 } //end sce_instantiate
