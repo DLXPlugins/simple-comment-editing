@@ -45,6 +45,38 @@ msgid_plural "seconds"
 msgstr[0] ""
 msgstr[1] ""
 
+#: src/includes/class-sce-admin-menu-output.php:21
+msgid "Your options have been saved."
+msgstr ""
+
+#: src/includes/class-sce-admin-menu-output.php:36, src/includes/class-sce-admin.php:62, src/includes/class-sce-admin.php:62
+msgid "Simple Comment Editing"
+msgstr ""
+
+#: src/includes/class-sce-admin-menu-output.php:37
+msgid "Welcome to Simple Commment Editing!"
+msgstr ""
+
+#: src/includes/class-sce-admin-menu-output.php:38
+msgid "For more options and configuration, please try: "
+msgstr ""
+
+#: src/includes/class-sce-admin-menu-output.php:38
+msgid "Simple Comment Editing Options"
+msgstr ""
+
+#: src/includes/class-sce-admin-menu-output.php:42
+msgid "Edit Timer in Minutes"
+msgstr ""
+
+#: src/includes/class-sce-admin-menu-output.php:50
+msgid "Save Options"
+msgstr ""
+
+#: src/includes/class-sce-admin.php:89
+msgid "Settings"
+msgstr ""
+
 #: src/simple-comment-editing.php:27
 msgid "You do not have permission to edit this comment."
 msgstr ""
