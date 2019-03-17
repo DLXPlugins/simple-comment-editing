@@ -1,5 +1,5 @@
 <?php
-define('SCE_VERSION', '2.3.7');
+define('SCE_VERSION', '2.3.8');
 class Simple_Comment_Editing {
 	private static $instance = null;
 	private $comment_time = 0; //in minutes
@@ -974,7 +974,7 @@ class Simple_Comment_Editing {
 		if ( function_exists( 'mb_convert_encoding' ) ) {
 			$comment_content_to_return = mb_convert_encoding( $comment_content_to_return, ''. get_option( 'blog_charset' ) . '', mb_detect_encoding( $comment_content_to_return, "UTF-8, ISO-8859-1, ISO-8859-15", true ) );
 		}
-		return apply_filters( 'comment_text', apply_filters( 'get_comment_text', $comment_content_to_return, $comment ), $comment );
+		return apply_filters( 'comment_text', apply_filters( 'get_comment_text', $comment_content_to_return, $comment, array() ), $comment, array() );
 	}
 
 	/**
