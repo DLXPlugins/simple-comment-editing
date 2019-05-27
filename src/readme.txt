@@ -26,7 +26,7 @@ Simple Comment Editing features:
 
 <h3>Introducing Simple Comment Editing Options</h3>
 
-Introducing Simple Comment Editing Options (a paid add-on to Simple Comment Editing). If you lack programming experience and want to customize Simple Comment Editing, then this plugin is for you. See the features below.
+Introducing Simple Comment Editing Options (a free add-on to Simple Comment Editing). If you lack programming experience and want to customize Simple Comment Editing, then this plugin is for you. See the features below.
 
 <ul>
 <li>Set the comment timer</li>
@@ -44,7 +44,7 @@ Introducing Simple Comment Editing Options (a paid add-on to Simple Comment Edit
 <li>And More!</li>
 </ul>
 
-> Get <a href="https://mediaron.com/simple-comment-editing-options">Simple Comment Editing Options</a> today!
+> Get <a href="https://mediaron.com/simple-comment-editing-options">the free Simple Comment Editing Options</a> today!
 
 <h3>Help Contribute</h3>
 
