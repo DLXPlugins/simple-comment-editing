@@ -665,15 +665,21 @@ class Simple_Comment_Editing {
 	 	}
 
 	 	//Get original comment
-	 	$comment_to_save = $original_comment = get_comment( $comment_id, ARRAY_A);
+		$comment_to_save = $original_comment = get_comment( $comment_id, ARRAY_A);
 
 	 	//Check the comment
 	 	if ( $comment_to_save['comment_approved'] == 1 ) {
+			// Short circuit comment moderation filter.
+			add_filter( 'pre_option_comment_moderation', array( $this, 'short_circuit_comment_moderation' ) );
+			add_filter( 'pre_option_comment_whitelist', array( $this, 'short_circuit_comment_moderation' ) );
 			if ( check_comment( $comment_to_save['comment_author'], $comment_to_save['comment_author_email'], $comment_to_save['comment_author_url'], $new_comment_content, $comment_to_save['comment_author_IP'], $comment_to_save['comment_agent'], $comment_to_save['comment_type'] ) ) {
 				$comment_to_save['comment_approved'] = 1;
 			} else {
 				$comment_to_save['comment_approved'] = 0;
 			}
+			// Remove Short circuit comment moderation filter.
+			remove_filter( 'pre_option_comment_moderation', array( $this, 'short_circuit_comment_moderation' ) );
+			remove_filter( 'pre_option_comment_whitelist', array( $this, 'short_circuit_comment_moderation' ) );
 		}
 
 		//Check comment against blacklist
@@ -780,6 +786,16 @@ class Simple_Comment_Editing {
 		die( json_encode( $return ) );
 	 } //end ajax_save_comment
 
+	/**
+	 * Short circuit the comment moderation option check.
+	 *
+	 * @param bool|mixed $option_value The option value for moderation
+	 *
+	 * @return int Return a string so there is not a boolean value.
+	*/
+	public function short_circuit_comment_moderation( $option_value ) {
+		return 'approved';
+	}
 
 	/**
 	 * can_edit - Returns true/false if a user can edit a comment
