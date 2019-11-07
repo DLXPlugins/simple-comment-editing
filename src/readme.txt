@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment,
 Requires at least: 5.0
 Tested up to: 5.3
-Stable tag: 2.3.8
+Stable tag: 2.3.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/contribute/
@@ -78,6 +78,10 @@ Simple Comment Editing will work all the way back to IE10.
 4. Simple Comment Editing Options front-end.
 
 == Changelog ==
+
+= 2.3.9 =
+* Released 2019-11-06
+* Fixed bug where edited (and approved) comments were sent back to moderation.
 
 = 2.3.8 =
 * Released 2019-03-17
@@ -338,17 +342,8 @@ Simple Comment Editing will work all the way back to IE10.
 
 == Upgrade Notice ==
 
-= 2.3.8 =
-Adjusting filters to prevent WSOD
-
-= 2.3.7 =
-Added options panel for editing the timer time.
-
-= 2.3.6 =
-Added new filter for unlimited editing option. Fixing PHP 5.3 fatal error.
-
-= 2.3.5 =
-Updating JavaScript hooks to work with WordPress 5.0+
+= 2.3.9 =
+Fixed bug where edited (and approved) comments were sent back to moderation.
 
 == Customization ==
 

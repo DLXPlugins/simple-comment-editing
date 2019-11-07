@@ -1,5 +1,5 @@
 <?php
-define('SCE_VERSION', '2.3.8');
+define('SCE_VERSION', '2.3.9');
 class Simple_Comment_Editing {
 	private static $instance = null;
 	private $comment_time = 0; //in minutes
@@ -789,10 +789,12 @@ class Simple_Comment_Editing {
 	/**
 	 * Short circuit the comment moderation option check.
 	 *
+	 * @since 2.3.9
+	 *
 	 * @param bool|mixed $option_value The option value for moderation
 	 *
 	 * @return int Return a string so there is not a boolean value.
-	*/
+	 */
 	public function short_circuit_comment_moderation( $option_value ) {
 		return 'approved';
 	}
