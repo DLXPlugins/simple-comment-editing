@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: ajax, comments,edit comments, edit, comment,
 Requires at least: 5.0
 Tested up to: 5.3
-Stable tag: 2.3.9
+Stable tag: 2.3.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/contribute/
@@ -26,7 +26,7 @@ Simple Comment Editing features:
 
 <h3>Introducing Simple Comment Editing Options</h3>
 
-Introducing Simple Comment Editing Options (a free add-on to Simple Comment Editing). If you lack programming experience and want to customize Simple Comment Editing, then this plugin is for you. See the features below.
+Introducing Simple Comment Editing Options. It is a paid add-on for Simple Comment Editing. If you lack programming experience and want to customize Simple Comment Editing, then this plugin is for you. See the features below.
 
 <ul>
 <li>Set the comment timer</li>
@@ -39,12 +39,12 @@ Introducing Simple Comment Editing Options (a free add-on to Simple Comment Edit
 <li>See how many people are editing comments</li>
 <li>Receive email notifications of edited or deleted comments</li>
 <li>Edit the messages and text shown to users</li>
-<li>Set a minimum comment length</li>
+<li>Set a minimum and maximum comment length</li>
 <li>Disable/Enable comment deletion</li>
 <li>And More!</li>
 </ul>
 
-> Get <a href="https://mediaron.com/simple-comment-editing-options">the free Simple Comment Editing Options</a> today!
+> Get <a href="https://mediaron.com/simple-comment-editing-options">the Simple Comment Editing Options add-on</a> today!
 
 <h3>Help Contribute</h3>
 
@@ -60,6 +60,8 @@ Introducing Simple Comment Editing Options (a free add-on to Simple Comment Edit
 == Frequently Asked Questions ==
 = Why doesn't this plugin come with any styles? =
 It's impossible to style an inline comment editor for every theme.  We've included basic HTML markup that is easily stylable to fit your theme.
+
+With <a href="https://mediaron.com/simple-comment-editing-options">Simple Comment Editing Options</a>, you can choose between three themes.
 
 = Where are the options? =
 No options :) - Just simple comment editing. If you prefer options, try out the add-on <a href="https://mediaron.com/simple-comment-editing-options">Simple Comment Editing Options</a>.
@@ -78,6 +80,10 @@ Simple Comment Editing will work all the way back to IE10.
 4. Simple Comment Editing Options front-end.
 
 == Changelog ==
+
+= 2.3.11 =
+* Released 2019-12-07
+* Internal documentation update.
 
 = 2.3.9 =
 * Released 2019-11-06
@@ -342,9 +348,9 @@ Simple Comment Editing will work all the way back to IE10.
 
 == Upgrade Notice ==
 
-= 2.3.9 =
-Fixed bug where edited (and approved) comments were sent back to moderation.
+= 2.3.11 =
+Internal documentation update.
 
 == Customization ==
 
-For advanced options, please see the <a href="https://github.com/ronalfy/simple-comment-editing#wordpress-filters">SCE Filter/Action reference</a>.
+For advanced options, please see the <a href="https://github.com/ronalfy/simple-comment-editing#wordpress-filters">SCE Filter/Action reference</a>. You can also try <a href="https://mediaron.com/simple-comment-editing-options">the Simple Comment Editing Options add-on</a>.
