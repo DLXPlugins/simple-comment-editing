@@ -58,7 +58,7 @@ msgid "Welcome to Simple Commment Editing!"
 msgstr ""
 
 #: src/includes/class-sce-admin-menu-output.php:38
-msgid "For more options and configuration, please try: "
+msgid "For more options, stats, restoration of edited comments, and more configuration, please try: "
 msgstr ""
 
 #: src/includes/class-sce-admin-menu-output.php:38
