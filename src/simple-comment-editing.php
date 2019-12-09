@@ -1,5 +1,5 @@
 <?php
-define('SCE_VERSION', '2.3.11');
+define('SCE_VERSION', '2.3.12');
 class Simple_Comment_Editing {
 	private static $instance = null;
 	private $comment_time = 0; //in minutes
@@ -325,7 +325,7 @@ class Simple_Comment_Editing {
 		 do_action( 'sce_scripts_loaded' );
 
 		 /* For translations in JS */
-		wp_set_script_translations( 'simple-comment-editing', 'simple-comment-editing', plugin_dir_path( __FILE__ ) . 'languages' );
+		wp_set_script_translations( 'simple-comment-editing', 'simple-comment-editing' );
 
 	 	/**
 		 * Filter: sce_allow_delete_confirmation

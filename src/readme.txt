@@ -1,12 +1,12 @@
 === Simple Comment Editing ===
 Contributors: ronalfy
-Tags: ajax, comments,edit comments, edit, comment,
+Tags: comment editing, comments,edit comments, edit, comment,
 Requires at least: 5.0
 Tested up to: 5.3
-Stable tag: 2.3.11
+Stable tag: 2.3.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Donate link: https://mediaron.com/contribute/
+Donate link: https://mediaron.com/give/
 
 Simple Comment Editing for your website.
 
@@ -45,6 +45,7 @@ Introducing Simple Comment Editing Options. It is a paid add-on for Simple Comme
 </ul>
 
 > Get <a href="https://mediaron.com/simple-comment-editing-options">the Simple Comment Editing Options add-on</a> today!
+> As a WordPress Plugin directory user, enter coupon code `scewp` for 50% off any license plan.
 
 <h3>Help Contribute</h3>
 
@@ -80,6 +81,10 @@ Simple Comment Editing will work all the way back to IE10.
 4. Simple Comment Editing Options front-end.
 
 == Changelog ==
+
+= 2.3.12 =
+* Released 2019-12-08
+* Fixing translation errors for Russian language.
 
 = 2.3.11 =
 * Released 2019-12-07
@@ -348,8 +353,8 @@ Simple Comment Editing will work all the way back to IE10.
 
 == Upgrade Notice ==
 
-= 2.3.11 =
-Internal documentation update.
+= 2.3.12 =
+Fixing translation errors for Russian language.
 
 == Customization ==
 
