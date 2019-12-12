@@ -823,7 +823,7 @@ class Simple_Comment_Editing {
 		$comment_meta = get_comment_meta( $comment_id, '_sce', true );
 		$cookie_bypass = false;
 		if ( 0 != $user_id && ( $post->post_author == $user_id || $comment->user_id == $user_id ) && ! empty( $comment_meta ) ) {
-			$cookie_bypass = true;
+			$cookie_bypass = false;
 		}
 
 		/**
