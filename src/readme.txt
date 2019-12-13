@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: comment editing, comments,edit comments, edit, comment,
 Requires at least: 5.0
 Tested up to: 5.3
-Stable tag: 2.3.14
+Stable tag: 2.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/give/
@@ -81,6 +81,10 @@ Simple Comment Editing will work all the way back to IE10.
 4. Simple Comment Editing Options front-end.
 
 == Changelog ==
+
+= 2.4.0 =
+* Released 2019-12-13
+* Fix: Users could not edit comments.
 
  = 2.3.14 =
 * Released 2019-12-11
@@ -357,8 +361,8 @@ Simple Comment Editing will work all the way back to IE10.
 
 == Upgrade Notice ==
 
-= 2.3.14 =
-Removing ability of authors to see edited-enabled comments.
+= 2.4.0 =
+Fix: Users could not edit comments.
 
 == Customization ==
 
