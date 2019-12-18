@@ -817,13 +817,14 @@ class Simple_Comment_Editing {
 		if ( !is_object( $post ) ) $post = get_post( $post_id, OBJECT );
 
 		if ( $comment->comment_post_ID != $post_id ) return false;
-		$user_id = $this->get_user_id();
+		$user_id = absint( $this->get_user_id() );
 
 		// if we are logged in and are the comment author, bypass cookie check
 		$comment_meta = get_comment_meta( $comment_id, '_sce', true );
 		$cookie_bypass = false;
-		if ( 0 != $user_id && ( $post->post_author == $user_id || $comment->user_id == $user_id ) && ! empty( $comment_meta ) ) {
-			$cookie_bypass = false;
+		$is_comment_author = false;
+		if ( is_user_logged_in() && $user_id === absint( $comment->user_id ) ) {
+			$is_comment_author = true;
 		}
 
 		/**
@@ -844,14 +845,14 @@ class Simple_Comment_Editing {
 		$sce_unlimited_editing = apply_filters( 'sce_unlimited_editing', false, $comment );
 
 		//Check to see if time has elapsed for the comment
-		if( ! $sce_unlimited_editing && ! $cookie_bypass ) {
+		if( ( $sce_unlimited_editing && $cookie_bypass ) ||  $is_comment_author ) {
 			$comment_timestamp = strtotime( $comment->comment_date );
 			$time_elapsed = current_time( 'timestamp', get_option( 'gmt_offset' ) ) - $comment_timestamp;
 			$minutes_elapsed = ( ( ( $time_elapsed % 604800 ) % 86400 )  % 3600 ) / 60;
-			if ( ( $minutes_elapsed - $this->comment_time ) >= 0 ) return false;
-		}
-
-		if ( false === $cookie_bypass ) {
+			if ( ( $minutes_elapsed - $this->comment_time ) >= 0 ) {
+				return false;
+			}
+		} elseif ( false === $cookie_bypass ) {
 			// Set cookies for verification
 			$comment_date_gmt = date( 'Y-m-d', strtotime( $comment->comment_date_gmt ) );
 			$cookie_hash = md5( $comment->comment_author_IP . $comment_date_gmt . $comment->user_id . $comment->comment_agent );
@@ -859,7 +860,6 @@ class Simple_Comment_Editing {
 			$cookie_value = $this->get_cookie_value( 'SimpleCommentEditing' . $comment_id . $cookie_hash );
 			$comment_meta_hash = get_comment_meta( $comment_id, '_sce', true );
 			if ( $cookie_value !== $comment_meta_hash ) return false;
-
 		}
 
 		//All is well, the person/place/thing can edit the comment
