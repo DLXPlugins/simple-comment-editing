@@ -845,7 +845,7 @@ class Simple_Comment_Editing {
 		$sce_unlimited_editing = apply_filters( 'sce_unlimited_editing', false, $comment );
 
 		//Check to see if time has elapsed for the comment
-		if( ( $sce_unlimited_editing && $cookie_bypass ) ||  $is_comment_author ) {
+		if( ( $sce_unlimited_editing && $cookie_bypass ) || $is_comment_author ) {
 			$comment_timestamp = strtotime( $comment->comment_date );
 			$time_elapsed = current_time( 'timestamp', get_option( 'gmt_offset' ) ) - $comment_timestamp;
 			$minutes_elapsed = ( ( ( $time_elapsed % 604800 ) % 86400 )  % 3600 ) / 60;
