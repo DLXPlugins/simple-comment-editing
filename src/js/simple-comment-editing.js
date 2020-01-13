@@ -17,7 +17,18 @@ jQuery( document ).ready( function( $ ) {
 				$( element ).fadeOut( 'fast', function() {
 					$( element ).siblings( '.sce-textarea' ).find( 'button' ).prop( 'disabled', false );
 					$( element ).siblings( '.sce-textarea' ).fadeIn( 'fast', function() {
-						$( element ).siblings( '.sce-textarea' ).find( 'textarea:first' ).focus();
+						/**
+						 * Event: sce.timer.loaded
+						 *
+						 * Event triggered after a commen's timer has been loaded
+						 *
+						 * @since 1.3.0
+						 *
+						 * @param jQuery Element of the comment
+						 */
+						var textarea = $( element ).siblings( '.sce-textarea' ).find( 'textarea:first' );
+						jQuery( 'body' ).triggerHandler( 'sce.edit.show', [ textarea, ajax_params.cid ] )
+						textarea.focus();
 					} );
 				} );
 			} );
@@ -76,9 +87,6 @@ jQuery( document ).ready( function( $ ) {
 					//Save the comment
 					var textarea_val = $( element ).siblings( '.sce-textarea' ).find( 'textarea' ).val();
 					var comment_to_save = $.trim( textarea_val );
-					if ( textarea_val == 'I am God' && typeof( console ) == 'object' ) {
-						console.log( "Isn't God perfect?  Why the need to edit?" );
-					}
 
 					//If the comment is blank, see if the user wants to delete their comment
 					if ( comment_to_save == '' && simple_comment_editing.allow_delete == true  ) {
