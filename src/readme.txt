@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: comment editing, comments,edit comments, edit, comment,
 Requires at least: 5.0
 Tested up to: 5.3
-Stable tag: 2.4.2
+Stable tag: 2.4.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/give/
@@ -81,6 +81,10 @@ Simple Comment Editing will work all the way back to IE10.
 4. Simple Comment Editing Options front-end.
 
 == Changelog ==
+
+= 2.4.5 =
+* Released 2020-02-16
+* Added better support for multisite.
 
 = 2.4.2 =
 * Released 2020-01-13
@@ -370,9 +374,12 @@ Simple Comment Editing will work all the way back to IE10.
 
 == Upgrade Notice ==
 
+= 2.4.5 =
+Added better support for multisite.
+
 = 2.4.2 =
 Added hook for when the editing dialog is displayed.
 
 == Customization ==
 
-For advanced options, please see the <a href="https://github.com/ronalfy/simple-comment-editing#wordpress-filters">SCE Filter/Action reference</a>. You can also try <a href="https://mediaron.com/simple-comment-editing-options">the Simple Comment Editing Options add-on</a>.
+For advanced options, please see the <a href="https://github.com/ronalfy/simple-comment-editing#wordpress-filters">SCE Filter/Action reference</a>. Don't want to program? Try <a href="https://mediaron.com/simple-comment-editing-options">the Simple Comment Editing Options add-on</a>.

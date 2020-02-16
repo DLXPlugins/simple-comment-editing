@@ -49,27 +49,27 @@ msgstr[1] ""
 msgid "Your options have been saved."
 msgstr ""
 
-#: src/includes/class-sce-admin-menu-output.php:36, src/includes/class-sce-admin.php:62, src/includes/class-sce-admin.php:62
+#: src/includes/class-sce-admin-menu-output.php:40, src/includes/class-sce-admin.php:62, src/includes/class-sce-admin.php:62
 msgid "Simple Comment Editing"
 msgstr ""
 
-#: src/includes/class-sce-admin-menu-output.php:37
+#: src/includes/class-sce-admin-menu-output.php:41
 msgid "Welcome to Simple Commment Editing!"
 msgstr ""
 
-#: src/includes/class-sce-admin-menu-output.php:38
+#: src/includes/class-sce-admin-menu-output.php:42
 msgid "For more options, stats, restoration of edited comments, and more configuration, please try: "
 msgstr ""
 
-#: src/includes/class-sce-admin-menu-output.php:38
+#: src/includes/class-sce-admin-menu-output.php:42
 msgid "Simple Comment Editing Options"
 msgstr ""
 
-#: src/includes/class-sce-admin-menu-output.php:42
+#: src/includes/class-sce-admin-menu-output.php:46
 msgid "Edit Timer in Minutes"
 msgstr ""
 
-#: src/includes/class-sce-admin-menu-output.php:50
+#: src/includes/class-sce-admin-menu-output.php:54
 msgid "Save Options"
 msgstr ""
 
