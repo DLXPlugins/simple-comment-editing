@@ -808,7 +808,7 @@ class Simple_Comment_Editing {
 		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
 			require_once ABSPATH . '/wp-admin/includes/plugin.php';
 		}
-		if ( is_multisite() && is_network_admin() && is_plugin_active_for_network( SCE_SLUG ) ) {
+		if ( is_multisite() && is_plugin_active_for_network( SCE_SLUG ) ) {
 			return true;
 		}
 		return false;
