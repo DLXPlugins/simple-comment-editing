@@ -14,7 +14,12 @@ class SCE_Plugin_Output {
 	public function __construct() {
 
 		// Get SCE options
-		$options = get_site_option( 'sce_options', false );
+		if ( Simple_Comment_Editing::get_instance()::is_multisite() ) {
+			$options = get_site_option( 'sce_options', false );
+		} else {
+			$options = get_option( 'sce_options', false );
+		}
+		
 		if( false === $options ) return;
 		if( is_array( $options ) ) {
 			$this->options = $options;

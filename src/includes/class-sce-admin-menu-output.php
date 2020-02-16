@@ -21,7 +21,11 @@ class SCE_Plugin_Admin_Menu_Output {
 			printf( '<div class="updated"><p><strong>%s</strong></p></div>', __( 'Your options have been saved.', 'simple-comment-editing' ) );
 		}
 		// Get options and defaults
-		$options = get_site_option( 'sce_options', false );
+		if ( Simple_Comment_Editing::get_instance()::is_multisite() ) {
+			$options = get_site_option( 'sce_options', false );
+		} else {
+			$options = get_option( 'sce_options', false );
+		}
 		if ( false === $options ) {
 			$options = $this->get_defaults();
 		} elseif( is_array( $options ) ) {
@@ -76,7 +80,11 @@ class SCE_Plugin_Admin_Menu_Output {
 					break;
 			}
 		}
-		update_site_option( 'sce_options', $options );
+		if ( Simple_Comment_Editing::get_instance()::is_multisite() ) {
+			update_site_option( 'sce_options', $options );
+		} else {
+			update_option( 'sce_options', $options );
+		}
 	}
 
 	/**

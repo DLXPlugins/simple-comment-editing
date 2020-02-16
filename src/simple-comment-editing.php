@@ -800,6 +800,21 @@ class Simple_Comment_Editing {
 	}
 
 	/**
+	 * Checks if the plugin is on a multisite install.
+	 *
+	 * @return true if multisite, false if not.
+	 */
+	public static function is_multisite() {
+		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
+			require_once ABSPATH . '/wp-admin/includes/plugin.php';
+		}
+		if ( is_multisite() && is_network_admin() && is_plugin_active_for_network( SCE_SLUG ) ) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * can_edit - Returns true/false if a user can edit a comment
 	 *
 	 * Retrieves a cookie to see if a comment can be edited or not
