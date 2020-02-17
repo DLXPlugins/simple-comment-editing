@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: comment editing, comments,edit comments, edit, comment,
 Requires at least: 5.0
 Tested up to: 5.3
-Stable tag: 2.4.5
+Stable tag: 2.4.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/give/
@@ -81,6 +81,10 @@ Simple Comment Editing will work all the way back to IE10.
 4. Simple Comment Editing Options front-end.
 
 == Changelog ==
+
+= 2.4.6 =
+* Released 2020-02-17
+* Fixing WSOD error with incompatible PHP7 syntax.
 
 = 2.4.5 =
 * Released 2020-02-16
@@ -373,6 +377,9 @@ Simple Comment Editing will work all the way back to IE10.
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.4.6 =
+Fixing WSOD error with incompatible PHP7 syntax.
 
 = 2.4.5 =
 Added better support for multisite.

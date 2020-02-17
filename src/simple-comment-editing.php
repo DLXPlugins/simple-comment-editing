@@ -1,5 +1,5 @@
 <?php
-define('SCE_VERSION', '2.4.5');
+define('SCE_VERSION', '2.4.6');
 class Simple_Comment_Editing {
 	private static $instance = null;
 	private $comment_time = 0; //in minutes
