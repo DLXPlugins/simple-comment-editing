@@ -75,10 +75,8 @@ Simple Comment Editing will work all the way back to IE10.
 
 == Screenshots ==
 
-1. Edit button and timer.
-2. Textarea and Save/Cancel buttons.
-3. Simple Comment Editing Options admin screen.
-4. Simple Comment Editing Options front-end.
+1. Edit Button and Timer.
+2. Styled Buttons and Compact Timer.
 
 == Changelog ==
 
