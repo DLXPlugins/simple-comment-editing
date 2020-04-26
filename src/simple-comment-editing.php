@@ -1,5 +1,5 @@
 <?php
-define('SCE_VERSION', '2.4.6');
+define('SCE_VERSION', '2.5.0');
 class Simple_Comment_Editing {
 	private static $instance = null;
 	private $comment_time = 0; //in minutes
@@ -842,6 +842,12 @@ class Simple_Comment_Editing {
 			$is_comment_author = true;
 		}
 
+		// If unlimited is enabled and user is comment author, user can edit.
+		$unlimited_editing = apply_filters( 'sce_unlimited_editing', false, $comment );
+		if ( $is_comment_author && $unlimited_editing ) {
+			return apply_filters( 'sce_can_edit', true, $comment, $comment_id, $post_id );
+		}
+
 		/**
 		 * Filter: sce_can_edit_cookie_bypass
 		 *
@@ -856,8 +862,6 @@ class Simple_Comment_Editing {
 		 * @param int    $user_id    The logged in user ID
 		 */
 		$cookie_bypass = apply_filters( 'sce_can_edit_cookie_bypass', $cookie_bypass, $comment, $comment_id, $post_id, $user_id );
-
-		$sce_unlimited_editing = apply_filters( 'sce_unlimited_editing', false, $comment );
 
 		//Check to see if time has elapsed for the comment
 		if( ( $sce_unlimited_editing && $cookie_bypass ) || $is_comment_author ) {

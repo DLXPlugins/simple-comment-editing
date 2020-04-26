@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: comment editing, comments,edit comments, edit, comment,
 Requires at least: 5.0
 Tested up to: 5.4
-Stable tag: 2.4.6
+Stable tag: 2.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/give/
@@ -79,6 +79,10 @@ Simple Comment Editing will work all the way back to IE10.
 2. Styled Buttons and Compact Timer.
 
 == Changelog ==
+
+= 2.5.0 =
+* Released 2020-04-26
+* Unlimited logged-in comment was always failing.
 
 = 2.4.6 =
 * Released 2020-02-17
@@ -375,6 +379,9 @@ Simple Comment Editing will work all the way back to IE10.
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.5.0 =
+Unlimited logged-in comment was always failing with SCE Options.
 
 = 2.4.6 =
 Fixing WSOD error with incompatible PHP7 syntax.
