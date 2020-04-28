@@ -1,5 +1,5 @@
 <?php
-define('SCE_VERSION', '2.5.0');
+define('SCE_VERSION', '2.5.1');
 class Simple_Comment_Editing {
 	private static $instance = null;
 	private $comment_time = 0; //in minutes
@@ -843,8 +843,8 @@ class Simple_Comment_Editing {
 		}
 
 		// If unlimited is enabled and user is comment author, user can edit.
-		$unlimited_editing = apply_filters( 'sce_unlimited_editing', false, $comment );
-		if ( $is_comment_author && $unlimited_editing ) {
+		$sce_unlimited_editing = apply_filters( 'sce_unlimited_editing', false, $comment );
+		if ( $is_comment_author && $sce_unlimited_editing ) {
 			return apply_filters( 'sce_can_edit', true, $comment, $comment_id, $post_id );
 		}
 
