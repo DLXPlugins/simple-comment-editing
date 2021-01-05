@@ -97,7 +97,7 @@
   },
   "dependencies": {
     "@wordpress/i18n": "^3.0.1",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "babel-preset-latest": "^6.24.1",
     "eslint-config-wordpress": "^2.0.0",
     "gulp": "^3.9.1",
