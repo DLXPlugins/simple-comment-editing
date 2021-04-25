@@ -10,7 +10,7 @@ jQuery( document ).ready( function( $ ) {
 			var element = this;
 
 			//Set up event for when the edit button is clicked
-			$( element ).on( 'click', 'a:first', function( e ) {
+			$( element ).on( 'click', 'a.sce-edit-button-main', function( e ) {
 				e.preventDefault();
 				$( '#sce-edit-comment-status' + ajax_params.cid ).removeClass().addClass( 'sce-status' ).css( 'display', 'none' );
 				//Hide the edit button and show the textarea
@@ -31,6 +31,18 @@ jQuery( document ).ready( function( $ ) {
 						textarea.focus();
 					} );
 				} );
+			} );
+
+			// Delete button.
+			$( element ).on( 'click', 'a.sce-delete-button-main', function( e ) {
+				e.preventDefault();
+				if ( simple_comment_editing.allow_delete_confirmation ) {
+	    			if( confirm( simple_comment_editing.confirm_delete ) ) {
+		    			sce_delete_comment( element, ajax_params );
+	    			}
+    			} else {
+	    			sce_delete_comment( element, ajax_params );
+    			}
 			} );
 
 			//Cancel button

@@ -168,7 +168,31 @@ class Simple_Comment_Editing {
 		*/
 		$click_to_edit_text = apply_filters( 'sce_text_edit', __( 'Click to Edit', 'simple-comment-editing' ) );
 
-		$sce_content .= sprintf( '<a href="%s">%s</a>', esc_url( $ajax_edit_url ), esc_html( $click_to_edit_text ) );
+		/**
+		* Filter: sce_text_edit_delete
+		*
+		* Filter allow editing of the delete text
+		*
+		* @since 2.6.0
+		*
+		* @param string Translated delete text
+		*/
+		$delete_edit_text = apply_filters( 'sce_text_edit_delete', __( 'Delete Comment', 'simple-comment-editing' ) );
+
+		$allow_edit_delete = apply_filters( 'sce_allow_delete_button', false );
+		$allow_edit        = apply_filters( 'sce_allow_edit_button', true );
+
+		if ( $allow_edit && ! $allow_edit_delete ) {
+			$sce_content .= sprintf( '<a class="sce-edit-button-main" href="%s">%s</a>', esc_url( $ajax_edit_url ), esc_html( $click_to_edit_text ) );
+		} elseif ( $allow_edit && $allow_edit_delete ) {
+			$sce_content .= sprintf( '<a class="sce-edit-button-main" href="%s">%s</a>', esc_url( $ajax_edit_url ), esc_html( $click_to_edit_text ) );
+			$sce_content .= '<span class="sce-seperator">&nbsp;&ndash;&nbsp;</span>';
+			$sce_content .= sprintf( '<a class="sce-delete-button-main" href="%s">%s</a>', esc_url( $ajax_edit_url ), esc_html( $delete_edit_text ) );
+		} elseif ( ! $allow_edit && $allow_edit_delete ) {
+			$sce_content .= sprintf( '<a class="sce-delete-button-main" href="%s">%s</a>', esc_url( $ajax_edit_url ), esc_html( $delete_edit_text ) );
+		} else {
+			$sce_content .= sprintf( '<a class="sce-edit-button-main" href="%s">%s</a>', esc_url( $ajax_edit_url ), esc_html( $click_to_edit_text ) );
+		}
 
 		/**
 		 * Filter: sce_show_timer
