@@ -341,14 +341,8 @@ class Simple_Comment_Editing {
 			return;
 		}
 
-		$main_script_uri  = $this->get_plugin_url( '/js/simple-comment-editing.min.js' );
-		$hooks_script_url = $this->get_plugin_url( '/js/event-manager.min.js' );
-		if ( defined( 'SCRIPT_DEBUG' ) ) {
-			if ( SCRIPT_DEBUG == true ) {
-				$main_script_uri  = $this->get_plugin_url( '/js/simple-comment-editing.js' );
-				$hooks_script_url = $this->get_plugin_url( '/js/event-manager.js' );
-			}
-		}
+		$main_script_uri  = $this->get_plugin_url( '/js/simple-comment-editing.js' );
+		$hooks_script_url = $this->get_plugin_url( '/js/event-manager.js' );
 		wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery', 'wp-ajax-response', 'wp-i18n', 'wp-hooks' ), SCE_VERSION, true );
 
 		/**

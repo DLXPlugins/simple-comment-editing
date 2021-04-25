@@ -1,0 +1,31 @@
+{
+  "name": "simple-comment-editing",
+  "version": "1.0.0",
+  "description": "Simple Comment Editing for your users",
+  "main": "gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MediaRon/simple-comment-editing.git"
+  },
+  "keywords": [
+    "comment",
+    "editing",
+    "simple",
+    "comment",
+    "editing"
+  ],
+  "author": "Ronald Huereca",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/MediaRon/simple-comment-editing/issues"
+  },
+  "homepage": "https://github.com/MediaRon/simple-comment-editing#readme",
+  "devDependencies": {
+    "grunt": "^1.4.0",
+    "grunt-cli": "^1.4.2",
+    "grunt-contrib-compress": "^2.0.0"
+  }
+}
