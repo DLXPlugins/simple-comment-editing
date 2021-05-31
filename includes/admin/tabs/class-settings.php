@@ -99,7 +99,7 @@ class Settings extends Tabs {
 								</tbody>
 							</table>
 
-							<?php submit_button( __( 'Save Options', 'simple-comment-editing' ), 'sce-button sce-button-info', 'submit', true, ); ?>
+							<?php submit_button( __( 'Save Options', 'simple-comment-editing' ), 'sce-button sce-button-info', 'submit', true ); ?>
 						</form>
 					</div>
 				</div>
