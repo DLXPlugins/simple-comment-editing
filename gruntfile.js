@@ -9,6 +9,7 @@ module.exports = function (grunt) {
 				{src: ['simple-comment-editing.php'], dest: '/', filter: 'isFile'}, // includes files in path
 				{src: ['index.php'], dest: '/', filter: 'isFile'}, // includes files in path
 				{src: ['readme.txt'], dest: '/', filter: 'isFile'}, // includes files in path
+				{src: ['autoloader.php'], dest: '/', filter: 'isFile'}, // includes files in path
 				{src: ['uninstall.php'], dest: '/', filter: 'isFile'}, // includes files in path
 				{src: ['images/**'], dest: '/'}, // includes files in path and its subdirs
 				{src: ['includes/**'], dest: '/'}, // includes files in path and its subdirs
