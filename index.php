@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: Simple Comment Editing
-Plugin URI: http://wordpress.org/extend/plugins/simple-comment-editing/
-Description: Simple comment editing for your users.
+Plugin URI: https://mediaron.com/simple-comment-editing/
+Description: Allow your users to edit their comments.
 Author: Ronald Huereca
 Version: 2.5.5
 Requires at least: 5.0
@@ -11,5 +11,13 @@ Contributors: ronalfy
 Text Domain: simple-comment-editing
 Domain Path: /languages
 */
-define( 'SCE_SLUG', plugin_basename(__FILE__) );
-require( 'simple-comment-editing.php' );
+if ( ! defined( 'ABSPATH' ) ) {
+	die( 'No direct access.' );
+}
+define( 'SCE_SLUG', plugin_basename( __FILE__ ) );
+define( 'SCE_VERSION', '2.5.5' );
+define( 'SCE_FILE', __FILE__ );
+define( 'SCE_SPONSORS_URL', 'https://github.com/sponsors/MediaRon' );
+
+require_once 'autoloader.php';
+require 'simple-comment-editing.php';

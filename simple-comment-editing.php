@@ -1,5 +1,4 @@
 <?php
-define( 'SCE_VERSION', '2.5.5' );
 class Simple_Comment_Editing {
 	private static $instance = null;
 	private $comment_time    = 0; // in minutes
@@ -1282,11 +1281,9 @@ add_action( 'plugins_loaded', 'sce_instantiate' );
 function sce_instantiate() {
 	Simple_Comment_Editing::get_instance();
 	if ( is_admin() && apply_filters( 'sce_show_admin', true ) ) {
-		include Simple_Comment_Editing::get_instance()->get_plugin_dir( '/includes/class-sce-admin.php' );
-		new SCE_Plugin_Admin();
+		new SCE\Includes\Admin\Admin_Settings();
 	}
 	if ( apply_filters( 'sce_show_admin', true ) ) {
-		include Simple_Comment_Editing::get_instance()->get_plugin_dir( '/includes/class-sce-output.php' );
-		new SCE_Plugin_Output();
+		
 	}
 } //end sce_instantiate
