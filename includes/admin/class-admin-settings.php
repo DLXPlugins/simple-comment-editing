@@ -24,6 +24,7 @@ class Admin_Settings {
 
 		// init tabs here.
 		new \SCE\Includes\Admin\Tabs\Settings();
+		new \SCE\Includes\Admin\Tabs\Support();
 	}
 
 	/**

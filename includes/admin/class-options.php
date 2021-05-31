@@ -76,7 +76,7 @@ class Options {
 					break;
 			}
 		}
-		if ( Simple_Comment_Editing::is_multisite() ) {
+		if ( \Simple_Comment_Editing::is_multisite() ) {
 			update_site_option( 'sce_options', $options );
 		} else {
 			update_option( 'sce_options', $options );
