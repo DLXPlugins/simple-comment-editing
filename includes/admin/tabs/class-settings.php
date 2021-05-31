@@ -82,25 +82,26 @@ class Settings extends Tabs {
 				// Get options and defaults.
 				$options = Options::get_options();
 				?>
-				<div class="wrap">
-					<form action="" method="POST">
-						<?php wp_nonce_field( 'save_sce_options' ); ?>
-						<h1><?php esc_html_e( 'Simple Comment Editing', 'simple-comment-editing' ); ?></h1>
-						<h2><?php esc_html_e( 'Welcome to Simple Commment Editing!', 'simple-comment-editing' ); ?></h2>
-						<p><?php esc_html_e( 'For more options, stats, restoration of edited comments, and more configuration, please try: ', 'simple-comment-editing' ); ?><a target="_blank" href="https://mediaron.com/simple-comment-editing-options/"><?php esc_html_e( 'Simple Comment Editing Options', 'simple-comment-editing' ); ?></a></p>
-						<table class="form-table">
-							<tbody>
-								<tr>
-									<th scope="row"><label for="sce-timer"><?php esc_html_e( 'Edit Timer in Minutes', 'simple-comment-editing' ); ?></label></th>
-									<td>
-										<input id="sce-timer" class="regular-text" type="number" value="<?php echo esc_attr( absint( $options['timer'] ) ); ?>" name="options[timer]" />
-									</td>
-								</tr>
-							</tbody>
-						</table>
+				<div class="sce-admin-panel-area">
+					<div class="sce-panel-row">
+						<form action="" method="POST">
+							<?php wp_nonce_field( 'save_sce_options' ); ?>
+							<h1><?php esc_html_e( 'Welcome to Simple Commment Editing!', 'simple-comment-editing' ); ?></h1>
+							<p><?php esc_html_e( 'For more options, stats, restoration of edited comments, and more configuration, please try: ', 'simple-comment-editing' ); ?><a target="_blank" href="https://mediaron.com/simple-comment-editing-options/"><?php esc_html_e( 'Simple Comment Editing Options', 'simple-comment-editing' ); ?></a></p>
+							<table class="form-table">
+								<tbody>
+									<tr>
+										<th scope="row"><label for="sce-timer"><?php esc_html_e( 'Edit Timer in Minutes', 'simple-comment-editing' ); ?></label></th>
+										<td>
+											<input id="sce-timer" class="regular-text" type="number" value="<?php echo esc_attr( absint( $options['timer'] ) ); ?>" name="options[timer]" />
+										</td>
+									</tr>
+								</tbody>
+							</table>
 
-						<?php submit_button( __( 'Save Options', 'simple-comment-editing' ) ); ?>
-					</form>
+							<?php submit_button( __( 'Save Options', 'simple-comment-editing' ), 'sce-button sce-button-info', 'submit', true,  ); ?>
+						</form>
+					</div>
 				</div>
 				<?php
 			}

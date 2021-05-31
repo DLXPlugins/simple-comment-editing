@@ -56,7 +56,7 @@ $danger_button_color_text: #fff;
 	vertical-align: middle;
 	font-size: 14px;
 	&:hover {
-		color: #fff;
+		color: #fff !important;
 		background: lighten( $accent_color, 10% );
 	}
 	&.sce-button-info {
@@ -147,4 +147,11 @@ h3.sce-panel-heading {
 		height: auto;
 		max-width: 800px;
 	}
+}
+
+#sce-options-logo {
+	max-width: 250px;
+	display: inline-block;
+	width: 100%;
+	height: auto;
 }
