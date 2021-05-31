@@ -1,13 +1,13 @@
-const path = require("path");
-const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const path = require('path');
+const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = [
 	{
 		mode: process.env.NODE_ENV,
 		entry: {
-			"sce-admin": ["./src/scss/admin.scss"],
-			"sce-frontend": ["./src/scss/frontend.scss"],
+			'sce-admin': ['./src/scss/admin.scss'],
+			'sce-frontend': ['./src/scss/frontend.scss'],
 		},
 		output: {},
 		module: {
@@ -20,20 +20,18 @@ module.exports = [
 							loader: MiniCssExtractPlugin.loader,
 						},
 						{
-							loader: "css-loader",
+							loader: 'css-loader',
 							options: {
 								sourceMap: true,
 								url: false,
 							},
 						},
-						"sass-loader",
+						'sass-loader',
 					],
 				},
 			],
 		},
-		plugins: [
-			new FixStyleOnlyEntriesPlugin(),
-			new MiniCssExtractPlugin(),
-		],
+		devtool: 'source-map',
+		plugins: [new FixStyleOnlyEntriesPlugin(), new MiniCssExtractPlugin()],
 	},
 ];
