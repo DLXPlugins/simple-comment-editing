@@ -1282,6 +1282,8 @@ function sce_instantiate() {
 	Simple_Comment_Editing::get_instance();
 	if ( is_admin() && apply_filters( 'sce_show_admin', true ) ) {
 		new SCE\Includes\Admin\Admin_Settings();
+		$sce_enqueue = new SCE\Includes\Enqueue;
+		$sce_enqueue->run();
 	}
 	if ( apply_filters( 'sce_show_admin', true ) ) {
 		

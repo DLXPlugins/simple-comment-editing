@@ -258,7 +258,6 @@ class Admin_Settings {
 		<div class="wrap sce-admin-wrap">
 			<h1>
 				<a href="<?php echo esc_url( Functions::get_settings_url() ); ?>" class="sce-admin-logo"><img src="<?php echo esc_url( Functions::get_plugin_logo() ); ?>" alt="Simple Comment Editing" /></a>
-				<strong style="font-weight: 500;"><?php echo esc_html( _x( 'Simple Comment Editing', 'Plugin name.', 'simple-comment-editing' ) ); ?></strong>
 			</h1>
 			<p class="sce-info-text"><?php esc_html_e( 'Supercharge your comment section by allowing your users to edit their comments.', 'simple-comment-editing' ); ?></p>
 		<?php

@@ -1,0 +1,150 @@
+$base_color: #58a0db;
+$admin_color_panel_background: #fff;
+$border_color_light: #ddd;
+$admin_logo_color: #b01b1b;
+$body_color: #000;
+$main_color: #274472;
+$color_disabled: #f1f1f1;
+$accent_color_alt: #627227;
+$accent_color: #722727;
+$accent_color_hover: #722727;
+$color_white: #ffffff;
+$color_black: #000000;
+$secondary_color: #e2e3e5;
+$secondary_text_color: #383d41;
+$secondary_border_color: #d6d8db;
+$success_color: #d4edda;
+$success_text_color: #155724;
+$success_border_color: #c3e6cb;
+$info_color: #d1ecf1;
+$info_border_color: #bee5eb;
+$info_text_color: #0c5460;
+$warning_color: #fff3cd;
+$warning_border_color: #ffeeba;
+$warning_text_color: #856404;
+$error_color: #f8d7da;
+$error_border_color: #f5c6cb;
+$error_text_color: #721c24;
+$danger_background_color: #721c24;
+$danger_text_color: #ffffff;
+$save_button_color: #22721c;
+$save_button_color_text: #fff;
+$primary_button_color: #1c3472;
+$primary_button_color_text: #fff;
+$secondary_button_color: #6c757d;
+$secondary_button_color_text: #fff;
+$edit_button_color: #f8f9fa;
+$edit_button_color_text: #000;
+$delete_button_color: #721c24;
+$delete_button_color_text: #fff;
+$danger_button_color: #721c24;
+$danger_button_color_text: #fff;
+
+
+
+/* Button Options */
+.sce-button {
+	padding: 10px 20px;
+	border-radius: 5px;
+	background: $accent_color;
+	color: #fff;
+	cursor: pointer;
+	border: 1px solid #e0e4e9;
+	transition: background-color 0.5s ease;
+	text-decoration: none;
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 14px;
+	&:hover {
+		color: #fff;
+		background: lighten( $accent_color, 10% );
+	}
+	&.sce-button-info {
+		background: $secondary_button_color;
+		color: $secondary_button_color_text;
+		&:hover {
+			background: lighten( $secondary_button_color, 10% );
+		}
+	}
+	&.sce-button-danger {
+		background: $danger_button_color;
+		color: $danger_button_color_text;
+		&:hover {
+			background: lighten( $danger_button_color, 10% );
+		}
+	}
+	&.sce-button-edit {
+		background: $edit_button_color;
+		color: $edit_button_color_text;
+		&:hover {
+			background: lighten( $edit_button_color, 10% );
+		}
+	}
+	&.sce-button-delete {
+		background: $delete_button_color;
+		color: $delete_button_color_text;
+		&:hover {
+			background: lighten( $delete_button_color, 10% );
+		}
+	}
+	&.sce-button-lg {
+		padding: 20px 30px;
+		font-size: 2em;
+	}
+	&.sce-button-save {
+		background: $save_button_color;
+		color: $save_button_color_text;
+		&:hover {
+			color: #fff;
+			background: lighten( $save_button_color, 10% );
+		}
+	}
+	.sce-icon-button {
+		text-align: middle;
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+	}
+	svg {
+		width: 16px;
+		height: 16px;
+		vertical-align: middle;
+	}
+	.sce-icon-yellow {
+		color: #f52a39;
+	}
+}
+
+h3.sce-panel-heading {
+	color: $secondary_button_color;
+	font-size: 1.8em;
+	font-weight: 700;
+	padding-bottom: 2px;
+	margin: 0;
+	padding-bottom: 0.7em;
+	line-height: 1.3;
+}
+.sce-admin-panel-area {
+	position: relative;
+	background-color: #FFF;
+	border: 1px solid #DDD;
+	box-shadow: 1px 1px 7px 2px rgba(221,221,221,0.6);
+	padding: 20px;
+	margin-top: 25px;
+}
+.sce-panel-row {
+	margin-bottom: 15px;
+	&:last-of-type {
+		margin-bottom: 0;
+	}
+}
+
+
+.sce-admin-logo {
+	img {
+		display: inline-block;
+		width: 100%;
+		height: auto;
+		max-width: 800px;
+	}
+}
