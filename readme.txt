@@ -3,32 +3,28 @@ Contributors: ronalfy
 Tags: comment editing, comments,edit comments, edit, comment,
 Requires at least: 5.0
 Tested up to: 5.7
-Stable tag: 2.5.5
+Stable tag: 2.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/give/
 
-Simple Comment Editing for your website.
+Supercharge your comment section and allow your users to edit their comments for a period of time.
 
 == Description ==
 
-Simple Comment Editing gives anonymous users the ability to edit and/or delete their comments for a period of time.
+Supercharge your comment section and allow your users to edit their comments for a period of time. Save your users some headaches and let them fix their typos while you take a backseat and relax.
 
 [youtube https://www.youtube.com/watch?v=bNCDdQbwA-s&rel=0]
 
 Simple Comment Editing features:
 <ol>
-<li>No options. Install the plugin. It just works.
+<li>Install the plugin. That's it. It just works.
 <li>Anonymous users can edit comments for 5 minutes.</li>
 <li>No styling is necessary. For advanced customization, see the "Other Notes" section.</li>
 <li>Advanced customization can be achieved using filters.</li>
 </ol>
 
-<h3>Help Contribute</h3>
-
-* Leave a star rating
-* <a href="https://translate.wordpress.org/projects/wp-plugins/simple-comment-editing">Contribute a translation</a>
-* <a href="https://github.com/ronalfy/simple-comment-editing">Contribute some code</a>
+For additional features in addition to comment editing, please check out <a href="https://mediaron.com/simple-comment-editing-options">SCE Options</a>. You can download a 1-site license for free.
 
 == Installation ==
 
@@ -56,6 +52,10 @@ Simple Comment Editing will work all the way back to IE10.
 2. Styled Buttons and Compact Timer.
 
 == Changelog ==
+
+= 2.6.0 =
+* Released 2021-05-30
+* New admin panel style in anticipation of a few more feature additions.
 
 = 2.5.5 =
 * Released 2021-04-25
@@ -365,9 +365,6 @@ Simple Comment Editing will work all the way back to IE10.
 
 == Upgrade Notice ==
 
-= 2.5.5 =
-Added new filters to allow for comment deletion only.
-
-== Customization ==
-
-For advanced options, please see the <a href="https://github.com/ronalfy/simple-comment-editing#wordpress-filters">SCE Filter/Action reference</a>. Don't want to program? Try <a href="https://mediaron.com/simple-comment-editing-options">the Simple Comment Editing Options add-on</a>.
+= 2.6.0 =
+* Released 2021-05-30
+* New admin panel style in anticipation of a few more feature additions.
