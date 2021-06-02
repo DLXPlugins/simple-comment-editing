@@ -1,4 +1,7 @@
 <?php
+
+use SCE\Includes\Admin\Options as Options;
+
 class Simple_Comment_Editing {
 	private static $instance = null;
 	private $comment_time    = 0; // in minutes
@@ -1145,6 +1148,8 @@ class Simple_Comment_Editing {
 		if ( $this->comment_time > 0 ) {
 			return $this->comment_time;
 		}
+
+		$time_do_edit = Options::get_options( false, 'timer' );
 		/**
 		* Filter: sce_comment_time
 		*
@@ -1154,7 +1159,7 @@ class Simple_Comment_Editing {
 		*
 		* @param int  $minutes Time in minutes
 		*/
-		$comment_time       = absint( apply_filters( 'sce_comment_time', 5 ) );
+		$comment_time       = absint( apply_filters( 'sce_comment_time', $time_do_edit ) );
 		$this->comment_time = $comment_time;
 		return $this->comment_time;
 	}
