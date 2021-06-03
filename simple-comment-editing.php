@@ -383,6 +383,7 @@ class Simple_Comment_Editing {
 				'allow_delete_confirmation' => $allow_delete_confirmation,
 				'ajax_url'                  => admin_url( 'admin-ajax.php', $this->scheme ),
 				'nonce'                     => wp_create_nonce( 'sce-general-ajax-nonce' ),
+				'timer_appearance'          => sanitize_text_field( Options::get_options( false, 'timer_appearance' ) ),
 			)
 		);
 
@@ -1287,10 +1288,10 @@ function sce_instantiate() {
 	Simple_Comment_Editing::get_instance();
 	if ( is_admin() && apply_filters( 'sce_show_admin', true ) ) {
 		new SCE\Includes\Admin\Admin_Settings();
-		$sce_enqueue = new SCE\Includes\Enqueue;
+		$sce_enqueue = new SCE\Includes\Enqueue();
 		$sce_enqueue->run();
 	}
 	if ( apply_filters( 'sce_show_admin', true ) ) {
-		
+
 	}
 } //end sce_instantiate

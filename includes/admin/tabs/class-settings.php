@@ -86,7 +86,7 @@ class Settings extends Tabs {
 					<div class="sce-panel-row">
 						<form action="" method="POST">
 							<?php wp_nonce_field( 'save_sce_options' ); ?>
-							<h1><?php esc_html_e( 'Welcome to Simple Commment Editing!', 'simple-comment-editing' ); ?></h1>
+							<h1><?php esc_html_e( 'Welcome to Simple Comment Editing!', 'simple-comment-editing' ); ?></h1>
 							<p><?php esc_html_e( 'For more options, stats, restoration of edited comments, and more configuration, please try: ', 'simple-comment-editing' ); ?><a target="_blank" href="https://mediaron.com/simple-comment-editing-options/"><?php esc_html_e( 'Simple Comment Editing Options', 'simple-comment-editing' ); ?></a></p>
 							<table class="form-table">
 								<tbody>
@@ -96,6 +96,15 @@ class Settings extends Tabs {
 											<input id="sce-timer" class="regular-text" type="number" value="<?php echo esc_attr( absint( $options['timer'] ) ); ?>" name="options[timer]" />
 										</td>
 									</tr>
+									<tr>
+									<th scope="row"><label for="sce-timer-appearance"><?php esc_html_e( 'Timer Appearance', 'simple-comment-editing' ); ?></label></th>
+									<td>
+										<select name="options[timer_appearance]">
+											<option value="words" <?php selected( 'words', $options['timer_appearance'] ); ?>><?php esc_html_e( 'Words', 'simple-comment-editing' ); ?></option>
+											<option value="compact" <?php selected( 'compact', $options['timer_appearance'] ); ?>><?php esc_html_e( 'Compact', 'simple-comment-editing' ); ?></option>
+										</select>
+									</td>
+								</tr>
 								</tbody>
 							</table>
 
