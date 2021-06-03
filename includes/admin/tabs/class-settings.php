@@ -86,7 +86,7 @@ class Settings extends Tabs {
 					<div class="sce-panel-row">
 						<form action="" method="POST">
 							<?php wp_nonce_field( 'save_sce_options' ); ?>
-							<h1><?php esc_html_e( 'Welcome to Simple Commment Editing!', 'simple-comment-editing' ); ?></h1>
+							<h1><?php esc_html_e( 'Welcome to Simple Comment Editing!', 'simple-comment-editing' ); ?></h1>
 							<p><?php esc_html_e( 'For more options, stats, restoration of edited comments, and more configuration, please try: ', 'simple-comment-editing' ); ?><a target="_blank" href="https://mediaron.com/simple-comment-editing-options/"><?php esc_html_e( 'Simple Comment Editing Options', 'simple-comment-editing' ); ?></a></p>
 							<table class="form-table">
 								<tbody>
@@ -96,9 +96,48 @@ class Settings extends Tabs {
 											<input id="sce-timer" class="regular-text" type="number" value="<?php echo esc_attr( absint( $options['timer'] ) ); ?>" name="options[timer]" />
 										</td>
 									</tr>
+									<tr>
+									<th scope="row"><label for="sce-timer-appearance"><?php esc_html_e( 'Timer Appearance', 'simple-comment-editing' ); ?></label></th>
+									<td>
+										<select name="options[timer_appearance]">
+											<option value="words" <?php selected( 'words', $options['timer_appearance'] ); ?>><?php esc_html_e( 'Words', 'simple-comment-editing' ); ?></option>
+											<option value="compact" <?php selected( 'compact', $options['timer_appearance'] ); ?>><?php esc_html_e( 'Compact', 'simple-comment-editing' ); ?></option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+								<th scope="row"><label for="sce-button-theme"><?php esc_html_e( 'Button Theme', 'simple-comment-editing-options' ); ?></label></th>
+								<td>
+									<select name="options[button_theme]">
+										<option value="default" <?php selected( 'default', $options['button_theme'] ); ?>><?php esc_html_e( 'None', 'simple-comment-editing-options' ); ?></option>
+										<option value="regular" <?php selected( 'regular', $options['button_theme'] ); ?>><?php esc_html_e( 'Regular', 'simple-comment-editing-options' ); ?></option>
+										<option value="dark" <?php selected( 'dark', $options['button_theme'] ); ?> ><?php esc_html_e( 'Dark', 'simple-comment-editing-options' ); ?></option>
+										<option value="light" <?php selected( 'light', $options['button_theme'] ); ?>><?php esc_html_e( 'Light', 'simple-comment-editing-options' ); ?></option>
+									</select>
+									<input type="hidden" value="false" name="options[show_icons]" />
+									<p><input id="sce-allow-icons" type="checkbox" value="true" name="options[show_icons]" <?php checked( true, $options['show_icons'] ); ?> /> <label for="sce-allow-icons"><?php esc_html_e( 'Allow icons for the buttons. Recommended if you have selected a button theme.', 'simple-comment-editing-options' ); ?></label></p>
+									<p class="sce-theme-preview">
+										<strong>
+										<?php
+											esc_html_e( 'Button Theme Preview:', 'simple-comment-editing' );
+										?>
+										</strong>
+										<a data-animation-effect="zoom" data-animation-duration="1000" data-fancybox data-src="#sce-screenshot-default" data-caption="SCE Default Theme" href="javascript:;"><?php esc_html_e( 'Default Theme', 'simple-comment-editing' ); ?></a> | <a data-animation-effect="zoom" data-animation-duration="1000" data-fancybox data-src="#sce-screenshot-dark" data-caption="SCE Dark Theme" href="javascript:;"><?php esc_html_e( 'Dark Theme', 'simple-comment-editing' ); ?></a> | <a data-animation-effect="zoom" data-animation-duration="1000" data-fancybox data-src="#sce-screenshot-light" data-caption="SCE Light Theme" href="javascript:;"><?php esc_html_e( 'Light Theme', 'simple-comment-editing' ); ?></a>
+									</p>
+								</td>
+							</tr>
 								</tbody>
 							</table>
-
+							<div id="sce-screenshot-default" style="display: none;">
+								<img src="<?php echo esc_url( Functions::get_plugin_url( '/images/screenshot-theme-default.png' ) ); ?>" alt="SCE Default Theme Screenshot" />
+							</div>
+							<div id="sce-screenshot-dark" style="display: none;">
+								<img src="<?php echo esc_url( Functions::get_plugin_url( '/images/screenshot-theme-dark.png' ) ); ?>" alt="SCE Dark Theme Screenshot" />
+							</div>
+							<div id="sce-screenshot-light" style="display: none;">
+								<img src="<?php echo esc_url( Functions::get_plugin_url( '/images/screenshot-theme-light.png' ) ); ?>" alt="SCE Light Theme Screenshot" />
+							</div>
+							
 							<?php submit_button( __( 'Save Options', 'simple-comment-editing' ), 'sce-button sce-button-info', 'submit', true ); ?>
 						</form>
 					</div>

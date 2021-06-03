@@ -1,6 +1,7 @@
 <?php
 
 use SCE\Includes\Admin\Options as Options;
+use SCE\Includes\Functions as Functions;
 
 class Simple_Comment_Editing {
 	private static $instance = null;
@@ -101,6 +102,12 @@ class Simple_Comment_Editing {
 
 		// Epoch Compatibility
 		add_filter( 'epoch_iframe_scripts', array( $this, 'epoch_add_sce' ), 15 );
+
+		// Button themes.
+		add_filter( 'sce_button_extra_save', array( $this, 'maybe_add_save_icon' ) );
+		add_filter( 'sce_button_extra_cancel', array( $this, 'maybe_add_cancel_icon' ) );
+		add_filter( 'sce_button_extra_delete', array( $this, 'maybe_add_delete_icon' ) );
+		add_filter( 'sce_wrapper_class', array( $this, 'output_theme_class' ) );
 	} //end init
 
 	/**
@@ -316,6 +323,83 @@ class Simple_Comment_Editing {
 	} //end add_edit_interface
 
 	/**
+	 * Add a delete icon.
+	 *
+	 * Add a delete icon.
+	 *
+	 * @since 3.0.0
+	 * @access public
+	 *
+	 * @param string $text Button text.
+	 *
+	 * @return string Button text
+	 */
+	public function maybe_add_delete_icon( $text ) {
+		if ( true === Options::get_options( false, 'show_icons' ) ) {
+			return '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+		}
+		return $text;
+	}
+
+	/**
+	 * Add a cancel icon.
+	 *
+	 * Add a cancel icon.
+	 *
+	 * @since 3.0.0
+	 * @access public
+	 *
+	 * @param string $text Button text.
+	 *
+	 * @return string Button text
+	 */
+	public function maybe_add_cancel_icon( $text ) {
+		if ( true === Options::get_options( false, 'show_icons' ) ) {
+			return '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 20"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+		}
+		return $text;
+	}
+
+	/**
+	 * Add a save icon.
+	 *
+	 * Add a save icon.
+	 *
+	 * @since 3.0.0
+	 * @access public
+	 *
+	 * @param string $text Button text.
+	 *
+	 * @return string Button text
+	 */
+	public function maybe_add_save_icon( $text ) {
+		if ( true === Options::get_options( false, 'show_icons' ) ) {
+			return '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M0 0h24v24H0z" fill="none"/><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>';
+		}
+		return $text;
+	}
+
+	/**
+	 * Returns a theme class.
+	 *
+	 * Returns a theme class.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @param array $classes SCE Wrapper class.
+	 * @return array $classes New SCE theme classes
+	 */
+	public function output_theme_class( $classes = array() ) {
+		$theme = Options::get_options( false, 'button_theme' );
+		if ( false === $theme ) {
+			return $classes;
+		}
+		$classes[] = $theme;
+		return $classes;
+	}
+
+	/**
 	 * add_scripts - Adds the necessary JavaScript for the plugin (only loads on posts/pages)
 	 *
 	 * Called via the wp_enqueue_scripts
@@ -346,6 +430,7 @@ class Simple_Comment_Editing {
 		$main_script_uri  = $this->get_plugin_url( '/js/simple-comment-editing.js' );
 		$hooks_script_url = $this->get_plugin_url( '/js/event-manager.js' );
 		wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'jquery', 'wp-ajax-response', 'wp-i18n', 'wp-hooks' ), SCE_VERSION, true );
+		wp_enqueue_style( 'simple-comment-editing', Functions::get_plugin_url( 'dist/sce-frontend.css' ), array(), SCE_VERSION, 'all' );
 
 		/**
 		* Action: sce_scripts_loaded
@@ -383,6 +468,7 @@ class Simple_Comment_Editing {
 				'allow_delete_confirmation' => $allow_delete_confirmation,
 				'ajax_url'                  => admin_url( 'admin-ajax.php', $this->scheme ),
 				'nonce'                     => wp_create_nonce( 'sce-general-ajax-nonce' ),
+				'timer_appearance'          => sanitize_text_field( Options::get_options( false, 'timer_appearance' ) ),
 			)
 		);
 
@@ -719,8 +805,14 @@ class Simple_Comment_Editing {
 		}
 
 		// Check comment against blacklist
-		if ( wp_blacklist_check( $comment_to_save['comment_author'], $comment_to_save['comment_author_email'], $comment_to_save['comment_author_url'], $new_comment_content, $comment_to_save['comment_author_IP'], $comment_to_save['comment_agent'] ) ) {
-			$comment_to_save['comment_approved'] = 'spam';
+		if ( function_exists( 'wp_check_comment_disallowed_list' ) ) {
+			if ( wp_check_comment_disallowed_list( $comment_to_save['comment_author'], $comment_to_save['comment_author_email'], $comment_to_save['comment_author_url'], $new_comment_content, $comment_to_save['comment_author_IP'], $comment_to_save['comment_agent'] ) ) {
+				$comment_to_save['comment_approved'] = 'spam';
+			};
+		} else {
+			if ( wp_blacklist_check( $comment_to_save['comment_author'], $comment_to_save['comment_author_email'], $comment_to_save['comment_author_url'], $new_comment_content, $comment_to_save['comment_author_IP'], $comment_to_save['comment_agent'] ) ) {
+				$comment_to_save['comment_approved'] = 'spam';
+			}
 		}
 
 		// Update comment content with new content
@@ -1287,10 +1379,11 @@ function sce_instantiate() {
 	Simple_Comment_Editing::get_instance();
 	if ( is_admin() && apply_filters( 'sce_show_admin', true ) ) {
 		new SCE\Includes\Admin\Admin_Settings();
-		$sce_enqueue = new SCE\Includes\Enqueue;
+		$sce_enqueue = new SCE\Includes\Enqueue();
 		$sce_enqueue->run();
 	}
+	
 	if ( apply_filters( 'sce_show_admin', true ) ) {
-		
+
 	}
 } //end sce_instantiate
