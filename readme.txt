@@ -62,6 +62,7 @@ Simple Comment Editing will work all the way back to IE10.
 * New option: button themes.
 * Using new comment check function name if it exists.
 * Correcting typo in admin options.
+* Basic styling for edit buttons.
 
 = 2.6.1 =
 * Released 2021-06-02
@@ -381,7 +382,7 @@ Simple Comment Editing will work all the way back to IE10.
 == Upgrade Notice ==
 
 = 2.7.0 =
-New option: timer can now be compact (e.g., 41:15). New option: button themes. Using new comment check function name if it exists. Correcting typo in admin options.
+New option: timer can now be compact (e.g., 41:15). New option: button themes. Using new comment check function name if it exists. Correcting typo in admin options. Basic styling for edit buttons.
 
 = 2.6.1 =
 Fixing admin styling. Fixing timer for times greater than 5 minutes.
