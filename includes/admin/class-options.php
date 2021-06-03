@@ -71,6 +71,14 @@ class Options {
 					}
 					$option = $timer;
 					break;
+				case 'show_icons':
+					$show_icons = filter_var( $options[ $key ], FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE );
+					if ( null === $show_icons || false === $show_icons ) {
+						$option = false;
+					} else {
+						$option = true;
+					}
+					break;
 				default:
 					$option = sanitize_text_field( $options[ $key ] );
 					break;
