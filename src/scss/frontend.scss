@@ -1,0 +1,266 @@
+$base_color: #58a0db;
+$label-colour: #bbb;
+$disabled-colour: #ddd;
+$toggle-colour: #2f855a;
+$white: #fff;
+$focus-color: #ff0;
+$danger_button_color: #721c24;
+
+/* Regular Theme */
+.sce-edit-comment {
+	margin: 20px 0;
+	.sce-comment-edit-buttons {
+		@media only screen and (max-width: 600px) {
+			button {
+				display: block;
+				width: 100%;
+				margin-bottom: 10px;
+				text-align: center;
+				.sce-comment-delete {
+					float: none;
+				}
+			}
+		}
+		svg {
+			margin-right: 10px;
+		}
+	}
+	.sce-timer-cancel {
+		display: block;
+		margin-top: 15px;
+		font-size: 0.8em;
+		float: right;
+		&:after {
+			content: "";
+			display: table;
+			clear: right;
+		}
+	}
+	&.default {
+		.sce-comment-edit-buttons,
+		.sce-timer-cancel-wrapper {
+			margin: 10px 0;
+			.sce-timer {
+				font-size: 12px;
+				font-style: italic;
+			}
+			button {
+				margin-right: 10px;
+			}
+			button:last-of-type {
+				margin-right: 0;
+			}
+			svg {
+				fill: currentColor;
+				margin-right: 10px;
+			}
+			.sce-comment-delete {
+				float: right;
+			}
+			.sce-timer {
+				margin-top: 10px;
+			}
+		}
+	}
+	&.regular {
+		.sce-comment-edit-buttons,
+		.sce-timer-cancel-wrapper {
+			margin: 10px 0;
+			.sce-timer {
+				font-size: 12px;
+				font-style: italic;
+			}
+			button {
+				display: inline-block;
+				border-radius: 5px;
+				border: 1px solid #EEE;
+				padding: 10px 20px;
+				margin-right: 10px;
+				font-weight: 700;
+			}
+			button:last-of-type {
+				margin-right: 0;
+			}
+			.sce-comment-save {
+				background-color: #4CAF50;
+				color: #FFF;
+				font-size: 20px;
+				&:hover {
+					background-color: darken( #4CAF50, 10% );
+				}
+				svg {
+					fill: #FFF;
+					margin-right: 10px;
+				}
+			}
+			.sce-comment-cancel {
+				background-color: #e7e7e7;
+				color: #000;
+				&:hover {
+					background-color: darken( #e7e7e7, 10% );
+				}
+				font-size: 20px;
+				svg {
+					fill: #000;
+					margin-right: 10px;
+				}
+			}
+			.sce-timer-cancel {
+				background-color: #f44336;
+				color: #FFF;
+				text-decoration: none;
+				&:hover {
+					background-color: darken( #f44336, 10% );
+					text-decoration: none;
+				}
+				&:focus {
+					text-decoration: none;
+				}
+				font-size: 20px;
+				svg {
+					position: relative;
+					top: 3px;
+					width: 20px;
+					height: 20px;
+					fill: #FFF;
+					margin-right: 10px;
+				}
+			}
+			.sce-comment-delete {
+				background-color: #f44336;
+				color: #FFF;
+				&:hover {
+					background-color: darken( #f44336, 10% );
+				}
+				font-size: 20px;
+				svg {
+					fill: #FFF;
+					margin-right: 10px;
+				}
+			}
+			.sce-comment-delete {
+				float: right;
+			}
+			.sce-timer {
+				margin-top: 10px;
+			}
+		}
+	}
+	&.dark {
+		.sce-comment-edit-buttons,
+		.sce-timer-cancel-wrapper {
+			margin: 10px 0;
+			.sce-timer {
+				font-size: 12px;
+				font-style: italic;
+			}
+			button {
+				display: inline-block;
+				background-color: lighten( #333, 15%);
+				color: #FFF;
+				margin-right: 10px;
+				border-radius: 5px;
+				border: 1px solid #EEE;
+				padding: 10px 20px;
+				text-decoration: none;
+				font-weight: 700;
+				&:hover {
+					background-color: darken( #333, 10% );
+					text-decoration: none;
+				}
+				&:focus {
+					text-decoration: none;
+				}
+				font-size: 20px;
+				svg {
+					fill: #FFF;
+					margin-right: 10px;
+				}
+			}
+			button:last-of-type {
+				margin-right: 0;
+			}
+			.sce-comment-delete {
+				float: right;
+			}
+			.sce-timer-cancel {
+				background-color: #333;
+				svg {
+					position: relative;
+					top: 3px;
+					width: 20px;
+					height: 20px;
+					fill: #FFF;
+					margin-right: 10px;
+				}
+			}
+			.sce-timer {
+				margin-top: 10px;
+			}
+		}
+	}
+	&.light {
+		.sce-comment-edit-buttons,
+		.sce-timer-cancel-wrapper {
+			margin: 10px 0;
+			.sce-timer {
+				font-size: 12px;
+				font-style: italic;
+			}
+			button {
+				display: inline-block;
+				background-color: #EEE;
+				color: #000;
+				margin-right: 10px;
+				border-radius: 5px;
+				padding: 10px 20px;
+				border: 1px solid rgba( 0, 0, 0, 0.3 );
+				text-decoration: none;
+				font-weight: 700;
+				&:hover {
+					background-color: lighten( #EEE, 10% );
+					text-decoration: none;
+				}
+				&:focus {
+					text-decoration: none;
+				}
+				font-size: 20px;
+				svg {
+					fill: #000;
+					margin-right: 10px;
+				}
+			}
+			button:last-of-type {
+				margin-right: 0;
+			}
+			.sce-timer-cancel {
+				svg {
+					position: relative;
+					top: 3px;
+					width: 20px;
+					height: 20px;
+					fill: #000;
+					margin-right: 10px;
+				}
+			}
+			.sce-comment-delete {
+				float: right;
+			}
+			.sce-timer {
+				margin-top: 10px;
+			}
+		}
+	}
+}
+.sce-status {
+	color: #000;
+	background: #fff;
+	border-left: 4px solid #46b450;
+	box-shadow: 0 1px 1px 0 rgba( 0, 0, 0, 0.1 );
+	margin: 10px 0;
+	padding: 20px 15px;
+
+	&.error {
+		border-left-color: #dc3232;
+	}
+}
