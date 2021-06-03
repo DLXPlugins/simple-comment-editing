@@ -90,7 +90,10 @@ class Options {
 	 */
 	private static function get_defaults() {
 		$defaults = array(
-			'timer' => 5,
+			'timer'            => 5,
+			'timer_appearance' => 'words',
+			'button_theme'     => 'default',
+			'show_icons'       => true,
 		);
 
 		/**
