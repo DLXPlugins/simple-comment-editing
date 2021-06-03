@@ -36,6 +36,32 @@ $danger_button_color: #721c24;
 			clear: right;
 		}
 	}
+	&.default {
+		.sce-comment-edit-buttons,
+		.sce-timer-cancel-wrapper {
+			margin: 10px 0;
+			.sce-timer {
+				font-size: 12px;
+				font-style: italic;
+			}
+			button {
+				margin-right: 10px;
+			}
+			button:last-of-type {
+				margin-right: 0;
+			}
+			svg {
+				fill: currentColor;
+				margin-right: 10px;
+			}
+			.sce-comment-delete {
+				float: right;
+			}
+			.sce-timer {
+				margin-top: 10px;
+			}
+		}
+	}
 	&.regular {
 		.sce-comment-edit-buttons,
 		.sce-timer-cancel-wrapper {

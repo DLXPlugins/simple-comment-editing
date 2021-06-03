@@ -805,8 +805,14 @@ class Simple_Comment_Editing {
 		}
 
 		// Check comment against blacklist
-		if ( wp_blacklist_check( $comment_to_save['comment_author'], $comment_to_save['comment_author_email'], $comment_to_save['comment_author_url'], $new_comment_content, $comment_to_save['comment_author_IP'], $comment_to_save['comment_agent'] ) ) {
-			$comment_to_save['comment_approved'] = 'spam';
+		if ( function_exists( 'wp_check_comment_disallowed_list' ) ) {
+			if ( wp_check_comment_disallowed_list( $comment_to_save['comment_author'], $comment_to_save['comment_author_email'], $comment_to_save['comment_author_url'], $new_comment_content, $comment_to_save['comment_author_IP'], $comment_to_save['comment_agent'] ) ) {
+				$comment_to_save['comment_approved'] = 'spam';
+			};
+		} else {
+			if ( wp_blacklist_check( $comment_to_save['comment_author'], $comment_to_save['comment_author_email'], $comment_to_save['comment_author_url'], $new_comment_content, $comment_to_save['comment_author_IP'], $comment_to_save['comment_agent'] ) ) {
+				$comment_to_save['comment_approved'] = 'spam';
+			}
 		}
 
 		// Update comment content with new content

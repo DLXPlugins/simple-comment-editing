@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: comment editing, comments,edit comments, edit, comment,
 Requires at least: 5.0
 Tested up to: 5.7
-Stable tag: 2.6.1
+Stable tag: 2.7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/give/
@@ -50,8 +50,18 @@ Simple Comment Editing will work all the way back to IE10.
 
 1. Edit Button and Timer.
 2. Styled Buttons and Compact Timer.
+3. Default button theme.
+4. Dark button theme.
+5. Light button theme.
 
 == Changelog ==
+
+= 2.7.0 =
+* Released 2021-06-03
+* New option: timer can now be compact (e.g., 41:15).
+* New option: button themes.
+* Using new comment check function name if it exists.
+* Correcting typo in admin options.
 
 = 2.6.1 =
 * Released 2021-06-02
@@ -369,6 +379,9 @@ Simple Comment Editing will work all the way back to IE10.
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.7.0 =
+New option: timer can now be compact (e.g., 41:15). New option: button themes. Using new comment check function name if it exists. Correcting typo in admin options.
 
 = 2.6.1 =
 Fixing admin styling. Fixing timer for times greater than 5 minutes.

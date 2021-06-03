@@ -101,7 +101,7 @@ class Options {
 			'timer'            => 5,
 			'timer_appearance' => 'words',
 			'button_theme'     => 'default',
-			'show_icons'       => true,
+			'show_icons'       => false,
 		);
 
 		/**
