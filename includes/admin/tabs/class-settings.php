@@ -120,7 +120,7 @@ class Settings extends Tabs {
 											esc_html_e( 'Button Theme Preview:', 'simple-comment-editing' );
 										?>
 										</strong>
-										Regular | Dark | Light
+										<a data-animation-effect="zoom" data-animation-duration="1000" data-fancybox data-src="#sce-screenshot-default" data-caption="SCE Default Theme" href="javascript:;">Regular</a> | Dark | Light
 									</p>
 									<input type="hidden" value="false" name="options[show_icons]" />
 									<p><input id="sce-allow-icons" type="checkbox" value="true" name="options[show_icons]" <?php checked( true, $options['show_icons'] ); ?> /> <label for="sce-allow-icons"><?php esc_html_e( 'Allow icons for the buttons. Recommended if you have selected a button theme.', 'simple-comment-editing-options' ); ?></label></p>
@@ -128,7 +128,10 @@ class Settings extends Tabs {
 							</tr>
 								</tbody>
 							</table>
-
+							<div id="sce-screenshot-default" style="display: none; width: 100%; max-width: 600px">
+								<img src="<?php echo esc_url( Functions::get_plugin_url( '/images/screenshot-theme-default.png' ) ); ?>" alt="SCE Default Theme Screenshot" />
+							</div>
+							
 							<?php submit_button( __( 'Save Options', 'simple-comment-editing' ), 'sce-button sce-button-info', 'submit', true ); ?>
 						</form>
 					</div>
