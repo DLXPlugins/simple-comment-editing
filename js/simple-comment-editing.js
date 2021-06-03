@@ -2,6 +2,52 @@ var __ = wp.i18n.__;
 var _n = wp.i18n._n;
 var sce_hooks = wp.hooks.createHooks();
 jQuery( document ).ready( function( $ ) {
+	// SCE Timer Filter.
+	if( 'compact' === simple_comment_editing.timer_appearance ) {
+		sce_hooks.addFilter( 'sce.comment.timer.text', 'simple-comment-editing', function( timer_text, days_text, hours_text, minutes_text, seconds_text, days, hours, minutes, seconds ) {
+			timer_text = '';
+			if( days > 0 ) {
+				if( days < 10 ) {
+					timer_text += '' + '0' + days;
+				} else {
+					timer_text += days;
+				}
+				timer_text += ':';
+			}
+			if( hours > 0 ) {
+				if( hours < 10 ) {
+					timer_text += '' + '0' + hours;
+				} else {
+					timer_text += hours;
+				}
+				timer_text += ':';
+			} else if( hours === 0 && days > 0 ) {
+				timer_text += '00';
+				timer_text += ':';
+			}
+			if( minutes > 0 ) {
+				if( minutes < 10 ) {
+					timer_text += '' + '0' + minutes;
+				} else {
+					timer_text += minutes;
+				}
+				timer_text += ':';
+			} else if( minutes === 0 && hours > 0 ) {
+				timer_text += '00';
+				timer_text += ':';
+			}
+			if (seconds > 0) {
+				if( seconds < 10 ) {
+					timer_text += '' + '0' + seconds;
+				} else {
+					timer_text += seconds;
+				}
+			} else if( seconds === 0 && minutes > 0 ) {
+				timer_text += '00';
+			}
+			return timer_text;
+		} );
+	}
 	var sce = $.simplecommentediting = $.fn.simplecommentediting = function() {
 		var $this = this;
 		return this.each( function() {

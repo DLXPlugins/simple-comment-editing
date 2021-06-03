@@ -39,5 +39,7 @@ class Enqueue {
 			SCE_VERSION,
 			'all'
 		);
+		wp_enqueue_script( 'fancybox', Functions::get_plugin_url( '/fancybox/jquery.fancybox.min.js' ), array( 'jquery' ), SCE_VERSION, true );
+		wp_enqueue_style( 'fancybox', Functions::get_plugin_url( '/fancybox/jquery.fancybox.min.css' ), array(), SCE_VERSION, 'all' );
 	}
 }
