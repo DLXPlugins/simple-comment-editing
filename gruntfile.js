@@ -13,9 +13,10 @@ module.exports = function (grunt) {
 				{src: ['uninstall.php'], dest: '/', filter: 'isFile'}, // includes files in path
 				{src: ['images/**'], dest: '/'}, // includes files in path and its subdirs
 				{src: ['includes/**'], dest: '/'}, // includes files in path and its subdirs
+				{src: ['includes/**'], dest: '/'}, // includes files in path and its subdirs
 				{src: ['js/**'], dest: '/'}, // includes files in path and its subdirs
 				{src: ['dist/**'], dest: '/'}, // includes files in path and its subdirs
-				{src: ['languages/**'], dest: '/'}, // includes files in path and its subdirs
+				{src: ['fancybox/**'], dest: '/'}, // includes files in path and its subdirs
 			  ]
 			}
 		  }
