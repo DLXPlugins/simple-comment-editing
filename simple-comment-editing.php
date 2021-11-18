@@ -1187,7 +1187,19 @@ class Simple_Comment_Editing {
 		} elseif ( isset( $_SERVER['REMOTE_ADDR'] ) ) {
 				$comment_author_ip = $_SERVER['REMOTE_ADDR'];
 		}
-		$comment_author_ip = apply_filters( 'pre_comment_user_ip', $comment_author_ip );
+		/**
+		 * Filter: sce_pre_comment_user_ip
+		 *
+		 * Whether to use the IP filter (true by default)
+		 *
+		 * @since 2.7.1
+		 *
+		 * @param bool  true to use the comment IP filter.
+		 */
+		if ( apply_filters( 'sce_pre_comment_user_ip', true ) ) {
+			// Props: https://github.com/timreeves.
+			$comment_author_ip = apply_filters( 'pre_comment_user_ip', $comment_author_ip );
+		}
 		$comment_date_gmt = current_time( 'Y-m-d', 1 );
 		$user_agent       = substr( isset( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '', 0, 254 );
 		$hash             = md5( $comment_author_ip . $comment_date_gmt . $this->get_user_id() . $user_agent );
