@@ -28,7 +28,7 @@
   "homepage": "https://github.com/MediaRon/simple-comment-editing#readme",
   "devDependencies": {
     "css-loader": "^5.2.6",
-    "grunt": "^1.4.0",
+    "grunt": "^1.5.3",
     "grunt-cli": "^1.4.2",
     "grunt-contrib-compress": "^2.0.0",
     "mini-css-extract-plugin": "^1.6.0",
