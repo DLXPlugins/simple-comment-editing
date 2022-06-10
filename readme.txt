@@ -2,8 +2,8 @@
 Contributors: ronalfy
 Tags: comment editing, comments,edit comments, edit, comment,
 Requires at least: 5.0
-Tested up to: 5.8
-Stable tag: 2.7.1
+Tested up to: 6.0
+Stable tag: 2.7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/give/
@@ -24,7 +24,7 @@ Simple Comment Editing features:
 <li>Advanced customization can be achieved using filters.</li>
 </ol>
 
-For additional features in addition to comment editing, please check out <a href="https://mediaron.com/simple-comment-editing-options">SCE Options</a>. You can download a 1-site license for free.
+For additional features in addition to comment editing, please check out <a href="https://dlxplugins.com/plugins/comment-edit-pro/">Comment Edit Pro</a>.
 
 == Installation ==
 
@@ -35,13 +35,13 @@ For additional features in addition to comment editing, please check out <a href
 = Why doesn't this plugin come with any styles? =
 It's impossible to style an inline comment editor for every theme.  We've included basic HTML markup that is easily stylable to fit your theme.
 
-With <a href="https://mediaron.com/simple-comment-editing-options">Simple Comment Editing Options</a>, you can choose between three themes.
+With <a href="https://dlxplugins.com/plugins/comment-edit-pro/">Comment Edit Pro</a>, you can choose between three themes.
 
 = Where are the options? =
-No options :) - Just simple comment editing. If you prefer options, try out the paid add-on <a href="https://mediaron.com/simple-comment-editing-options">Simple Comment Editing Options</a>.
+No options :) - Just simple comment editing. If you prefer options, try out the paid add-on <a href="https://dlxplugins.com/plugins/comment-edit-pro/">Comment Edit Pro</a>.
 
 = How do I customize this plugin? =
-For advanced options, please see the <a href="https://github.com/ronalfy/simple-comment-editing#wordpress-filters">SCE Filter/Action reference</a> or get <a href="https://mediaron.com/simple-comment-editing-options">Simple Comment Editing Options</a>.
+For advanced options, please see the <a href="https://sce.dlxplugins.com/">SCE Filter/Action reference</a> or get <a href="https://dlxplugins.com/plugins/comment-edit-pro/">Comment Edit Pro</a>.
 
 = What browsers have you tested this with? =
 Simple Comment Editing will work all the way back to IE10.
@@ -55,6 +55,10 @@ Simple Comment Editing will work all the way back to IE10.
 5. Light button theme.
 
 == Changelog ==
+
+= 2.7.2 =
+* Updating logo
+* Updating documentation
 
 = 2.7.1 =
 * Released 2021-07-02
@@ -385,15 +389,5 @@ Simple Comment Editing will work all the way back to IE10.
 
 == Upgrade Notice ==
 
-= 2.7.1 =
-Added IP fix that should make editing comments more reliable and less prone to error. Props @tim-reeves.
-
-= 2.7.0 =
-New option: timer can now be compact (e.g., 41:15). New option: button themes. Using new comment check function name if it exists. Correcting typo in admin options. Basic styling for edit buttons.
-
-= 2.6.1 =
-Fixing admin styling. Fixing timer for times greater than 5 minutes.
-
-= 2.6.0 =
-* Released 2021-05-30
-* New admin panel style in anticipation of a few more feature additions.
+= 2.7.2 =
+Documentation, compatibility, and logo update. Introducing Comment Edit Pro.

@@ -531,11 +531,25 @@ class Simple_Comment_Editing {
 			die( json_encode( $response ) );
 		}
 
-		$comment_time        = absint( $this->comment_time );
-		$query               = $wpdb->prepare( "SELECT ( $comment_time * 60 - (UNIX_TIMESTAMP('" . current_time( 'mysql' ) . "') - UNIX_TIMESTAMP(comment_date))) comment_time FROM {$wpdb->comments} where comment_ID = %d", $comment_id );
+		$comment_time = absint( $this->comment_time );
+		$query        = $wpdb->prepare( "SELECT ( $comment_time * 60 - (UNIX_TIMESTAMP('" . current_time( 'mysql' ) . "') - UNIX_TIMESTAMP(comment_date))) comment_time FROM {$wpdb->comments} where comment_ID = %d", $comment_id );
+
 		$comment_time_result = $wpdb->get_row( $query, ARRAY_A );
 
-		$time_left = $comment_time_result['comment_time'];
+		/**
+		 * Filter: sce_get_comment_time_left
+		 *
+		 * Get the comment time remaining.
+		 *
+		 * @since 2.8.0
+		 *
+		 * @param int    Current comment editing time.
+		 * @param string Current time format in date/time format.
+		 * @param int    Current Post ID.
+		 * @param int    Current Comment ID.
+		 */
+		$time_left = apply_filters( 'sce_get_comment_time_left', $comment_time_result['comment_time'], $comment_time, $post_id, $comment_id );
+
 		if ( $time_left < 0 ) {
 			$response = array(
 				'minutes'    => 0,
@@ -1395,7 +1409,7 @@ function sce_instantiate() {
 		$sce_enqueue = new SCE\Includes\Enqueue();
 		$sce_enqueue->run();
 	}
-	
+
 	if ( apply_filters( 'sce_show_admin', true ) ) {
 
 	}

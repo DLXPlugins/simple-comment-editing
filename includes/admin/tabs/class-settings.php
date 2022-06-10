@@ -87,7 +87,7 @@ class Settings extends Tabs {
 						<form action="" method="POST">
 							<?php wp_nonce_field( 'save_sce_options' ); ?>
 							<h1><?php esc_html_e( 'Welcome to Simple Comment Editing!', 'simple-comment-editing' ); ?></h1>
-							<p><?php esc_html_e( 'For more options, stats, restoration of edited comments, and more configuration, please try: ', 'simple-comment-editing' ); ?><a target="_blank" href="https://mediaron.com/simple-comment-editing-options/"><?php esc_html_e( 'Simple Comment Editing Options', 'simple-comment-editing' ); ?></a></p>
+							<p><?php esc_html_e( 'For more options, stats, restoration of edited comments, and more configuration, please try: ', 'simple-comment-editing' ); ?><a target="_blank" href="https://dlxplugins.com/plugins/comment-edit-pro/"><?php esc_html_e( 'Comment Edit Pro', 'simple-comment-editing' ); ?></a></p>
 							<table class="form-table">
 								<tbody>
 									<tr>
