@@ -6,7 +6,6 @@ Tested up to: 6.0
 Stable tag: 2.7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Donate link: https://mediaron.com/give/
 
 Supercharge your comment section and allow your users to edit their comments for a period of time.
 
