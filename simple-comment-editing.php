@@ -891,8 +891,17 @@ class Simple_Comment_Editing {
 			die( json_encode( $return ) );
 		}
 
+		/**
+		 * Filter: sce_akismet_enabled
+		 *
+		 * Allow third parties to disable Akismet.
+		 *
+		 * @param bool true if Akismet is enabled
+		 */
+		$akismet_enabled = apply_filters( 'sce_akismet_enabled', true );
+
 		// Check the new comment for spam with Akismet
-		if ( function_exists( 'akismet_check_db_comment' ) ) {
+		if ( function_exists( 'akismet_check_db_comment' ) && $akismet_enabled ) {
 			if ( akismet_verify_key( get_option( 'wordpress_api_key' ) ) != 'failed' ) { // Akismet
 				$response = akismet_check_db_comment( $comment_id );
 				if ( $response == 'true' ) { // You have spam
