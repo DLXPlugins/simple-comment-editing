@@ -16,6 +16,13 @@ use SCE\Includes\Admin\Options as Options;
 class Integrations extends Tabs {
 
 	/**
+	 * Mailchimp API variable with <sp> (server prefix) for search/replace.
+	 *
+	 * @var string Mailchimp API variable.
+	 */
+	private $mailchimp_api = 'https://<sp>.api.mailchimp.com/3.0/';
+
+	/**
 	 * Tab to run actions against.
 	 *
 	 * @var $tab Settings tab.
@@ -29,6 +36,19 @@ class Integrations extends Tabs {
 		add_filter( 'sce_admin_tabs', array( $this, 'add_tab' ), 1, 1 );
 		add_filter( 'sce_admin_sub_tabs', array( $this, 'add_sub_tab' ), 1, 3 );
 		add_action( 'sce_output_' . $this->tab, array( $this, 'output_settings' ), 1, 3 );
+
+		/**
+		 * Mailchimp admin panel actions.
+		 */
+
+		// Save mailchimp settings in the admin.
+		add_action( 'wp_ajax_sce_save_mailchimp_options', array( $this, 'ajax_save_mailchimp_options' ) );
+
+		// Retrieve mailchimp settings in the admin.
+		add_action( 'wp_ajax_sce_get_mailchimp_options', array( $this, 'ajax_get_mailchimp_options' ) );
+
+		// Reset Mailchimp API key.
+		add_action( 'wp_ajax_sce_reset_mailchimp_options', array( $this, 'ajax_reset_mailchimp_options' ) );
 	}
 
 	/**
@@ -43,7 +63,7 @@ class Integrations extends Tabs {
 			'get'    => $this->tab,
 			'action' => 'sce_output_' . $this->tab,
 			'url'    => Functions::get_settings_url( $this->tab ),
-			'label'  => _x( 'Help', 'Tab label as support', 'simple-comment-editing' ),
+			'label'  => _x( 'Integrations', 'Tab label as support', 'simple-comment-editing' ),
 			'icon'   => 'home-heart',
 		);
 		return $tabs;
@@ -74,104 +94,258 @@ class Integrations extends Tabs {
 	public function output_settings( $tab, $sub_tab = '' ) {
 		if ( $this->tab === $tab ) {
 			if ( empty( $sub_tab ) || $this->tab === $sub_tab ) {
+				wp_enqueue_script(
+					'sce-integrations',
+					Functions::get_plugin_url( 'dist/integrations-admin.js' ),
+					array(),
+					Functions::get_plugin_version(),
+					true
+				);
+				wp_localize_script(
+					'sce-integrations',
+					'sceIntegrations',
+					array(
+						'save_nonce'  => wp_create_nonce( 'sce-save-integrations-options' ),
+						'get_nonce'   => wp_create_nonce( 'sce-retrieve-integrations-options' ),
+						'reset_nonce' => wp_create_nonce( 'sce-reset-integrations-options' ),
+						'ajaxurl'     => esc_url( admin_url( 'admin-ajax.php' ) ),
+					)
+				);
 				?>
-				<svg width="0" height="0" class="hidden" aria-hidden="true">
-					<symbol aria-hidden="true" data-prefix="fas" data-icon="hands-helping" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" id="sce-support-icon">
-						<path fill="currentColor" d="M488 192H336v56c0 39.7-32.3 72-72 72s-72-32.3-72-72V126.4l-64.9 39C107.8 176.9 96 197.8 96 220.2v47.3l-80 46.2C.7 322.5-4.6 342.1 4.3 357.4l80 138.6c8.8 15.3 28.4 20.5 43.7 11.7L231.4 448H368c35.3 0 64-28.7 64-64h16c17.7 0 32-14.3 32-32v-64h8c13.3 0 24-10.7 24-24v-48c0-13.3-10.7-24-24-24zm147.7-37.4L555.7 16C546.9.7 527.3-4.5 512 4.3L408.6 64H306.4c-12 0-23.7 3.4-33.9 9.7L239 94.6c-9.4 5.8-15 16.1-15 27.1V248c0 22.1 17.9 40 40 40s40-17.9 40-40v-88h184c30.9 0 56 25.1 56 56v28.5l80-46.2c15.3-8.9 20.5-28.4 11.7-43.7z"></path>
-					</symbol>
-					<symbol aria-hidden="true" data-prefix="fab" data-icon="github" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" id="sce-github-icon">
-						<path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path>
-					</symbol>
-					<symbol aria-hidden="true" data-prefix="fas" data-icon="heart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="sce-heart-icon">
-						<path fill="currentColor" d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"></path>
-					</symbol>
-					<symbol aria-hidden="true" data-prefix="fas" data-icon="book" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" id="sce-book-icon">
-						<path fill="currentColor" d="M448 360V24c0-13.3-10.7-24-24-24H96C43 0 0 43 0 96v320c0 53 43 96 96 96h328c13.3 0 24-10.7 24-24v-16c0-7.5-3.5-14.3-8.9-18.7-4.2-15.4-4.2-59.3 0-74.7 5.4-4.3 8.9-11.1 8.9-18.6zM128 134c0-3.3 2.7-6 6-6h212c3.3 0 6 2.7 6 6v20c0 3.3-2.7 6-6 6H134c-3.3 0-6-2.7-6-6v-20zm0 64c0-3.3 2.7-6 6-6h212c3.3 0 6 2.7 6 6v20c0 3.3-2.7 6-6 6H134c-3.3 0-6-2.7-6-6v-20zm253.4 250H96c-17.7 0-32-14.3-32-32 0-17.6 14.4-32 32-32h285.4c-1.9 17.1-1.9 46.9 0 64z"></path>
-					</symbol>
-					<symbol aria-hidden="true" data-prefix="fas" data-icon="star" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" id="sce-star-icon">
-						<path fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path>
-					</symbol>
-				</svg>
+				<div class="sce-admin-panel-area">
+					<div class="sce-panel-row">
+						<div id="sce-tab-mailchimp"></div>
+					</div>
+				</div>
 				<div class="sce-admin-panel-area">
 					<h3 class="sce-panel-heading">
-						<a href="https://dlxplugins.com/plugins/comment-edit-pro"><img id="sce-options-logo" src="<?php echo esc_url( Functions::get_plugin_url( 'images/comment-edit-base.png' ) ); ?>" alt="Comment Edit Pro logo" /></a>
+						<?php esc_html_e( 'Akismet and reCAPTCHA 3 Integrations (Pro only)', 'simple-comment-editing' ); ?>
 					</h3>
 					<div class="sce-panel-row">
 						<p class="description">
-							<?php esc_html_e( 'SCE is pretty simple. Comment Edit Pro adds many more features. Supercharge the editing experience with Comment Edit Pro.', 'simple-comment-editing' ); ?>
+							<?php esc_html_e( 'Comment Edit Pro adds reCAPTCHA 3 spam protection and Akismet integrations to Simple Comment Editing.', 'simple-comment-editing' ); ?>
 						</p>
 					</div>
 					<div class="sce-panel-row">
 						<a class="sce-button sce-button-info" href="https://dlxplugins.com/plugins/comment-edit-pro" target="_blank"> <?php esc_html_e( 'Visit Comment Edit Pro', 'simple-comment-editing' ); ?></a>
 					</div>
 				</div>
-				<div class="sce-admin-panel-area">
-					<h3 class="sce-panel-heading">
-						<?php esc_html_e( 'Get Support On the WordPress Plugin Directory', 'simple-comment-editing' ); ?>
-					</h3>
-					<div class="sce-panel-row">
-						<p class="description">
-							<?php esc_html_e( 'The best way to receive support is via the official WordPress Plugin Directory support forum.', 'simple-comment-editing' ); ?>
-						</p>
-					</div>
-					<div class="sce-panel-row">
-						<a class="sce-button sce-button-info" href="https://wordpress.org/support/plugin/simple-comment-editing/" target="_blank"><svg class="sce-icon"><use xlink:href="#sce-support-icon"></use></svg>&nbsp;&nbsp;<?php esc_html_e( 'Open a Support Topic', 'simple-comment-editing' ); ?></a>
-					</div>
-				</div>
-				<div class="sce-admin-panel-area">
-					<h3 class="sce-panel-heading">
-						<?php esc_html_e( 'File a GitHub Issue', 'simple-comment-editing' ); ?>
-					</h3>
-					<div class="sce-panel-row">
-						<p class="description">
-							<?php esc_html_e( 'Feature requests or modifications to existing behavior can be opened on GitHub.', 'simple-comment-editing' ); ?>
-						</p>
-					</div>
-					<div class="sce-panel-row">
-						<a class="sce-button sce-button-info" href="https://github.com/DLXPlugins/simple-comment-editing/issues" target="_blank"><svg class="sce-icon"><use xlink:href="#sce-github-icon"></use></svg>&nbsp;&nbsp;<?php esc_html_e( 'Open a GitHub Issue', 'simple-comment-editing' ); ?></a>
-					</div>
-				</div>
-				<div class="sce-admin-panel-area">
-					<h3 class="sce-panel-heading">
-						<?php esc_html_e( 'Show Your Support', 'simple-comment-editing' ); ?>
-					</h3>
-					<div class="sce-panel-row">
-						<p class="description">
-							<?php esc_html_e( 'Every cent counts and will help this project monetarily.', 'simple-comment-editing' ); ?>
-						</p>
-					</div>
-					<div class="sce-panel-row">
-						<a class="sce-button sce-button-info" href="https://github.com/sponsors/DLXPlugins" target="_blank"><svg class="sce-icon"><use xlink:href="#sce-heart-icon"></use></svg>&nbsp;&nbsp;<?php esc_html_e( 'Sponsor This Plugin', 'simple-comment-editing' ); ?></a>
-					</div>
-				</div>
-				<div class="sce-admin-panel-area">
-					<h3 class="sce-panel-heading">
-						<?php esc_html_e( 'Documentation', 'simple-comment-editing' ); ?>
-					</h3>
-					<div class="sce-panel-row">
-						<p class="description">
-							<?php esc_html_e( 'The documentation for the plugin displays its capabilities.', 'simple-comment-editing' ); ?>
-						</p>
-					</div>
-					<div class="sce-panel-row">
-						<a class="sce-button sce-button-info" href="https://sce.dlxplugins.com/" target="_blank"><svg class="sce-icon"><use xlink:href="#sce-book-icon"></use></svg>&nbsp;&nbsp;<?php esc_html_e( 'View the Documentation', 'simple-comment-editing' ); ?></a>
-					</div>
-				</div>
-				<div class="sce-admin-panel-area">
-					<h3 class="sce-panel-heading">
-						<?php esc_html_e( 'Help Rate This Plugin', 'simple-comment-editing' ); ?>
-					</h3>
-					<div class="sce-panel-row">
-						<p class="description">
-							<?php esc_html_e( 'If you find this plugin useful, please consider leaving a star rating on WordPress.org.', 'simple-comment-editing' ); ?>
-						</p>
-					</div>
-					<div class="sce-panel-row">
-						<a class="sce-button sce-button-info" href="https://wordpress.org/support/plugin/simple-comment-editing/reviews/#new-post" target="_blank"><svg class="sce-icon"><use xlink:href="#sce-star-icon"></use></svg>&nbsp;&nbsp;<?php esc_html_e( 'Help Rate This Plugin', 'simple-comment-editing' ); ?></a>
-					</div>
-				</div>
 				<?php
 			}
 		}
+	}
+
+	
+
+	/**
+	 * Save avatar options.
+	 */
+	public function ajax_get_mailchimp_options() {
+		$nonce = sanitize_text_field( filter_input( INPUT_POST, 'nonce', FILTER_DEFAULT ) );
+
+		// Security.
+		if ( ! wp_verify_nonce( $nonce, 'sce-retrieve-integrations-options' ) || ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error(
+				array(
+					'message' => __( 'Could not verify nonce.', 'comment-edit-pro' ),
+				)
+			);
+		}
+
+		$options = Options::get_options();
+		$lists   = array();
+		if ( Functions::is_multisite() ) {
+			$lists = get_site_option( 'sce_mailchimp_lists', array() );
+		} else {
+			$lists = get_option( 'sce_mailchimp_lists', array() );
+		}
+
+		$json_array = array(
+			'enableMailchimp'       => (bool) $options['enable_mailchimp'],
+			'apiKey'                => $options['mailchimp_api_key'],
+			'mailchimpServerPrefix' => $options['mailchimp_api_key_server_prefix'],
+			'mailchimpLists'        => $lists,
+			'selectedList'          => $options['mailchimp_selected_list'],
+			'signUpLabel'           => $options['mailchimp_signup_label'],
+			'checkboxEnabled'       => (bool) $options['mailchimp_checkbox_enabled'],
+		);
+
+		// Exit gracefully.
+		wp_send_json_success( $json_array );
+	}
+
+	/**
+	 * Save mailchimp options.
+	 */
+	public function ajax_save_mailchimp_options() {
+		$nonce = sanitize_text_field( filter_input( INPUT_POST, 'nonce', FILTER_DEFAULT ) );
+
+		// Security.
+		if ( ! wp_verify_nonce( $nonce, 'sce-save-integrations-options' ) || ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error(
+				array(
+					'message' => __( 'Could not verify nonce.', 'comment-edit-pro' ),
+				)
+			);
+		}
+
+		// Nonce passed, let's get post vars.
+		$mailchimp_enabled          = (bool) filter_input( INPUT_POST, 'enableMailchimp', FILTER_VALIDATE_BOOLEAN );
+		$api_token                  = sanitize_text_field( filter_input( INPUT_POST, 'apiKey', FILTER_DEFAULT ) );
+		$api_server_prefix          = sanitize_text_field( filter_input( INPUT_POST, 'mailchimpServerPrefix', FILTER_DEFAULT ) );
+		$selected_list              = sanitize_text_field( filter_input( INPUT_POST, 'selectedList', FILTER_DEFAULT ) );
+		$mailchimp_checkbox_enabled = (bool) filter_input( INPUT_POST, 'checkboxEnabled', FILTER_VALIDATE_BOOLEAN );
+		$signup_label               = sanitize_text_field( filter_input( INPUT_POST, 'signUpLabel', FILTER_DEFAULT ) );
+
+		// If mailchimp is disabled, let's clear out some keys.
+		if ( ! $mailchimp_enabled ) {
+			$options_to_save = array(
+				'enable_mailchimp'                => false,
+				'mailchimp_api_key'               => '',
+				'mailchimp_api_key_server_prefix' => '',
+				'mailchimp_selected_list'         => '',
+				'mailchimp_signup_label'          => __( 'Sign Up for Updates', 'comment-edit-pro' ),
+				'mailchimp_checkbox_enabled'      => true,
+			);
+			if ( Functions::is_multisite() ) {
+				delete_site_option( 'sce_mailchimp_lists' );
+			} else {
+				delete_option( 'sce_mailchimp_lists' );
+			}
+
+			// todo: clear mailchimp lists option.
+
+			Options::update_options( $options_to_save );
+			wp_send_json_success( array( 'list' => false ) );
+			exit;
+		}
+
+		// Now let's save options.
+		$options_to_save = array(
+			'enable_mailchimp'                => $mailchimp_enabled,
+			'mailchimp_api_key'               => $api_token,
+			'mailchimp_api_key_server_prefix' => $api_server_prefix,
+			'mailchimp_selected_list'         => $selected_list,
+			'mailchimp_signup_label'          => $signup_label,
+			'mailchimp_checkbox_enabled'      => $mailchimp_checkbox_enabled,
+		);
+		Options::update_options( $options_to_save );
+
+		// Let's check if mailchimp key has changed and if so, let's grab the list again.
+		$needs_refresh = false;
+		$options       = Options::get_options( true );
+		if ( '' === $options['mailchimp_selected_list'] ) {
+			$needs_refresh = true;
+		}
+
+		// If we don't need to refresh the list, let's not do it.
+		if ( ! $needs_refresh ) {
+			// Exit gracefully.
+			if ( Functions::is_multisite() ) {
+				$mailchimp_lists = get_site_option( 'sce_mailchimp_lists', array() );
+			} else {
+				$mailchimp_lists = get_option( 'sce_mailchimp_lists', array() );
+			}
+			$options_to_save['lists'] = $mailchimp_lists;
+			wp_send_json_success( $options_to_save );
+			exit;
+		}
+
+		// Format API url for a server prefix..
+		$mailchimp_api_url = str_replace(
+			'<sp>',
+			$api_server_prefix,
+			$this->mailchimp_api
+		);
+
+		// Start building up HTTP args.
+		$http_args            = array();
+		$http_args['headers'] = array(
+			'Authorization' => 'Bearer ' . $api_token,
+			'Accept'        => 'application/json;ver=1.0',
+		);
+
+		// Get lists endpoint.
+		$lists_api_url = esc_url_raw( $mailchimp_api_url . '/lists' );
+
+		// Make API call.
+		$response = wp_remote_get( $lists_api_url, $http_args );
+
+		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+			wp_send_json_error( array( 'message' => __( 'Could not connect to Mailchimp.', 'comment-edit-pro' ) ) );
+		}
+
+		// Now format response from JSON.
+		$lists_raw        = json_decode( wp_remote_retrieve_body( $response ), true );
+		$lists            = $lists_raw['lists'] ?? array();
+		$sanitized_values = array();
+		foreach ( $lists as $index => $values ) {
+			$sanitized_values[ $index ] = array(
+				'label' => sanitize_text_field( $lists[ $index ]['name'] ),
+				'value' => sanitize_text_field( $lists[ $index ]['id'] ),
+			);
+		}
+
+		// Save list in option.
+		if ( Functions::is_multisite() ) {
+			update_site_option( 'sce_mailchimp_lists', $sanitized_values );
+		} else {
+			update_option( 'sce_mailchimp_lists', $sanitized_values );
+		}
+
+		// When no lists were found, return error.
+		if ( empty( $sanitized_values ) ) {
+			wp_send_json_error( array( 'message' => __( 'There are no Mailchimp lists that were found.', 'comment-edit-pro' ) ) );
+			exit;
+		}
+
+		wp_send_json_success(
+			array(
+				'list'          => true,
+				'lists'         => $sanitized_values,
+				'selected_list' => $options['mailchimp_selected_list'],
+			)
+		);
+		exit;
+	}
+
+	/**
+	 * Reset Mailchimp Options.
+	 */
+	public function ajax_reset_mailchimp_options() {
+		// Security.
+		if ( ! wp_verify_nonce( filter_input( INPUT_POST, 'nonce', FILTER_DEFAULT ), 'sce-reset-integrations-options' ) || ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error(
+				array(
+					'message' => __( 'Could not verify nonce.', 'comment-edit-pro' ),
+				)
+			);
+		}
+
+		// Remove list options.
+		if ( Functions::is_multisite() ) {
+			delete_site_option( 'sce_mailchimp_lists' );
+		} else {
+			delete_option( 'sce_mailchimp_lists' );
+		}
+
+		// Clear options.
+		Options::update_options(
+			array(
+				'enable_mailchimp'                => false,
+				'mailchimp_api_key'               => '',
+				'mailchimp_api_key_server_prefix' => '',
+				'mailchimp_selected_list'         => '',
+				'mailchimp_signup_label'          => __( 'Sign Up for Updates', 'comment-edit-pro' ),
+				'mailchimp_checkbox_enabled'      => false,
+			)
+		);
+
+		wp_send_json_success(
+			array(
+				'message' => __( 'Mailchimp options have been reset.', 'comment-edit-pro' ),
+			)
+		);
+
 	}
 }

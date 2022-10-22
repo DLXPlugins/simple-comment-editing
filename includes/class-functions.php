@@ -13,6 +13,16 @@ namespace SCE\Includes;
 class Functions {
 
 	/**
+	 * Check whether site is multisite or not.
+	 *
+	 * @return bool True if multisite, false if not.
+	 */
+	public static function is_multisite() {
+		$sce = \Simple_Comment_Editing::get_instance();
+		return $sce::is_multisite();
+	}
+
+	/**
 	 * Sanitize an attribute based on type.
 	 *
 	 * @param array  $attributes Array of attributes.
