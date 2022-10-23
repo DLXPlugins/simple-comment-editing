@@ -24,6 +24,7 @@ class Admin_Settings {
 
 		// init tabs here.
 		new \SCE\Includes\Admin\Tabs\Settings();
+		new \SCE\Includes\Admin\Tabs\Integrations();
 		new \SCE\Includes\Admin\Tabs\Support();
 	}
 
@@ -51,8 +52,8 @@ class Admin_Settings {
 		);
 		$admin_settings_links[] = sprintf(
 			'<a href="%s" style="color: #f60098;" target="_blank">%s</a>',
-			esc_url( SCE_SPONSORS_URL ),
-			esc_html__( 'Sponsor', 'simple-comment-editing' )
+			esc_url( 'https://dlxplugins.com/plugins/comment-edit-pro/' ),
+			esc_html__( 'Go Pro', 'simple-comment-editing' )
 		);
 		if ( ! is_array( $settings ) ) {
 			return $admin_settings_links;
@@ -256,9 +257,16 @@ class Admin_Settings {
 	public static function get_settings_header() {
 		?>
 		<div class="wrap sce-admin-wrap">
-			<h1>
-				<a href="<?php echo esc_url( Functions::get_settings_url() ); ?>" class="sce-admin-logo"><img src="<?php echo esc_url( Functions::get_plugin_logo() ); ?>" alt="Simple Comment Editing" /></a>
-			</h1>
+			<div class="sce-logo-wrap">
+				<h1>
+					<a href="<?php echo esc_url( Functions::get_settings_url() ); ?>" class="sce-admin-logo"><img src="<?php echo esc_url( Functions::get_plugin_logo() ); ?>" alt="Simple Comment Editing" /></a>
+				</h1>
+				<div class="sce-docs-wrap">
+					<a href="https://dlxplugins.com/support/" target="_blank" class="sce-support-link"><?php esc_html_e( 'Get Support', 'simple-comment-editing' ); ?></a>
+					<a href="https://docs.dlxplugins.com/v/simple-comment-editing/" target="_blank" class="sce-docs-link"><?php esc_html_e( 'View Documentation', 'simple-comment-editing' ); ?></a>
+					<a href="https://dlxplugins.com/plugins/comment-edit-pro/" target="_blank" class="sce-comment-edit-pro-link"><?php esc_html_e( 'Get the Pro Version', 'simple-comment-editing' ); ?></a>
+				</div>
+			</div>
 			<p class="sce-info-text"><?php esc_html_e( 'Supercharge your comment section by allowing your users to edit their comments.', 'simple-comment-editing' ); ?></p>
 		<?php
 	}

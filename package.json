@@ -4,9 +4,9 @@
   "description": "Simple Comment Editing for your users",
   "main": "gruntfile.js",
   "scripts": {
-    "start": "webpack --watch --mode development",
-    "dev": "webpack --mode development",
-    "build": "webpack --mode production",
+    "start": "webpack --watch --env mode=development",
+    "dev": "webpack --mode development --env mode=development",
+    "build": "webpack --mode production --env mode=production",
     "lint": "eslint ."
   },
   "repository": {
@@ -27,18 +27,40 @@
   },
   "homepage": "https://github.com/MediaRon/simple-comment-editing#readme",
   "devDependencies": {
-    "css-loader": "^5.2.6",
+    "@babel/core": "^7.18.6",
+    "@babel/eslint-parser": "^7.18.2",
+    "@babel/plugin-proposal-class-properties": "^7.17.12",
+    "@babel/plugin-transform-arrow-functions": "^7.17.12",
+    "@babel/preset-env": "^7.18.2",
+    "@babel/preset-react": "^7.18.6",
+    "@wordpress/components": "^19.15.0",
+    "@wordpress/eslint-plugin": "^12.7.0",
+    "@wordpress/i18n": "^4.13.0",
+    "axios": "^0.27.2",
+    "babel-loader": "^8.2.5",
+    "classnames": "^2.3.1",
+    "css-loader": "^5.2.4",
+    "eslint": "^8.18.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "grunt": "^1.5.3",
     "grunt-cli": "^1.4.2",
     "grunt-contrib-compress": "^2.0.0",
-    "mini-css-extract-plugin": "^1.6.0",
-    "sass-loader": "^10.0.5",
-    "style-loader": "^2.0.0",
-    "webpack": "^4.42.0",
-    "webpack-cli": "^4.5.0",
+    "mini-css-extract-plugin": "^1.5.0",
+    "prop-types": "^15.8.1",
+    "qs": "^6.11.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.33.1",
+    "sass": "^1.32.11",
+    "sass-loader": "^11.0.1",
+    "use-async-resource": "^2.2.2",
+    "webpack": "^5.35.1",
+    "webpack-cli": "^4.6.0",
     "webpack-fix-style-only-entries": "^0.6.1"
   },
   "dependencies": {
-    "sass": "^1.34.0"
+    "sass": "^1.34.0",
+    "react-spinners": "^0.13.3"
   }
 }
