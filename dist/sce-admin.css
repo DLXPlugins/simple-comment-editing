@@ -14,6 +14,58 @@
     transform: rotate(360deg);
   }
 }
+/* Admin buttons and logo */
+.sce-logo-wrap {
+  display: grid;
+  grid-template-columns: 70fr 30fr;
+  /* Media query for mobile */
+}
+@media (max-width: 650px) {
+  .sce-logo-wrap {
+    grid-template-columns: 1fr;
+  }
+  .sce-logo-wrap h1 {
+    width: 100%;
+    padding: 0 20px;
+  }
+}
+
+.sce-docs-wrap {
+  justify-self: end;
+}
+@media (max-width: 650px) {
+  .sce-docs-wrap {
+    width: 100%;
+  }
+}
+.sce-docs-wrap a {
+  padding: 10px 20px;
+  border-radius: 5px;
+  background: #1c3472;
+  color: #fff;
+  cursor: pointer;
+  border: 1px solid #e0e4e9;
+  transition: background-color 0.5s ease;
+  text-decoration: none;
+  display: block;
+  font-size: 14px;
+  margin-bottom: 8px;
+  max-width: 250px;
+  text-align: center;
+}
+@media (max-width: 650px) {
+  .sce-docs-wrap a {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+.sce-docs-wrap a:last-child {
+  margin-bottom: 0;
+}
+.sce-docs-wrap a:hover {
+  background: #26479b;
+}
+
 /* Button Options */
 .sce-button {
   padding: 10px 20px;
@@ -115,7 +167,7 @@ h3.sce-panel-heading {
 
 .sce-admin-logo img {
   width: 100%;
-  max-width: 500px;
+  max-width: 650px;
   display: inline-block;
 }
 
