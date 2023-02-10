@@ -1,11 +1,11 @@
-Simple Comment Editing for WordPress
+Comment Edit Lite for WordPress
 ======================
 
-Simple Comment Editing for WordPress 3.5+
+Comment Edit Lite for WordPress 3.5+
 
 ## Description
 
-Simple Comment Editing is a stripped down version of <a href="http://wordpress.org/plugins/wp-ajax-edit-comments/">Ajax Edit Comments</a>.
+Comment Edit Lite is a stripped down version of <a href="http://wordpress.org/plugins/wp-ajax-edit-comments/">Ajax Edit Comments</a>.
 
 The biggest differences:
 <ol>
@@ -65,7 +65,7 @@ See "Styles" section.
 Example:
 
 ```php
-//Simple Comment Editing
+//Comment Edit Lite
 add_filter( 'sce_loading_img', 'edit_sce_loading_img' );
 function edit_sce_loading_img( $default_url ) {
 	return 'http://domain.com/new_loading_image.gif';
@@ -275,7 +275,7 @@ Example: https://gist.github.com/ronalfy/6b4fec8b3ac55bc47f3f
 Example:
 
 ```php
-//Simple Comment Editing
+//Comment Edit Lite
 add_filter( 'sce_comment_time', 'edit_sce_comment_time' );
 function edit_sce_comment_time( $time_in_minutes ) {
 	return 60;
@@ -297,7 +297,7 @@ function edit_sce_comment_time( $time_in_minutes ) {
 Example:
 
 ```php
-//Simple Comment Editing - Disable the timer
+//Comment Edit Lite - Disable the timer
 add_filter( 'sce_show_timer', '__return_false' );
 ```
 
