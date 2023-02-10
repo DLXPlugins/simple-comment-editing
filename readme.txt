@@ -1,9 +1,9 @@
-=== Simple Comment Editing ===
+=== Comment Edit Lite ===
 Contributors: ronalfy
 Tags: comment editing, comments,edit comments, edit, comment,
 Requires at least: 5.0
 Tested up to: 6.1
-Stable tag: 2.8.0
+Stable tag: 2.9.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -11,18 +11,19 @@ Your users make mistakes. Come to their rescue by allowing your users to edit th
 
 == Description ==
 
-Supercharge your comment section with <a href="https://dlxplugins.com/plugins/simple-comment-editing/">Simple Comment Editing</a> and allow your users to edit their comments for a period of time. Save your users some headaches and let them fix their typos while you take a backseat and relax.
+Add useful comment editing with <a href="https://dlxplugins.com/plugins/comment-edit-lite/">Comment Edit Lite</a>. Allow your users to edit their comments for a period of time. Save your users some headaches and let them fix their typos while you take a backseat and relax.
 
 [youtube https://www.youtube.com/watch?v=bNCDdQbwA-s&rel=0]
 
-> Please check out the <a href="https://sce.dlxplugins.com/">comprehensive documentation for Simple Comment Editing</a>.
+> Please check out the <a href="https://docs.dlxplugins.com/v/comment-edit-lite/">comprehensive documentation for Comment Edit Lite</a>.
 
-<h2>Simple Comment Editing features:</h2>
+<h2>Comment Edit Lite features:</h2>
 <ol>
 <li>Install the plugin. That's it. It just works.
 <li>Anonymous users can edit comments for 5 minutes.</li>
 <li>No styling is necessary. For advanced customization, see the "Other Notes" section.</li>
 <li>Advanced customization can be achieved using filters.</li>
+<li>Add Mailchimp to your comment form and get email subscribers through comments.</li>
 </ol>
 
 > <strong>New</strong>: Enable Mailchimp and get newsletter signups from your comment section.
@@ -38,6 +39,7 @@ Features Include:
 * Mailchimp integration
 * reCAPTCHA 3 integration
 * Akismet integration
+* Slack integration
 * Translations
 * Comment Avatars
 * Comment Character Control
@@ -45,10 +47,14 @@ Features Include:
 
 == Installation ==
 
-1. Just unzip and upload the "simple-comment-editor" folder to your '/wp-content/plugins/' directory
+1. Just unzip and upload the "simple-comment-editing" folder to your '/wp-content/plugins/' directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Frequently Asked Questions ==
+
+= Simple Comment Editing is now Comment Edit Lite? =
+Yes.  We've renamed the plugin to make it easier to find and to more closely tie the plugin to the pro version.
+
 = Why doesn't this plugin come with any styles? =
 It's impossible to style an inline comment editor for every theme.  We've included basic HTML markup that is easily stylable to fit your theme.
 
@@ -72,6 +78,10 @@ Simple Comment Editing will work all the way back to IE10.
 5. Light button theme.
 
 == Changelog ==
+
+= 2.9.0 =
+* Released 2023-02-10
+* Rebranding the plugin from Simple Comment Editing to Comment Edit Lite.
 
 = 2.8.0 =
 * Released 2022-10-22
@@ -416,8 +426,5 @@ Simple Comment Editing will work all the way back to IE10.
 
 == Upgrade Notice ==
 
-= 2.8.0 =
-New Mailchimp integration for your comment section. WP 6.1 compatibility.
-
-= 2.7.2 =
-Documentation, compatibility, and logo update. Introducing Comment Edit Pro.
+= 2.9.0 =
+Rebranding the plugin from Simple Comment Editing to Comment Edit Lite.
