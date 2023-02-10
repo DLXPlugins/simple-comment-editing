@@ -1537,3 +1537,43 @@ function sce_instantiate() {
 
 	}
 } //end sce_instantiate
+
+
+register_activation_hook( Functions::get_plugin_file(), 'sce_plugin_activate' );
+add_action( 'admin_init', 'sce_plugin_activate_redirect' );
+
+/**
+ * Add an option upon activation to read in later when redirecting.
+ */
+function sce_plugin_activate() {
+	if ( ! Functions::is_multisite() ) {
+		add_option( 'comment-edit-lite-activate', sanitize_text_field( Functions::get_plugin_file() ) );
+	}
+}
+
+/**
+ * Redirect to Comment Edit Lite settings page upon activation.
+ */
+function sce_plugin_activate_redirect() {
+
+	// If on multisite, bail.
+	if ( Functions::is_multisite() ) {
+		return;
+	}
+
+	// Make sure we're in the admin and that the option is available.
+	if ( is_admin() && Functions::get_plugin_file() === get_option( 'comment-edit-lite-activate' ) ) {
+		delete_option( 'comment-edit-lite-activate' );
+		// GEt bulk activation variable if it exists.
+		$maybe_multi = filter_input( INPUT_GET, 'activate-multi', FILTER_VALIDATE_BOOLEAN );
+
+		// Return early if it's a bulk activation.
+		if ( $maybe_multi ) {
+			return;
+		}
+
+		$settings_url = admin_url( 'options-general.php?page=comment-edit-lite' );
+		wp_safe_redirect( $settings_url );
+		exit;
+	}
+}

@@ -162,7 +162,7 @@ class Support extends Tabs {
 						</p>
 					</div>
 					<div class="sce-panel-row">
-						<a class="sce-button sce-button-info" href="https://sce.dlxplugins.com/" target="_blank"><svg class="sce-icon"><use xlink:href="#sce-book-icon"></use></svg>&nbsp;&nbsp;<?php esc_html_e( 'View the Documentation', 'simple-comment-editing' ); ?></a>
+						<a class="sce-button sce-button-info" href="https://docs.dlxplugins.com/v/comment-edit-lite/" target="_blank"><svg class="sce-icon"><use xlink:href="#sce-book-icon"></use></svg>&nbsp;&nbsp;<?php esc_html_e( 'View the Documentation', 'simple-comment-editing' ); ?></a>
 					</div>
 				</div>
 				<div class="sce-admin-panel-area">

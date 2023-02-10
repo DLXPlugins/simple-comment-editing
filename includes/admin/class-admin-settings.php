@@ -263,7 +263,7 @@ class Admin_Settings {
 				</h1>
 				<div class="sce-docs-wrap">
 					<a href="https://dlxplugins.com/support/" target="_blank" class="sce-support-link"><?php esc_html_e( 'Get Support', 'simple-comment-editing' ); ?></a>
-					<a href="https://docs.dlxplugins.com/v/simple-comment-editing/" target="_blank" class="sce-docs-link"><?php esc_html_e( 'View Documentation', 'simple-comment-editing' ); ?></a>
+					<a href="https://docs.dlxplugins.com/v/comment-edit-lite/" target="_blank" class="sce-docs-link"><?php esc_html_e( 'View Documentation', 'simple-comment-editing' ); ?></a>
 					<a href="https://dlxplugins.com/plugins/comment-edit-pro/" target="_blank" class="sce-comment-edit-pro-link"><?php esc_html_e( 'Get the Pro Version', 'simple-comment-editing' ); ?></a>
 				</div>
 			</div>
@@ -287,10 +287,10 @@ class Admin_Settings {
 	 */
 	public function register_settings_menu() {
 		$hook = add_options_page(
-			__( 'Simple Comment Editing', 'simple-comment-editing' ),
-			__( 'Simple Comment Editing', 'simple-comment-editing' ),
+			__( 'Comment Edit Lite', 'simple-comment-editing' ),
+			__( 'Comment Edit Lite', 'simple-comment-editing' ),
 			'manage_options',
-			'simple-comment-editing',
+			'comment-edit-lite',
 			array( '\SCE\Includes\Admin\Admin_Settings', 'settings_page' )
 		);
 		return $hook;

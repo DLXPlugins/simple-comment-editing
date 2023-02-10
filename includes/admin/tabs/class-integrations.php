@@ -119,11 +119,11 @@ class Integrations extends Tabs {
 				</div>
 				<div class="sce-admin-panel-area">
 					<h3 class="sce-panel-heading">
-						<?php esc_html_e( 'Akismet and reCAPTCHA 3 Integrations (Pro only)', 'simple-comment-editing' ); ?>
+						<?php esc_html_e( 'Akismet, reCAPTCHA 3, Slack Integrations (Pro only)', 'simple-comment-editing' ); ?>
 					</h3>
 					<div class="sce-panel-row">
 						<p class="description">
-							<?php esc_html_e( 'Comment Edit Pro adds reCAPTCHA 3 spam protection and Akismet integrations to Simple Comment Editing.', 'simple-comment-editing' ); ?>
+							<?php esc_html_e( 'Comment Edit Pro adds reCAPTCHA 3 spam protection, Akismet spam protection, and Slack notifications to Comment Edit Lite.', 'simple-comment-editing' ); ?>
 						</p>
 					</div>
 					<div class="sce-panel-row">

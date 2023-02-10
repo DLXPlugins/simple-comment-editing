@@ -1,7 +1,8 @@
 <?php
 /*
-Plugin Name: Simple Comment Editing
-Plugin URI: https://dlxplugins.com/plugins/simple-comment-editing/
+Plugin Name: Comment Edit Lite
+Plugin URI: https://dlxplugins.com/plugins/comment-edit-lite
+/
 Description: Allow your users to edit their comments.
 Author: DLX Plugins
 Version: 2.8.0

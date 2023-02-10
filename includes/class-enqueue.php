@@ -30,7 +30,7 @@ class Enqueue {
 	 * @param string $hook The page hook name.
 	 */
 	public function admin_scripts( $hook ) {
-		if ( 'options-general.php' !== $hook && 'settings_page_simple-comment-editing' !== $hook ) {
+		if ( 'options-general.php' !== $hook && 'settings_page_comment-edit-lite' !== $hook ) {
 			return;
 		}
 		wp_enqueue_style(
