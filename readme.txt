@@ -82,6 +82,7 @@ Simple Comment Editing will work all the way back to IE10.
 = 2.9.0 =
 * Released 2023-02-10
 * Rebranding the plugin from Simple Comment Editing to Comment Edit Lite.
+* <a href="https://dlxplugins.com/announcements/simple-comment-editing-has-been-renamed-to-comment-edit-lite/">Please read more on the rebranding</a> where you can leave questions or comments.
 
 = 2.8.0 =
 * Released 2022-10-22
