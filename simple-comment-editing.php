@@ -1573,7 +1573,7 @@ function sce_plugin_activate_redirect() {
 		}
 
 		$settings_url = admin_url( 'options-general.php?page=comment-edit-lite' );
-		wp_safe_redirect( $settings_url );
+		wp_safe_redirect( esc_url( $settings_url ) );
 		exit;
 	}
 }
