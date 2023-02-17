@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: comment editing, comments,edit comments, edit, comment,
 Requires at least: 5.0
 Tested up to: 6.1
-Stable tag: 2.9.0
+Stable tag: 2.9.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,6 +78,11 @@ Simple Comment Editing will work all the way back to IE10.
 5. Light button theme.
 
 == Changelog ==
+
+= 2.9.1 =
+* Released 2023-02-17
+* Adding new filter for early disabling of comment editing.
+* Fixing redirect issue on plugin activation when Comment Edit Pro is installed.
 
 = 2.9.0 =
 * Released 2023-02-10
@@ -427,5 +432,5 @@ Simple Comment Editing will work all the way back to IE10.
 
 == Upgrade Notice ==
 
-= 2.9.0 =
-Rebranding the plugin from Simple Comment Editing to Comment Edit Lite.
+= 2.9.1 =
+Adding new filter for early disabling of comment editing.
