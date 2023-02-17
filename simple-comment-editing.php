@@ -991,6 +991,22 @@ class Simple_Comment_Editing {
 	public function can_edit( $comment_id, $post_id ) {
 		global $comment, $post;
 
+		/**
+		 * Filter: sce_can_edit_pre
+		 *
+		 * Determine if a user can edit the comment (can short-circuit.)
+		 *
+		 * @since 2.9.1
+		 *
+		 * @param bool  true If user can edit the comment
+		 * @param WP_Comment $comment Comment object user has left (may be unset)
+		 * @param WP_Post    $post    Post object (may be unset)
+		 */
+		$can_edit_pre = apply_filters( 'sce_can_edit_pre', true, $comment, $post );
+		if ( ! $can_edit_pre ) {
+			return false;
+		}
+
 		if ( ! is_object( $comment ) ) {
 			$comment = get_comment( $comment_id, OBJECT );
 		}
@@ -1573,6 +1589,9 @@ function sce_plugin_activate_redirect() {
 		}
 
 		$settings_url = admin_url( 'options-general.php?page=comment-edit-lite' );
+		if ( class_exists( '\CommentEditPro\Comment_Edit_Pro' ) ) {
+			$settings_url = admin_url( 'options-general.php?page=comment-edit-pro' );
+		}
 		wp_safe_redirect( esc_url( $settings_url ) );
 		exit;
 	}
