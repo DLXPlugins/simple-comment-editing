@@ -11,6 +11,13 @@ class Simple_Comment_Editing {
 	public $errors;
 	private $scheme;
 
+	/**
+	 * Mailchimp API variable with <sp> (server prefix) for search/replace.
+	 *
+	 * @var string Mailchimp API variable.
+	 */
+	private $mailchimp_api = 'https://<sp>.api.mailchimp.com/3.0/';
+
 	// Singleton
 	public static function get_instance() {
 		if ( null == self::$instance ) {
@@ -108,6 +115,11 @@ class Simple_Comment_Editing {
 		add_filter( 'sce_button_extra_cancel', array( $this, 'maybe_add_cancel_icon' ) );
 		add_filter( 'sce_button_extra_delete', array( $this, 'maybe_add_delete_icon' ) );
 		add_filter( 'sce_wrapper_class', array( $this, 'output_theme_class' ) );
+
+		// Add Mailchimp Checkbox.
+		add_filter( 'comment_form_defaults', array( $this, 'add_mailchimp_checkbox' ), 100 );
+		// When a new comment has been added.
+		add_action( 'comment_post', array( $this, 'comment_posted_mailchimp' ), 100, 2 );
 	} //end init
 
 	/**
@@ -531,11 +543,25 @@ class Simple_Comment_Editing {
 			die( json_encode( $response ) );
 		}
 
-		$comment_time        = absint( $this->comment_time );
-		$query               = $wpdb->prepare( "SELECT ( $comment_time * 60 - (UNIX_TIMESTAMP('" . current_time( 'mysql' ) . "') - UNIX_TIMESTAMP(comment_date))) comment_time FROM {$wpdb->comments} where comment_ID = %d", $comment_id );
+		$comment_time = absint( $this->comment_time );
+		$query        = $wpdb->prepare( "SELECT ( $comment_time * 60 - (UNIX_TIMESTAMP('" . current_time( 'mysql' ) . "') - UNIX_TIMESTAMP(comment_date))) comment_time FROM {$wpdb->comments} where comment_ID = %d", $comment_id );
+
 		$comment_time_result = $wpdb->get_row( $query, ARRAY_A );
 
-		$time_left = $comment_time_result['comment_time'];
+		/**
+		 * Filter: sce_get_comment_time_left
+		 *
+		 * Get the comment time remaining.
+		 *
+		 * @since 2.8.0
+		 *
+		 * @param int    Current comment editing time.
+		 * @param string Current time format in date/time format.
+		 * @param int    Current Post ID.
+		 * @param int    Current Comment ID.
+		 */
+		$time_left = apply_filters( 'sce_get_comment_time_left', $comment_time_result['comment_time'], $comment_time, $post_id, $comment_id );
+
 		if ( $time_left < 0 ) {
 			$response = array(
 				'minutes'    => 0,
@@ -877,8 +903,17 @@ class Simple_Comment_Editing {
 			die( json_encode( $return ) );
 		}
 
+		/**
+		 * Filter: sce_akismet_enabled
+		 *
+		 * Allow third parties to disable Akismet.
+		 *
+		 * @param bool true if Akismet is enabled
+		 */
+		$akismet_enabled = apply_filters( 'sce_akismet_enabled', true );
+
 		// Check the new comment for spam with Akismet
-		if ( function_exists( 'akismet_check_db_comment' ) ) {
+		if ( function_exists( 'akismet_check_db_comment' ) && $akismet_enabled ) {
 			if ( akismet_verify_key( get_option( 'wordpress_api_key' ) ) != 'failed' ) { // Akismet
 				$response = akismet_check_db_comment( $comment_id );
 				if ( $response == 'true' ) { // You have spam
@@ -955,6 +990,22 @@ class Simple_Comment_Editing {
 	 */
 	public function can_edit( $comment_id, $post_id ) {
 		global $comment, $post;
+
+		/**
+		 * Filter: sce_can_edit_pre
+		 *
+		 * Determine if a user can edit the comment (can short-circuit.)
+		 *
+		 * @since 2.9.1
+		 *
+		 * @param bool  true If user can edit the comment
+		 * @param WP_Comment $comment Comment object user has left (may be unset)
+		 * @param WP_Post    $post    Post object (may be unset)
+		 */
+		$can_edit_pre = apply_filters( 'sce_can_edit_pre', true, $comment, $post );
+		if ( ! $can_edit_pre ) {
+			return false;
+		}
 
 		if ( ! is_object( $comment ) ) {
 			$comment = get_comment( $comment_id, OBJECT );
@@ -1384,6 +1435,108 @@ class Simple_Comment_Editing {
 			set_transient( 'sce_security_keys', true, HOUR_IN_SECONDS );
 		}
 	}
+	/**
+	 * Send Mailchimp when a comment has been posted.
+	 *
+	 * @param int  $comment_id Comment ID that has been submitted.
+	 * @param bool $maybe_comment_approved Whether the comment is approved or not (1, 0, spam).
+	 */
+	public function comment_posted_mailchimp( $comment_id, $maybe_comment_approved ) {
+		$signup_enabled = (bool) filter_input( INPUT_POST, 'sce-mailchimp-signup', FILTER_VALIDATE_BOOLEAN );
+
+		if ( $signup_enabled && 'spam' !== $maybe_comment_approved ) {
+			// Get the comment.
+			$comment         = get_comment( $comment_id );
+			$commenter_email = $comment->comment_author_email;
+
+			$subscriber_added = $this->add_subscriber( $comment_id, $commenter_email, $comment );
+		}
+	}
+
+	/**
+	 * Add a subscriber to mailchimp.
+	 *
+	 * @param int        $comment_id The comment ID.
+	 * @param string     $email      The email address.
+	 * @param WP_Comment $comment    The comment object.
+	 */
+	private function add_subscriber( $comment_id, $email, $comment ) {
+		if ( ! is_email( $email ) ) {
+			return false;
+		}
+
+		$options = Options::get_options();
+		$list    = $options['mailchimp_selected_list'] ?? '';
+		if ( empty( $list ) ) {
+			return false;
+		}
+
+		// Format API url for a server prefix..
+		$mailchimp_api_url = str_replace(
+			'<sp>',
+			$options['mailchimp_api_key_server_prefix'],
+			$this->mailchimp_api
+		);
+
+		$commenter_name    = $comment->comment_author;
+		$mailchimp_api_key = $options['mailchimp_api_key'];
+
+		$endpoint = $mailchimp_api_url . 'lists/' . $list . '/members/';
+
+		// Start building up HTTP args.
+		$http_args            = array();
+		$http_args['headers'] = array(
+			'Authorization' => 'Bearer ' . $mailchimp_api_key,
+			'Accept'        => 'application/json;ver=1.0',
+		);
+		$http_args['body']    = wp_json_encode(
+			array(
+				'email_address' => $email,
+				'status'        => 'pending',
+				'merge_fields'  => array(
+					'FNAME' => $commenter_name,
+				),
+			)
+		);
+		$response             = wp_remote_post( esc_url_raw( $endpoint ), $http_args );
+		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+			// Response code can be 400 if the member already exists.
+			return false;
+		}
+
+		// Now format response from JSON.
+		$response_array = json_decode( wp_remote_retrieve_body( $response ), true );
+		// Save subscription ID to comment meta.
+		add_comment_meta( $comment_id, 'sce_mailchimp_id', $response_array['id'] );
+		return true;
+	}
+
+	/**
+	 * Add an subscribe option below the comment textarea and above the submit button.
+	 *
+	 * @param array $comment_fields Array of defaults for the form field.
+	 */
+	public function add_mailchimp_checkbox( $comment_fields ) {
+		$options           = Options::get_options();
+		$mailchimp_enabled = (bool) $options['enable_mailchimp'];
+
+		// Chceck to see if Mailchimp is enabled.
+		if ( ! $mailchimp_enabled || current_user_can( 'moderate_comments' ) ) {
+			return $comment_fields;
+		}
+
+		// Now get the checkbox details.
+		$checked_by_default              = (bool) $options['mailchimp_checkbox_enabled'];
+		$mailchimp_html                  = array(
+			'sce-mailchimp' => sprintf(
+				'<section class="comment-form-sce-mailchimp"><label><input type="checkbox" name="sce-mailchimp-signup" %s /> %s</label></section>',
+				checked( $checked_by_default, true, false ),
+				esc_html( $options['mailchimp_signup_label'] )
+			),
+		);
+		$comment_fields['submit_button'] = $mailchimp_html['sce-mailchimp'] . $comment_fields['submit_button'];
+		return $comment_fields;
+	}
 
 } //end class Simple_Comment_Editing
 
@@ -1395,8 +1548,51 @@ function sce_instantiate() {
 		$sce_enqueue = new SCE\Includes\Enqueue();
 		$sce_enqueue->run();
 	}
-	
+
 	if ( apply_filters( 'sce_show_admin', true ) ) {
 
 	}
 } //end sce_instantiate
+
+
+register_activation_hook( Functions::get_plugin_file(), 'sce_plugin_activate' );
+add_action( 'admin_init', 'sce_plugin_activate_redirect' );
+
+/**
+ * Add an option upon activation to read in later when redirecting.
+ */
+function sce_plugin_activate() {
+	if ( ! Functions::is_multisite() ) {
+		add_option( 'comment-edit-lite-activate', sanitize_text_field( Functions::get_plugin_file() ) );
+	}
+}
+
+/**
+ * Redirect to Comment Edit Lite settings page upon activation.
+ */
+function sce_plugin_activate_redirect() {
+
+	// If on multisite, bail.
+	if ( Functions::is_multisite() ) {
+		return;
+	}
+
+	// Make sure we're in the admin and that the option is available.
+	if ( is_admin() && Functions::get_plugin_file() === get_option( 'comment-edit-lite-activate' ) ) {
+		delete_option( 'comment-edit-lite-activate' );
+		// GEt bulk activation variable if it exists.
+		$maybe_multi = filter_input( INPUT_GET, 'activate-multi', FILTER_VALIDATE_BOOLEAN );
+
+		// Return early if it's a bulk activation.
+		if ( $maybe_multi ) {
+			return;
+		}
+
+		$settings_url = admin_url( 'options-general.php?page=comment-edit-lite' );
+		if ( class_exists( '\CommentEditPro\Comment_Edit_Pro' ) ) {
+			$settings_url = admin_url( 'options-general.php?page=comment-edit-pro' );
+		}
+		wp_safe_redirect( esc_url( $settings_url ) );
+		exit;
+	}
+}

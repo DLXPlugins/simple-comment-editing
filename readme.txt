@@ -1,47 +1,70 @@
-=== Simple Comment Editing ===
+=== Comment Edit Lite ===
 Contributors: ronalfy
 Tags: comment editing, comments,edit comments, edit, comment,
 Requires at least: 5.0
-Tested up to: 5.8
-Stable tag: 2.7.1
+Tested up to: 6.1
+Stable tag: 2.9.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Donate link: https://mediaron.com/give/
 
-Supercharge your comment section and allow your users to edit their comments for a period of time.
+Your users make mistakes. Come to their rescue by allowing your users to edit their comments for a period of time.
 
 == Description ==
 
-Supercharge your comment section and allow your users to edit their comments for a period of time. Save your users some headaches and let them fix their typos while you take a backseat and relax.
+Add useful comment editing with <a href="https://dlxplugins.com/plugins/comment-edit-lite/">Comment Edit Lite</a>. Allow your users to edit their comments for a period of time. Save your users some headaches and let them fix their typos while you take a backseat and relax.
 
 [youtube https://www.youtube.com/watch?v=bNCDdQbwA-s&rel=0]
 
-Simple Comment Editing features:
+> Please check out the <a href="https://docs.dlxplugins.com/v/comment-edit-lite/">comprehensive documentation for Comment Edit Lite</a>.
+
+<h2>Comment Edit Lite features:</h2>
 <ol>
 <li>Install the plugin. That's it. It just works.
 <li>Anonymous users can edit comments for 5 minutes.</li>
 <li>No styling is necessary. For advanced customization, see the "Other Notes" section.</li>
 <li>Advanced customization can be achieved using filters.</li>
+<li>Add Mailchimp to your comment form and get email subscribers through comments.</li>
 </ol>
 
-For additional features in addition to comment editing, please check out <a href="https://mediaron.com/simple-comment-editing-options">SCE Options</a>. You can download a 1-site license for free.
+> <strong>New</strong>: Enable Mailchimp and get newsletter signups from your comment section.
+
+<h2>Go Pro with Comment Edit Pro</h2>
+
+For additional features in addition to comment editing, please check out <a href="https://dlxplugins.com/plugins/comment-edit-pro/">Comment Edit Pro</a>.
+
+Features Include:
+
+* Front-end editing
+* Unlimited editing
+* Mailchimp integration
+* reCAPTCHA 3 integration
+* Akismet integration
+* Slack integration
+* Translations
+* Comment Avatars
+* Comment Character Control
+* <a href="https://dlxplugins.com/plugins/comment-edit-pro/">And much more...</a>
 
 == Installation ==
 
-1. Just unzip and upload the "simple-comment-editor" folder to your '/wp-content/plugins/' directory
+1. Just unzip and upload the "simple-comment-editing" folder to your '/wp-content/plugins/' directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Frequently Asked Questions ==
+
+= Simple Comment Editing is now Comment Edit Lite? =
+Yes.  We've renamed the plugin to make it easier to find and to more closely tie the plugin to the pro version.
+
 = Why doesn't this plugin come with any styles? =
 It's impossible to style an inline comment editor for every theme.  We've included basic HTML markup that is easily stylable to fit your theme.
 
-With <a href="https://mediaron.com/simple-comment-editing-options">Simple Comment Editing Options</a>, you can choose between three themes.
+With <a href="https://dlxplugins.com/plugins/comment-edit-pro/">Comment Edit Pro</a>, you can choose between three themes.
 
 = Where are the options? =
-No options :) - Just simple comment editing. If you prefer options, try out the paid add-on <a href="https://mediaron.com/simple-comment-editing-options">Simple Comment Editing Options</a>.
+No options :) - Just simple comment editing. If you prefer options, try out the paid add-on <a href="https://dlxplugins.com/plugins/comment-edit-pro/">Comment Edit Pro</a>.
 
 = How do I customize this plugin? =
-For advanced options, please see the <a href="https://github.com/ronalfy/simple-comment-editing#wordpress-filters">SCE Filter/Action reference</a> or get <a href="https://mediaron.com/simple-comment-editing-options">Simple Comment Editing Options</a>.
+For advanced options, please see the <a href="https://sce.dlxplugins.com/">SCE Filter/Action reference</a> or get <a href="https://dlxplugins.com/plugins/comment-edit-pro/">Comment Edit Pro</a>.
 
 = What browsers have you tested this with? =
 Simple Comment Editing will work all the way back to IE10.
@@ -55,6 +78,30 @@ Simple Comment Editing will work all the way back to IE10.
 5. Light button theme.
 
 == Changelog ==
+
+= 2.9.1 =
+* Released 2023-02-17
+* Adding new filter for early disabling of comment editing.
+* Fixing redirect issue on plugin activation when Comment Edit Pro is installed.
+
+= 2.9.0 =
+* Released 2023-02-10
+* Rebranding the plugin from Simple Comment Editing to Comment Edit Lite.
+* <a href="https://dlxplugins.com/announcements/simple-comment-editing-has-been-renamed-to-comment-edit-lite/">Please read more on the rebranding</a> where you can leave questions or comments.
+
+= 2.8.0 =
+* Released 2022-10-22
+* New: Integrate Mailchimp with your comment section to increase newsletter signups.
+* Updating internal documentation.
+* Successfully tested with WP 6.1.
+
+= 2.7.4 =
+* Released 2022-08-11
+* Updating Akismet integration so it can be disabled.
+
+= 2.7.2 =
+* Updating logo
+* Updating documentation
 
 = 2.7.1 =
 * Released 2021-07-02
@@ -385,15 +432,5 @@ Simple Comment Editing will work all the way back to IE10.
 
 == Upgrade Notice ==
 
-= 2.7.1 =
-Added IP fix that should make editing comments more reliable and less prone to error. Props @tim-reeves.
-
-= 2.7.0 =
-New option: timer can now be compact (e.g., 41:15). New option: button themes. Using new comment check function name if it exists. Correcting typo in admin options. Basic styling for edit buttons.
-
-= 2.6.1 =
-Fixing admin styling. Fixing timer for times greater than 5 minutes.
-
-= 2.6.0 =
-* Released 2021-05-30
-* New admin panel style in anticipation of a few more feature additions.
+= 2.9.1 =
+Adding new filter for early disabling of comment editing.

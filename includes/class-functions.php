@@ -13,6 +13,16 @@ namespace SCE\Includes;
 class Functions {
 
 	/**
+	 * Check whether site is multisite or not.
+	 *
+	 * @return bool True if multisite, false if not.
+	 */
+	public static function is_multisite() {
+		$sce = \Simple_Comment_Editing::get_instance();
+		return $sce::is_multisite();
+	}
+
+	/**
 	 * Sanitize an attribute based on type.
 	 *
 	 * @param array  $attributes Array of attributes.
@@ -101,7 +111,7 @@ class Functions {
 	 * @return string URL to admin screen. Output is not escaped.
 	 */
 	public static function get_settings_url( $tab = '', $sub_tab = '' ) {
-		$options_url = admin_url( 'options-general.php?page=simple-comment-editing' );
+		$options_url = admin_url( 'options-general.php?page=comment-edit-lite' );
 		if ( ! empty( $tab ) ) {
 			$options_url = add_query_arg( array( 'tab' => sanitize_title( $tab ) ), $options_url );
 			if ( ! empty( $sub_tab ) ) {

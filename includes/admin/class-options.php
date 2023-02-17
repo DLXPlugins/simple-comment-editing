@@ -64,6 +64,11 @@ class Options {
 
 		foreach ( $options as $key => &$option ) {
 			switch ( $key ) {
+				case 'enable_mailchimp':
+				case 'mailchimp_api_key_valid':
+				case 'mailchimp_checkbox_enabled':
+					$option = (bool) filter_var( $options[ $key ], FILTER_VALIDATE_BOOLEAN );
+					break;
 				case 'timer':
 					$timer = absint( $options[ $key ] );
 					if ( 0 === $timer ) {
@@ -98,10 +103,18 @@ class Options {
 	 */
 	private static function get_defaults() {
 		$defaults = array(
-			'timer'            => 5,
-			'timer_appearance' => 'words',
-			'button_theme'     => 'default',
-			'show_icons'       => false,
+			'timer'                           => 5,
+			'timer_appearance'                => 'words',
+			'button_theme'                    => 'default',
+			'show_icons'                      => false,
+			'enable_mailchimp'                => false,
+			'mailchimp_api_key'               => '',
+			'mailchimp_api_key_valid'         => false,
+			'mailchimp_api_key_server_prefix' => '',
+			'mailchimp_lists'                 => array(),
+			'mailchimp_selected_list'         => '',
+			'mailchimp_signup_label'          => __( 'Sign Up for Updates', 'simple-comment-editing' ),
+			'mailchimp_checkbox_enabled'      => false,
 		);
 
 		/**
