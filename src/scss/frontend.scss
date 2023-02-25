@@ -6,11 +6,34 @@ $white: #fff;
 $focus-color: #ff0;
 $danger_button_color: #721c24;
 
+
+.sce-comment-edit-buttons {
+	.sce-comment-edit-buttons-group {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+
+		.sce-comment-delete {
+			margin-left: auto;
+		}
+		.sce-comment-delete,
+		.sce-comment-save,
+		.sce-comment-cancel {
+			display: flex;
+			align-items: center;
+			line-height: normal;
+		}
+	}
+}
+
 /* Regular Theme */
 .sce-edit-comment {
 	margin: 20px 0;
 	.sce-comment-edit-buttons {
 		@media only screen and (max-width: 600px) {
+			.sce-comment-edit-buttons-group {
+				display: block;
+			}
 			button {
 				display: block;
 				width: 100%;
@@ -71,7 +94,6 @@ $danger_button_color: #721c24;
 				font-style: italic;
 			}
 			button {
-				display: inline-block;
 				border-radius: 5px;
 				border: 1px solid #EEE;
 				padding: 10px 20px;
@@ -155,7 +177,6 @@ $danger_button_color: #721c24;
 				font-style: italic;
 			}
 			button {
-				display: inline-block;
 				background-color: lighten( #333, 15%);
 				color: #FFF;
 				margin-right: 10px;
@@ -208,7 +229,6 @@ $danger_button_color: #721c24;
 				font-style: italic;
 			}
 			button {
-				display: inline-block;
 				background-color: #EEE;
 				color: #000;
 				margin-right: 10px;

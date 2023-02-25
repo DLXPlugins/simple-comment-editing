@@ -10,7 +10,9 @@ module.exports = (env) => {
 				'sce-admin': ['./src/scss/admin.scss'],
 				'sce-frontend': ['./src/scss/frontend.scss'],
 			},
-			output: {},
+			output: {
+				clean: true,
+			},
 			module: {
 				rules: [
 					{
@@ -42,7 +44,7 @@ module.exports = (env) => {
 					react: path.resolve('node_modules/react'),
 				},
 			},
-			devtool: 'source-map',
+			devtool: 'production' === env.mode ? false : 'source-map',
 			entry: {
 				'integrations-admin': ['./src/js/react/views/integrations/index.js'],
 			},
