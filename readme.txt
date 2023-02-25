@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: comment editing, comments,edit comments, edit, comment,
 Requires at least: 5.0
 Tested up to: 6.1
-Stable tag: 2.9.1
+Stable tag: 2.9.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,7 @@ Features Include:
 * Translations
 * Comment Avatars
 * Comment Character Control
+* Webhooks
 * <a href="https://dlxplugins.com/plugins/comment-edit-pro/">And much more...</a>
 
 == Installation ==
@@ -78,6 +79,11 @@ Simple Comment Editing will work all the way back to IE10.
 5. Light button theme.
 
 == Changelog ==
+
+= 2.9.5 =
+* Released 2023-02-24
+* Fixing spacing issue with the edit buttons when selecting a button theme.
+* New wrapper around the buttons for better styling control.
 
 = 2.9.1 =
 * Released 2023-02-17
@@ -432,5 +438,5 @@ Simple Comment Editing will work all the way back to IE10.
 
 == Upgrade Notice ==
 
-= 2.9.1 =
-Adding new filter for early disabling of comment editing.
+= 2.9.5 =
+Fixing spacing issue with the edit buttons when selecting a button theme. New wrapper around the buttons for better styling control.
