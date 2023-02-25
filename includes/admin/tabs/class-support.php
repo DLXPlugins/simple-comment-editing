@@ -101,12 +101,16 @@ class Support extends Tabs {
 							<?php echo wp_kses_post( '<strong>Go Pro</strong> with <strong>Comment Edit Pro</strong> and its useful comment utilities.', 'simple-comment-editing' ); ?>
 						</p>
 						<ul>
+							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/comment-editing">Additional Comment Editing Features</a></li>
 							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/comment-avatars">Comment Avatars</a></li>
+							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/gravatar-privacy-protection">Gravatar Privacy Protection</a></li>
 							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/integrations/recaptcha-3-support">reCAPTCHA 3 Support</a></li>
 							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/integrations/akismet-spam-protection">Akismet Spam Protection Integration</a></li>
+							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/spam-protection/cloudflare-turnstile">Cloudflare Turnstile Support</a></li>
 							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/comment-character-control">Comment Character Control</a></li>
 							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/frontend-editing">Front-end Comment Editing</a></li>
-							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/unlimited-editing">Unlimited Editing</a></li>
+							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/integrations/slack-integration">Slack Integration</a></li>
+							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/webhooks">Webhooks</a></li>
 						</ul>
 					</div>
 					<div class="sce-panel-row">

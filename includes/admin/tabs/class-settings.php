@@ -142,6 +142,31 @@ class Settings extends Tabs {
 						</form>
 					</div>
 				</div>
+				<div class="sce-admin-panel-area">
+					<h3 class="sce-panel-heading">
+						<a href="https://dlxplugins.com/plugins/comment-edit-pro"><img id="sce-options-logo" src="<?php echo esc_url( Functions::get_plugin_url( 'images/comment-edit-base.png' ) ); ?>" alt="Comment Edit Pro logo" /></a>
+					</h3>
+					<div class="sce-panel-row">
+						<p class="description">
+							<?php echo wp_kses_post( '<strong>Go Pro</strong> with <strong>Comment Edit Pro</strong> and its useful comment utilities.', 'simple-comment-editing' ); ?>
+						</p>
+						<ul>
+							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/comment-editing">Additional Comment Editing Features</a></li>
+							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/comment-avatars">Comment Avatars</a></li>
+							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/gravatar-privacy-protection">Gravatar Privacy Protection</a></li>
+							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/integrations/recaptcha-3-support">reCAPTCHA 3 Support</a></li>
+							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/integrations/akismet-spam-protection">Akismet Spam Protection Integration</a></li>
+							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/spam-protection/cloudflare-turnstile">Cloudflare Turnstile Support</a></li>
+							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/comment-character-control">Comment Character Control</a></li>
+							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/frontend-editing">Front-end Comment Editing</a></li>
+							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/integrations/slack-integration">Slack Integration</a></li>
+							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/webhooks">Webhooks</a></li>
+						</ul>
+					</div>
+					<div class="sce-panel-row">
+						<a class="sce-button sce-button-info" href="https://dlxplugins.com/plugins/comment-edit-pro" target="_blank"> <?php esc_html_e( 'Find out More About Comment Edit Pro', 'simple-comment-editing' ); ?></a>
+					</div>
+				</div>
 				<?php
 			}
 		}
