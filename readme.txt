@@ -11,7 +11,7 @@ Your users make mistakes. Come to their rescue by allowing your users to edit th
 
 == Description ==
 
-Add useful comment editing with <a href="https://dlxplugins.com/plugins/comment-edit-lite/">Comment Edit Lite</a>. Allow your users to edit their comments for a period of time. Save your users some headaches and let them fix their typos while you take a backseat and relax.
+Add useful comment editing with <a href="https://dlxplugins.com/plugins/comment-edit-lite/">Comment Edit Lite</a>. Allow your users to edit their comments for a period of time. Save your users some headaches and let them fix their typos while you focus on your site.
 
 [youtube https://www.youtube.com/watch?v=bNCDdQbwA-s&rel=0]
 
@@ -26,25 +26,20 @@ Add useful comment editing with <a href="https://dlxplugins.com/plugins/comment-
 <li>Add Mailchimp to your comment form and get email subscribers through comments.</li>
 </ol>
 
-> <strong>New</strong>: Enable Mailchimp and get newsletter signups from your comment section.
-
-<h2>Go Pro with Comment Edit Pro</h2>
+<h2>Get more with Comment Edit Pro</h2>
 
 For additional features in addition to comment editing, please check out <a href="https://dlxplugins.com/plugins/comment-edit-pro/">Comment Edit Pro</a>.
 
 Features Include:
 
-* Front-end editing
-* Unlimited editing
-* Mailchimp integration
-* reCAPTCHA 3 integration
-* Akismet integration
-* Slack integration
-* Translations
-* Comment Avatars
-* Comment Character Control
-* Webhooks
-* <a href="https://dlxplugins.com/plugins/comment-edit-pro/">And much more...</a>
+* Newsletter integration with Mailchimp or ConvertKit
+* Community features including @ Mentions, Comment Avatars, and Comment Character Control
+* Automations with Webhooks to connect to services like Zapier and other automation tools
+* Spam/bot protection add-ons with reCAPTCHA 3 or Cloudflare Turnstile support
+* Get notified of new and edited comments with the Slack integration
+* <a href="https://dlxplugins.com/plugins/comment-edit-pro/">Find out more...</a>
+
+> <a href="https://app.instawp.io/launch?t=dlx-plugins&d=v1">Launch a Live Demo on InstaWP</a>
 
 == Installation ==
 
@@ -79,6 +74,10 @@ Simple Comment Editing will work all the way back to IE10.
 5. Light button theme.
 
 == Changelog ==
+
+= 2.9.7 =
+* Released 2023-04-20
+* Adding new filter to allow for permanent comment deletion option and override.
 
 = 2.9.5 =
 * Released 2023-02-24
@@ -438,5 +437,5 @@ Simple Comment Editing will work all the way back to IE10.
 
 == Upgrade Notice ==
 
-= 2.9.5 =
-Fixing spacing issue with the edit buttons when selecting a button theme. New wrapper around the buttons for better styling control.
+= 2.9.7 =
+Adding new filter to allow for permanent comment deletion option and override.
