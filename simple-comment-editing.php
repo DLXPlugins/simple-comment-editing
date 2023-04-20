@@ -685,7 +685,21 @@ class Simple_Comment_Editing {
 		 */
 		do_action( 'sce_comment_is_deleted', $post_id, $comment_id );
 
-		wp_delete_comment( $comment_id ); // Save to trash for admin retrieval
+		/**
+		 * Filter: sce_force_delete
+		 *
+		 * Allow third parties to force a comment to be deleted
+		 * instead of being saved to the trash
+		 *
+		 * @since 2.9.6
+		 *
+		 * @param bool $force_delete Whether to force delete or not
+		 * @param int $comment_id The Comment ID
+		 * @param int $post_id The Post ID
+		 */
+		$force_delete = apply_filters( 'sce_force_delete', false, $comment_id, $post_id );
+
+		wp_delete_comment( $comment_id, $force_delete ); // Save to trash for admin retrieval.
 		$return['error'] = '';
 		die( json_encode( $return ) );
 	} //end ajax_delete_comment
