@@ -2,7 +2,7 @@
 Contributors: ronalfy
 Tags: comment editing, comments,edit comments, edit, comment,
 Requires at least: 5.0
-Tested up to: 6.1
+Tested up to: 6.2
 Stable tag: 2.9.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -78,6 +78,7 @@ Simple Comment Editing will work all the way back to IE10.
 = 2.9.7 =
 * Released 2023-04-20
 * Adding new filter to allow for permanent comment deletion option and override.
+* <a href="https://dlxplugins.com/announcements/comment-edit-lite-and-pro-now-support-permanent-comment-deletion/">Read the announcement post</a>.
 
 = 2.9.5 =
 * Released 2023-02-24
