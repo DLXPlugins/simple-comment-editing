@@ -1,7 +1,11 @@
 <?php
+/**
+ * Main class for Comment Edit Lite.
+ *
+ * @package DLXPlugins\CommentEditLite
+ */
 
-use SCE\Includes\Admin\Options as Options;
-use SCE\Includes\Functions as Functions;
+namespace DLXPlugins\CommentEditLite;
 
 class Simple_Comment_Editing {
 	private static $instance = null;
@@ -1556,13 +1560,13 @@ class Simple_Comment_Editing {
 
 } //end class Simple_Comment_Editing
 
-add_action( 'plugins_loaded', 'sce_instantiate' );
+add_action( 'plugins_loaded', __NAMESPACE__ . '\sce_instantiate' );
 function sce_instantiate() {
 	Simple_Comment_Editing::get_instance();
 	if ( is_admin() && apply_filters( 'sce_show_admin', true ) ) {
-		new SCE\Includes\Admin\Admin_Settings();
-		$sce_enqueue = new SCE\Includes\Enqueue();
-		$sce_enqueue->run();
+		// new SCE\Includes\Admin\Admin_Settings();
+		// $sce_enqueue = new SCE\Includes\Enqueue();
+		// $sce_enqueue->run();
 	}
 
 	if ( apply_filters( 'sce_show_admin', true ) ) {
@@ -1571,8 +1575,8 @@ function sce_instantiate() {
 } //end sce_instantiate
 
 
-register_activation_hook( Functions::get_plugin_file(), 'sce_plugin_activate' );
-add_action( 'admin_init', 'sce_plugin_activate_redirect' );
+register_activation_hook( Functions::get_plugin_file(), __NAMESPACE__ . '\sce_plugin_activate' );
+add_action( 'admin_init', __NAMESPACE__ . '\sce_plugin_activate_redirect' );
 
 /**
  * Add an option upon activation to read in later when redirecting.

@@ -2,10 +2,10 @@
 /**
  * Helper fuctions.
  *
- * @package SCE
+ * @package DLXPlugins\CommentEditLite
  */
 
-namespace SCE\Includes;
+namespace DLXPlugins\CommentEditLite;
 
 /**
  * Class functions
@@ -18,7 +18,7 @@ class Functions {
 	 * @return bool True if multisite, false if not.
 	 */
 	public static function is_multisite() {
-		$sce = \Simple_Comment_Editing::get_instance();
+		$sce = Simple_Comment_Editing::get_instance();
 		return $sce::is_multisite();
 	}
 

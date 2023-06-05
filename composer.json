@@ -1,0 +1,21 @@
+{
+    "name": "dlxplugins/commenteditlite",
+    "description": "Allow users to edit comments for a period of time.",
+    "type": "project",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "Ronald Huereca",
+            "email": "ronald@dlxplugins.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "config": {
+        "vendor-dir": "lib"
+    },
+      "autoload": {
+        "psr-4": {
+            "DLXPlugins\\CommentEditLite\\": "includes/"
+        }
+    }
+}
