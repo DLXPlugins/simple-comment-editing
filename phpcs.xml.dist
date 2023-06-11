@@ -4,7 +4,7 @@
 	<arg name="colors" />
 	<arg value="s" /><!-- Show sniff codes in all reports -->
 
-	<rule ref="WordPress-Core">
+	<rule ref="WordPress-Extra">
 		<exclude name="WordPress.Files.FileName" />
 		<exclude name="Generic.Arrays.DisallowShortArraySyntax" />
 	</rule>
@@ -13,6 +13,7 @@
 
 	<config name="testVersion" value="5.6-" />
 	<file>.</file>
+	<ini name="error_reporting" value="E_ALL &#38; ~E_DEPRECATED" />
 
 	<exclude-pattern>/node_modules/</exclude-pattern>
 	<exclude-pattern>/vendor/</exclude-pattern>

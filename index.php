@@ -2,7 +2,7 @@
 /**
  * Comment Edit Lite main file.
  *
- * @package DLXPlugins\comment-edit-lite
+ * @package CommentEditLite
  */
 
 /**
