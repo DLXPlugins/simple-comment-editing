@@ -2,10 +2,10 @@
 /**
  * Abstract class for tabs.
  *
- * @package SCE
+ * @package CommentEditLite
  */
 
-namespace SCE\Includes\Admin\Tabs;
+namespace DLXPlugins\CommentEditLite\Admin\Tabs;
 
 /**
  * Tabs boilerplate.

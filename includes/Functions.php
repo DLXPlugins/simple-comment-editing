@@ -2,7 +2,7 @@
 /**
  * Helper fuctions.
  *
- * @package DLXPlugins\CommentEditLite
+ * @package CommentEditLite
  */
 
 namespace DLXPlugins\CommentEditLite;
@@ -13,6 +13,13 @@ namespace DLXPlugins\CommentEditLite;
 class Functions {
 
 	/**
+	 * The comment time in minutes.
+	 *
+	 * @var int The comment time in minutes.
+	 */
+	private static $comment_time = 0; // in minutes.
+
+	/**
 	 * Check whether site is multisite or not.
 	 *
 	 * @return bool True if multisite, false if not.
@@ -20,6 +27,197 @@ class Functions {
 	public static function is_multisite() {
 		$sce = Simple_Comment_Editing::get_instance();
 		return $sce::is_multisite();
+	}
+
+	/**
+	 * Gets the comment time for editing
+	 *
+	 * @since 1.3.0
+	 */
+	public static function get_comment_time() {
+		if ( self::$comment_time > 0 ) {
+			return self::$comment_time;
+		}
+
+		$time_do_edit = Options::get_options( false, 'timer' );
+		/**
+		* Filter: sce_comment_time
+		*
+		* How long in minutes to edit a comment
+		*
+		* @since 1.0.0
+		*
+		* @param int  $minutes Time in minutes
+		*/
+		$comment_time       = absint( apply_filters( 'sce_comment_time', $time_do_edit ) );
+		self::$comment_time = $comment_time;
+		return self::$comment_time;
+	}
+
+	/**
+	 * Return a string of the comment's text
+	 *
+	 * Return formatted comment text
+	 *
+	 * @access private
+	 * @since 1.5.0
+	 *
+	 * @param WP_Comment $comment Comment Object.
+	 * @return string Comment text
+	 */
+	public static function get_comment_content( $comment ) {
+		$comment_content_to_return = $comment->comment_content;
+
+		// Format the comment for returning.
+		if ( function_exists( 'mb_convert_encoding' ) ) {
+			$comment_content_to_return = mb_convert_encoding( $comment_content_to_return, '' . get_option( 'blog_charset' ) . '', mb_detect_encoding( $comment_content_to_return, 'UTF-8, ISO-8859-1, ISO-8859-15', true ) );
+		}
+		return apply_filters( 'comment_text', apply_filters( 'get_comment_text', $comment_content_to_return, $comment, array() ), $comment, array() );
+	}
+
+	/**
+	 * Whether a user can edit a comment. Returns true/false if a user can edit a comment.
+	 *
+	 * Retrieves a cookie to see if a comment can be edited or not
+	 *
+	 * @since 1.0
+	 *
+	 * @param int $comment_id The Comment ID.
+	 * @param int $post_id The Comment's Post ID.
+	 * @return bool true if can edit, false if not
+	 */
+	public static function can_edit( $comment_id, $post_id ) {
+		global $comment, $post;
+
+		/**
+		 * Filter: sce_can_edit_pre
+		 *
+		 * Determine if a user can edit the comment (can short-circuit.)
+		 *
+		 * @since 2.9.1
+		 *
+		 * @param bool  true If user can edit the comment
+		 * @param WP_Comment $comment Comment object user has left (may be unset)
+		 * @param WP_Post    $post    Post object (may be unset)
+		 */
+		$can_edit_pre = apply_filters( 'sce_can_edit_pre', true, $comment, $post );
+		if ( ! $can_edit_pre ) {
+			return false;
+		}
+
+		if ( ! is_object( $comment ) ) {
+			$comment = get_comment( $comment_id, OBJECT );
+		}
+		if ( ! is_object( $post ) ) {
+			$post = get_post( $post_id, OBJECT );
+		}
+
+		if ( $comment->comment_post_ID != $post_id ) {
+			return false;
+		}
+		$user_id = absint( self::get_user_id() );
+
+		// if we are logged in and are the comment author, bypass cookie check
+		$comment_meta      = get_comment_meta( $comment_id, '_sce', true );
+		$cookie_bypass     = false;
+		$is_comment_author = false;
+		if ( is_user_logged_in() && $user_id === absint( $comment->user_id ) ) {
+			$is_comment_author = true;
+		}
+
+		// If unlimited is enabled and user is comment author, user can edit.
+		$sce_unlimited_editing = apply_filters( 'sce_unlimited_editing', false, $comment );
+		if ( $is_comment_author && $sce_unlimited_editing ) {
+			return apply_filters( 'sce_can_edit', true, $comment, $comment_id, $post_id );
+		}
+
+		/**
+		 * Filter: sce_can_edit_cookie_bypass
+		 *
+		 * Bypass the cookie based user verification.
+		 *
+		 * @since 2.2.0
+		 *
+		 * @param boolean            Whether to bypass cookie authentication
+		 * @param object $comment    Comment object
+		 * @param int    $comment_id The comment ID
+		 * @param int    $post_id    The post ID of the comment
+		 * @param int    $user_id    The logged in user ID
+		 */
+		$cookie_bypass = apply_filters( 'sce_can_edit_cookie_bypass', $cookie_bypass, $comment, $comment_id, $post_id, $user_id );
+
+		// Check to see if time has elapsed for the comment
+		if ( ( $sce_unlimited_editing && $cookie_bypass ) || $is_comment_author ) {
+			$comment_timestamp = strtotime( $comment->comment_date );
+			$time_elapsed      = current_time( 'timestamp', get_option( 'gmt_offset' ) ) - $comment_timestamp;
+			$minutes_elapsed   = ( ( ( $time_elapsed % 604800 ) % 86400 ) % 3600 ) / 60;
+			if ( ( $minutes_elapsed - self::get_comment_time() ) >= 0 ) {
+				return false;
+			}
+		} elseif ( false === $cookie_bypass ) {
+			// Set cookies for verification
+			$comment_date_gmt = date( 'Y-m-d', strtotime( $comment->comment_date_gmt ) );
+			$cookie_hash      = md5( $comment->comment_author_IP . $comment_date_gmt . $comment->user_id . $comment->comment_agent );
+
+			$cookie_value      = self::get_cookie_value( 'SimpleCommentEditing' . $comment_id . $cookie_hash );
+			$comment_meta_hash = get_comment_meta( $comment_id, '_sce', true );
+			if ( $cookie_value !== $comment_meta_hash ) {
+				return false;
+			}
+		}
+
+		// All is well, the person/place/thing can edit the comment
+		/**
+		 * Filter: sce_can_edit
+		 *
+		 * Determine if a user can edit the comment
+		 *
+		 * @since 1.3.2
+		 *
+		 * @param bool  true If user can edit the comment
+		 * @param object $comment Comment object user has left
+		 * @param int $comment_id Comment ID of the comment
+		 * @param int $post_id Post ID of the comment
+		 */
+		return apply_filters( 'sce_can_edit', true, $comment, $comment_id, $post_id );
+	} //end can_edit
+
+	/**
+	 * Return a cookie's value
+	 *
+	 * Return a cookie's value
+	 *
+	 * @access private
+	 * @since 1.5.0
+	 *
+	 * @param string $name Cookie name.
+	 * @return string $value Cookie value
+	 */
+	public static function get_cookie_value( $name ) {
+		if ( isset( $_COOKIE[ $name ] ) ) {
+			return $_COOKIE[ $name ];
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Get a user ID
+	 *
+	 * Get a logged in user's ID
+	 *
+	 * @access private
+	 * @since 1.5.0
+	 *
+	 * @return int user id
+	 */
+	public static function get_user_id() {
+		$user_id = 0;
+		if ( is_user_logged_in() ) {
+			$current_user = wp_get_current_user();
+			$user_id      = $current_user->ID;
+		}
+		return $user_id;
 	}
 
 	/**

@@ -2,10 +2,10 @@
 /**
  * Plugin Options.
  *
- * @package SCE
+ * @package CommentEditLite
  */
 
-namespace SCE\Includes\Admin;
+namespace DLXPlugins\CommentEditLite;;
 
 /**
  * Class Options

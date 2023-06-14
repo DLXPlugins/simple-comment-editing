@@ -2,12 +2,12 @@
 /**
  * Initialize various admin settings including the admin page, admin menu, and action links.
  *
- * @package SCE
+ * @package CommentEditLite
  */
 
-namespace SCE\Includes\Admin;
+namespace DLXPlugins\CommentEditLite\Admin;
 
-use SCE\Includes\Functions as Functions;
+use DLXPlugins\CommentEditLite\Functions as Functions;
 
 /**
  * Class Admin Settings.
@@ -23,9 +23,9 @@ class Admin_Settings {
 		add_action( 'plugin_action_links_' . Functions::get_plugin_path(), array( $this, 'plugin_settings_link' ) );
 
 		// init tabs here.
-		new \SCE\Includes\Admin\Tabs\Settings();
-		new \SCE\Includes\Admin\Tabs\Integrations();
-		new \SCE\Includes\Admin\Tabs\Support();
+		new Tabs\Settings();
+		new Tabs\Integrations();
+		new Tabs\Support();
 	}
 
 	/**
@@ -291,7 +291,7 @@ class Admin_Settings {
 			__( 'Comment Edit Lite', 'simple-comment-editing' ),
 			'manage_options',
 			'comment-edit-lite',
-			array( '\SCE\Includes\Admin\Admin_Settings', 'settings_page' )
+			array( __NAMESPACE__ . '\Admin_Settings', 'settings_page' )
 		);
 		return $hook;
 	}

@@ -1,14 +1,11 @@
 <?php
 /**
- * Enqueue assets for the blocks.
+ * Enqueue assets for the SCE admin.
  *
- * @package SCE
+ * @package CommentEditLite
  */
 
-namespace SCE\Includes;
-
-use SCE\Includes\Functions as Functions;
-use SCE\Includes\Admin\Options as Options;
+namespace DLXPlugins\CommentEditLite;
 
 /**
  * Class enqueue

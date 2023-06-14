@@ -4,7 +4,7 @@
 	<arg name="colors" />
 	<arg value="s" /><!-- Show sniff codes in all reports -->
 
-	<rule ref="WordPress-Extra">
+	<rule ref="WordPress">
 		<exclude name="WordPress.Files.FileName" />
 		<exclude name="Generic.Arrays.DisallowShortArraySyntax" />
 	</rule>

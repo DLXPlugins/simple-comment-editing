@@ -1,14 +1,14 @@
 <?php
 /**
- * Register the Settings tab and any sub-tabs.
+ * Register the support tab.
  *
- * @package sce
+ * @package CommentEditLite
  */
 
-namespace SCE\Includes\Admin\Tabs;
+namespace DLXPlugins\CommentEditLite\Admin\Tabs;
 
-use SCE\Includes\Functions as Functions;
-use SCE\Includes\Admin\Options as Options;
+use DLXPlugins\CommentEditLite\Functions as Functions;
+use DLXPlugins\CommentEditLite\Options as Options;
 
 /**
  * Output the settings tab and content.
