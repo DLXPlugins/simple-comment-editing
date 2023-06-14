@@ -20,13 +20,18 @@ class Functions {
 	private static $comment_time = 0; // in minutes.
 
 	/**
-	 * Check whether site is multisite or not.
+	 * Checks if the plugin is on a multisite install.
 	 *
-	 * @return bool True if multisite, false if not.
+	 * @return true if multisite, false if not.
 	 */
 	public static function is_multisite() {
-		$sce = Simple_Comment_Editing::get_instance();
-		return $sce::is_multisite();
+		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
+			require_once ABSPATH . '/wp-admin/includes/plugin.php';
+		}
+		if ( is_multisite() && is_plugin_active_for_network( SCE_SLUG ) ) {
+			return true;
+		}
+		return false;
 	}
 
 	/**
