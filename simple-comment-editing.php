@@ -202,13 +202,13 @@ class Simple_Comment_Editing {
 		$sce_content = sprintf( '<div id="sce-edit-comment%d" class="%s">', $comment_id, esc_attr( implode( ' ', $classes ) ) );
 
 		// Edit Button.
-		$sce_content  .= '<div class="sce-edit-button" style="display:none;">';
+		$sce_content  .= '<div class="sce-edit-button sce-hide">';
 		$ajax_edit_url = add_query_arg(
 			array(
 				'cid' => $comment_id,
 				'pid' => $post_id,
 			),
-			wp_nonce_url( admin_url( 'admin-ajax.php', $this->scheme ), 'sce-edit-comment' . $comment_id )
+			wp_nonce_url( admin_url( 'admin-ajax.php', self::$scheme ), 'sce-edit-comment' . $comment_id )
 		);
 
 		/**
@@ -265,7 +265,7 @@ class Simple_Comment_Editing {
 
 		// Loading button.
 		$sce_content .= '<div class="sce-loading" style="display: none;">';
-		$sce_content .= sprintf( '<img src="%1$s" title="%2$s" alt="%2$s" />', esc_url( $this->loading_img ), esc_attr__( 'Loading', 'simple-comment-editing' ) );
+		$sce_content .= sprintf( '<img src="%1$s" title="%2$s" alt="%2$s" />', esc_url( self::$loading_img ), esc_attr__( 'Loading', 'simple-comment-editing' ) );
 		$sce_content .= '</div><!-- sce-loading -->';
 
 		// Textarea.
@@ -350,7 +350,7 @@ class Simple_Comment_Editing {
 		 *
 		 * @param string Empty string
 		 */
-		$textarea_buttons .= $this->allow_delete ? sprintf( '<button class="sce-comment-delete">%s%s</button>', apply_filters( 'sce_button_extra_delete', '' ), esc_html( $delete_text ) ) : '';
+		$textarea_buttons .= self::$allow_delete ? sprintf( '<button class="sce-comment-delete">%s%s</button>', apply_filters( 'sce_button_extra_delete', '' ), esc_html( $delete_text ) ) : '';
 		$textarea_buttons .= '</div><!-- .sce-comment-edit-buttons-group -->';
 
 		/**
@@ -506,9 +506,21 @@ class Simple_Comment_Editing {
 			return;
 		}
 
-		$main_script_uri = Functions::get_plugin_url( '/js/simple-comment-editing.js' );
-		wp_enqueue_script( 'simple-comment-editing', $main_script_uri, array( 'wp-i18n', 'wp-hooks' ), SCE_VERSION, true );
-		wp_enqueue_style( 'simple-comment-editing', Functions::get_plugin_url( 'dist/sce-frontend.css' ), array(), SCE_VERSION, 'all' );
+		$main_script_uri = Functions::get_plugin_url( '/dist/sce-editing.js' );
+		wp_enqueue_script(
+			'simple-comment-editing',
+			$main_script_uri,
+			array( 'wp-i18n', 'wp-hooks' ),
+			SCE_VERSION,
+			true
+		);
+		wp_enqueue_style(
+			'simple-comment-editing',
+			Functions::get_plugin_url( 'dist/sce-frontend.css' ),
+			array(),
+			SCE_VERSION,
+			'all'
+		);
 
 		/**
 		* Action: sce_scripts_loaded
@@ -541,10 +553,10 @@ class Simple_Comment_Editing {
 				'confirm_delete'            => apply_filters( 'sce_confirm_delete', __( 'Do you want to delete this comment?', 'simple-comment-editing' ) ),
 				'comment_deleted'           => apply_filters( 'sce_comment_deleted', __( 'Your comment has been removed.', 'simple-comment-editing' ) ),
 				'comment_deleted_error'     => apply_filters( 'sce_comment_deleted_error', __( 'Your comment could not be deleted', 'simple-comment-editing' ) ),
-				'empty_comment'             => apply_filters( 'sce_empty_comment', $this->errors->get_error_message( 'comment_empty' ) ),
-				'allow_delete'              => $this->allow_delete,
+				'empty_comment'             => apply_filters( 'sce_empty_comment', self::$errors->get_error_message( 'comment_empty' ) ),
+				'allow_delete'              => self::$allow_delete,
 				'allow_delete_confirmation' => $allow_delete_confirmation,
-				'ajax_url'                  => admin_url( 'admin-ajax.php', $this->scheme ),
+				'ajax_url'                  => admin_url( 'admin-ajax.php', self::$scheme ),
 				'nonce'                     => wp_create_nonce( 'sce-general-ajax-nonce' ),
 				'timer_appearance'          => sanitize_text_field( Options::get_options( false, 'timer_appearance' ) ),
 			)
@@ -715,13 +727,13 @@ class Simple_Comment_Editing {
 		}
 		$comment_date_gmt = current_time( 'Y-m-d', 1 );
 		$user_agent       = substr( isset( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '', 0, 254 );
-		$hash             = md5( $comment_author_ip . $comment_date_gmt . $this->get_user_id() . $user_agent );
+		$hash             = md5( $comment_author_ip . $comment_date_gmt . Functions::get_user_id() . $user_agent );
 
 		$rand            = '_wpAjax' . $hash . md5( wp_generate_password( 30, true, true ) ) . '-' . time();
 		$maybe_save_meta = get_comment_meta( $comment_id, '_sce', true );
 		$cookie_name     = 'SimpleCommentEditing' . $comment_id . $hash;
 		$cookie_value    = $rand;
-		$cookie_expire   = time() + ( 60 * $this->comment_time );
+		$cookie_expire   = time() + ( 60 * Functions::get_comment_time() );
 
 		if ( ! $maybe_save_meta ) {
 			// Make sure we don't set post meta again for security reasons and subsequent calls to this method will generate a new key, so no calling it twice unless you want to remove a cookie.
@@ -743,7 +755,7 @@ class Simple_Comment_Editing {
 		$return = array(
 			'name'       => $cookie_name,
 			'value'      => $cookie_value,
-			'expires'    => ( time() + ( 60 * $this->comment_time ) ) * 1000,
+			'expires'    => ( time() + ( 60 * Functions::get_comment_time() ) ) * 1000,
 			'post_id'    => $post_id,
 			'comment_id' => $comment_id,
 			'path'       => COOKIEPATH,
@@ -833,7 +845,7 @@ class Simple_Comment_Editing {
 			}
 			// Delete expired meta.
 			global $wpdb;
-			$query = $wpdb->prepare( "delete from {$wpdb->commentmeta} where meta_key = '_sce' AND CAST( SUBSTRING(meta_value, LOCATE('-',meta_value ) +1 ) AS UNSIGNED) < %d", time() - ( $this->comment_time * MINUTE_IN_SECONDS ) );
+			$query = $wpdb->prepare( "delete from {$wpdb->commentmeta} where meta_key = '_sce' AND CAST( SUBSTRING(meta_value, LOCATE('-',meta_value ) +1 ) AS UNSIGNED) < %d", time() - ( Functions::get_comment_time() * MINUTE_IN_SECONDS ) );
 			$wpdb->query( $query ); // phpcs:ignore.
 			set_transient( 'sce_security_keys', true, HOUR_IN_SECONDS );
 		}

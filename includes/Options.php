@@ -5,7 +5,7 @@
  * @package CommentEditLite
  */
 
-namespace DLXPlugins\CommentEditLite;;
+namespace DLXPlugins\CommentEditLite;
 
 /**
  * Class Options
@@ -89,7 +89,7 @@ class Options {
 					break;
 			}
 		}
-		if ( \Simple_Comment_Editing::is_multisite() ) {
+		if ( Functions::is_multisite() ) {
 			update_site_option( 'sce_options', $options );
 		} else {
 			update_option( 'sce_options', $options );

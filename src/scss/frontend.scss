@@ -6,7 +6,29 @@ $white: #fff;
 $focus-color: #ff0;
 $danger_button_color: #721c24;
 
+/**
+Animation for showing container */
+@keyframes showContainer {
+	0% {
+		opacity: 0;
+		height: auto;
+	}
+	100% {
+		opacity: 1;
+		height: auto;
+	}
+}
 
+.sce-hide {
+	opacity: 0;
+	height: 0;
+	overflow: hidden;
+}
+.sce-show {
+	animation: showContainer 0.6s ease-in-out;
+	opacity: 1;
+	height: auto;
+}
 .sce-comment-edit-buttons {
 	.sce-comment-edit-buttons-group {
 		display: flex;

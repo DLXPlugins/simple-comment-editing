@@ -110,23 +110,24 @@ class Functions {
 			return false;
 		}
 
-		if ( ! is_object( $comment ) ) {
-			$comment = get_comment( $comment_id, OBJECT );
-		}
-		if ( ! is_object( $post ) ) {
-			$post = get_post( $post_id, OBJECT );
+		// Short circuit if user can edit comment.
+		if ( current_user_can( 'edit-comment', $comment_id ) ) {
+			return apply_filters( 'sce_can_edit', true, $comment, $comment_id, $post_id );
 		}
 
-		if ( $comment->comment_post_ID != $post_id ) {
+		if ( ! is_object( $comment ) ) {
+			$comment = get_comment( $comment_id, OBJECT ); // phpcs:ignore.
+		}
+		if ( (int) $comment->comment_post_ID !== $post_id ) {
 			return false;
 		}
 		$user_id = absint( self::get_user_id() );
 
-		// if we are logged in and are the comment author, bypass cookie check
+		// if we are logged in and are the comment author, bypass cookie check.
 		$comment_meta      = get_comment_meta( $comment_id, '_sce', true );
 		$cookie_bypass     = false;
 		$is_comment_author = false;
-		if ( is_user_logged_in() && $user_id === absint( $comment->user_id ) ) {
+		if ( is_user_logged_in() && absint( $comment->user_id ) === $user_id ) {
 			$is_comment_author = true;
 		}
 
@@ -151,17 +152,17 @@ class Functions {
 		 */
 		$cookie_bypass = apply_filters( 'sce_can_edit_cookie_bypass', $cookie_bypass, $comment, $comment_id, $post_id, $user_id );
 
-		// Check to see if time has elapsed for the comment
+		// Check to see if time has elapsed for the comment.
 		if ( ( $sce_unlimited_editing && $cookie_bypass ) || $is_comment_author ) {
 			$comment_timestamp = strtotime( $comment->comment_date );
-			$time_elapsed      = current_time( 'timestamp', get_option( 'gmt_offset' ) ) - $comment_timestamp;
+			$time_elapsed      = current_time( 'timestamp', get_option( 'gmt_offset' ) ) - $comment_timestamp; // phpcs:ignore.
 			$minutes_elapsed   = ( ( ( $time_elapsed % 604800 ) % 86400 ) % 3600 ) / 60;
 			if ( ( $minutes_elapsed - self::get_comment_time() ) >= 0 ) {
 				return false;
 			}
 		} elseif ( false === $cookie_bypass ) {
-			// Set cookies for verification
-			$comment_date_gmt = date( 'Y-m-d', strtotime( $comment->comment_date_gmt ) );
+			// Set cookies for verification.
+			$comment_date_gmt = date( 'Y-m-d', strtotime( $comment->comment_date_gmt ) ); // phpcs:ignore.
 			$cookie_hash      = md5( $comment->comment_author_IP . $comment_date_gmt . $comment->user_id . $comment->comment_agent );
 
 			$cookie_value      = self::get_cookie_value( 'SimpleCommentEditing' . $comment_id . $cookie_hash );
@@ -171,7 +172,7 @@ class Functions {
 			}
 		}
 
-		// All is well, the person/place/thing can edit the comment
+		// All is well, the person/place/thing can edit the comment.
 		/**
 		 * Filter: sce_can_edit
 		 *
@@ -200,7 +201,7 @@ class Functions {
 	 */
 	public static function get_cookie_value( $name ) {
 		if ( isset( $_COOKIE[ $name ] ) ) {
-			return $_COOKIE[ $name ];
+			return sanitize_text_field( wp_unslash( $_COOKIE[ $name ] ) );
 		} else {
 			return false;
 		}
