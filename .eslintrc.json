@@ -4,7 +4,8 @@
 		"wp": true,
 		"wpApiSettings": true,
 		"window": true,
-		"document": true
+		"document": true,
+		"simple_comment_editing": true
 	},
 	"env": {
 		"browser": true,

@@ -7,7 +7,7 @@ import sendCommand from '../SendCommand';
 const { __, _n } = wp.i18n;
 
 // get hooks.
-const { createHooks, applyFilters } = wp.hooks;
+const { createHooks } = wp.hooks;
 
 // Get the timer placeholder.
 const timers = [];
@@ -15,15 +15,15 @@ const timers = [];
 // Get the textareas placeholder.
 const textareas = [];
 
+// Start any hooks that are registered.
+const sceHooks = createHooks();
+
 // Onload, get dom entries.
 window.addEventListener( 'load', () => {
 	const comment_edit_buttons = document.querySelectorAll( '.sce-edit-button' );
 	if ( ! comment_edit_buttons ) {
 		return;
 	}
-
-	// Start any hooks that are registered.
-	const sceHooks = createHooks();
 
 	/**
 	 * Gets the time left for the comment.
@@ -118,11 +118,11 @@ window.addEventListener( 'load', () => {
 		 *
 		 * @since 1.4.0
 		 *
-		 * @param  string comment text
-		 * @param  string minute text,
-		 * @param  string second text,
-		 * @param  int    number of minutes left
-		 * @param  int    seconds left
+		 * @param string comment text
+		 * @param string minute text,
+		 * @param string second text,
+		 * @param int    number of minutes left
+		 * @param int    seconds left
 		 */
 		text = sceHooks.applyFilters( 'sce.comment.timer.text', text, _n( 'day', 'days', days, 'simple-comment-editing' ), _n( 'hour', 'hours', hours, 'simple-comment-editing' ), _n( 'minute', 'minutes', minutes, 'simple-comment-editing' ), _n( 'second', 'seconds', seconds, 'simple-comment-editing' ), days, hours, minutes, seconds );
 		return text;
@@ -154,7 +154,6 @@ window.addEventListener( 'load', () => {
 			// Convert to integers.
 			minutes = parseInt( minutes );
 			seconds = parseInt( seconds );
-			const timerText = getTimerText( minutes, seconds );
 
 			//Determine via JS if a user can edit a comment - Note that if someone were to finnagle with this, there is still a server side check when saving the comment
 			if ( ! can_edit ) {
@@ -171,11 +170,11 @@ window.addEventListener( 'load', () => {
 
 				//Remove elements
 				button.parentNode.remove();
-				console.log( 'here' );
 				return;
 			}
 
 			// Update the timer text placeholder.
+			const timerText = getTimerText( minutes, seconds );
 			const timerTextElement = button.querySelector( '.sce-timer' );
 			if ( null !== timerTextElement ) {
 				timerTextElement.textContent = timerText;
@@ -266,7 +265,84 @@ window.addEventListener( 'load', () => {
 			};
 			window.setTimeout( timers[ commentId ].timer, 1000 );
 		} );
+
+		//Set up event for when the edit button is clicked
+		const editButton = document.querySelector( `#sce-edit-comment${ commentId } .sce-edit-button-main` );
+		if ( null !== editButton ) {
+			editButton.addEventListener( 'click', ( e ) => {
+				e.preventDefault();
+				const statusElement = document.querySelector( `#sce-edit-comment-status${ commentId }` );
+				if ( null !== statusElement ) {
+					statusElement.classList.remove( 'sce-error' );
+					statusElement.classList.remove( 'sce-success' );
+					statusElement.classList.add( 'sce-status' );
+					statusElement.style.display = 'none';
+				}
+				//Hide the edit button and show the textarea
+				const editButtonWrapper = editButton.closest( '.sce-edit-comment' );
+				editButtonWrapper.querySelectorAll( '.sce-textarea button' ).disabled = false;
+				editButtonWrapper.querySelector( '.sce-textarea' ).style.display = 'block';
+				editButton.parentNode.style.display = 'none';
+
+				const textarea = editButton.parentNode.querySelector( '.sce-textarea textarea:first-of-type' );
+				const showEditTextAreaEvent = new CustomEvent( 'sceEditTextareaShow', {
+					detail: {
+						textarea,
+						commentId,
+						postId,
+					},
+				} );
+				button.dispatchEvent( showEditTextAreaEvent );
+				textarea.focus();
+			} );
+		}
 	} );
+
+	if ( 'compact' === simple_comment_editing.timer_appearance ) {
+		sceHooks.addFilter( 'sce.comment.timer.text', 'simple-comment-editing', function( timer_text, days_text, hours_text, minutes_text, seconds_text, days, hours, minutes, seconds ) {
+			timer_text = '';
+			if ( days > 0 ) {
+				if ( days < 10 ) {
+					timer_text += '' + '0' + days;
+				} else {
+					timer_text += days;
+				}
+				timer_text += ':';
+			}
+			if ( hours > 0 ) {
+				if ( hours < 10 ) {
+					timer_text += '' + '0' + hours;
+				} else {
+					timer_text += hours;
+				}
+				timer_text += ':';
+			} else if ( hours === 0 && days > 0 ) {
+				timer_text += '00';
+				timer_text += ':';
+			}
+			if ( minutes > 0 ) {
+				if ( minutes < 10 ) {
+					timer_text += '' + '0' + minutes;
+				} else {
+					timer_text += minutes;
+				}
+				timer_text += ':';
+			} else if ( minutes === 0 && hours > 0 ) {
+				timer_text += '00';
+				timer_text += ':';
+			}
+			if ( seconds > 0 ) {
+				if ( seconds < 10 ) {
+					timer_text += '' + '0' + seconds;
+				} else {
+					timer_text += seconds;
+				}
+			} else if ( seconds === 0 && minutes > 0 ) {
+				timer_text += '00';
+			}
+			return timer_text;
+		} );
+	}
 } );
 //Callback when comments have been updated (for wp-ajaxify-comments compatibility) - http://wordpress.org/plugins/wp-ajaxify-comments/faq/
 window.SCE_comments_updated = ( comment_url ) => {
