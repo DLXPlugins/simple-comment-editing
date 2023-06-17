@@ -5111,7 +5111,7 @@ window.addEventListener('load', function () {
         editButtonWrapper.querySelectorAll('.sce-textarea button').disabled = false;
         editButtonWrapper.querySelector('.sce-textarea').style.display = 'block';
         editButton.parentNode.style.display = 'none';
-        var textarea = editButton.parentNode.querySelector('.sce-textarea textarea:first-of-type');
+        var textarea = editButtonWrapper.querySelector('.sce-textarea textarea:first-of-type');
         var showEditTextAreaEvent = new CustomEvent('sceEditTextareaShow', {
           detail: {
             textarea: textarea,

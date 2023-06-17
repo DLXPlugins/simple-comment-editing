@@ -284,7 +284,7 @@ window.addEventListener( 'load', () => {
 				editButtonWrapper.querySelector( '.sce-textarea' ).style.display = 'block';
 				editButton.parentNode.style.display = 'none';
 
-				const textarea = editButton.parentNode.querySelector( '.sce-textarea textarea:first-of-type' );
+				const textarea = editButtonWrapper.querySelector( '.sce-textarea textarea:first-of-type' );
 				const showEditTextAreaEvent = new CustomEvent( 'sceEditTextareaShow', {
 					detail: {
 						textarea,
