@@ -183,7 +183,7 @@ class Ajax {
 		}
 
 		// Check to see if the user can edit the comment.
-		if ( ! $this->can_edit( $comment_id, $post_id ) || false === $this->allow_delete ) {
+		if ( ! Functions::can_edit( $comment_id, $post_id ) || false === Simple_Comment_Editing::$allow_delete ) {
 			$return['errors'] = true;
 			$return['remove'] = true;
 			$return['error']  = Simple_Comment_Editing::$errors->get_error_message( 'edit_fail' );

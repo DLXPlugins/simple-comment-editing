@@ -31,7 +31,7 @@ class Simple_Comment_Editing {
 	 *
 	 * @var bool Whether or not users can delete their comments.
 	 */
-	private static $allow_delete = true;
+	public static $allow_delete = true;
 
 	/**
 	 * Error object for WP_Error.
@@ -205,10 +205,12 @@ class Simple_Comment_Editing {
 		$sce_content  .= '<div class="sce-edit-button sce-hide">';
 		$ajax_edit_url = add_query_arg(
 			array(
+				'editComment' => 1,
 				'cid' => $comment_id,
 				'pid' => $post_id,
+				'nonce' => wp_create_nonce( 'sce-edit-comment' . $comment_id ),
 			),
-			wp_nonce_url( admin_url( 'admin-ajax.php', self::$scheme ), 'sce-edit-comment' . $comment_id )
+			admin_url( 'admin-ajax.php', self::$scheme )
 		);
 
 		/**

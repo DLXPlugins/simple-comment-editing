@@ -128,6 +128,41 @@ window.addEventListener( 'load', () => {
 		return text;
 	};
 
+	/**
+	 * Deletes a comment.
+	 *
+	 * @param {Element} element   The element to show.
+	 * @param {number}  commentId The Comment ID.
+	 * @param {number}  postId    The Post ID.
+	 * @param {string}  nonce     The ajax nonce.
+	 * @param {string}  ajaxUrl   The ajax url.
+	 */
+	const deleteComment = async( element, commentId, postId, nonce, ajaxUrl ) => {
+		// todo - remove events.
+		// $( element ).siblings( '.sce-textarea' ).off();
+		// $( element ).off();
+
+		//Remove elements
+		element.parentNode.remove();
+		await sendCommand( 'sce_delete_comment', { comment_id: commentId, post_id: postId, nonce }, ajaxUrl ).then( ( response ) => {
+			if ( ! response.data.success ) {
+				alert( simple_comment_editing.comment_deleted_error );
+			} else {
+				const status = document.querySelector( '#sce-edit-comment-status' + commentId );
+
+				// Remove all classes.
+				status.classList.remove( 'sce-status', 'sce-status-error', 'sce-status-updated' );
+				status.classList.add( 'sce-status', 'updated' );
+				status.innerHTML = simple_comment_editing.comment_deleted;
+				status.style.display = 'block';
+				setTimeout( function() {
+					document.querySelector( '#comment-' + commentId ).remove();
+				}, 3000 ); //Attempt to remove the comment from the theme interface
+			}
+			return response;
+		} );
+	};
+
 	// Loop through all edit buttons.
 	comment_edit_buttons.forEach( ( button ) => {
 		// Get first link
@@ -137,6 +172,9 @@ window.addEventListener( 'load', () => {
 		const urlParams = new URLSearchParams( ajaxUrl );
 		const commentId = urlParams.get( 'cid' );
 		const postId = urlParams.get( 'pid' );
+		const nonce = urlParams.get( 'nonce' );
+
+		console.log( commentId, postId, nonce );
 
 		// Get the time left for the comment.
 		getTimeLeft( commentId, postId, simple_comment_editing.nonce, ajaxUrl ).then( ( response ) => {
@@ -295,6 +333,36 @@ window.addEventListener( 'load', () => {
 				button.dispatchEvent( showEditTextAreaEvent );
 				textarea.focus();
 			} );
+
+			// For when the delete button is clicked.
+			const deleteButton = button.querySelector( '.sce-delete-button-main' );
+			if ( null !== deleteButton ) {
+				deleteButton.addEventListener( 'click', ( e ) => {
+					e.preventDefault();
+					if ( simple_comment_editing.allow_delete_confirmation ) {
+						if ( confirm( simple_comment_editing.confirm_delete ) ) {
+							deleteComment( button, commentId, postId, nonce, ajaxUrl );
+						}
+					} else {
+						deleteComment( button, commentId, postId, nonce, ajaxUrl );
+					}
+				} );
+			}
+
+			// Set up main delete button event.
+			const commentDeleteButton = button.parentNode.querySelector( '.sce-textarea .sce-comment-delete' );
+			if ( null !== commentDeleteButton ) {
+				commentDeleteButton.addEventListener( 'click', ( e ) => {
+					e.preventDefault();
+					if ( simple_comment_editing.allow_delete_confirmation ) {
+						if ( confirm( simple_comment_editing.confirm_delete ) ) {
+							deleteComment( button, commentId, postId, nonce, ajaxUrl );
+						}
+					} else {
+						deleteComment( button, commentId, postId, nonce, ajaxUrl );
+					}
+				} );
+			}
 		}
 	} );
 

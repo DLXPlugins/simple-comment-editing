@@ -4955,6 +4955,62 @@ window.addEventListener('load', function () {
     return text;
   };
 
+  /**
+   * Deletes a comment.
+   *
+   * @param {Element} element   The element to show.
+   * @param {number}  commentId The Comment ID.
+   * @param {number}  postId    The Post ID.
+   * @param {string}  nonce     The ajax nonce.
+   * @param {string}  ajaxUrl   The ajax url.
+   */
+  var deleteComment = /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(element, commentId, postId, nonce, ajaxUrl) {
+      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              // todo - remove events.
+              // $( element ).siblings( '.sce-textarea' ).off();
+              // $( element ).off();
+
+              //Remove elements
+              element.parentNode.remove();
+              _context2.next = 3;
+              return (0,_SendCommand__WEBPACK_IMPORTED_MODULE_0__["default"])('sce_delete_comment', {
+                comment_id: commentId,
+                post_id: postId,
+                nonce: nonce
+              }, ajaxUrl).then(function (response) {
+                if (!response.data.success) {
+                  alert(simple_comment_editing.comment_deleted_error);
+                } else {
+                  var status = document.querySelector('#sce-edit-comment-status' + commentId);
+
+                  // Remove all classes.
+                  status.classList.remove('sce-status', 'sce-status-error', 'sce-status-updated');
+                  status.classList.add('sce-status', 'updated');
+                  status.innerHTML = simple_comment_editing.comment_deleted;
+                  status.style.display = 'block';
+                  setTimeout(function () {
+                    document.querySelector('#comment-' + commentId).remove();
+                  }, 3000); //Attempt to remove the comment from the theme interface
+                }
+
+                return response;
+              });
+            case 3:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+    return function deleteComment(_x5, _x6, _x7, _x8, _x9) {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+
   // Loop through all edit buttons.
   comment_edit_buttons.forEach(function (button) {
     // Get first link
@@ -4964,6 +5020,8 @@ window.addEventListener('load', function () {
     var urlParams = new URLSearchParams(ajaxUrl);
     var commentId = urlParams.get('cid');
     var postId = urlParams.get('pid');
+    var nonce = urlParams.get('nonce');
+    console.log(commentId, postId, nonce);
 
     // Get the time left for the comment.
     getTimeLeft(commentId, postId, simple_comment_editing.nonce, ajaxUrl).then(function (response) {
@@ -5122,6 +5180,36 @@ window.addEventListener('load', function () {
         button.dispatchEvent(showEditTextAreaEvent);
         textarea.focus();
       });
+
+      // For when the delete button is clicked.
+      var deleteButton = button.querySelector('.sce-delete-button-main');
+      if (null !== deleteButton) {
+        deleteButton.addEventListener('click', function (e) {
+          e.preventDefault();
+          if (simple_comment_editing.allow_delete_confirmation) {
+            if (confirm(simple_comment_editing.confirm_delete)) {
+              deleteComment(button, commentId, postId, nonce, ajaxUrl);
+            }
+          } else {
+            deleteComment(button, commentId, postId, nonce, ajaxUrl);
+          }
+        });
+      }
+
+      // Set up main delete button event.
+      var commentDeleteButton = button.parentNode.querySelector('.sce-textarea .sce-comment-delete');
+      if (null !== commentDeleteButton) {
+        commentDeleteButton.addEventListener('click', function (e) {
+          e.preventDefault();
+          if (simple_comment_editing.allow_delete_confirmation) {
+            if (confirm(simple_comment_editing.confirm_delete)) {
+              deleteComment(button, commentId, postId, nonce, ajaxUrl);
+            }
+          } else {
+            deleteComment(button, commentId, postId, nonce, ajaxUrl);
+          }
+        });
+      }
     }
   });
   if ('compact' === simple_comment_editing.timer_appearance) {
