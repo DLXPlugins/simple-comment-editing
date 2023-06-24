@@ -4865,6 +4865,38 @@ window.addEventListener('load', function () {
   }();
 
   /**
+   * Save a comment via Ajax.
+   * @param {string} action The Ajax action.
+   * @param {object} ajaxParams The Ajax params including the nonce.
+   * @param {string} ajaxUrl The Ajax URL.
+   *
+   * @return {Promise} The Ajax promise.
+   */
+  var saveComment = /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(action, ajaxParams, ajaxUrl) {
+      var response;
+      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return (0,_SendCommand__WEBPACK_IMPORTED_MODULE_0__["default"])(action, ajaxParams, ajaxUrl);
+            case 2:
+              response = _context2.sent;
+              return _context2.abrupt("return", response);
+            case 4:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+    return function saveComment(_x5, _x6, _x7) {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+
+  /**
    * Show the edit button.
    *
    * @param {Element} button The element to show.
@@ -4965,10 +4997,10 @@ window.addEventListener('load', function () {
    * @param {string}  ajaxUrl   The ajax url.
    */
   var deleteComment = /*#__PURE__*/function () {
-    var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(element, commentId, postId, nonce, ajaxUrl) {
-      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(element, commentId, postId, nonce, ajaxUrl) {
+      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context3.prev = _context3.next) {
             case 0:
               // todo - remove events.
               // $( element ).siblings( '.sce-textarea' ).off();
@@ -4976,7 +5008,7 @@ window.addEventListener('load', function () {
 
               //Remove elements
               element.parentNode.remove();
-              _context2.next = 3;
+              _context3.next = 3;
               return (0,_SendCommand__WEBPACK_IMPORTED_MODULE_0__["default"])('sce_delete_comment', {
                 comment_id: commentId,
                 post_id: postId,
@@ -5001,13 +5033,13 @@ window.addEventListener('load', function () {
               });
             case 3:
             case "end":
-              return _context2.stop();
+              return _context3.stop();
           }
         }
-      }, _callee2);
+      }, _callee3);
     }));
-    return function deleteComment(_x5, _x6, _x7, _x8, _x9) {
-      return _ref2.apply(this, arguments);
+    return function deleteComment(_x8, _x9, _x10, _x11, _x12) {
+      return _ref3.apply(this, arguments);
     };
   }();
 
@@ -5021,7 +5053,6 @@ window.addEventListener('load', function () {
     var commentId = urlParams.get('cid');
     var postId = urlParams.get('pid');
     var nonce = urlParams.get('nonce');
-    console.log(commentId, postId, nonce);
 
     // Get the time left for the comment.
     getTimeLeft(commentId, postId, simple_comment_editing.nonce, ajaxUrl).then(function (response) {
@@ -5208,6 +5239,124 @@ window.addEventListener('load', function () {
           } else {
             deleteComment(button, commentId, postId, nonce, ajaxUrl);
           }
+        });
+      }
+
+      //Cancel button
+      var cancelButton = button.parentNode.querySelector('.sce-textarea .sce-comment-cancel');
+      if (null !== cancelButton) {
+        cancelButton.addEventListener('click', function (e) {
+          e.preventDefault();
+          //Hide the textarea and show the edit button
+          var editButtonWrapper = cancelButton.closest('.sce-edit-comment');
+          editButtonWrapper.querySelector('.sce-textarea').style.display = 'none';
+          editButtonWrapper.querySelector('.sce-edit-button').style.display = 'block';
+          document.querySelector("#sce-edit-comment".concat(commentId, " textarea")).value = textareas[commentId];
+        });
+      }
+
+      //Save button
+      var saveButton = button.parentNode.querySelector('.sce-textarea .sce-comment-save');
+      if (null !== saveButton) {
+        saveButton.addEventListener('click', function (e) {
+          e.preventDefault();
+
+          //Disable all buttons.
+          button.parentNode.querySelectorAll('.sce-textarea button').disabled = true;
+          button.parentNode.querySelector('.sce-textarea').style.display = 'none';
+          button.parentNode.querySelector('.sce-loading').style.display = 'block';
+
+          //Save the comment
+          var textarea = button.parentNode.querySelector('.sce-textarea textarea:first-of-type');
+          var commentToSave = textarea.value.trim();
+
+          //If the comment is blank, see if the user wants to delete their comment
+          if (commentToSave === '' && simple_comment_editing.allow_delete) {
+            if (confirm(simple_comment_editing.empty_comment)) {
+              deleteComment(button, commentId, postId, nonce, ajaxUrl);
+            } else {
+              //Revert value.
+              textarea.value = textareas[commentId];
+              button.parentNode.querySelectorAll('.sce-textarea button').disabled = false;
+              button.style.display = 'block';
+            }
+          }
+
+          // Set up pre save event.
+          var savePreEvent = new CustomEvent('sceCommentSavePre', {
+            detail: {
+              button: button,
+              textarea: textarea,
+              commentId: commentId,
+              postId: postId
+            }
+          });
+          button.dispatchEvent(savePreEvent);
+
+          // Save the comment.
+          var ajaxSaveParams = {
+            action: 'sce_save_comment',
+            comment_content: commentToSave,
+            comment_id: commentId,
+            post_id: postId,
+            nonce: nonce
+          };
+
+          /**
+          * JSFilter: sce.comment.save.data
+          *
+          * Event triggered before a comment is saved
+          *
+          * @since 1.4.0
+          *
+          * @param object $ajax_save_params
+          */
+          ajaxSaveParams = sceHooks.applyFilters('sce.comment.save.data', ajaxSaveParams);
+          saveComment('sce_save_comment', ajaxSaveParams, ajaxUrl).then(function (response) {
+            // Hide loading.
+            button.parentNode.querySelector('.sce-loading').style.display = 'none';
+
+            // Show the edit button.
+            button.style.display = 'block';
+
+            // Check if no errors.
+            var data = response.data;
+            if (!data.errors) {
+              // Update comment HTML.
+              document.querySelector("#sce-comment".concat(commentId)).innerHTML = data.data.comment_text;
+
+              // Update textarea placeholder.
+              textareas[commentId] = document.querySelector("#sce-edit-comment".concat(commentId, " textarea")).value;
+
+              // Set up post save event.
+              var savePostEvent = new CustomEvent('sceCommentSavePost', {
+                detail: {
+                  button: button,
+                  textarea: textarea,
+                  commentId: commentId,
+                  postId: postId
+                }
+              });
+              button.dispatchEvent(savePostEvent);
+            } else {
+              if (data.data.remove === true) {
+                // Remove event handlers.
+                button.parentNode.querySelector('.sce-textarea').removeEventListener('submit');
+                button.removeEventListener('click');
+
+                // Remove elements.
+                button.parentNode.remove();
+              }
+
+              // Clear all classes from status area.
+              document.querySelector("#sce-edit-comment-status".concat(commentId)).className = '';
+
+              // Add class to status area and show it.
+              document.querySelector("#sce-edit-comment-status".concat(commentId)).classList.add('sce-status', 'error');
+              document.querySelector("#sce-edit-comment-status".concat(commentId)).innerHTML = data.data.error;
+              document.querySelector("#sce-edit-comment-status".concat(commentId)).style.display = 'block';
+            }
+          });
         });
       }
     }

@@ -575,19 +575,6 @@ class Simple_Comment_Editing {
 	}
 
 	/**
-	 * Short circuit the comment moderation option check.
-	 *
-	 * @since 2.3.9
-	 *
-	 * @param bool|mixed $option_value The option value for moderation.
-	 *
-	 * @return int Return a string so there is not a boolean value.
-	 */
-	public function short_circuit_comment_moderation( $option_value ) {
-		return 'approved';
-	}
-
-	/**
 	 * When a comment has been posted.
 	 *
 	 * Called when a comment has been posted - Stores a cookie for later editing
@@ -670,7 +657,7 @@ class Simple_Comment_Editing {
 	 * @param int $comment_id Comment ID.
 	 * @return obj Comment Object
 	 */
-	private function get_comment( $comment_id ) {
+	public static function get_comment( $comment_id ) {
 		if ( isset( $GLOBALS['comment'] ) ) {
 			unset( $GLOBALS['comment'] );   // caching.
 		}
@@ -816,7 +803,7 @@ class Simple_Comment_Editing {
 	 *
 	 * @param associative array $comment The results from get_comment( $id, ARRAY_A ).
 	 */
-	private function remove_comment_cookie( $comment ) {
+	public static function remove_comment_cookie( $comment ) {
 		if ( ! is_array( $comment ) ) {
 			return;
 		}

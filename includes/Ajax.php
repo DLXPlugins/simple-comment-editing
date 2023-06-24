@@ -23,8 +23,6 @@ class Ajax {
 		add_action( 'wp_ajax_nopriv_sce_save_comment', array( static::class, 'ajax_save_comment' ) );
 		add_action( 'wp_ajax_sce_delete_comment', array( static::class, 'ajax_delete_comment' ) );
 		add_action( 'wp_ajax_nopriv_sce_delete_comment', array( static::class, 'ajax_delete_comment' ) );
-		add_action( 'wp_ajax_sce_get_cookie_var', array( static::class, 'generate_cookie_data' ) );
-		add_action( 'wp_ajax_nopriv_sce_get_cookie_var', array( static::class, 'generate_cookie_data' ) );
 		add_action( 'wp_ajax_sce_get_comment', array( static::class, 'ajax_get_comment' ) );
 		add_action( 'wp_ajax_nopriv_sce_get_comment', array( static::class, 'ajax_get_comment' ) );
 		add_action( 'wp_ajax_sce_stop_timer', array( static::class, 'ajax_stop_timer' ) );
@@ -136,7 +134,7 @@ class Ajax {
 		}
 
 		// Check to see if the user can edit the comment.
-		if ( ! $this->can_edit( $comment_id, $post_id ) ) {
+		if ( ! Functions::can_edit( $comment_id, $post_id ) ) {
 			$return['errors'] = true;
 			$return['remove'] = true;
 			$return['error']  = Simple_Comment_Editing::$errors->get_error_message( 'edit_fail' );
@@ -278,7 +276,7 @@ class Ajax {
 		}
 
 		// Check to see if the user can edit the comment.
-		if ( ! $this->can_edit( $comment_id, $post_id ) ) {
+		if ( ! Functions::can_edit( $comment_id, $post_id ) ) {
 			$return['errors'] = true;
 			$return['remove'] = true;
 			$return['error']  = Simple_Comment_Editing::$errors->get_error_message( 'edit_fail' );
@@ -298,16 +296,16 @@ class Ajax {
 		// Check the comment.
 		if ( 1 === (int) $comment_to_save['comment_approved'] ) {
 			// Short circuit comment moderation filter.
-			add_filter( 'pre_option_comment_moderation', array( $this, 'short_circuit_comment_moderation' ) );
-			add_filter( 'pre_option_comment_whitelist', array( $this, 'short_circuit_comment_moderation' ) );
+			add_filter( 'pre_option_comment_moderation', array( static::class, 'short_circuit_comment_moderation' ) );
+			add_filter( 'pre_option_comment_whitelist', array( static::class, 'short_circuit_comment_moderation' ) );
 			if ( check_comment( $comment_to_save['comment_author'], $comment_to_save['comment_author_email'], $comment_to_save['comment_author_url'], $new_comment_content, $comment_to_save['comment_author_IP'], $comment_to_save['comment_agent'], $comment_to_save['comment_type'] ) ) {
 				$comment_to_save['comment_approved'] = 1;
 			} else {
 				$comment_to_save['comment_approved'] = 0;
 			}
 			// Remove Short circuit comment moderation filter.
-			remove_filter( 'pre_option_comment_moderation', array( $this, 'short_circuit_comment_moderation' ) );
-			remove_filter( 'pre_option_comment_whitelist', array( $this, 'short_circuit_comment_moderation' ) );
+			remove_filter( 'pre_option_comment_moderation', array( static::class, 'short_circuit_comment_moderation' ) );
+			remove_filter( 'pre_option_comment_whitelist', array( static::class, 'short_circuit_comment_moderation' ) );
 		}
 
 		// Check comment against blacklist.
@@ -377,8 +375,8 @@ class Ajax {
 		if ( 'spam' === $comment_to_save['comment_approved'] ) {
 			$return['errors'] = true;
 			$return['remove'] = true;
-			$return['error']  = $this->errors->get_error_message( 'comment_marked_spam' );
-			$this->remove_comment_cookie( $comment_to_save );
+			$return['error']  = Simple_Comment_Editing::$errors->get_error_message( 'comment_marked_spam' );
+			Simple_Comment_Editing::remove_comment_cookie( $comment_to_save );
 			wp_send_json_error( $return );
 		}
 
@@ -399,14 +397,14 @@ class Ajax {
 					wp_set_comment_status( $comment_id, 'spam' );
 					$return['errors'] = true;
 					$return['remove'] = true;
-					$return['error']  = $this->errors->get_error_message( 'comment_marked_spam' );
-					$this->remove_comment_cookie( $comment_to_save );
+					$return['error']  = Simple_Comment_Editing::$errors->get_error_message( 'comment_marked_spam' );
+					Simple_Comment_Editing::remove_comment_cookie( $comment_to_save );
 					wp_send_json_error( $return );
 				}
 			}
 		}
 
-		$comment_to_return = $this->get_comment( $comment_id );
+		$comment_to_return = Simple_Comment_Editing::get_comment( $comment_id );
 
 		/**
 		 * Filter: sce_return_comment_text
@@ -426,5 +424,18 @@ class Ajax {
 		$return['comment_text'] = $comment_content_to_return;
 		$return['error']        = '';
 		wp_send_json_success( $return );
+	}
+
+	/**
+	 * Short circuit the comment moderation option check.
+	 *
+	 * @since 2.3.9
+	 *
+	 * @param bool|mixed $option_value The option value for moderation.
+	 *
+	 * @return int Return a string so there is not a boolean value.
+	 */
+	public static function short_circuit_comment_moderation( $option_value ) {
+		return 'approved';
 	}
 }
