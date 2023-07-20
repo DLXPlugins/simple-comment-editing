@@ -40,9 +40,10 @@ window.addEventListener( 'load', () => {
 
 	/**
 	 * Save a comment via Ajax.
-	 * @param {string} action The Ajax action.
-	 * @param {object} ajaxParams The Ajax params including the nonce.
-	 * @param {string} ajaxUrl The Ajax URL.
+	 *
+	 * @param {string} action     The Ajax action.
+	 * @param {Object} ajaxParams The Ajax params including the nonce.
+	 * @param {string} ajaxUrl    The Ajax URL.
 	 *
 	 * @return {Promise} The Ajax promise.
 	 */
@@ -131,11 +132,11 @@ window.addEventListener( 'load', () => {
 		 *
 		 * @since 1.4.0
 		 *
-		 * @param string comment text
-		 * @param string minute text,
-		 * @param string second text,
-		 * @param int    number of minutes left
-		 * @param int    seconds left
+		 * @param  string comment text
+		 * @param  string minute text,
+		 * @param  string second text,
+		 * @param  int    number of minutes left
+		 * @param  int    seconds left
 		 */
 		text = sceHooks.applyFilters( 'sce.comment.timer.text', text, _n( 'day', 'days', days, 'simple-comment-editing' ), _n( 'hour', 'hours', hours, 'simple-comment-editing' ), _n( 'minute', 'minutes', minutes, 'simple-comment-editing' ), _n( 'second', 'seconds', seconds, 'simple-comment-editing' ), days, hours, minutes, seconds );
 		return text;
@@ -176,8 +177,8 @@ window.addEventListener( 'load', () => {
 		} );
 	};
 
-	// Loop through all edit buttons.
-	comment_edit_buttons.forEach( ( button ) => {
+	// Function to run to initialize the edit comment buttons.
+	window.initEditCommentButton = ( button ) => {
 		// Get first link
 		const ajaxUrl = button.querySelector( 'a:first-of-type' ).getAttribute( 'href' );
 
@@ -427,7 +428,6 @@ window.addEventListener( 'load', () => {
 					} );
 					button.dispatchEvent( savePreEvent );
 
-				
 					// Save the comment.
 					let ajaxSaveParams = {
 						action: 'sce_save_comment',
@@ -438,17 +438,17 @@ window.addEventListener( 'load', () => {
 					};
 
 					/**
-					* JSFilter: sce.comment.save.data
-					*
-					* Event triggered before a comment is saved
-					*
-					* @since 1.4.0
-					*
-					* @param object $ajax_save_params
-					*/
+					 * JSFilter: sce.comment.save.data
+					 *
+					 * Event triggered before a comment is saved
+					 *
+					 * @since 1.4.0
+					 *
+					 * @param  object $ajax_save_params
+					 */
 					ajaxSaveParams = sceHooks.applyFilters( 'sce.comment.save.data', ajaxSaveParams );
 
-					saveComment( 'sce_save_comment', ajaxSaveParams, ajaxUrl  ).then( ( response ) => {
+					saveComment( 'sce_save_comment', ajaxSaveParams, ajaxUrl ).then( ( response ) => {
 						// Hide loading.
 						button.parentNode.querySelector( '.sce-loading' ).style.display = 'none';
 
@@ -496,6 +496,11 @@ window.addEventListener( 'load', () => {
 				} );
 			}
 		}
+	};
+
+	// Loop through all edit buttons.
+	comment_edit_buttons.forEach( ( button ) => {
+		initEditCommentButton( button );
 	} );
 
 	if ( 'compact' === simple_comment_editing.timer_appearance ) {
@@ -551,5 +556,19 @@ window.SCE_comments_updated = ( comment_url ) => {
 		return;
 	}
 	const comment_id = match[ 1 ];
+
+	// Get comment.
+	const comment = document.querySelector( `#comment-${ comment_id }` );
+	if ( null === comment ) {
+		return;
+	}
+
+	// Get the edit button.
+	const editButton = comment.querySelector( '.sce-edit-button' );
+	if ( null !== editButton ) {
+		// Re-initialize the edit button.
+		window.initEditCommentButton( editButton );
+	}
+
 	//jQuery( '#comment-' + comment_id ).find( '.sce-edit-button' ).simplecommentediting();
 };
