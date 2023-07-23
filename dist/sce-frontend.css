@@ -328,4 +328,30 @@ Animation for showing container */
   border-left-color: #dc3232;
 }
 
+/* WooCommerce star ratings */
+.stars ~ .stars {
+  display: none;
+}
+
+.comment-form-rating {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.comment-form-rating label {
+  margin-right: 10px;
+}
+.comment-form-rating p.stars {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.comment-form-rating p.stars span {
+  display: flex;
+  align-items: center;
+}
+
+.woocommerce #reviews .comment-form-rating .stars a {
+  top: unset;
+}
+
 /*# sourceMappingURL=sce-frontend.css.map*/

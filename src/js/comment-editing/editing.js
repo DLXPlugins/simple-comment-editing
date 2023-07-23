@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /**
  * Covers comment editing on the frontend.
  */
@@ -15,15 +16,49 @@ const timers = [];
 // Get the textareas placeholder.
 const textareas = [];
 
-// Start any hooks that are registered.
-const sceHooks = createHooks();
-
 // Onload, get dom entries.
 window.addEventListener( 'load', () => {
 	const comment_edit_buttons = document.querySelectorAll( '.sce-edit-button' );
 	if ( ! comment_edit_buttons ) {
 		return;
 	}
+
+	const sceHooks = createHooks();
+
+	sceHooks.addFilter( 'sce.comment.save.data', 'comment-edit-lite', ( ajaxSaveParams ) => {
+		// Get current comment.
+		const comments = document.querySelectorAll( `#sce-edit-comment${ ajaxSaveParams.comment_id }` );
+
+		// Get star rating placeholder.
+		let starRating = null;
+
+		// Get the last element in the list.
+		if ( null !== comments ) {
+			// Get the comment.
+			const comment = comments[ comments.length - 1 ];
+			starRating = comment.querySelector( '.stars' );
+		}
+		// Check that there is a star rating.
+		if ( null !== starRating ) {
+			// Get selected star.
+			const selectedStar = starRating.querySelector( '.active' );
+
+			// Get star count.
+			const starCount = selectedStar.classList[ 0 ].replace( 'star-', '' );
+
+			const nonceElement = document.querySelector( '#woo_edit_comment_nonce_' + ajaxSaveParams.comment_id );
+			const nonce = nonceElement.value;
+
+			// Add nonce to Ajax params.
+			ajaxSaveParams.wooEditCommentNonce = nonce;
+
+			// Add star count to ajax params.
+			ajaxSaveParams.rating = starCount;
+
+			return ajaxSaveParams;
+		}
+		return ajaxSaveParams;
+	} );
 
 	/**
 	 * Gets the time left for the comment.
@@ -152,10 +187,6 @@ window.addEventListener( 'load', () => {
 	 * @param {string}  ajaxUrl   The ajax url.
 	 */
 	const deleteComment = async( element, commentId, postId, nonce, ajaxUrl ) => {
-		// todo - remove events.
-		// $( element ).siblings( '.sce-textarea' ).off();
-		// $( element ).off();
-
 		//Remove elements
 		element.parentNode.remove();
 		await sendCommand( 'sce_delete_comment', { comment_id: commentId, post_id: postId, nonce }, ajaxUrl ).then( ( response ) => {
@@ -207,17 +238,6 @@ window.addEventListener( 'load', () => {
 
 			//Determine via JS if a user can edit a comment - Note that if someone were to finnagle with this, there is still a server side check when saving the comment
 			if ( ! can_edit ) {
-				// Get sibling textareas and turn off events.
-				const textareas = button.parentNode.querySelectorAll( '.sce-textarea' );
-				textareas.forEach( ( textarea ) => {
-					// Turn off all parent and child events.
-
-				} );
-
-				// todo - remove events from elements.
-				// $( element ).siblings( '.sce-textarea' ).off();
-				// $( element ).off();
-
 				//Remove elements
 				button.parentNode.remove();
 				return;
@@ -267,10 +287,6 @@ window.addEventListener( 'load', () => {
 					let timer_seconds = timers[ commentId ].seconds - 1;
 					let timer_minutes = timers[ commentId ].minutes;
 					if ( timer_minutes <= 0 && timer_seconds <= 0 ) {
-						// todo - remove events from elements.
-						// $( element ).siblings( '.sce-textarea' ).off();
-						// $( element ).off();
-
 						//Remove elements
 						button.parentNode.remove();
 						return;
@@ -471,6 +487,7 @@ window.addEventListener( 'load', () => {
 									textarea,
 									commentId,
 									postId,
+									ajaxData: data.data,
 								},
 							} );
 							button.dispatchEvent( savePostEvent );
@@ -502,6 +519,98 @@ window.addEventListener( 'load', () => {
 	comment_edit_buttons.forEach( ( button ) => {
 		initEditCommentButton( button );
 	} );
+
+	// WooCommerce: Get any star reviews and format.
+	const starReviewsContainers = document.querySelectorAll( '.comment-form-rating' );
+	if ( starReviewsContainers.length > 0 ) {
+		starReviewsContainers.forEach( ( starReviewsContainer ) => {
+			// Get data attribute.
+			const starReviews = starReviewsContainer.dataset.selectedRating;
+
+			// Get stars paragraph and add selected class.
+			const starsParagraph = starReviewsContainer.querySelector( '.stars' );
+			if ( null !== starsParagraph ) {
+				starsParagraph.classList.add( 'selected' );
+
+				// Get individual star container and set to active.
+				const starContainer = starsParagraph.querySelector( '.star-' + starReviews );
+				if ( null !== starContainer ) {
+					starContainer.classList.add( 'active' );
+				}
+			}
+		} );
+	}
+
+	// If jQuery is enabled, hook into WooCommerce ratings.
+	if ( 'undefined' !== typeof jQuery ) {
+		jQuery( document ).ready( function( $ ) {
+			// WooCommerce: Hook into ratings.
+			jQuery( '.comment-form-rating select' )
+				.hide()
+				.before(
+					'<p class="stars">\
+							<span>\
+								<a class="star-1" href="#">1</a>\
+								<a class="star-2" href="#">2</a>\
+								<a class="star-3" href="#">3</a>\
+								<a class="star-4" href="#">4</a>\
+								<a class="star-5" href="#">5</a>\
+							</span>\
+						</p>'
+				);
+
+			/**
+			 * Each time a text area shows, select the correct star in the interface.
+			 */
+			comment_edit_buttons.forEach( ( button ) => {
+				button.addEventListener( 'sceEditTextareaShow', ( e ) => {
+					// Select the right star.
+					const starsContainer = button.closest( '.sce-edit-comment' );
+					const dataStarRating = jQuery( starsContainer ).find( '.comment-form-rating' ).data( 'selected-rating' );
+					const $stars = jQuery( starsContainer ).find( '.stars' );
+					$stars.find( 'a' ).removeClass( 'active' );
+					$stars.addClass( 'selected' );
+					$stars.find( '.star-' + dataStarRating ).addClass( 'active' );
+				} );
+
+				// Set up return save event.
+				button.addEventListener( 'sceCommentSavePost', ( returnData ) => {
+					const { targetButton, textarea, commentId, postId, ajaxData } = returnData.detail;
+					// Update the star rating.
+					const starsContainer = jQuery( button ).closest( '.sce-edit-comment' );
+					const $stars = starsContainer.find( '.stars' );
+					$stars.find( 'a' ).removeClass( 'active' );
+					$stars.find( '.star-' + ajaxData.rating ).addClass( 'active' );
+
+					// Set CSS width of star rating on frontend.
+					const $starRating = starsContainer.closest( '#comment-' + commentId ).find( '.star-rating span' );
+
+					// Assign ratings to the star string represented by width.
+					$starRating.css( { width: ( ajaxData.rating * 20 ) + '%' } );
+
+					// Update data param.
+					const commentFormRating = starsContainer.find( '.comment-form-rating' );
+					commentFormRating.data( 'selected-rating', ajaxData.rating );
+				} );
+			} );
+
+			/**
+			 * When someone selects a star, update the select field and add the active class.
+			 */
+			jQuery( 'body' ).on( 'click', '.comment-form-rating p.stars a', function( e ) {
+				e.preventDefault();
+				const $star = jQuery( this ),
+					$rating 	= jQuery( this ).closest( '.comment-form-rating' ).find( 'select' ),
+					$container 	= jQuery( this ).closest( '.stars' );
+
+				$rating.val( $star.text() );
+				$star.siblings( 'a' ).removeClass( 'active' );
+				$star.addClass( 'active' );
+				$container.addClass( 'selected' );
+				return false;
+			} );
+		} );
+	}
 
 	if ( 'compact' === simple_comment_editing.timer_appearance ) {
 		sceHooks.addFilter( 'sce.comment.timer.text', 'simple-comment-editing', function( timer_text, days_text, hours_text, minutes_text, seconds_text, days, hours, minutes, seconds ) {
@@ -569,6 +678,4 @@ window.SCE_comments_updated = ( comment_url ) => {
 		// Re-initialize the edit button.
 		window.initEditCommentButton( editButton );
 	}
-
-	//jQuery( '#comment-' + comment_id ).find( '.sce-edit-button' ).simplecommentediting();
 };

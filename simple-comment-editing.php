@@ -138,6 +138,9 @@ class Simple_Comment_Editing {
 		// Init mailchimp.
 		Mailchimp::run();
 
+		// Init WooCommerce.
+		WooCommerce::run();
+
 		/* Begin Filters */
 		if ( ! is_feed() && ! defined( 'DOING_SCE' ) ) {
 			add_filter( 'comment_excerpt', array( $this, 'add_edit_interface' ), 1000, 2 );
@@ -206,9 +209,9 @@ class Simple_Comment_Editing {
 		$ajax_edit_url = add_query_arg(
 			array(
 				'editComment' => 1,
-				'cid' => $comment_id,
-				'pid' => $post_id,
-				'nonce' => wp_create_nonce( 'sce-edit-comment' . $comment_id ),
+				'cid'         => $comment_id,
+				'pid'         => $post_id,
+				'nonce'       => wp_create_nonce( 'sce-edit-comment' . $comment_id ),
 			),
 			admin_url( 'admin-ajax.php', self::$scheme )
 		);
@@ -271,7 +274,21 @@ class Simple_Comment_Editing {
 		$sce_content .= '</div><!-- sce-loading -->';
 
 		// Textarea.
-		$textarea_content  = '<div class="sce-textarea" style="display: none;">';
+		$textarea_content = '<div class="sce-textarea" style="display: none;">';
+
+		/**
+		* Filter: sce_extra_fields_pre
+		*
+		* Filter to add additional form fields before the textarea.
+		*
+		* @since 3.0.0
+		*
+		* @param string Empty string
+		* @param int post_id POST ID
+		* @param int comment_id Comment ID
+		* @param WP_Comment comment Comment object.
+		*/
+		$textarea_content .= apply_filters( 'sce_extra_fields_pre', '', $post_id, $comment_id, $comment );
 		$textarea_content .= '<div class="sce-comment-textarea">';
 		$textarea_content .= '<textarea class="sce-comment-text" cols="45" rows="8">%s</textarea>';
 		$textarea_content .= '</div><!-- .sce-comment-textarea -->';

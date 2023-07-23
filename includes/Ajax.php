@@ -423,6 +423,19 @@ class Ajax {
 		// Ajax response.
 		$return['comment_text'] = $comment_content_to_return;
 		$return['error']        = '';
+
+		/**
+		 * Filter: sce_save_comment_return
+		 *
+		 * Allow third parties to modify the return value of the comment
+		 *
+		 * @since 3.0.0
+		 * @param array $return The return array
+		 * @param object $comment_to_return The comment object
+		 * @param int $post_id The post ID
+		 * @param int $comment_id The comment ID
+		 */
+		$return = apply_filters( 'sce_save_comment_return', $return, $comment_to_return, $post_id, $comment_id );
 		wp_send_json_success( $return );
 	}
 
