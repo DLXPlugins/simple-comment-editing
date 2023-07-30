@@ -1,4 +1,4 @@
-=== Comment Edit Lite ===
+=== Comment Edit Core - Simple WordPress Comment Editing with Mailchimp Integration ===
 Contributors: ronalfy
 Tags: comment editing, comments,edit comments, edit, comment,
 Requires at least: 5.0
@@ -11,13 +11,13 @@ Your users make mistakes. Come to their rescue by allowing your users to edit th
 
 == Description ==
 
-Add useful comment editing with <a href="https://dlxplugins.com/plugins/comment-edit-lite/">Comment Edit Lite</a>. Allow your users to edit their comments for a period of time. Save your users some headaches and let them fix their typos while you focus on your site.
+Add useful comment editing with <a href="https://dlxplugins.com/plugins/comment-edit-core/">Comment Edit Core</a>. Allow your users to edit their comments for a period of time. Save your users some headaches and let them fix their typos while you focus on your site.
 
 [youtube https://www.youtube.com/watch?v=bNCDdQbwA-s&rel=0]
 
-> Please check out the <a href="https://docs.dlxplugins.com/v/comment-edit-lite/">comprehensive documentation for Comment Edit Lite</a>.
+> Please check out the <a href="https://docs.dlxplugins.com/v/comment-edit-lite/">comprehensive documentation for Comment Edit Core</a>.
 
-<h2>Comment Edit Lite features:</h2>
+<h2>Comment Edit Core features:</h2>
 <ol>
 <li>Install the plugin. That's it. It just works.
 <li>Anonymous users can edit comments for 5 minutes.</li>
@@ -48,7 +48,7 @@ Features Include:
 
 == Frequently Asked Questions ==
 
-= Simple Comment Editing is now Comment Edit Lite? =
+= Simple Comment Editing is now Comment Edit Core? =
 Yes.  We've renamed the plugin to make it easier to find and to more closely tie the plugin to the pro version.
 
 = Why doesn't this plugin come with any styles? =
@@ -92,7 +92,7 @@ Simple Comment Editing will work all the way back to IE10.
 
 = 2.9.0 =
 * Released 2023-02-10
-* Rebranding the plugin from Simple Comment Editing to Comment Edit Lite.
+* Rebranding the plugin from Simple Comment Editing to Comment Edit Core.
 * <a href="https://dlxplugins.com/announcements/simple-comment-editing-has-been-renamed-to-comment-edit-lite/">Please read more on the rebranding</a> where you can leave questions or comments.
 
 = 2.8.0 =

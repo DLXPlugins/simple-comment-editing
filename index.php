@@ -1,12 +1,12 @@
 <?php
 /**
- * Comment Edit Lite main file.
+ * Comment Edit Core main file.
  *
- * @package CommentEditLite
+ * @package CommentEditCore
  */
 
 /**
- * Plugin Name: Comment Edit Lite
+ * Plugin Name: Comment Edit Core
  * Plugin URI: https://dlxplugins.com/plugins/comment-edit-lite/
  * Description: Allow your users to edit their comments.
  * Author: DLX Plugins

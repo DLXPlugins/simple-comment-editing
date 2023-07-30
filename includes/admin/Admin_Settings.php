@@ -287,10 +287,10 @@ class Admin_Settings {
 	 */
 	public function register_settings_menu() {
 		$hook = add_options_page(
-			__( 'Comment Edit Lite', 'simple-comment-editing' ),
-			__( 'Comment Edit Lite', 'simple-comment-editing' ),
+			__( 'Comment Edit Core', 'simple-comment-editing' ),
+			__( 'Comment Edit Core', 'simple-comment-editing' ),
 			'manage_options',
-			'comment-edit-lite',
+			'comment-edit-core',
 			array( __NAMESPACE__ . '\Admin_Settings', 'settings_page' )
 		);
 		return $hook;
