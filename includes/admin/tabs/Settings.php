@@ -86,8 +86,9 @@ class Settings extends Tabs {
 					<div class="sce-panel-row">
 						<form action="" method="POST">
 							<?php wp_nonce_field( 'save_sce_options' ); ?>
-							<h1><?php esc_html_e( 'Welcome to Comment Edit Lite!', 'simple-comment-editing' ); ?></h1>
-							<p><?php esc_html_e( 'For more options, stats, restoration of edited comments, and more configuration, please try: ', 'simple-comment-editing' ); ?><a target="_blank" href="https://dlxplugins.com/plugins/comment-edit-pro/"><?php esc_html_e( 'Comment Edit Pro', 'simple-comment-editing' ); ?></a></p>
+							<h1><?php esc_html_e( 'Welcome to Comment Edit Core!', 'simple-comment-editing' ); ?></h1>
+							<p><?php esc_html_e( 'Comment Edit Core allows you to set a time limit for comment editing. After the time limit has passed, the comment will no longer editable.', 'simple-comment-editing' ); ?></p>
+							<p><?php esc_html_e( 'For more control over the comment editing experience, please consider Comment Edit Pro. It has a bunch of utilities that can make managing comments easier.', 'simple-comment-editing' ); ?> - <a target="_blank" href="https://dlxplugins.com/plugins/comment-edit-pro/"><?php esc_html_e( 'Visit Comment Edit Pro', 'simple-comment-editing' ); ?></a></p>
 							<table class="form-table">
 								<tbody>
 									<tr>

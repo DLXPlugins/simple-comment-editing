@@ -62,6 +62,22 @@ $danger_button_color_text: #fff;
 	display: grid;
 	grid-template-columns: 70fr 30fr;
 
+	&:has(.updated) {
+		grid-template-areas:
+			"logo doclinks"
+			"updated updated";
+		h1 {
+			grid-area: logo;
+		}
+		.updated {
+			order: 3;
+			grid-area: updated;
+			margin-top: 15px;
+			padding-top: 10px;
+			padding-bottom: 10px;
+		}
+	}
+
 	/* Media query for mobile */
 	@media (max-width: 650px) {
 		grid-template-columns: 1fr;
