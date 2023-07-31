@@ -3,7 +3,7 @@
 import axios from 'axios';
 import qs from 'qs';
 
-export default function sendCommand( action, data ) {
+export default function sendCommand( action, data, ajaxUrl = '' ) {
 	const params = {
 		action,
 	};
@@ -17,6 +17,14 @@ export default function sendCommand( action, data ) {
 		data = {};
 	}
 
+	let sendAjaxUrl = '';
+
+	if ( typeof ajaxurl === 'undefined' ) {
+		sendAjaxUrl = ajaxUrl;
+	} else {
+		sendAjaxUrl = ajaxurl;
+	}
+
 	for ( const opt in default_data ) {
 		if ( ! data.hasOwnProperty( opt ) ) {
 			data[ opt ] = default_data[ opt ];
@@ -25,7 +33,7 @@ export default function sendCommand( action, data ) {
 
 	const options = {
 		method: 'post',
-		url: ajaxurl,
+		url: sendAjaxUrl,
 		params,
 		paramsSerializer( jsparams ) {
 			return qs.stringify( jsparams, { arrayFormat: 'brackets' } );

@@ -2,12 +2,12 @@
 /**
  * Initialize various admin settings including the admin page, admin menu, and action links.
  *
- * @package SCE
+ * @package CommentEditLite
  */
 
-namespace SCE\Includes\Admin;
+namespace DLXPlugins\CommentEditLite\Admin;
 
-use SCE\Includes\Functions as Functions;
+use DLXPlugins\CommentEditLite\Functions as Functions;
 
 /**
  * Class Admin Settings.
@@ -23,9 +23,9 @@ class Admin_Settings {
 		add_action( 'plugin_action_links_' . Functions::get_plugin_path(), array( $this, 'plugin_settings_link' ) );
 
 		// init tabs here.
-		new \SCE\Includes\Admin\Tabs\Settings();
-		new \SCE\Includes\Admin\Tabs\Integrations();
-		new \SCE\Includes\Admin\Tabs\Support();
+		new Tabs\Settings();
+		new Tabs\Integrations();
+		new Tabs\Support();
 	}
 
 	/**
@@ -267,7 +267,7 @@ class Admin_Settings {
 					<a href="https://dlxplugins.com/plugins/comment-edit-pro/" target="_blank" class="sce-comment-edit-pro-link"><?php esc_html_e( 'Get the Pro Version', 'simple-comment-editing' ); ?></a>
 				</div>
 			</div>
-			<p class="sce-info-text"><?php esc_html_e( 'Supercharge your comment section by allowing your users to edit their comments.', 'simple-comment-editing' ); ?></p>
+			<p class="sce-info-text"><?php esc_html_e( 'Comment Edit Core is the simplest and most extensible plugin to allow your users to edit their comments.', 'simple-comment-editing' ); ?></p>
 		<?php
 	}
 
@@ -287,11 +287,11 @@ class Admin_Settings {
 	 */
 	public function register_settings_menu() {
 		$hook = add_options_page(
-			__( 'Comment Edit Lite', 'simple-comment-editing' ),
-			__( 'Comment Edit Lite', 'simple-comment-editing' ),
+			__( 'Comment Edit Core', 'simple-comment-editing' ),
+			__( 'Comment Edit Core', 'simple-comment-editing' ),
 			'manage_options',
-			'comment-edit-lite',
-			array( '\SCE\Includes\Admin\Admin_Settings', 'settings_page' )
+			'comment-edit-core',
+			array( __NAMESPACE__ . '\Admin_Settings', 'settings_page' )
 		);
 		return $hook;
 	}

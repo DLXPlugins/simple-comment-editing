@@ -1,14 +1,11 @@
 <?php
 /**
- * Enqueue assets for the blocks.
+ * Enqueue assets for the SCE admin.
  *
- * @package SCE
+ * @package CommentEditLite
  */
 
-namespace SCE\Includes;
-
-use SCE\Includes\Functions as Functions;
-use SCE\Includes\Admin\Options as Options;
+namespace DLXPlugins\CommentEditLite;
 
 /**
  * Class enqueue
@@ -30,7 +27,7 @@ class Enqueue {
 	 * @param string $hook The page hook name.
 	 */
 	public function admin_scripts( $hook ) {
-		if ( 'options-general.php' !== $hook && 'settings_page_comment-edit-lite' !== $hook ) {
+		if ( 'options-general.php' !== $hook && 'settings_page_comment-edit-core' !== $hook ) {
 			return;
 		}
 		wp_enqueue_style(

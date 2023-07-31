@@ -1,14 +1,14 @@
 <?php
 /**
- * Register the Settings tab and any sub-tabs.
+ * Register the support tab.
  *
- * @package sce
+ * @package CommentEditLite
  */
 
-namespace SCE\Includes\Admin\Tabs;
+namespace DLXPlugins\CommentEditLite\Admin\Tabs;
 
-use SCE\Includes\Functions as Functions;
-use SCE\Includes\Admin\Options as Options;
+use DLXPlugins\CommentEditLite\Functions as Functions;
+use DLXPlugins\CommentEditLite\Options as Options;
 
 /**
  * Output the settings tab and content.
@@ -43,7 +43,7 @@ class Support extends Tabs {
 			'get'    => $this->tab,
 			'action' => 'sce_output_' . $this->tab,
 			'url'    => Functions::get_settings_url( $this->tab ),
-			'label'  => _x( 'Help', 'Tab label as support', 'simple-comment-editing' ),
+			'label'  => _x( 'Help and Support', 'Tab label as support', 'simple-comment-editing' ),
 			'icon'   => 'home-heart',
 		);
 		return $tabs;

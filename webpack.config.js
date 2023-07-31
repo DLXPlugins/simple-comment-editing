@@ -1,14 +1,14 @@
-const path = require('path');
-const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const path = require( 'path' );
+const FixStyleOnlyEntriesPlugin = require( 'webpack-fix-style-only-entries' );
+const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
 
-module.exports = (env) => {
+module.exports = ( env ) => {
 	return [
 		{
 			mode: env.mode,
 			entry: {
-				'sce-admin': ['./src/scss/admin.scss'],
-				'sce-frontend': ['./src/scss/frontend.scss'],
+				'sce-admin': [ './src/scss/admin.scss' ],
+				'sce-frontend': [ './src/scss/frontend.scss' ],
 			},
 			output: {
 				clean: true,
@@ -35,18 +35,20 @@ module.exports = (env) => {
 				],
 			},
 			devtool: 'source-map',
-			plugins: [new FixStyleOnlyEntriesPlugin(), new MiniCssExtractPlugin()],
+			plugins: [ new FixStyleOnlyEntriesPlugin(), new MiniCssExtractPlugin() ],
 		},
 		{
 			mode: env.mode,
 			resolve: {
 				alias: {
-					react: path.resolve('node_modules/react'),
+					react: path.resolve( 'node_modules/react' ),
 				},
 			},
 			devtool: 'production' === env.mode ? false : 'source-map',
 			entry: {
-				'integrations-admin': ['./src/js/react/views/integrations/index.js'],
+				'integrations-admin': [ './src/js/react/views/integrations/index.js' ],
+				'sce-editing': [ './src/js/comment-editing/editing.js' ],
+
 			},
 			module: {
 				rules: [
@@ -55,7 +57,7 @@ module.exports = (env) => {
 						exclude: /(node_modules|bower_components)/,
 						loader: 'babel-loader',
 						options: {
-							presets: ['@babel/preset-env', '@babel/preset-react'],
+							presets: [ '@babel/preset-env', '@babel/preset-react' ],
 							plugins: [
 								'@babel/plugin-proposal-class-properties',
 								'@babel/plugin-transform-arrow-functions',
@@ -81,7 +83,7 @@ module.exports = (env) => {
 					},
 				],
 			},
-			plugins: [new FixStyleOnlyEntriesPlugin(), new MiniCssExtractPlugin()],
+			plugins: [ new FixStyleOnlyEntriesPlugin(), new MiniCssExtractPlugin() ],
 		},
 	];
 };
