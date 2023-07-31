@@ -2,8 +2,8 @@
 Contributors: ronalfy
 Tags: comment editing, comments,edit comments, edit, comment,
 Requires at least: 5.0
-Tested up to: 6.2
-Stable tag: 2.9.7
+Tested up to: 6.3
+Stable tag: 3.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,6 +74,12 @@ Simple Comment Editing will work all the way back to IE10.
 5. Light button theme.
 
 == Changelog ==
+
+= 3.0.0 =
+* Released 2023-07-31
+* Added support for WooCommerce Reviews and editing.
+* Re-worked the JavaScript for better extensibility.
+* Testing with WordPress 6.3.
 
 = 2.9.7 =
 * Released 2023-04-20
@@ -438,5 +444,5 @@ Simple Comment Editing will work all the way back to IE10.
 
 == Upgrade Notice ==
 
-= 2.9.7 =
-Adding new filter to allow for permanent comment deletion option and override.
+= 3.0.0 =
+Comment editing now allows you to edit WooCommerce reviews, including the rating.
