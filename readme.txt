@@ -1,6 +1,6 @@
-=== Comment Edit Core - Simple WordPress Comment Editing with Mailchimp Integration ===
+=== Comment Edit Core - Edit Comments and WooCommerce Reviews ===
 Contributors: ronalfy
-Tags: comment editing, comments,edit comments, edit, comment,
+Tags: comment editing, comments,edit comments, woocommerce reviews,
 Requires at least: 5.0
 Tested up to: 6.3
 Stable tag: 3.0.5
