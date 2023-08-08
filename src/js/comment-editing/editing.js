@@ -149,7 +149,7 @@ window.addEventListener( 'load', () => {
 			const minutesIncluded = Math.floor( minute_to_seconds / 60 ) % 60;
 			minute_to_seconds -= minutesIncluded;
 			if ( minutes > 0 ) {
-				text += minutes + ' ' + _n( 'minute', 'minutes', minutes, 'simple-comment-editing' );
+				text += minutesIncluded + ' ' + _n( 'minute', 'minutes', minutesIncluded, 'simple-comment-editing' );
 			}
 
 			// Get seconds
@@ -600,8 +600,8 @@ window.addEventListener( 'load', () => {
 			jQuery( 'body' ).on( 'click', '.comment-form-rating p.stars a', function( e ) {
 				e.preventDefault();
 				const $star = jQuery( this ),
-					$rating 	= jQuery( this ).closest( '.comment-form-rating' ).find( 'select' ),
-					$container 	= jQuery( this ).closest( '.stars' );
+					$rating = jQuery( this ).closest( '.comment-form-rating' ).find( 'select' ),
+					$container = jQuery( this ).closest( '.stars' );
 
 				$rating.val( $star.text() );
 				$star.siblings( 'a' ).removeClass( 'active' );

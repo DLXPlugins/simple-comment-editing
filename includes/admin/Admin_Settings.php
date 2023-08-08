@@ -264,7 +264,7 @@ class Admin_Settings {
 				<div class="sce-docs-wrap">
 					<a href="https://dlxplugins.com/support/" target="_blank" class="sce-support-link"><?php esc_html_e( 'Get Support', 'simple-comment-editing' ); ?></a>
 					<a href="https://docs.dlxplugins.com/v/comment-edit-lite/" target="_blank" class="sce-docs-link"><?php esc_html_e( 'View Documentation', 'simple-comment-editing' ); ?></a>
-					<a href="https://dlxplugins.com/plugins/comment-edit-pro/" target="_blank" class="sce-comment-edit-pro-link"><?php esc_html_e( 'Get the Pro Version', 'simple-comment-editing' ); ?></a>
+					<a href="https://dlxplugins.com/plugins/comment-edit-pro/" target="_blank" class="sce-comment-edit-pro-link"><?php esc_html_e( 'Get Comment Edit Pro', 'simple-comment-editing' ); ?></a>
 				</div>
 			</div>
 			<p class="sce-info-text"><?php esc_html_e( 'Comment Edit Core is the simplest and most extensible plugin to allow your users to edit their comments.', 'simple-comment-editing' ); ?></p>

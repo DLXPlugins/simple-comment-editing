@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: comment editing, comments,edit comments, edit, comment,
 Requires at least: 5.0
 Tested up to: 6.3
-Stable tag: 3.0.1
+Stable tag: 3.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,6 +74,10 @@ Simple Comment Editing will work all the way back to IE10.
 5. Light button theme.
 
 == Changelog ==
+
+= 3.0.5 =
+* Released 2023-08-08
+* Fixed timer issue not showing minutes correctly with a large timer.
 
 = 3.0.1 =
 * Released 2023-07-31
@@ -447,6 +451,9 @@ Simple Comment Editing will work all the way back to IE10.
 * Initial release.
 
 == Upgrade Notice ==
+
+= 3.0.5 =
+Fixing a bug where minutes were displaying incorrectly with a large timer.
 
 = 3.0.1 =
 Resolving a fatal error caused by folder name capitalization.

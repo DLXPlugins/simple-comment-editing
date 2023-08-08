@@ -115,6 +115,7 @@ class Support extends Tabs {
 					</div>
 					<div class="sce-panel-row">
 						<a class="sce-button sce-button-info" href="https://dlxplugins.com/plugins/comment-edit-pro" target="_blank"> <?php esc_html_e( 'Find out More About Comment Edit Pro', 'simple-comment-editing' ); ?></a>
+						<a class="sce-button sce-button-info" href="https://app.instawp.io/launch?t=dlx-plugins&d=v1" target="_blank"> <?php esc_html_e( 'Launch a Free Demo', 'simple-comment-editing' ); ?></a>
 					</div>
 				</div>
 				<div class="sce-admin-panel-area">
