@@ -122,13 +122,14 @@ window.addEventListener( 'load', () => {
 		let text = '';
 		let days = 0;
 		let hours = 0;
+		let currentMinutes = 0;
 		if ( minutes >= 1 ) {
 			// Get mniutes in seconds
 			let minute_to_seconds = Math.abs( minutes * 60 );
 			days = Math.floor( minute_to_seconds / 86400 );
 
 			// Get Days
-			if ( days > 0 ) {
+			if ( days >= 1 ) {
 				// Get days
 				text += days + ' ' + _n( 'day', 'days', days, 'simple-comment-editing' );
 				text += ' ' + __( 'and', 'simple-comment-editing' ) + ' ';
@@ -146,10 +147,10 @@ window.addEventListener( 'load', () => {
 			}
 
 			// Get minutes
-			const minutesIncluded = Math.floor( minute_to_seconds / 60 ) % 60;
-			minute_to_seconds -= minutesIncluded;
+			currentMinutes = Math.floor( minute_to_seconds / 60 ) % 60;
+			minute_to_seconds -= currentMinutes;
 			if ( minutes > 0 ) {
-				text += minutesIncluded + ' ' + _n( 'minute', 'minutes', minutesIncluded, 'simple-comment-editing' );
+				text += currentMinutes + ' ' + _n( 'minute', 'minutes', currentMinutes, 'simple-comment-editing' );
 			}
 
 			// Get seconds
@@ -173,7 +174,7 @@ window.addEventListener( 'load', () => {
 		 * @param  int    number of minutes left
 		 * @param  int    seconds left
 		 */
-		text = sceHooks.applyFilters( 'sce.comment.timer.text', text, _n( 'day', 'days', days, 'simple-comment-editing' ), _n( 'hour', 'hours', hours, 'simple-comment-editing' ), _n( 'minute', 'minutes', minutes, 'simple-comment-editing' ), _n( 'second', 'seconds', seconds, 'simple-comment-editing' ), days, hours, minutes, seconds );
+		text = sceHooks.applyFilters( 'sce.comment.timer.text', text, _n( 'day', 'days', days, 'simple-comment-editing' ), _n( 'hour', 'hours', hours, 'simple-comment-editing' ), _n( 'minute', 'minutes', currentMinutes, 'simple-comment-editing' ), _n( 'second', 'seconds', seconds, 'simple-comment-editing' ), days, hours, currentMinutes, seconds );
 		return text;
 	};
 
@@ -615,7 +616,7 @@ window.addEventListener( 'load', () => {
 	if ( 'compact' === simple_comment_editing.timer_appearance ) {
 		sceHooks.addFilter( 'sce.comment.timer.text', 'simple-comment-editing', function( timer_text, days_text, hours_text, minutes_text, seconds_text, days, hours, minutes, seconds ) {
 			timer_text = '';
-			if ( days > 0 ) {
+			if ( days >= 1 ) {
 				if ( days < 10 ) {
 					timer_text += '' + '0' + days;
 				} else {
