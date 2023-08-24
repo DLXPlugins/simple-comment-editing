@@ -241,6 +241,7 @@ class Ajax {
 		* @param array Comment array
 		*/
 		$comment                 = apply_filters( 'sce_get_comment', get_comment( $comment_id, ARRAY_A ) );
+		$comment['comment_text'] = stripslashes( get_comment_text( $comment_id ) );
 		$comment['comment_html'] = Functions::get_comment_content( (object) $comment );
 
 		if ( $comment ) {
@@ -352,6 +353,9 @@ class Ajax {
 		 */
 		$comment_to_save = apply_filters( 'sce_save_before', $comment_to_save, $post_id, $comment_id );
 
+		// Add slashes to comment output.
+		$comment_to_save['comment_content'] = addslashes( $comment_to_save['comment_content'] );
+
 		// Save the comment.
 		wp_update_comment( $comment_to_save );
 
@@ -404,7 +408,7 @@ class Ajax {
 			}
 		}
 
-		$comment_to_return = Simple_Comment_Editing::get_comment( $comment_id );
+		$comment_to_return                    = Simple_Comment_Editing::get_comment( $comment_id );
 
 		/**
 		 * Filter: sce_return_comment_text
@@ -421,7 +425,7 @@ class Ajax {
 		$comment_content_to_return = apply_filters( 'sce_return_comment_text', Functions::get_comment_content( $comment_to_return ), $comment_to_return, $post_id, $comment_id );
 
 		// Ajax response.
-		$return['comment_text'] = $comment_content_to_return;
+		$return['comment_text'] = stripslashes( $comment_content_to_return );
 		$return['error']        = '';
 
 		/**
