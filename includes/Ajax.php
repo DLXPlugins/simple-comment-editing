@@ -321,7 +321,7 @@ class Ajax {
 		}
 
 		// Update comment content with new content.
-		$comment_to_save['comment_content'] = $new_comment_content;
+		$comment_to_save['comment_content'] = addslashes( $new_comment_content );
 
 		/**
 		 * Filter: sce_comment_check_errors
@@ -352,9 +352,6 @@ class Ajax {
 		 * @param int $comment_id The Comment ID
 		 */
 		$comment_to_save = apply_filters( 'sce_save_before', $comment_to_save, $post_id, $comment_id );
-
-		// Add slashes to comment output.
-		$comment_to_save['comment_content'] = addslashes( $comment_to_save['comment_content'] );
 
 		// Save the comment.
 		wp_update_comment( $comment_to_save );
