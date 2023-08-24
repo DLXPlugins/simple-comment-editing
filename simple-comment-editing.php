@@ -7,6 +7,8 @@
 
 namespace DLXPlugins\CommentEditLite;
 
+use DLXPlugins\CommentEditLite\Admin\Admin_Settings as Admin_Settings;
+
 /**
  * Main class for Comment Edit Lite.
  */
@@ -870,7 +872,7 @@ function sce_instantiate() {
 	$sce = Simple_Comment_Editing::get_instance();
 	$sce->plugins_loaded();
 	if ( is_admin() && apply_filters( 'sce_show_admin', true ) ) {
-		new Admin\Admin_Settings();
+		new Admin_Settings();
 		$sce_enqueue = new Enqueue();
 		$sce_enqueue->run();
 	}
