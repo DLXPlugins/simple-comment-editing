@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: comment editing, comments,edit comments, woocommerce reviews,
 Requires at least: 5.0
 Tested up to: 6.3
-Stable tag: 3.0.7
+Stable tag: 3.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -75,10 +75,9 @@ Simple Comment Editing will work all the way back to IE10.
 
 == Changelog ==
 
-= 3.0.7 =
-* Released 2023-08-14
-* Trail 2 of fixing long timers in compact mode.
-* Fixing issue with the timer not showing correctly in compact mode.
+= 3.0.9 =
+* Released 2023-08-24
+* Added support for LaTeX when editing comments. You should use a plugin like <a href="https://wordpress.org/plugins/mathjax-latex/">WP LaTeX</a> to render the LaTeX.
 
 = 3.0.5 =
 * Released 2023-08-08
@@ -457,5 +456,5 @@ Simple Comment Editing will work all the way back to IE10.
 
 == Upgrade Notice ==
 
-= 3.0.7 =
-Trail 2 of fixing long timers in compact mode.
+= 3.0.9 =
+Adding support for LaTeX in edited comments.
