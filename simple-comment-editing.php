@@ -912,7 +912,7 @@ function sce_plugin_activate_redirect() {
 			return;
 		}
 
-		$settings_url = admin_url( 'options-general.php?page=comment-edit-lite' );
+		$settings_url = admin_url( 'options-general.php?page=comment-edit-core' );
 		if ( class_exists( '\CommentEditPro\Comment_Edit_Pro' ) ) {
 			$settings_url = admin_url( 'options-general.php?page=comment-edit-pro' );
 		}

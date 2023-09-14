@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: comment editing, comments,edit comments, woocommerce reviews,
 Requires at least: 5.0
 Tested up to: 6.3
-Stable tag: 3.0.9
+Stable tag: 3.0.14
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,6 +74,19 @@ Simple Comment Editing will work all the way back to IE10.
 5. Light button theme.
 
 == Changelog ==
+
+= 3.0.14 =
+* Released 2023-09-15
+* Fixing fatal error caused by case-sensitive server setups.
+* Fixing activation redirect to wrong screen in the admin.
+
+= 3.0.12 =
+* Released 2023-08-24
+* Fixing fatal error caused by case-sensitive server setups.
+
+= 3.0.11 =
+* Released 2023-08-24
+* Fixing fatal error caused by case-sensitive server setups.
 
 = 3.0.9 =
 * Released 2023-08-24
@@ -456,5 +469,5 @@ Simple Comment Editing will work all the way back to IE10.
 
 == Upgrade Notice ==
 
-= 3.0.9 =
-Adding support for LaTeX in edited comments.
+= 3.0.14 =
+Some users are still getting fatals. This release should fix that.
