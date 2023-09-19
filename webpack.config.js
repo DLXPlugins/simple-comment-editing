@@ -1,5 +1,5 @@
 const path = require( 'path' );
-const FixStyleOnlyEntriesPlugin = require( 'webpack-fix-style-only-entries' );
+const RemoveEmptyScripts = require('webpack-remove-empty-scripts');
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
 
 module.exports = ( env ) => {
@@ -35,7 +35,7 @@ module.exports = ( env ) => {
 				],
 			},
 			devtool: 'source-map',
-			plugins: [ new FixStyleOnlyEntriesPlugin(), new MiniCssExtractPlugin() ],
+			plugins: [ new RemoveEmptyScripts(), new MiniCssExtractPlugin() ],
 		},
 		{
 			mode: env.mode,
@@ -83,7 +83,7 @@ module.exports = ( env ) => {
 					},
 				],
 			},
-			plugins: [ new FixStyleOnlyEntriesPlugin(), new MiniCssExtractPlugin() ],
+			plugins: [ new RemoveEmptyScripts(), new MiniCssExtractPlugin() ],
 		},
 	];
 };
