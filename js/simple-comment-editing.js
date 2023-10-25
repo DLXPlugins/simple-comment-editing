@@ -1,7 +1,11 @@
 var __ = wp.i18n.__;
 var _n = wp.i18n._n;
 var sce_hooks = wp.hooks.createHooks();
+
 jQuery( document ).ready( function( $ ) {
+console.log( 'yo')
+	
+
 	// SCE Timer Filter.
 	if( 'compact' === simple_comment_editing.timer_appearance ) {
 		sce_hooks.addFilter( 'sce.comment.timer.text', 'simple-comment-editing', function( timer_text, days_text, hours_text, minutes_text, seconds_text, days, hours, minutes, seconds ) {

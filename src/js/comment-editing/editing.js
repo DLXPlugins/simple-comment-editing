@@ -23,6 +23,13 @@ window.addEventListener( 'load', () => {
 		return;
 	}
 
+	// For Ajaxify Comment integration.
+	document.addEventListener( 'wpacAfterUpdateComments', function( e ) {
+		const { detail } = e;
+		const { commentUrl } = detail;
+		window.SCE_comments_updated( commentUrl );
+	} );
+
 	const sceHooks = createHooks();
 
 	sceHooks.addFilter( 'sce.comment.save.data', 'comment-edit-lite', ( ajaxSaveParams ) => {
