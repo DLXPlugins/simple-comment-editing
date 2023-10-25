@@ -15,7 +15,7 @@ Allow your users to edit their comments and WooCommerce reviews for a period of 
 
 [youtube https://www.youtube.com/watch?v=bNCDdQbwA-s&rel=0]
 
-Go Pro for a lot more control over the comment editing experience, including front-end moderation capabilities, and unlimited logged-in editing. <a href="https://dlxplugins.com/plugins/comment-edit-pro/">Find out more...</a
+Go Pro for a lot more control over the comment editing experience, including front-end moderation capabilities, and unlimited logged-in editing. <a href="https://dlxplugins.com/plugins/comment-edit-pro/">Find out more...</a>
 
 > Not that you'll need it, but please check out the <a href="https://docs.dlxplugins.com/v/comment-edit-lite/">comprehensive documentation for Comment Edit Core</a>.
 
