@@ -1,21 +1,23 @@
-=== Comment Edit Core - Edit Comments and WooCommerce Reviews ===
+=== Comment Edit Core - Comment and Review Editing ===
 Contributors: ronalfy
 Tags: comment editing, comments,edit comments, woocommerce reviews,
 Requires at least: 5.0
-Tested up to: 6.3
-Stable tag: 3.0.14
+Tested up to: 6.4
+Stable tag: 3.0.15
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Your users make mistakes. Come to their rescue by allowing your users to edit their comments for a period of time.
+Allow your users to edit their comments or WooCommerce reviews for a period of time.
 
 == Description ==
 
-Add useful comment editing with <a href="https://dlxplugins.com/plugins/comment-edit-core/">Comment Edit Core</a>. Allow your users to edit their comments for a period of time. Save your users some headaches and let them fix their typos while you focus on your site.
+Allow your users to edit their comments and WooCommerce reviews for a period of time.
 
 [youtube https://www.youtube.com/watch?v=bNCDdQbwA-s&rel=0]
 
-> Please check out the <a href="https://docs.dlxplugins.com/v/comment-edit-lite/">comprehensive documentation for Comment Edit Core</a>.
+Go Pro for a lot more control over the comment editing experience, including front-end moderation capabilities, and unlimited logged-in editing. <a href="https://dlxplugins.com/plugins/comment-edit-pro/">Find out more...</a
+
+> Not that you'll need it, but please check out the <a href="https://docs.dlxplugins.com/v/comment-edit-lite/">comprehensive documentation for Comment Edit Core</a>.
 
 <h2>Comment Edit Core features:</h2>
 <ol>
@@ -36,6 +38,9 @@ Features Include:
 * Community features including @ Mentions, Comment Avatars, and Comment Character Control
 * Automations with Webhooks to connect to services like Zapier and other automation tools
 * Spam/bot protection add-ons with reCAPTCHA 3 or Cloudflare Turnstile support
+* Comment shortcuts and front-end moderation tools
+* Set comment rules per post type
+* Set comments to expire based on activity
 * Get notified of new and edited comments with the Slack integration
 * <a href="https://dlxplugins.com/plugins/comment-edit-pro/">Find out more...</a>
 
@@ -74,6 +79,10 @@ Simple Comment Editing will work all the way back to IE10.
 5. Light button theme.
 
 == Changelog ==
+
+= 3.0.15 =
+* Released 2023-10-25
+* Adding native Ajaxify Comments integration.
 
 = 3.0.14 =
 * Released 2023-09-15
@@ -469,5 +478,5 @@ Simple Comment Editing will work all the way back to IE10.
 
 == Upgrade Notice ==
 
-= 3.0.14 =
-Some users are still getting fatals. This release should fix that.
+= 3.0.15 =
+This release adds native Ajaxify Comments integration.
