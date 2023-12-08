@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: comment editing, comments,edit comments, woocommerce reviews,
 Requires at least: 5.0
 Tested up to: 6.4
-Stable tag: 3.0.15
+Stable tag: 3.0.17
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,7 +17,7 @@ Allow your users to edit their comments and WooCommerce reviews for a period of 
 
 Go Pro for a lot more control over the comment editing experience, including front-end moderation capabilities, and unlimited logged-in editing. <a href="https://dlxplugins.com/plugins/comment-edit-pro/">Find out more...</a>
 
-> Not that you'll need it, but please check out the <a href="https://docs.dlxplugins.com/v/comment-edit-lite/">comprehensive documentation for Comment Edit Core</a>.
+<a href="https://docs.dlxplugins.com/v/comment-edit-lite/">Getting Started</a> | <a href="https://github.com/sponsors/DLXPlugins">Sponsor Us</a> | <a href="https://dlxplugins.com/plugins/comment-edit-lite/">Comment Edit Core Home</a>
 
 <h2>Comment Edit Core features:</h2>
 <ol>
@@ -79,6 +79,10 @@ Simple Comment Editing will work all the way back to IE10.
 5. Light button theme.
 
 == Changelog ==
+
+= 3.0.17 =
+* Released 2023-12-08
+* Adding synthetic JS event for when the timer has been loaded. This is useful for third-party integrations.
 
 = 3.0.15 =
 * Released 2023-10-25
@@ -478,5 +482,5 @@ Simple Comment Editing will work all the way back to IE10.
 
 == Upgrade Notice ==
 
-= 3.0.15 =
-This release adds native Ajaxify Comments integration.
+= 3.0.17 =
+Adding synthetic JS event for when the timer has been loaded. This is useful for third-party integrations.
