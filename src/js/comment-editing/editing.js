@@ -277,7 +277,7 @@ window.addEventListener( 'load', () => {
 					postId,
 				},
 			} );
-			button.dispatchEvent( timerLoadedEvent );
+			document.dispatchEvent( timerLoadedEvent );
 
 			// Save textarea.
 			const currentTextarea = document.querySelector( `#sce-edit-comment${ commentId } textarea` );
