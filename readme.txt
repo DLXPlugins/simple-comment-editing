@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: comment editing, comments,edit comments, woocommerce reviews,
 Requires at least: 5.0
 Tested up to: 6.4
-Stable tag: 3.0.17
+Stable tag: 3.0.19
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,6 +79,10 @@ Simple Comment Editing will work all the way back to IE10.
 5. Light button theme.
 
 == Changelog ==
+
+= 3.0.19 =
+* Released 2023-12-19
+* Compatibility update: Fixing JS events not tied to document and fixing JS filters for other callers.
 
 = 3.0.17 =
 * Released 2023-12-08
@@ -482,5 +486,5 @@ Simple Comment Editing will work all the way back to IE10.
 
 == Upgrade Notice ==
 
-= 3.0.17 =
-Adding synthetic JS event for when the timer has been loaded. This is useful for third-party integrations.
+= 3.0.19 =
+Compatibility update: Fixing JS events not tied to document and fixing JS filters for other callers.
