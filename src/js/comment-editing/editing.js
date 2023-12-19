@@ -8,7 +8,7 @@ import sendCommand from '../SendCommand';
 const { __, _n } = wp.i18n;
 
 // get hooks.
-const { createHooks } = wp.hooks;
+const { addFilter, applyFilters } = wp.hooks;
 
 // Get the timer placeholder.
 const timers = [];
@@ -30,9 +30,7 @@ window.addEventListener( 'load', () => {
 		window.SCE_comments_updated( commentUrl );
 	} );
 
-	const sceHooks = createHooks();
-
-	sceHooks.addFilter( 'sce.comment.save.data', 'comment-edit-lite', ( ajaxSaveParams ) => {
+	addFilter( 'sce.comment.save.data', 'comment-edit-lite', ( ajaxSaveParams ) => {
 		// Get current comment.
 		const comments = document.querySelectorAll( `#sce-edit-comment${ ajaxSaveParams.comment_id }` );
 
@@ -181,7 +179,7 @@ window.addEventListener( 'load', () => {
 		 * @param  int    number of minutes left
 		 * @param  int    seconds left
 		 */
-		text = sceHooks.applyFilters( 'sce.comment.timer.text', text, _n( 'day', 'days', days, 'simple-comment-editing' ), _n( 'hour', 'hours', hours, 'simple-comment-editing' ), _n( 'minute', 'minutes', currentMinutes, 'simple-comment-editing' ), _n( 'second', 'seconds', seconds, 'simple-comment-editing' ), days, hours, currentMinutes, seconds );
+		text = applyFilters( 'sce.comment.timer.text', text, _n( 'day', 'days', days, 'simple-comment-editing' ), _n( 'hour', 'hours', hours, 'simple-comment-editing' ), _n( 'minute', 'minutes', currentMinutes, 'simple-comment-editing' ), _n( 'second', 'seconds', seconds, 'simple-comment-editing' ), days, hours, currentMinutes, seconds );
 		return text;
 	};
 
@@ -325,7 +323,7 @@ window.addEventListener( 'load', () => {
 							timer_minutes,
 						},
 					} );
-					button.dispatchEvent( timerCountdownEvent );
+					document.dispatchEvent( timerCountdownEvent );
 
 					// Update timer with new values.
 					timers[ commentId ].seconds = timer_seconds;
@@ -366,7 +364,7 @@ window.addEventListener( 'load', () => {
 						postId,
 					},
 				} );
-				button.dispatchEvent( showEditTextAreaEvent );
+				document.dispatchEvent( showEditTextAreaEvent );
 				textarea.focus();
 			} );
 
@@ -450,7 +448,7 @@ window.addEventListener( 'load', () => {
 							postId,
 						},
 					} );
-					button.dispatchEvent( savePreEvent );
+					document.dispatchEvent( savePreEvent );
 
 					// Save the comment.
 					let ajaxSaveParams = {
@@ -470,7 +468,7 @@ window.addEventListener( 'load', () => {
 					 *
 					 * @param  object $ajax_save_params
 					 */
-					ajaxSaveParams = sceHooks.applyFilters( 'sce.comment.save.data', ajaxSaveParams );
+					ajaxSaveParams = applyFilters( 'sce.comment.save.data', ajaxSaveParams );
 
 					saveComment( 'sce_save_comment', ajaxSaveParams, ajaxUrl ).then( ( response ) => {
 						// Hide loading.
@@ -498,7 +496,7 @@ window.addEventListener( 'load', () => {
 									ajaxData: data.data,
 								},
 							} );
-							button.dispatchEvent( savePostEvent );
+							document.dispatchEvent( savePostEvent );
 						} else {
 							if ( data.data.remove === true ) {
 								// Remove event handlers.
@@ -621,7 +619,7 @@ window.addEventListener( 'load', () => {
 	}
 
 	if ( 'compact' === simple_comment_editing.timer_appearance ) {
-		sceHooks.addFilter( 'sce.comment.timer.text', 'simple-comment-editing', function( timer_text, days_text, hours_text, minutes_text, seconds_text, days, hours, minutes, seconds ) {
+		addFilter( 'sce.comment.timer.text', 'simple-comment-editing', function( timer_text, days_text, hours_text, minutes_text, seconds_text, days, hours, minutes, seconds ) {
 			timer_text = '';
 			if ( days >= 1 ) {
 				if ( days < 10 ) {
@@ -663,7 +661,7 @@ window.addEventListener( 'load', () => {
 				timer_text += '00';
 			}
 			return timer_text;
-		} );
+		}, 10 );
 	}
 } );
 //Callback when comments have been updated (for wp-ajaxify-comments compatibility) - http://wordpress.org/plugins/wp-ajaxify-comments/faq/
