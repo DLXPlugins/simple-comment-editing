@@ -1,13 +1,13 @@
-=== Comment Edit Core - Comment and Review Editing ===
+=== Comment Edit Core - Simple Comment Editing ===
 Contributors: ronalfy
-Tags: comment editing, comments,edit comments, woocommerce reviews,
+Tags: comment editing, comments ,edit comments, reviews,
 Requires at least: 5.0
 Tested up to: 6.5
 Stable tag: 3.0.19
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Allow your users to edit their comments or WooCommerce reviews for a period of time.
+Allow your users to edit their comments for a period of time.
 
 == Description ==
 
