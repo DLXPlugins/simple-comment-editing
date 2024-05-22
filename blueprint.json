@@ -55,14 +55,8 @@
         {
             "step": "setSiteOptions",
             "options": {
-                "permalink_structure": "/%postname%/"
-            }
-        },
-        {
-            "step": "setSiteOptions",
-            "options": {
-                "show_on_front": "page",
-				"page_on_front": 8
+                "permalink_structure": "/%postname%/",
+				"comment-edit-lite-activate": "noredirect"
             }
         }
     ]
