@@ -2,8 +2,8 @@
 Contributors: ronalfy
 Tags: comment editing, comments ,edit comments, reviews,
 Requires at least: 5.0
-Tested up to: 6.5
-Stable tag: 3.0.19
+Tested up to: 6.6
+Stable tag: 3.0.20
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,6 +79,11 @@ Simple Comment Editing will work all the way back to IE10.
 5. Light button theme.
 
 == Changelog ==
+
+= 3.0.20 =
+* Released 2024-06-25
+* Fixing Ajax JS error for timers on lazy loaded comments.
+* Hiding non-plugin notices on the settings page.
 
 = 3.0.19 =
 * Released 2023-12-19
@@ -486,5 +491,5 @@ Simple Comment Editing will work all the way back to IE10.
 
 == Upgrade Notice ==
 
-= 3.0.19 =
-Compatibility update: Fixing JS events not tied to document and fixing JS filters for other callers.
+= 3.0.20 =
+Fixing Ajax error for timers on lazy loaded comments.
