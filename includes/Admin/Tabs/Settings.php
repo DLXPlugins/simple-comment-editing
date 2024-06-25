@@ -77,7 +77,7 @@ class Settings extends Tabs {
 				if ( isset( $_POST['submit'] ) && isset( $_POST['options'] ) ) {
 					check_admin_referer( 'save_sce_options' );
 					Options::update_options( $_POST['options'] ); // phpcs:ignore
-					printf( '<div class="updated"><p><strong>%s</strong></p></div>', esc_html__( 'Your options have been saved.', 'simple-comment-editing' ) );
+					printf( '<div class="updated sce-updated"><p><strong>%s</strong></p></div>', esc_html__( 'Your options have been saved.', 'simple-comment-editing' ) );
 				}
 				// Get options and defaults.
 				$options = Options::get_options();
