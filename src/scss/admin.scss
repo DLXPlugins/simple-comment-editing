@@ -57,6 +57,14 @@ $danger_button_color_text: #fff;
 	}
 }
 
+/** Hide Notices **/
+body .updated, body .notice {
+	display: none !important;
+}
+body .sce-updated {
+	display: block !important;
+}
+
 /* Admin buttons and logo */
 .sce-logo-wrap {
 	display: grid;
