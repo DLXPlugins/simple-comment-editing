@@ -7,7 +7,7 @@
 
 namespace DLXPlugins\CommentEditLite;
 
-use DLXPlugins\CommentEditLite\Admin\Admin_Settings as Admin_Settings;
+use DLXPlugins\CommentEditLite\Admin\Admin_Settings;
 
 /**
  * Main class for Comment Edit Lite.
@@ -210,6 +210,7 @@ class Simple_Comment_Editing {
 		$sce_content  .= '<div class="sce-edit-button sce-hide">';
 		$ajax_edit_url = add_query_arg(
 			array(
+				'action'      => 'sce_get_time_left',
 				'editComment' => 1,
 				'cid'         => $comment_id,
 				'pid'         => $post_id,
@@ -419,7 +420,6 @@ class Simple_Comment_Editing {
 		// Return content.
 		$comment_content = $comment_wrapper . $sce_content;
 		return $comment_content;
-
 	}
 
 	/**
@@ -643,7 +643,6 @@ class Simple_Comment_Editing {
 				$this->generate_cookie_data( $post_id, $comment_id, 'setcookie' );
 			}
 		}
-
 	} //end comment_posted
 
 	/**
@@ -828,7 +827,6 @@ class Simple_Comment_Editing {
 		}
 
 		$this->generate_cookie_data( $comment['comment_post_ID'], $comment['comment_ID'], 'removecookie' );
-
 	}
 
 	/**
@@ -858,10 +856,6 @@ class Simple_Comment_Editing {
 			set_transient( 'sce_security_keys', true, HOUR_IN_SECONDS );
 		}
 	}
-
-
-
-
 } //end class Simple_Comment_Editing
 
 add_action( 'plugins_loaded', __NAMESPACE__ . '\sce_instantiate' );
