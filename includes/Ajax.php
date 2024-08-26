@@ -300,11 +300,13 @@ class Ajax {
 			add_filter( 'pre_option_comment_moderation', array( static::class, 'short_circuit_comment_moderation' ) );
 			add_filter( 'pre_option_comment_whitelist', array( static::class, 'short_circuit_comment_moderation' ) );
 			add_filter( 'option_comment_moderation', '__return_false' ); // Needed to bypass moderation.
+			add_filter( 'option_comment_previously_approved', '__return_false' ); // Needed to bypass moderation.
 			if ( check_comment( $comment_to_save['comment_author'], $comment_to_save['comment_author_email'], $comment_to_save['comment_author_url'], $new_comment_content, $comment_to_save['comment_author_IP'], $comment_to_save['comment_agent'], $comment_to_save['comment_type'] ) ) {
 				$comment_to_save['comment_approved'] = 1;
 			} else {
 				$comment_to_save['comment_approved'] = 0;
 			}
+			remove_filter( 'option_comment_previously_approved', '__return_false' );
 			remove_filter( 'option_comment_moderation', '__return_false' ); 
 			// Remove Short circuit comment moderation filter.
 			remove_filter( 'pre_option_comment_moderation', array( static::class, 'short_circuit_comment_moderation' ) );

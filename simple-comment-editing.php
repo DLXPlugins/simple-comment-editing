@@ -711,14 +711,12 @@ class Simple_Comment_Editing {
 			$comment_id = isset( $_POST['comment_id'] ) ? absint( $_POST['comment_id'] ) : 0;
 		}
 
+		// Get comment for IP and user-agent data.
+		$comment = \get_comment( $comment_id, ARRAY_A );
+
 		// Get hash and random security key - Stored in the style of Ajax Edit Comments.
-		$comment_author_ip = '';
 		$comment_date_gmt  = '';
-		if ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
-					$comment_author_ip = sanitize_text_field( wp_unslash( $_SERVER['HTTP_X_FORWARDED_FOR'] ) );
-		} elseif ( isset( $_SERVER['REMOTE_ADDR'] ) ) {
-				$comment_author_ip = sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) );
-		}
+		$comment_author_ip = sanitize_text_field( $comment['comment_author_IP'] );
 		/**
 		 * Filter: sce_pre_comment_user_ip
 		 *
@@ -733,7 +731,7 @@ class Simple_Comment_Editing {
 			$comment_author_ip = apply_filters( 'pre_comment_user_ip', $comment_author_ip );
 		}
 		$comment_date_gmt = current_time( 'Y-m-d', 1 );
-		$user_agent       = substr( isset( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '', 0, 254 );
+		$user_agent       = isset( $comment['comment_agent'] ) ? sanitize_text_field( $comment['comment_agent'] ) : '';
 		$hash             = md5( $comment_author_ip . $comment_date_gmt . Functions::get_user_id() . $user_agent );
 
 		$rand            = '_wpAjax' . $hash . md5( wp_generate_password( 30, true, true ) ) . '-' . time();
