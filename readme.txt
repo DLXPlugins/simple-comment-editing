@@ -81,7 +81,7 @@ Simple Comment Editing will work all the way back to IE10.
 == Changelog ==
 
 = 3.0.30 =
-* Released TBD
+* Released 2024-08-26
 * Fixing issue with Server IP and user-agent not allowing for edited comments.
 * Fixed issue with edited comments and comment edit markup showing when re-checking a comment.
 
