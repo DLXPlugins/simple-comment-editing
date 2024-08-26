@@ -307,7 +307,7 @@ class Ajax {
 				$comment_to_save['comment_approved'] = 0;
 			}
 			remove_filter( 'option_comment_previously_approved', '__return_false' );
-			remove_filter( 'option_comment_moderation', '__return_false' ); 
+			remove_filter( 'option_comment_moderation', '__return_false' );
 			// Remove Short circuit comment moderation filter.
 			remove_filter( 'pre_option_comment_moderation', array( static::class, 'short_circuit_comment_moderation' ) );
 			remove_filter( 'pre_option_comment_whitelist', array( static::class, 'short_circuit_comment_moderation' ) );
