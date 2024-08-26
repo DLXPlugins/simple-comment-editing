@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: comment editing, comments ,edit comments, reviews,
 Requires at least: 5.0
 Tested up to: 6.6
-Stable tag: 3.0.25
+Stable tag: 3.0.30
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,9 +80,10 @@ Simple Comment Editing will work all the way back to IE10.
 
 == Changelog ==
 
-= 3.0.25 =
+= 3.0.30 =
 * Released TBD
 * Fixing issue with Server IP and user-agent not allowing for edited comments.
+* Fixed issue with edited comments and comment edit markup showing when re-checking a comment.
 
 = 3.0.21 =
 * Released 2024-08-26
@@ -499,5 +500,5 @@ Simple Comment Editing will work all the way back to IE10.
 
 == Upgrade Notice ==
 
-= 3.0.21 =
-Fixing bug with `check_comment` function always returning that a comment should be in moderation when saving an edited comment.
+= 3.0.30 =
+Fixing issue with Server IP and user-agent not allowing for edited comments. Fixed issue with edited comments and comment edit markup showing when re-checking a comment.
