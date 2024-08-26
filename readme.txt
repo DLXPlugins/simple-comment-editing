@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: comment editing, comments ,edit comments, reviews,
 Requires at least: 5.0
 Tested up to: 6.6
-Stable tag: 3.0.24
+Stable tag: 3.0.25
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,7 +80,7 @@ Simple Comment Editing will work all the way back to IE10.
 
 == Changelog ==
 
-= 3.0.24 =
+= 3.0.25 =
 * Released TBD
 * Fixing issue with Server IP and user-agent not allowing for edited comments.
 
