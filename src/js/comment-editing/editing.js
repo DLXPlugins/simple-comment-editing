@@ -235,6 +235,15 @@ window.addEventListener( 'load', () => {
 			// Show button if time left.
 			if ( 'unlimited' === minutes && 'unlimited' === seconds ) {
 				showEditButton( button );
+				// Trigger new event for timer being loaded for the button.
+				const timerLoadedEvent = new CustomEvent( 'sceTimerLoaded', {
+					detail: {
+						button,
+						commentId,
+						postId,
+					},
+				} );
+				document.dispatchEvent( timerLoadedEvent );
 				return;
 			}
 

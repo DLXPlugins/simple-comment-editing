@@ -3,8 +3,6 @@ const _n = wp.i18n._n;
 const sce_hooks = wp.hooks.createHooks();
 
 jQuery( document ).ready( function( $ ) {
-	console.log( 'yo' );
-
 	// SCE Timer Filter.
 	if ( 'compact' === simple_comment_editing.timer_appearance ) {
 		sce_hooks.addFilter( 'sce.comment.timer.text', 'simple-comment-editing', function( timer_text, days_text, hours_text, minutes_text, seconds_text, days, hours, minutes, seconds ) {
@@ -238,6 +236,16 @@ jQuery( document ).ready( function( $ ) {
 				//Set initial timer text
 				if ( 'unlimited' === response.minutes && 'unlimited' === response.seconds ) {
 					$( element ).show( 400 );
+					/**
+					 * Event: sce.timer.loaded
+					 *
+					 * Event triggered after a commen's timer has been loaded
+					 *
+					 * @since 1.3.0
+					 *
+					 * @param jQuery Element of the comment
+					 */
+					$( element ).trigger( 'sce.timer.loaded', element );
 					return;
 				}
 				const minutes = parseInt( response.minutes );

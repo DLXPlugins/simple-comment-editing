@@ -293,7 +293,7 @@ class Simple_Comment_Editing {
 		*/
 		$textarea_content .= apply_filters( 'sce_extra_fields_pre', '', $post_id, $comment_id, $comment );
 		$textarea_content .= '<div class="sce-comment-textarea">';
-		$textarea_content .= '<textarea class="sce-comment-text" cols="45" rows="8">%s</textarea>';
+		$textarea_content .= '<textarea class="sce-comment-text" %s>%s</textarea>';
 		$textarea_content .= '</div><!-- .sce-comment-textarea -->';
 
 		/**
@@ -397,7 +397,12 @@ class Simple_Comment_Editing {
 		*/
 		$textarea_buttons         = apply_filters( 'sce_buttons', $textarea_buttons, $comment_id );
 		$textarea_button_content .= $textarea_buttons . '</div><!-- .sce-comment-edit-buttons -->';
-		$textarea_content         = sprintf( $textarea_content, esc_textarea( $raw_content ), $textarea_button_content );
+		$textarea_content         = sprintf(
+			$textarea_content,
+			'style="max-width: 100%; min-height: 150px;"',
+			esc_textarea( $raw_content ),
+			$textarea_button_content
+		);
 
 		// End.
 		$sce_content .= $textarea_content . '</div><!-- .sce-edit-comment -->';
