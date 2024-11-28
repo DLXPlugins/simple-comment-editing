@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: comment editing, comments ,edit comments, reviews,
 Requires at least: 5.0
 Tested up to: 6.7
-Stable tag: 3.0.31
+Stable tag: 3.0.32
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,6 +79,10 @@ Simple Comment Editing will work all the way back to IE10.
 5. Light button theme.
 
 == Changelog ==
+
+= 3.0.32 =
+* Released 2024-11-28
+* Fixing translation debug warning in WP 6.7 for loading translations to early.
 
 = 3.0.31 =
 * Released 2024-09-20
@@ -505,5 +509,5 @@ Simple Comment Editing will work all the way back to IE10.
 
 == Upgrade Notice ==
 
-= 3.0.31 =
-Fixing missing event for when there is no timer. Adding max-width to edit textarea for better styling.
+= 3.0.32 =
+Fixing translation debug warning in WP 6.7 for loading translations to early.
