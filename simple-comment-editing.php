@@ -74,13 +74,6 @@ class Simple_Comment_Editing {
 	public function plugins_loaded() {
 		add_action( 'init', array( $this, 'init' ), 9 );
 
-		// Load text domain.
-		load_plugin_textdomain(
-			'simple-comment-editing',
-			false,
-			dirname( plugin_basename( __FILE__ ) ) . '/languages/'
-		);
-
 		// Initialize errors.
 		self::$errors = new \WP_Error();
 		self::$errors->add( 'nonce_fail', __( 'You do not have permission to edit this comment.', 'simple-comment-editing' ) );
@@ -126,6 +119,13 @@ class Simple_Comment_Editing {
 		if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
 			return false;
 		}
+
+		// Load text domain.
+		load_plugin_textdomain(
+			'simple-comment-editing',
+			false,
+			dirname( plugin_basename( __FILE__ ) ) . '/languages/'
+		);
 
 		// When a comment is posted.
 		add_action( 'comment_post', array( $this, 'comment_posted' ), 100, 1 );
