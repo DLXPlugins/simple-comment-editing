@@ -74,14 +74,6 @@ class Simple_Comment_Editing {
 	public function plugins_loaded() {
 		add_action( 'init', array( $this, 'init' ), 9 );
 
-		// Initialize errors.
-		self::$errors = new \WP_Error();
-		self::$errors->add( 'nonce_fail', __( 'You do not have permission to edit this comment.', 'simple-comment-editing' ) );
-		self::$errors->add( 'edit_fail', __( 'You can no longer edit this comment.', 'simple-comment-editing' ) );
-		self::$errors->add( 'timer_fail', __( 'Timer could not be stopped.', 'simple-comment-editing' ) );
-		self::$errors->add( 'comment_empty', __( 'Your comment cannot be empty. Delete instead?', 'simple-comment-editing' ) );
-		self::$errors->add( 'comment_marked_spam', __( 'This comment was marked as spam.', 'simple-comment-editing' ) );
-
 		// Determine http/https admin-ajax issue.
 		self::$scheme = is_ssl() ? 'https' : 'http';
 
@@ -126,6 +118,14 @@ class Simple_Comment_Editing {
 			false,
 			dirname( plugin_basename( __FILE__ ) ) . '/languages/'
 		);
+
+		// Initialize errors.
+		self::$errors = new \WP_Error();
+		self::$errors->add( 'nonce_fail', __( 'You do not have permission to edit this comment.', 'simple-comment-editing' ) );
+		self::$errors->add( 'edit_fail', __( 'You can no longer edit this comment.', 'simple-comment-editing' ) );
+		self::$errors->add( 'timer_fail', __( 'Timer could not be stopped.', 'simple-comment-editing' ) );
+		self::$errors->add( 'comment_empty', __( 'Your comment cannot be empty. Delete instead?', 'simple-comment-editing' ) );
+		self::$errors->add( 'comment_marked_spam', __( 'This comment was marked as spam.', 'simple-comment-editing' ) );
 
 		// When a comment is posted.
 		add_action( 'comment_post', array( $this, 'comment_posted' ), 100, 1 );
