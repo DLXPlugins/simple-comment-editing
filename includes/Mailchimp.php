@@ -13,6 +13,13 @@ namespace DLXPlugins\CommentEditLite;
 class Mailchimp {
 
 	/**
+	 * Mailchimp API variable with <sp> (server prefix) for search/replace.
+	 *
+	 * @var string Mailchimp API variable.
+	 */
+	private static $mailchimp_api = 'https://<sp>.api.mailchimp.com/3.0/';
+
+	/**
 	 * Class runner.
 	 */
 	public static function run() {
@@ -90,12 +97,12 @@ class Mailchimp {
 		// Format API url for a server prefix..
 		$mailchimp_api_url = str_replace(
 			'<sp>',
-			$options['mailchimp_api_key_server_prefix'],
-			$this->mailchimp_api
+			sanitize_key( $options['mailchimp_api_key_server_prefix'] ),
+			self::$mailchimp_api
 		);
 
 		$commenter_name    = $comment->comment_author;
-		$mailchimp_api_key = $options['mailchimp_api_key'];
+		$mailchimp_api_key = sanitize_text_field( $options['mailchimp_api_key'] );
 
 		$endpoint = $mailchimp_api_url . 'lists/' . $list . '/members/';
 
@@ -114,7 +121,7 @@ class Mailchimp {
 				),
 			)
 		);
-		$response             = wp_remote_post( esc_url_raw( $endpoint ), $http_args );
+		$response             = wp_safe_remote_post( esc_url_raw( $endpoint ), $http_args );
 		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
 			// Response code can be 400 if the member already exists.
 			return false;

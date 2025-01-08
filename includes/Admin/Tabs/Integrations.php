@@ -254,7 +254,7 @@ class Integrations extends Tabs {
 		// Format API url for a server prefix..
 		$mailchimp_api_url = str_replace(
 			'<sp>',
-			$api_server_prefix,
+			sanitize_key( $api_server_prefix ),
 			$this->mailchimp_api
 		);
 
@@ -269,7 +269,7 @@ class Integrations extends Tabs {
 		$lists_api_url = esc_url_raw( $mailchimp_api_url . '/lists' );
 
 		// Make API call.
-		$response = wp_remote_get( $lists_api_url, $http_args );
+		$response = wp_safe_remote_get( $lists_api_url, $http_args );
 
 		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
 			wp_send_json_error( array( 'message' => __( 'Could not connect to Mailchimp.', 'comment-edit-pro' ) ) );
