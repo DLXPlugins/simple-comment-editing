@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: comment editing, comments ,edit comments, reviews,
 Requires at least: 5.0
 Tested up to: 6.7
-Stable tag: 3.0.33
+Stable tag: 3.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,6 +79,10 @@ Simple Comment Editing will work all the way back to IE10.
 5. Light button theme.
 
 == Changelog ==
+
+= 3.1.0 =
+* Released 2025-01-08
+* Security fix: Resolving SSRF security vulnerability when retrieving Mailchimp data as reported by Patchstack.
 
 = 3.0.33 =
 * Released 2024-12-11
@@ -513,5 +517,5 @@ Simple Comment Editing will work all the way back to IE10.
 
 == Upgrade Notice ==
 
-= 3.0.33 =
-Fixing remaining translation warnings in WP 6.7.
+= 3.1.0 =
+* Security fix: Resolving SSRF security vulnerability when retrieving and submitting Mailchimp data as reported by Patchstack.
