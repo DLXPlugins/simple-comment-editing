@@ -46,6 +46,10 @@ Features Include:
 
 > <a href="https://app.instawp.io/launch?t=dlx-plugins&d=v1">Launch a Live Demo on InstaWP</a>
 
+= How can I report security bugs? =
+
+You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/simple-comment-editing)
+
 == Installation ==
 
 1. Just unzip and upload the "simple-comment-editing" folder to your '/wp-content/plugins/' directory
