@@ -46,9 +46,6 @@ Features Include:
 
 > <a href="https://app.instawp.io/launch?t=dlx-plugins&d=v1">Launch a Live Demo on InstaWP</a>
 
-= How can I report security bugs? =
-
-You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/simple-comment-editing)
 
 == Installation ==
 
@@ -73,6 +70,10 @@ For advanced options, please see the <a href="https://sce.dlxplugins.com/">SCE F
 
 = What browsers have you tested this with? =
 Simple Comment Editing will work all the way back to IE10.
+
+= How can I report security bugs? =
+
+You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/simple-comment-editing)
 
 == Screenshots ==
 
