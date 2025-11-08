@@ -23,8 +23,6 @@ class Ajax {
 		add_action( 'wp_ajax_nopriv_sce_save_comment', array( static::class, 'ajax_save_comment' ) );
 		add_action( 'wp_ajax_sce_delete_comment', array( static::class, 'ajax_delete_comment' ) );
 		add_action( 'wp_ajax_nopriv_sce_delete_comment', array( static::class, 'ajax_delete_comment' ) );
-		add_action( 'wp_ajax_sce_get_comment', array( static::class, 'ajax_get_comment' ) );
-		add_action( 'wp_ajax_nopriv_sce_get_comment', array( static::class, 'ajax_get_comment' ) );
 		add_action( 'wp_ajax_sce_stop_timer', array( static::class, 'ajax_stop_timer' ) );
 		add_action( 'wp_ajax_nopriv_sce_stop_timer', array( static::class, 'ajax_stop_timer' ) );
 	}
@@ -218,37 +216,6 @@ class Ajax {
 		$return['error'] = '';
 		wp_send_json_success( $return );
 	} //end ajax_delete_comment
-
-	/**
-	 * Gets a Comment.
-	 *
-	 * Returns a JSON object of the comment and comment text.
-	 *
-	 * @access public
-	 * @since 1.5.0
-	 */
-	public static function ajax_get_comment() {
-		check_ajax_referer( 'sce-general-ajax-nonce' );
-		$comment_id = absint( filter_input( INPUT_POST, 'comment_id', FILTER_VALIDATE_INT ) );
-
-		/**
-		* Filter: sce_get_comment
-		*
-		* Modify comment object
-		*
-		* @since 1.5.0
-		*
-		* @param array Comment array
-		*/
-		$comment                 = apply_filters( 'sce_get_comment', get_comment( $comment_id, ARRAY_A ) );
-		$comment['comment_text'] = stripslashes( get_comment_text( $comment_id ) );
-		$comment['comment_html'] = Functions::get_comment_content( (object) $comment );
-
-		if ( $comment ) {
-			wp_send_json_success( $comment );
-		}
-		die( '' );
-	}
 
 	/**
 	 *  Saves a comment to the database, returns the updated comment via JSON.
