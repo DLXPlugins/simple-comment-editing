@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: comment editing, comments ,edit comments, reviews,
 Requires at least: 5.0
 Tested up to: 6.8
-Stable tag: 3.1.0
+Stable tag: 3.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -84,6 +84,10 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 5. Light button theme.
 
 == Changelog ==
+
+= 3.2.0 =
+* Released 2025-11-08
+* Security fix: Resolving Unauthenticated Sensitive Information Exposure report from Wordfence. Removing uneeded get comment function, which could expose comment information.
 
 = 3.1.0 =
 * Released 2025-01-08
@@ -522,5 +526,5 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Upgrade Notice ==
 
-= 3.1.0 =
-* Security fix: Resolving SSRF security vulnerability when retrieving and submitting Mailchimp data as reported by Patchstack.
+= 3.2.0 =
+* Security fix: Resolving Unauthenticated Sensitive Information Exposure report from Wordfence. Removing uneeded get comment function, which could expose comment information.
