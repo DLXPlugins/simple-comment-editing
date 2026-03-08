@@ -7,6 +7,10 @@
 
 namespace DLXPlugins\CommentEditLite\Admin\Tabs;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	die( 'No direct access.' );
+}
+
 /**
  * Tabs boilerplate.
  */

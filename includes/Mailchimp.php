@@ -7,6 +7,10 @@
 
 namespace DLXPlugins\CommentEditLite;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	die( 'No direct access.' );
+}
+
 /**
  * Class Mailchimp
  */

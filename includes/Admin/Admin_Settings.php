@@ -7,6 +7,10 @@
 
 namespace DLXPlugins\CommentEditLite\Admin;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	die( 'No direct access.' );
+}
+
 use DLXPlugins\CommentEditLite\Functions as Functions;
 
 /**
