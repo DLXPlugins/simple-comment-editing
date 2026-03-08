@@ -1,6 +1,6 @@
 === Comment Edit Core - Simple Comment Editing ===
 Contributors: ronalfy
-Tags: comment editing, comments ,edit comments, reviews,
+Tags: comment editing, comments ,edit comments, reviews, comment moderation
 Requires at least: 6.5
 Tested up to: 7.0
 Stable tag: 3.3.0
