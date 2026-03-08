@@ -119,15 +119,25 @@ class Integrations extends Tabs {
 				</div>
 				<div class="sce-admin-panel-area">
 					<h3 class="sce-panel-heading">
-						<?php esc_html_e( 'Akismet, reCAPTCHA 3, Slack Integrations (Pro only)', 'simple-comment-editing' ); ?>
+						<a href="https://dlxplugins.com/plugins/comment-edit-pro"><img id="sce-options-logo" src="<?php echo esc_url( Functions::get_plugin_url( 'images/comment-edit-base.png' ) ); ?>" alt="Comment Edit Pro logo" /></a>
 					</h3>
 					<div class="sce-panel-row">
 						<p class="description">
-							<?php esc_html_e( 'Comment Edit Pro adds reCAPTCHA 3 spam protection, Akismet spam protection, and Slack notifications to Comment Edit Lite.', 'simple-comment-editing' ); ?>
+							<?php echo wp_kses_post( '<strong>Go Pro</strong> with <strong>Comment Edit Pro</strong>. Enable ConvertKit, Flodesk, and MailerLite integrations to turn commenters into subscribers.', 'simple-comment-editing' ); ?>
 						</p>
+						<p class="description">
+							<?php echo wp_kses_post( 'Use coupon code <strong>COMMENTEDIT</strong> for 25% off your purchase.', 'simple-comment-editing' ); ?>
+						</p>
+						<ul>
+							<li>Additional newsletter integrations such as ConvertKit, Flodesk, and MailerLite</li>
+							<li>Akismet, reCAPTCHA 3, and Cloudflare Turnstile spam protection</li>
+							<li>Slack notifications when comments are left</li>
+							<li>And much more...</li>
+						</ul>
 					</div>
-					<div class="sce-panel-row">
-						<a class="sce-button sce-button-info" href="https://dlxplugins.com/plugins/comment-edit-pro" target="_blank"> <?php esc_html_e( 'Visit Comment Edit Pro', 'simple-comment-editing' ); ?></a>
+					<div class="sce-panel-row sce-button-grid">
+						<a class="sce-button sce-button-pro" href="https://dlxplugins.com/plugins/comment-edit-pro" target="_blank"> <?php esc_html_e( 'Find out More About Comment Edit Pro', 'simple-comment-editing' ); ?></a>
+						<a class="sce-button sce-button-pro" href="https://app.instawp.io/launch?t=comment-edit-pro&d=v2" target="_blank"> <?php esc_html_e( 'Launch a Free Demo', 'simple-comment-editing' ); ?></a>
 					</div>
 				</div>
 				<?php
