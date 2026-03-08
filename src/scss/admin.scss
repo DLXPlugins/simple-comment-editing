@@ -156,6 +156,13 @@ body .sce-updated {
 			background: lighten( $secondary_button_color, 10% );
 		}
 	}
+	&.sce-button-pro {
+		background: $primary_button_color;
+		color: $primary_button_color_text;
+		&:hover {
+			background: lighten( $primary_button_color, 10% );
+		}
+	}
 	&.sce-button-danger {
 		background: $danger_button_color;
 		color: $danger_button_color_text;
@@ -214,6 +221,12 @@ h3.sce-panel-heading {
 	padding-bottom: 0.7em;
 	line-height: 1.3;
 }
+.sce-admin-panel-area ul {
+	list-style: disc;
+	padding-left: 20px;
+	font-size: 16px;
+	line-height: 1.5;
+}
 .sce-admin-panel-area {
 	position: relative;
 	background-color: #FFF;
@@ -221,6 +234,13 @@ h3.sce-panel-heading {
 	box-shadow: 1px 1px 7px 2px rgba(221,221,221,0.6);
 	padding: 20px;
 	margin-top: 25px;
+
+	p {
+		font-size: 16px;
+	}
+}
+.sce-info-text {
+	font-size: 16px;
 }
 .sce-panel-row {
 	margin-bottom: 15px;
@@ -241,7 +261,7 @@ h3.sce-panel-heading {
 }
 
 #sce-options-logo {
-	max-width: 250px;
+	max-width: 325px;
 	display: inline-block;
 	width: 100%;
 	height: auto;

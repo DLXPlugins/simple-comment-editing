@@ -87,7 +87,7 @@ class Settings extends Tabs {
 						<form action="" method="POST">
 							<?php wp_nonce_field( 'save_sce_options' ); ?>
 							<h1><?php esc_html_e( 'Welcome to Comment Edit Core!', 'simple-comment-editing' ); ?></h1>
-							<p><?php esc_html_e( 'Comment Edit Core allows you to set a time limit for comment editing. After the time limit has passed, the comment will no longer editable.', 'simple-comment-editing' ); ?></p>
+							<p><?php esc_html_e( 'Comment Edit Core allows you to set a time limit for comment editing. After the time limit has passed, the comment will no longer be editable by the user.', 'simple-comment-editing' ); ?></p>
 							<p><?php esc_html_e( 'For more control over the comment editing experience, please consider Comment Edit Pro. It has a bunch of utilities that can make managing comments easier.', 'simple-comment-editing' ); ?> - <a target="_blank" href="https://dlxplugins.com/plugins/comment-edit-pro/"><?php esc_html_e( 'Visit Comment Edit Pro', 'simple-comment-editing' ); ?></a></p>
 							<table class="form-table">
 								<tbody>
@@ -149,24 +149,25 @@ class Settings extends Tabs {
 					</h3>
 					<div class="sce-panel-row">
 						<p class="description">
-							<?php echo wp_kses_post( '<strong>Go Pro</strong> with <strong>Comment Edit Pro</strong> and its useful comment utilities.', 'simple-comment-editing' ); ?>
+							<?php echo wp_kses_post( '<strong>Go Pro</strong> with <strong>Comment Edit Pro</strong>. Enable these additional comment moderation features, allow unlimited logged-in editing, and more.', 'simple-comment-editing' ); ?>
+						</p>
+						<p class="description">
+							<?php echo wp_kses_post( 'Use coupon code <strong>COMMENTEDIT</strong> for 25% off your purchase.', 'simple-comment-editing' ); ?>
 						</p>
 						<ul>
-							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/comment-editing">Additional Comment Editing Features</a></li>
-							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/comment-avatars">Comment Avatars</a></li>
-							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/gravatar-privacy-protection">Gravatar Privacy Protection</a></li>
-							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/integrations/recaptcha-3-support">reCAPTCHA 3 Support</a></li>
-							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/integrations/akismet-spam-protection">Akismet Spam Protection Integration</a></li>
-							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/spam-protection/cloudflare-turnstile">Cloudflare Turnstile Support</a></li>
-							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/comment-character-control">Comment Character Control</a></li>
-							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/frontend-editing">Front-end Comment Editing</a></li>
-							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/integrations/slack-integration">Slack Integration</a></li>
-							<li><a href="https://docs.dlxplugins.com/v/comment-edit-pro/features-overview/webhooks">Webhooks</a></li>
+							<li>Frontend moderation menu with comment deletion and moderation actions</li>
+							<li>Enable unlimited logged-in editing</li>
+							<li>Require a login to edit comments</li>
+							<li>Set smart comment deletion rules, such as skipping the trash</li>
+							<li>Change the labels and descriptions of the editing interface</li>
+							<li>Enable comment logging and rollbacks</li>
+							<li>Delete spammed comments automatically and permanently</li>
+							<li>Prevent comment deletion or make comments delete only</li>
 						</ul>
 					</div>
 					<div class="sce-panel-row sce-button-grid">
-						<a class="sce-button sce-button-info" href="https://dlxplugins.com/plugins/comment-edit-pro" target="_blank"> <?php esc_html_e( 'Find out More About Comment Edit Pro', 'simple-comment-editing' ); ?></a>
-						<a class="sce-button sce-button-info" href="https://app.instawp.io/launch?t=dlx-plugins&d=v1" target="_blank"> <?php esc_html_e( 'Launch a Free Demo', 'simple-comment-editing' ); ?></a>
+						<a class="sce-button sce-button-pro" href="https://dlxplugins.com/plugins/comment-edit-pro" target="_blank"> <?php esc_html_e( 'Find out More About Comment Edit Pro', 'simple-comment-editing' ); ?></a>
+						<a class="sce-button sce-button-pro" href="https://app.instawp.io/launch?t=comment-edit-pro&d=v2" target="_blank"> <?php esc_html_e( 'Launch a Free Demo', 'simple-comment-editing' ); ?></a>
 					</div>
 				</div>
 				<?php

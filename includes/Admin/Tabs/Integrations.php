@@ -63,7 +63,7 @@ class Integrations extends Tabs {
 			'get'    => $this->tab,
 			'action' => 'sce_output_' . $this->tab,
 			'url'    => Functions::get_settings_url( $this->tab ),
-			'label'  => _x( 'Integrations', 'Tab label as support', 'simple-comment-editing' ),
+			'label'  => _x( 'Comment Integrations', 'Tab label as support', 'simple-comment-editing' ),
 			'icon'   => 'home-heart',
 		);
 		return $tabs;
