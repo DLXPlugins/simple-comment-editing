@@ -1,6 +1,6 @@
 === Comment Edit Core - Simple Comment Editing ===
 Contributors: ronalfy
-Tags: comment editing, comments ,edit comments, reviews, comment moderation
+Tags: comment editing, comments ,edit comments, ajax comments, comment moderation
 Requires at least: 6.5
 Tested up to: 7.0
 Stable tag: 3.3.0
@@ -19,7 +19,7 @@ Go Pro for a lot more control over the comment editing experience, including fro
 
 <a href="https://docs.dlxplugins.com/v/comment-edit-lite/">Getting Started</a> | <a href="https://github.com/sponsors/DLXPlugins">Sponsor Us</a> | <a href="https://dlxplugins.com/plugins/comment-edit-lite/">Comment Edit Core Home</a>
 
-<h2>Comment Edit Core features:</h2>
+=== Comment Edit Core features ===
 <ol>
 <li>Install the plugin. That's it. It just works.
 <li>Anonymous users can edit comments for 5 minutes.</li>
@@ -28,7 +28,7 @@ Go Pro for a lot more control over the comment editing experience, including fro
 <li>Add Mailchimp to your comment form and get email subscribers through comments.</li>
 </ol>
 
-<h2>Get more with Comment Edit Pro</h2>
+=== Get more with Comment Edit Pro ===
 
 For additional features in addition to comment editing, please check out <a href="https://dlxplugins.com/plugins/comment-edit-pro/">Comment Edit Pro</a>.
 
