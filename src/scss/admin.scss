@@ -394,91 +394,156 @@ h3.sce-panel-heading {
 		}
 	}
 }
-
 /* Admin Buttons */
 .sce-admin-buttons {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-
-	button {
-		background: #FFF;
-		color: #017e01;
-		border-style: solid;
-		border-color: #017e01;
-		padding: 10px 20px;
-		cursor: pointer;
-		border-radius: 5px;
-
-		&:hover {
-			border-radius: 5px;
-			background: #e9ece6;
-			color: #005200;
-			border-color: #006400;
-		}
-
-		&.has-error {
-			border: 1px solid #bc2b2c;
-			&:hover {
-				cursor: not-allowed;
-			}
-		}
-
-		&.qdlx__btn-danger {
-			background: #FFF;
-			color: #822700;
-			border-color: #822700;
-
-			&:hover {
-				background: #ece6e6;
-				color: #822700;
-				border-color: #822700;
-			}
-		}
-
-		&.qdlx__btn--icon-right {
-			&.is-saving {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				svg {
-					width: 24px;
-					height: 24px;
-					animation: sce-rotate 1s linear infinite;
-					path {
-						fill: #017e01;
-					}
-				}
-			}
-			&.is-saved {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				svg {
-					width: 24px;
-					height: 24px;
-					margin-left: 14px;
-					path {
-						fill: #017e01;
-					}
-				}
-			}
-			&.is-resetting {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				svg {
-					width: 24px;
-					height: 24px;
-					animation: sce-rotate 1s linear infinite;
-					path {
-						fill: #822700;
-					}
-				}
-			}
-		}
-	}
-}
+  }
+  .sce-admin-buttons.sce-admin-buttons-flex-right {
+	justify-content: flex-end;
+  }
+  .sce-admin-buttons button {
+	background: #fff;
+	color: #017e01;
+	border-style: solid;
+	border-color: #017e01;
+	padding: 10px 20px;
+	cursor: pointer;
+	border-radius: 5px;
+	transition: all 0.4s ease-in-out;
+  }
+  .sce-admin-buttons button:hover {
+	border-radius: 5px;
+	background: #e9ece6;
+	color: #005200;
+	border-color: #006400;
+  }
+  .sce-admin-buttons button.has-error {
+	border: 1px solid #bc2b2c;
+  }
+  .sce-admin-buttons button.has-error:hover {
+	cursor: not-allowed;
+  }
+  .sce-admin-buttons button.qdlx__btn-white {
+	background: #fff;
+	color: #333;
+	border-color: #111;
+  }
+  .sce-admin-buttons button.qdlx__btn-white:hover {
+	background: rgb(229.5, 229.5, 229.5);
+	color: #111;
+	border-color: #000;
+  }
+  .sce-admin-buttons button.qdlx__btn-primary {
+	background: #fff;
+	color: #017e01;
+	border-style: solid;
+	border-color: #017e01;
+	padding: 10px 20px;
+	cursor: pointer;
+	border-radius: 5px;
+	transition: all 0.4s ease-in-out;
+	border-width: 1px;
+  }
+  .sce-admin-buttons button.qdlx__btn-primary:hover {
+	border-radius: 5px;
+	background: #e9ece6;
+	color: #005200;
+	border-color: #006400;
+  }
+  .sce-admin-buttons button.qdlx__btn-secondary {
+	background: #333;
+	color: #ffffff;
+	border-color: #111;
+  }
+  .sce-admin-buttons button.qdlx__btn-secondary:hover {
+	background: rgb(76.5, 76.5, 76.5);
+	color: #ffffff;
+	border-color: rgb(42.5, 42.5, 42.5);
+  }
+  .sce-admin-buttons button.qdlx__btn-link {
+	all: unset;
+	cursor: pointer;
+	color: #9949cf;
+	font-weight: 600;
+	text-decoration: underline;
+  }
+  .sce-admin-buttons button.qdlx__btn-danger {
+	background: #fff;
+	color: #822700;
+	border-color: #822700;
+	border-style: solid;
+	border-width: 1px;
+  }
+  .sce-admin-buttons button.qdlx__btn-danger:hover {
+	background: #ece6e6;
+	color: #822700;
+	border-color: #822700;
+  }
+  .sce-admin-buttons button.sce__btn-action {
+	display: flex;
+	align-items: center;
+	background: #fff;
+	color: #9949cf;
+	border-color: #9949cf;
+	font-weight: 600;
+  }
+  .sce-admin-buttons button.sce__btn-action:hover {
+	background: rgb(248, 247, 254);
+	color: #8019c4;
+	border-color: #6f6f6f;
+  }
+  .sce-admin-buttons button.sce__btn-action:hover svg path {
+	fill: #8019c4;
+  }
+  .sce-admin-buttons button.sce__btn-action svg {
+	display: inline-block;
+	margin-right: 8px;
+  }
+  .sce-admin-buttons button.sce__btn-action svg path {
+	fill: #9949cf;
+  }
+  .sce-admin-buttons button.qdlx__btn--icon-right.is-saving {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+  }
+  .sce-admin-buttons button.qdlx__btn--icon-right.is-saving svg {
+	width: 24px;
+	height: 24px;
+	margin-left: 8px;
+	animation: sce-rotate 1s linear infinite;
+  }
+  .sce-admin-buttons button.qdlx__btn--icon-right.is-saving svg path {
+	fill: currentColor;
+  }
+  .sce-admin-buttons button.qdlx__btn--icon-right.is-saved {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+  }
+  .sce-admin-buttons button.qdlx__btn--icon-right.is-saved svg {
+	width: 24px;
+	height: 24px;
+	margin-left: 14px;
+  }
+  .sce-admin-buttons button.qdlx__btn--icon-right.is-saved svg path {
+	fill: #017e01;
+  }
+  .sce-admin-buttons button.qdlx__btn--icon-right.is-resetting {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+  }
+  .sce-admin-buttons button.qdlx__btn--icon-right.is-resetting svg {
+	width: 24px;
+	height: 24px;
+	animation: sce-rotate 1s linear infinite;
+  }
+  .sce-admin-buttons button.qdlx__btn--icon-right.is-resetting svg path {
+	fill: #822700;
+  }
 
 /* Text fields */
 .sce-panel-row {
@@ -552,6 +617,9 @@ h3.sce-panel-heading {
 /* Error Notices */
 .sce-admin__notice {
 	margin: 10px 0;
+	.components-notice__actions {
+		display: none;
+	}
 	&.sce-admin__notice--has-icon {
 		.components-notice__content {
 			display: grid;
@@ -601,15 +669,16 @@ h3.sce-panel-heading {
 	}
 	&.sce-admin__notice-type--error.sce-admin__notice-appearance--inline {
 		.sce-admin__notice-message {
-			color: var(--sce-admin--color-notice--error-alt);
+			color: #1e1e1e;
 		}
 		.sce-admin__notice-message {
-			font-size: 0.9em;
+			font-size: 1.1em;
 		}
 
 		svg {
 			width: 16px;
 			height: 16px;
+			margin-left: 8px;
 			path {
 				fill: var(--sce-admin--color-notice--error-alt);
 			}

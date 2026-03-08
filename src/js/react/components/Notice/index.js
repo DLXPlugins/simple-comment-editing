@@ -27,11 +27,11 @@ const Notice = ( props ) => {
 	} );
 	return (
 		<div className={ containerClasses }>
-			<WPNotice isDismissible={ false } spokenMessage={ message } actions={ [] } { ...props }>
+			<WPNotice isDismissible={ false } spokenMessage={ message } { ...props }>
 				{ hasIcon() &&
 					<div className="sce-admin__notice-icon">{ getIcon( icon ) }</div>
 				}
-				<div className="sce-admin__notice-message"><>{ message } { children } </></div>
+				<div className="sce-admin__notice-message"><>{ message } { children ? children : null } </></div>
 			</WPNotice>
 		</div>
 	);
