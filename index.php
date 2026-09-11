@@ -1,19 +1,19 @@
 <?php
 /**
- * Comment Edit Core main file.
+ * Simple Comment Editing main file.
  *
- * @package CommentEditCore
+ * @package SimpleCommentEditing
  */
 
 /**
- * Plugin Name: Comment Edit Core
- * Plugin URI: https://dlxplugins.com/plugins/comment-edit-lite/
+ * Plugin Name: Simple Comment Editing
+ * Plugin URI: https://github.com/ronalfy/simple-comment-editing
  * Description: Allow your users to edit their comments.
- * Author: DLX Plugins
+ * Author: Ronald Huereca
  * Version: 3.3.0
  * Requires PHP: 7.2
  * Requires at least: 5.0
- * Author URI: https://dlxplugins.com/
+ * Author URI: https://github.com/ronalfy/simple-comment-editing
  * Contributors: ronalfy
  * Text Domain: simple-comment-editing
  * Domain Path: /languages
@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'SCE_SLUG', plugin_basename( __FILE__ ) );
 define( 'SCE_VERSION', '3.3.0' );
 define( 'SCE_FILE', __FILE__ );
-define( 'SCE_SPONSORS_URL', 'https://github.com/sponsors/DLXPlugins' );
+define( 'SCE_SPONSORS_URL', 'https://github.com/sponsors/ronalfy' );
 
 require_once 'lib/autoload.php';
 require 'simple-comment-editing.php';

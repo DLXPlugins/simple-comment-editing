@@ -1,6 +1,6 @@
 <?php
 /**
- * Main class for Comment Edit Lite.
+ * Main class for Simple Comment Editing.
  *
  * @package DLXPlugins\CommentEditLite
  */
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 use DLXPlugins\CommentEditLite\Admin\Admin_Settings;
 
 /**
- * Main class for Comment Edit Lite.
+ * Main class for Simple Comment Editing.
  */
 class Simple_Comment_Editing {
 
@@ -893,7 +893,7 @@ function sce_plugin_activate() {
 }
 
 /**
- * Redirect to Comment Edit Lite settings page upon activation.
+ * Redirect to Simple Comment Editing settings page upon activation.
  */
 function sce_plugin_activate_redirect() {
 
@@ -913,7 +913,7 @@ function sce_plugin_activate_redirect() {
 			return;
 		}
 
-		$settings_url = admin_url( 'options-general.php?page=comment-edit-core' );
+		$settings_url = admin_url( 'options-general.php?page=simple-comment-editing' );
 		if ( class_exists( '\CommentEditPro\Comment_Edit_Pro' ) ) {
 			$settings_url = admin_url( 'options-general.php?page=comment-edit-pro' );
 		}

@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MediaRon/simple-comment-editing.git"
+    "url": "git+https://github.com/ronalfy/simple-comment-editing.git"
   },
   "keywords": [
     "comment",
@@ -23,9 +23,9 @@
   "author": "Ronald Huereca",
   "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/MediaRon/simple-comment-editing/issues"
+    "url": "https://github.com/ronalfy/simple-comment-editing/issues"
   },
-  "homepage": "https://github.com/MediaRon/simple-comment-editing#readme",
+  "homepage": "https://github.com/ronalfy/simple-comment-editing#readme",
   "devDependencies": {
     "@babel/core": "^7.18.6",
     "@babel/eslint-parser": "^7.22.5",

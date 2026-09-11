@@ -30,7 +30,7 @@ const Mailchimp = ( props ) => {
 		<Suspense
 			fallback={
 				<>
-					<h2>{ __( 'Mailchimp', 'comment-edit-pro' ) }</h2>
+					<h2>{ __( 'Mailchimp', 'simple-comment-editing' ) }</h2>
 					<BeatLoader
 						color={ '#9c68b0' }
 						loading={ true }
@@ -156,7 +156,7 @@ const Interface = ( props ) => {
 						apiKey: '',
 						mailchimpLists: [],
 						selectedList: '',
-						signUpLabel: __( 'Sign Up for Updates', 'comment-edit-pro' ),
+						signUpLabel: __( 'Sign Up for Updates', 'simple-comment-editing' ),
 					} );
 					setTimeout( () => {
 						setIsReset( false );
@@ -175,7 +175,7 @@ const Interface = ( props ) => {
 		}
 		return (
 			<tr>
-				<th scope="row">{ __( 'Sign Up Label', 'comment-edit-pro' ) }</th>
+				<th scope="row">{ __( 'Sign Up Label', 'simple-comment-editing' ) }</th>
 				<td>
 					<Controller
 						name="signUpLabel"
@@ -184,7 +184,7 @@ const Interface = ( props ) => {
 						render={ ( { field } ) => (
 							<TextControl
 								{ ...field }
-								label={ __( 'Sign-up Label', 'comment-edit-pro' ) }
+								label={ __( 'Sign-up Label', 'simple-comment-editing' ) }
 								className={ classNames( 'qdlx-admin__text-control', {
 									'has-error': 'required' === errors.signUpLabel?.type,
 									'is-required': true,
@@ -192,7 +192,7 @@ const Interface = ( props ) => {
 								aria-required="true"
 								help={ __(
 									'This text will be shown in the comment section when a user leaves a comment.',
-									'comment-edit-pro'
+									'simple-comment-editing'
 								) }
 							/>
 						) }
@@ -217,14 +217,14 @@ const Interface = ( props ) => {
 		}
 		return (
 			<tr>
-				<th scope="row">{ __( 'Sign Up Checkbox', 'comment-edit-pro' ) }</th>
+				<th scope="row">{ __( 'Sign Up Checkbox', 'simple-comment-editing' ) }</th>
 				<td>
 					<Controller
 						name="checkboxEnabled"
 						control={ control }
 						render={ ( { field: { onChange, value } } ) => (
 							<ToggleControl
-								label={ __( 'Sign Up Checkbox Checked', 'comment-edit-pro' ) }
+								label={ __( 'Sign Up Checkbox Checked', 'simple-comment-editing' ) }
 								className="sce-admin__toggle-control"
 								checked={ value }
 								onChange={ ( boolValue ) => {
@@ -232,7 +232,7 @@ const Interface = ( props ) => {
 								} }
 								help={ __(
 									'Check the newsletter checkbox by default (not recommended).',
-									'comment-edit-pro'
+									'simple-comment-editing'
 								) }
 							/>
 						) }
@@ -250,7 +250,7 @@ const Interface = ( props ) => {
 
 		return (
 			<tr>
-				<th scope="row">{ __( 'Mailchimp Lists', 'comment-edit-pro' ) }</th>
+				<th scope="row">{ __( 'Mailchimp Lists', 'simple-comment-editing' ) }</th>
 				<td>
 					<Controller
 						name="mailchimpLists"
@@ -258,10 +258,10 @@ const Interface = ( props ) => {
 						rules={ { required: true } }
 						render={ ( { field: { onChange, value } } ) => (
 							<RadioControl
-								label={ __( 'Select a default list', 'comment-edit-pro' ) }
+								label={ __( 'Select a default list', 'simple-comment-editing' ) }
 								help={ __(
 									'Select a default list that will be used for your newsletter prompt',
-									'comment-edit-pro'
+									'simple-comment-editing'
 								) }
 								selected={ getValues( 'selectedList' ) }
 								options={ getValues( 'mailchimpLists' ) }
@@ -303,7 +303,7 @@ const Interface = ( props ) => {
 		// Output server prefix in readonly mode.
 		return (
 			<tr>
-				<th scope="row">{ __( 'Server Prefix', 'comment-edit-pro' ) }</th>
+				<th scope="row">{ __( 'Server Prefix', 'simple-comment-editing' ) }</th>
 				<td>
 					<Controller
 						name="mailchimpServerPrefix"
@@ -311,7 +311,7 @@ const Interface = ( props ) => {
 						rules={ { required: true } }
 						render={ ( { field } ) => (
 							<TextControl
-								label={ __( 'Mailchimp Server Prefix', 'quotes-dlx' ) }
+								label={ __( 'Mailchimp Server Prefix', 'simple-comment-editing' ) }
 								{ ...field }
 								className={ classNames( 'qdlx-admin__text-control', {
 									'has-error': 'required' === errors.apiKey?.type,
@@ -320,7 +320,7 @@ const Interface = ( props ) => {
 								disabled={ true }
 								help={ __(
 									'A server prefix is automatically generated for API access.',
-									'comment-edit-pro'
+									'simple-comment-editing'
 								) }
 								aria-required="true"
 							/>
@@ -334,7 +334,7 @@ const Interface = ( props ) => {
 	const getAPIKey = () => {
 		return (
 			<tr>
-				<th scope="row">{ __( 'API Key', 'comment-edit-pro' ) }</th>
+				<th scope="row">{ __( 'API Key', 'simple-comment-editing' ) }</th>
 				<td>
 					<Controller
 						name="apiKey"
@@ -342,7 +342,7 @@ const Interface = ( props ) => {
 						rules={ { required: true } }
 						render={ ( { field } ) => (
 							<TextControl
-								label={ __( 'Mailchimp API Key', 'quotes-dlx' ) }
+								label={ __( 'Mailchimp API Key', 'simple-comment-editing' ) }
 								{ ...field }
 								className={ classNames( 'qdlx-admin__text-control', {
 									'has-error': 'required' === errors.apiKey?.type,
@@ -350,7 +350,7 @@ const Interface = ( props ) => {
 								} ) }
 								help={ __(
 									'Enter your Mailchimp API Key in order to choose a default list.',
-									'comment-edit-pro'
+									'simple-comment-editing'
 								) }
 								aria-required="true"
 							/>
@@ -391,45 +391,45 @@ const Interface = ( props ) => {
 
 	const getSaveText = () => {
 		if ( saving ) {
-			return __( 'Saving…', 'quotes-dlx' );
+			return __( 'Saving…', 'simple-comment-editing' );
 		}
 		if ( isSaved ) {
-			return __( 'Saved', 'quotes-dlx' );
+			return __( 'Saved', 'simple-comment-editing' );
 		}
-		return __( 'Save Mailchimp Options', 'quotes-dlx' );
+		return __( 'Save Mailchimp Options', 'simple-comment-editing' );
 	};
 
 	const getResetText = () => {
 		if ( resetting ) {
-			return __( 'Disconnecting…', 'quotes-dlx' );
+			return __( 'Disconnecting…', 'simple-comment-editing' );
 		}
 		if ( isReset ) {
-			return __( 'Disconnected', 'quotes-dlx' );
+			return __( 'Disconnected', 'simple-comment-editing' );
 		}
-		return __( 'Disconnect From Mailchimp', 'quotes-dlx' );
+		return __( 'Disconnect From Mailchimp', 'simple-comment-editing' );
 	};
 
 	return (
 		<>
-			<h2>{ __( 'Mailchimp', 'comment-edit-pro' ) }</h2>
+			<h2>{ __( 'Mailchimp', 'simple-comment-editing' ) }</h2>
 			<p className="description">
 				{ __(
 					'When someone leaves a comment, they can be given the option to subscribe to your newsletter on Mailchimp.',
-					'comment-edit-pro'
+					'simple-comment-editing'
 				) }
 			</p>
 			<form onSubmit={ handleSubmit( onSubmit ) }>
 				<table className="form-table">
 					<tbody>
 						<tr>
-							<th scope="row">{ __( 'Mailchimp', 'comment-edit-pro' ) }</th>
+							<th scope="row">{ __( 'Mailchimp', 'simple-comment-editing' ) }</th>
 							<td>
 								<Controller
 									name="enableMailchimp"
 									control={ control }
 									render={ ( { field: { onChange, value } } ) => (
 										<ToggleControl
-											label={ __( 'Enable Mailchimp', 'comment-edit-pro' ) }
+											label={ __( 'Enable Mailchimp', 'simple-comment-editing' ) }
 											className="sce-admin__toggle-control"
 											checked={ value }
 											onChange={ ( boolValue ) => {
@@ -438,7 +438,7 @@ const Interface = ( props ) => {
 											} }
 											help={ __(
 												'Enable or Disable the Mailchimp Integration.',
-												'comment-edit-pro'
+												'simple-comment-editing'
 											) }
 										/>
 									) }
@@ -496,7 +496,7 @@ const Interface = ( props ) => {
 					<Notice
 						message={ __(
 							'There are form validation errors. Please correct them above.',
-							'comment-edit-pro'
+							'simple-comment-editing'
 						) }
 						status="error"
 						politeness="polite"
@@ -504,14 +504,14 @@ const Interface = ( props ) => {
 				) }
 				{ isSaved && (
 					<Notice
-						message={ __( 'Your settings have been saved.', 'comment-edit-pro' ) }
+						message={ __( 'Your settings have been saved.', 'simple-comment-editing' ) }
 						status="success"
 						politeness="assertive"
 					/>
 				) }
 				{ isReset && (
 					<Notice
-						message={ __( 'Your settings have been reset.', 'comment-edit-pro' ) }
+						message={ __( 'Your settings have been reset.', 'simple-comment-editing' ) }
 						status="success"
 						politeness="assertive"
 					/>

@@ -48,7 +48,7 @@
 		<guid isPermaLink="false">https://cec.local/?p=1</guid>
 		<description></description>
 		<content:encoded><![CDATA[<!-- wp:paragraph -->
-<p>Welcome to the Comment Edit Core demo.</p>
+<p>Welcome to the Simple Comment Editing demo.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
@@ -61,11 +61,11 @@
 
 <!-- wp:list -->
 <ul><!-- wp:list-item -->
-<li><a href="https://dlxplugins.com/plugins/comment-edit-lite/">Comment Edit Core</a></li>
+<li><a href="https://github.com/ronalfy/simple-comment-editing">Simple Comment Editing</a></li>
 <!-- /wp:list-item -->
 
 <!-- wp:list-item -->
-<li><a href="https://dlxplugins.com/plugins/comment-edit-pro/">Get Comment Edit Pro</a></li>
+<li><a href="https://github.com/ronalfy/simple-comment-editing">Simple Comment Editing on GitHub</a></li>
 <!-- /wp:list-item --></ul>
 <!-- /wp:list -->]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>

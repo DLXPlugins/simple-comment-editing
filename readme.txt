@@ -1,4 +1,4 @@
-=== Comment Edit Core - Simple Comment Editing ===
+=== Simple Comment Editing ===
 Contributors: ronalfy
 Tags: comment editing, comments ,edit comments, ajax comments, comment moderation
 Requires at least: 6.5
@@ -15,11 +15,9 @@ Allow your users to edit their comments and WooCommerce reviews for a period of 
 
 [youtube https://www.youtube.com/watch?v=bNCDdQbwA-s&rel=0]
 
-Go Pro for a lot more control over the comment editing experience, including front-end moderation capabilities, and unlimited logged-in editing. <a href="https://dlxplugins.com/plugins/comment-edit-pro/">Find out more...</a>
+<a href="https://github.com/ronalfy/simple-comment-editing-docs">Getting Started</a> | <a href="https://github.com/ronalfy/simple-comment-editing">Simple Comment Editing on GitHub</a>
 
-<a href="https://docs.dlxplugins.com/v/comment-edit-lite/">Getting Started</a> | <a href="https://github.com/sponsors/DLXPlugins">Sponsor Us</a> | <a href="https://dlxplugins.com/plugins/comment-edit-lite/">Comment Edit Core Home</a>
-
-=== Comment Edit Core features ===
+=== Simple Comment Editing features ===
 <ol>
 <li>Install the plugin. That's it. It just works.
 <li>Anonymous users can edit comments for 5 minutes.</li>
@@ -30,7 +28,7 @@ Go Pro for a lot more control over the comment editing experience, including fro
 
 === Get more with Comment Edit Pro ===
 
-For additional features in addition to comment editing, please check out <a href="https://dlxplugins.com/plugins/comment-edit-pro/">Comment Edit Pro</a>.
+For additional features in addition to comment editing, please check out Comment Edit Pro.
 
 Features Include:
 
@@ -42,9 +40,6 @@ Features Include:
 * Set comment rules per post type
 * Set comments to expire based on activity
 * Get notified of new and edited comments with the Slack integration
-* <a href="https://dlxplugins.com/plugins/comment-edit-pro/">Find out more...</a>
-
-> <a href="https://app.instawp.io/launch?t=comment-edit-pro&d=v2">Launch a Live Demo of Comment Edit Pro on InstaWP</a>
 
 
 == Installation ==
@@ -54,19 +49,19 @@ Features Include:
 
 == Frequently Asked Questions ==
 
-= Simple Comment Editing is now Comment Edit Core? =
-Yes.  We've renamed the plugin to make it easier to find and to more closely tie the plugin to the pro version.
+= Was this plugin called Comment Edit Core? =
+Yes. The plugin has been renamed back to Simple Comment Editing.
 
 = Why doesn't this plugin come with any styles? =
 It's impossible to style an inline comment editor for every theme.  We've included basic HTML markup that is easily stylable to fit your theme.
 
-With <a href="https://dlxplugins.com/plugins/comment-edit-pro/">Comment Edit Pro</a>, you can choose between three themes.
+With Comment Edit Pro, you can choose between three themes.
 
 = Where are the options? =
-No options :) - Just simple comment editing. If you prefer options, try out the paid add-on <a href="https://dlxplugins.com/plugins/comment-edit-pro/">Comment Edit Pro</a>.
+No options :) - Just simple comment editing. If you prefer options, try out the paid add-on Comment Edit Pro.
 
 = How do I customize this plugin? =
-For advanced options, please see the <a href="https://sce.dlxplugins.com/">SCE Filter/Action reference</a> or get <a href="https://dlxplugins.com/plugins/comment-edit-pro/">Comment Edit Pro</a>.
+For advanced options, please see the <a href="https://github.com/ronalfy/simple-comment-editing">GitHub repository</a> or get Comment Edit Pro.
 
 = What browsers have you tested this with? =
 Simple Comment Editing will work all the way back to IE10.
@@ -84,6 +79,12 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 5. Light button theme.
 
 == Changelog ==
+
+= 3.3.1 =
+* Released 2026-09-11
+* Renaming the plugin back to Simple Comment Editing.
+* Updating author, GitHub, and support URLs.
+* Removing Fancybox admin theme previews.
 
 = 3.3.0 =
 * Released 2026-03-07

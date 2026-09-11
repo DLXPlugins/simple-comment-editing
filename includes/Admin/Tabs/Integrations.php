@@ -11,8 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( 'No direct access.' );
 }
 
-use DLXPlugins\CommentEditLite\Functions as Functions;
-use DLXPlugins\CommentEditLite\Options as Options;
+use DLXPlugins\CommentEditLite\Functions;
+use DLXPlugins\CommentEditLite\Options;
 
 /**
  * Output the settings tab and content.
@@ -65,8 +65,8 @@ class Integrations extends Tabs {
 	public function add_tab( $tabs ) {
 		$tabs[] = array(
 			'get'    => $this->tab,
-			'action' => 'sce_output_' . $this->tab,
-			'url'    => Functions::get_settings_url( $this->tab ),
+			'action' => 'sce_output_' . sanitize_key( $this->tab ),
+			'url'    => esc_url_raw( Functions::get_settings_url( $this->tab ) ),
 			'label'  => _x( 'Newsletter Conversions', 'Tab label as support', 'simple-comment-editing' ),
 			'icon'   => 'home-heart',
 		);
@@ -121,29 +121,6 @@ class Integrations extends Tabs {
 						<div id="sce-tab-mailchimp"></div>
 					</div>
 				</div>
-				<div class="sce-admin-panel-area">
-					<h3 class="sce-panel-heading">
-						<a href="https://dlxplugins.com/plugins/comment-edit-pro"><img id="sce-options-logo" src="<?php echo esc_url( Functions::get_plugin_url( 'images/comment-edit-base.png' ) ); ?>" alt="Comment Edit Pro logo" /></a>
-					</h3>
-					<div class="sce-panel-row">
-						<p class="description">
-							<?php echo wp_kses_post( '<strong>Go Pro</strong> with <strong>Comment Edit Pro</strong>. Enable ConvertKit, Flodesk, and MailerLite integrations to turn commenters into subscribers.', 'simple-comment-editing' ); ?>
-						</p>
-						<p class="description">
-							<?php echo wp_kses_post( 'Use coupon code <strong>COMMENTEDIT</strong> for 25% off your purchase.', 'simple-comment-editing' ); ?>
-						</p>
-						<ul>
-							<li>Additional newsletter integrations such as ConvertKit, Flodesk, and MailerLite</li>
-							<li>Akismet, reCAPTCHA 3, and Cloudflare Turnstile spam protection</li>
-							<li>Slack notifications when comments are left</li>
-							<li>And much more...</li>
-						</ul>
-					</div>
-					<div class="sce-panel-row sce-button-grid">
-						<a class="sce-button sce-button-pro" href="https://dlxplugins.com/plugins/comment-edit-pro" target="_blank"> <?php esc_html_e( 'Find out More About Comment Edit Pro', 'simple-comment-editing' ); ?></a>
-						<a class="sce-button sce-button-pro" href="https://app.instawp.io/launch?t=comment-edit-pro&d=v2" target="_blank"> <?php esc_html_e( 'Launch a Free Demo', 'simple-comment-editing' ); ?></a>
-					</div>
-				</div>
 				<?php
 			}
 		}
@@ -161,7 +138,7 @@ class Integrations extends Tabs {
 		if ( ! wp_verify_nonce( $nonce, 'sce-retrieve-integrations-options' ) || ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'Could not verify nonce.', 'comment-edit-pro' ),
+					'message' => __( 'Could not verify nonce.', 'simple-comment-editing' ),
 				)
 			);
 		}
@@ -198,7 +175,7 @@ class Integrations extends Tabs {
 		if ( ! wp_verify_nonce( $nonce, 'sce-save-integrations-options' ) || ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'Could not verify nonce.', 'comment-edit-pro' ),
+					'message' => __( 'Could not verify nonce.', 'simple-comment-editing' ),
 				)
 			);
 		}
@@ -218,7 +195,7 @@ class Integrations extends Tabs {
 				'mailchimp_api_key'               => '',
 				'mailchimp_api_key_server_prefix' => '',
 				'mailchimp_selected_list'         => '',
-				'mailchimp_signup_label'          => __( 'Sign Up for Updates', 'comment-edit-pro' ),
+				'mailchimp_signup_label'          => __( 'Sign Up for Updates', 'simple-comment-editing' ),
 				'mailchimp_checkbox_enabled'      => true,
 			);
 			if ( Functions::is_multisite() ) {
@@ -286,7 +263,7 @@ class Integrations extends Tabs {
 		$response = wp_safe_remote_get( $lists_api_url, $http_args );
 
 		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
-			wp_send_json_error( array( 'message' => __( 'Could not connect to Mailchimp.', 'comment-edit-pro' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Could not connect to Mailchimp.', 'simple-comment-editing' ) ) );
 		}
 
 		// Now format response from JSON.
@@ -309,7 +286,7 @@ class Integrations extends Tabs {
 
 		// When no lists were found, return error.
 		if ( empty( $sanitized_values ) ) {
-			wp_send_json_error( array( 'message' => __( 'There are no Mailchimp lists that were found.', 'comment-edit-pro' ) ) );
+			wp_send_json_error( array( 'message' => __( 'There are no Mailchimp lists that were found.', 'simple-comment-editing' ) ) );
 			exit;
 		}
 
@@ -331,7 +308,7 @@ class Integrations extends Tabs {
 		if ( ! wp_verify_nonce( filter_input( INPUT_POST, 'nonce', FILTER_DEFAULT ), 'sce-reset-integrations-options' ) || ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'Could not verify nonce.', 'comment-edit-pro' ),
+					'message' => __( 'Could not verify nonce.', 'simple-comment-editing' ),
 				)
 			);
 		}
@@ -350,16 +327,15 @@ class Integrations extends Tabs {
 				'mailchimp_api_key'               => '',
 				'mailchimp_api_key_server_prefix' => '',
 				'mailchimp_selected_list'         => '',
-				'mailchimp_signup_label'          => __( 'Sign Up for Updates', 'comment-edit-pro' ),
+				'mailchimp_signup_label'          => __( 'Sign Up for Updates', 'simple-comment-editing' ),
 				'mailchimp_checkbox_enabled'      => false,
 			)
 		);
 
 		wp_send_json_success(
 			array(
-				'message' => __( 'Mailchimp options have been reset.', 'comment-edit-pro' ),
+				'message' => __( 'Mailchimp options have been reset.', 'simple-comment-editing' ),
 			)
 		);
-
 	}
 }

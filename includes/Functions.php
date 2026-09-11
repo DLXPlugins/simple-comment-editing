@@ -319,7 +319,7 @@ class Functions {
 	 * @return string URL to admin screen. Output is not escaped.
 	 */
 	public static function get_settings_url( $tab = '', $sub_tab = '' ) {
-		$options_url = admin_url( 'options-general.php?page=comment-edit-core' );
+		$options_url = admin_url( 'options-general.php?page=simple-comment-editing' );
 		if ( ! empty( $tab ) ) {
 			$options_url = add_query_arg( array( 'tab' => sanitize_title( $tab ) ), $options_url );
 			if ( ! empty( $sub_tab ) ) {
@@ -423,7 +423,7 @@ class Functions {
 		 *
 		 * @param string Plugin Author name.
 		 */
-		$plugin_author = apply_filters( 'sce_plugin_author', 'MediaRon LLC' );
+		$plugin_author = apply_filters( 'sce_plugin_author', 'Ronald Huereca' );
 		return $plugin_author;
 	}
 
@@ -440,7 +440,7 @@ class Functions {
 		 *
 		 * @param string Plugin Author URI.
 		 */
-		$plugin_author = apply_filters( 'sce_plugin_author_uri', 'https://mediaron.com' );
+		$plugin_author = apply_filters( 'sce_plugin_author_uri', 'https://github.com/ronalfy/simple-comment-editing' );
 		return $plugin_author;
 	}
 
@@ -509,7 +509,7 @@ class Functions {
 		 *
 		 * @param string Plugin URI.
 		 */
-		return apply_filters( 'sce_plugin_uri', 'https://mediaron.com/simple-comment-editing/' );
+		return apply_filters( 'sce_plugin_uri', 'https://github.com/ronalfy/simple-comment-editing' );
 	}
 
 	/**

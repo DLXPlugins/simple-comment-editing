@@ -11,8 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( 'No direct access.' );
 }
 
-use DLXPlugins\CommentEditLite\Functions as Functions;
-use DLXPlugins\CommentEditLite\Options as Options;
+use DLXPlugins\CommentEditLite\Functions;
+use DLXPlugins\CommentEditLite\Options;
 
 /**
  * Output the settings tab and content.
@@ -45,8 +45,8 @@ class Settings extends Tabs {
 	public function add_tab( $tabs ) {
 		$tabs[] = array(
 			'get'    => $this->tab,
-			'action' => 'sce_output_' . $this->tab,
-			'url'    => Functions::get_settings_url( $this->tab ),
+			'action' => 'sce_output_' . sanitize_key( $this->tab ),
+			'url'    => esc_url_raw( Functions::get_settings_url( $this->tab ) ),
 			'label'  => _x( 'Settings', 'Tab label as settings', 'simple-comment-editing' ),
 			'icon'   => 'home-heart',
 		);
@@ -90,9 +90,8 @@ class Settings extends Tabs {
 					<div class="sce-panel-row">
 						<form action="" method="POST">
 							<?php wp_nonce_field( 'save_sce_options' ); ?>
-							<h1><?php esc_html_e( 'Welcome to Comment Edit Core!', 'simple-comment-editing' ); ?></h1>
-							<p><?php esc_html_e( 'Comment Edit Core allows you to set a time limit for comment editing. After the time limit has passed, the comment will no longer be editable by the user.', 'simple-comment-editing' ); ?></p>
-							<p><?php esc_html_e( 'For more control over the comment editing experience, please consider Comment Edit Pro. It has a bunch of utilities that can make managing comments easier.', 'simple-comment-editing' ); ?> - <a target="_blank" href="https://dlxplugins.com/plugins/comment-edit-pro/"><?php esc_html_e( 'Visit Comment Edit Pro', 'simple-comment-editing' ); ?></a></p>
+							<h1><?php esc_html_e( 'Welcome to Simple Comment Editing!', 'simple-comment-editing' ); ?></h1>
+							<p><?php esc_html_e( 'Simple Comment Editing allows you to set a time limit for comment editing. After the time limit has passed, the comment will no longer be editable by the user.', 'simple-comment-editing' ); ?></p>
 							<table class="form-table">
 								<tbody>
 									<tr>
@@ -111,67 +110,22 @@ class Settings extends Tabs {
 									</td>
 								</tr>
 								<tr>
-								<th scope="row"><label for="sce-button-theme"><?php esc_html_e( 'Button Theme', 'simple-comment-editing-options' ); ?></label></th>
+								<th scope="row"><label for="sce-button-theme"><?php esc_html_e( 'Button Theme', 'simple-comment-editing' ); ?></label></th>
 								<td>
 									<select name="options[button_theme]">
-										<option value="default" <?php selected( 'default', $options['button_theme'] ); ?>><?php esc_html_e( 'None', 'simple-comment-editing-options' ); ?></option>
-										<option value="regular" <?php selected( 'regular', $options['button_theme'] ); ?>><?php esc_html_e( 'Regular', 'simple-comment-editing-options' ); ?></option>
-										<option value="dark" <?php selected( 'dark', $options['button_theme'] ); ?> ><?php esc_html_e( 'Dark', 'simple-comment-editing-options' ); ?></option>
-										<option value="light" <?php selected( 'light', $options['button_theme'] ); ?>><?php esc_html_e( 'Light', 'simple-comment-editing-options' ); ?></option>
+										<option value="default" <?php selected( 'default', $options['button_theme'] ); ?>><?php esc_html_e( 'None', 'simple-comment-editing' ); ?></option>
+										<option value="regular" <?php selected( 'regular', $options['button_theme'] ); ?>><?php esc_html_e( 'Regular', 'simple-comment-editing' ); ?></option>
+										<option value="dark" <?php selected( 'dark', $options['button_theme'] ); ?> ><?php esc_html_e( 'Dark', 'simple-comment-editing' ); ?></option>
+										<option value="light" <?php selected( 'light', $options['button_theme'] ); ?>><?php esc_html_e( 'Light', 'simple-comment-editing' ); ?></option>
 									</select>
 									<input type="hidden" value="false" name="options[show_icons]" />
-									<p><input id="sce-allow-icons" type="checkbox" value="true" name="options[show_icons]" <?php checked( true, $options['show_icons'] ); ?> /> <label for="sce-allow-icons"><?php esc_html_e( 'Allow icons for the buttons. Recommended if you have selected a button theme.', 'simple-comment-editing-options' ); ?></label></p>
-									<p class="sce-theme-preview">
-										<strong>
-										<?php
-											esc_html_e( 'Button Theme Preview:', 'simple-comment-editing' );
-										?>
-										</strong>
-										<a data-animation-effect="zoom" data-animation-duration="1000" data-fancybox data-src="#sce-screenshot-default" data-caption="SCE Default Theme" href="javascript:;"><?php esc_html_e( 'Default Theme', 'simple-comment-editing' ); ?></a> | <a data-animation-effect="zoom" data-animation-duration="1000" data-fancybox data-src="#sce-screenshot-dark" data-caption="SCE Dark Theme" href="javascript:;"><?php esc_html_e( 'Dark Theme', 'simple-comment-editing' ); ?></a> | <a data-animation-effect="zoom" data-animation-duration="1000" data-fancybox data-src="#sce-screenshot-light" data-caption="SCE Light Theme" href="javascript:;"><?php esc_html_e( 'Light Theme', 'simple-comment-editing' ); ?></a>
-									</p>
+									<p><input id="sce-allow-icons" type="checkbox" value="true" name="options[show_icons]" <?php checked( true, $options['show_icons'] ); ?> /> <label for="sce-allow-icons"><?php esc_html_e( 'Allow icons for the buttons. Recommended if you have selected a button theme.', 'simple-comment-editing' ); ?></label></p>
 								</td>
 							</tr>
 								</tbody>
 							</table>
-							<div id="sce-screenshot-default" style="display: none;">
-								<img src="<?php echo esc_url( Functions::get_plugin_url( '/images/screenshot-theme-default.png' ) ); ?>" alt="SCE Default Theme Screenshot" />
-							</div>
-							<div id="sce-screenshot-dark" style="display: none;">
-								<img src="<?php echo esc_url( Functions::get_plugin_url( '/images/screenshot-theme-dark.png' ) ); ?>" alt="SCE Dark Theme Screenshot" />
-							</div>
-							<div id="sce-screenshot-light" style="display: none;">
-								<img src="<?php echo esc_url( Functions::get_plugin_url( '/images/screenshot-theme-light.png' ) ); ?>" alt="SCE Light Theme Screenshot" />
-							</div>
-							
 							<?php submit_button( __( 'Save Options', 'simple-comment-editing' ), 'sce-button sce-button-info', 'submit', true ); ?>
 						</form>
-					</div>
-				</div>
-				<div class="sce-admin-panel-area">
-					<h3 class="sce-panel-heading">
-						<a href="https://dlxplugins.com/plugins/comment-edit-pro"><img id="sce-options-logo" src="<?php echo esc_url( Functions::get_plugin_url( 'images/comment-edit-base.png' ) ); ?>" alt="Comment Edit Pro logo" /></a>
-					</h3>
-					<div class="sce-panel-row">
-						<p class="description">
-							<?php echo wp_kses_post( '<strong>Go Pro</strong> with <strong>Comment Edit Pro</strong>. Enable these additional comment moderation features, allow unlimited logged-in editing, and more.', 'simple-comment-editing' ); ?>
-						</p>
-						<p class="description">
-							<?php echo wp_kses_post( 'Use coupon code <strong>COMMENTEDIT</strong> for 25% off your purchase.', 'simple-comment-editing' ); ?>
-						</p>
-						<ul>
-							<li>Frontend moderation menu with comment deletion and moderation actions</li>
-							<li>Enable unlimited logged-in editing</li>
-							<li>Require a login to edit comments</li>
-							<li>Set smart comment deletion rules, such as skipping the trash</li>
-							<li>Change the labels and descriptions of the editing interface</li>
-							<li>Enable comment logging and rollbacks</li>
-							<li>Delete spammed comments automatically and permanently</li>
-							<li>Prevent comment deletion or make comments delete only</li>
-						</ul>
-					</div>
-					<div class="sce-panel-row sce-button-grid">
-						<a class="sce-button sce-button-pro" href="https://dlxplugins.com/plugins/comment-edit-pro" target="_blank"> <?php esc_html_e( 'Find out More About Comment Edit Pro', 'simple-comment-editing' ); ?></a>
-						<a class="sce-button sce-button-pro" href="https://app.instawp.io/launch?t=comment-edit-pro&d=v2" target="_blank"> <?php esc_html_e( 'Launch a Free Demo', 'simple-comment-editing' ); ?></a>
 					</div>
 				</div>
 				<?php

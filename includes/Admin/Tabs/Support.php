@@ -11,8 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( 'No direct access.' );
 }
 
-use DLXPlugins\CommentEditLite\Functions as Functions;
-use DLXPlugins\CommentEditLite\Options as Options;
+use DLXPlugins\CommentEditLite\Functions;
+use DLXPlugins\CommentEditLite\Options;
 
 /**
  * Output the settings tab and content.
@@ -45,8 +45,8 @@ class Support extends Tabs {
 	public function add_tab( $tabs ) {
 		$tabs[] = array(
 			'get'    => $this->tab,
-			'action' => 'sce_output_' . $this->tab,
-			'url'    => Functions::get_settings_url( $this->tab ),
+			'action' => 'sce_output_' . sanitize_key( $this->tab ),
+			'url'    => esc_url_raw( Functions::get_settings_url( $this->tab ) ),
 			'label'  => _x( 'Help and Support', 'Tab label as support', 'simple-comment-editing' ),
 			'icon'   => 'home-heart',
 		);
@@ -119,33 +119,7 @@ class Support extends Tabs {
 						</p>
 					</div>
 					<div class="sce-panel-row">
-						<a class="sce-button sce-button-info" href="https://github.com/DLXPlugins/simple-comment-editing/issues" target="_blank"><svg class="sce-icon"><use xlink:href="#sce-github-icon"></use></svg>&nbsp;&nbsp;<?php esc_html_e( 'Open a GitHub Issue', 'simple-comment-editing' ); ?></a>
-					</div>
-				</div>
-				<div class="sce-admin-panel-area">
-					<h3 class="sce-panel-heading">
-						<?php esc_html_e( 'Show Your Support', 'simple-comment-editing' ); ?>
-					</h3>
-					<div class="sce-panel-row">
-						<p class="description">
-							<?php esc_html_e( 'Every cent counts and will help this project monetarily.', 'simple-comment-editing' ); ?>
-						</p>
-					</div>
-					<div class="sce-panel-row">
-						<a class="sce-button sce-button-info" href="https://github.com/sponsors/DLXPlugins" target="_blank"><svg class="sce-icon"><use xlink:href="#sce-heart-icon"></use></svg>&nbsp;&nbsp;<?php esc_html_e( 'Sponsor This Plugin', 'simple-comment-editing' ); ?></a>
-					</div>
-				</div>
-				<div class="sce-admin-panel-area">
-					<h3 class="sce-panel-heading">
-						<?php esc_html_e( 'Documentation', 'simple-comment-editing' ); ?>
-					</h3>
-					<div class="sce-panel-row">
-						<p class="description">
-							<?php esc_html_e( 'The documentation for the plugin displays its capabilities.', 'simple-comment-editing' ); ?>
-						</p>
-					</div>
-					<div class="sce-panel-row">
-						<a class="sce-button sce-button-info" href="https://docs.dlxplugins.com/v/comment-edit-lite/" target="_blank"><svg class="sce-icon"><use xlink:href="#sce-book-icon"></use></svg>&nbsp;&nbsp;<?php esc_html_e( 'View the Documentation', 'simple-comment-editing' ); ?></a>
+						<a class="sce-button sce-button-info" href="https://github.com/ronalfy/simple-comment-editing/issues" target="_blank"><svg class="sce-icon"><use xlink:href="#sce-github-icon"></use></svg>&nbsp;&nbsp;<?php esc_html_e( 'Open a GitHub Issue', 'simple-comment-editing' ); ?></a>
 					</div>
 				</div>
 				<div class="sce-admin-panel-area">
