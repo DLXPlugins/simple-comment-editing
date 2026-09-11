@@ -82,7 +82,10 @@ class Settings extends Tabs {
 			if ( empty( $sub_tab ) || $this->tab === $sub_tab ) {
 				if ( isset( $_POST['submit'] ) && isset( $_POST['options'] ) ) {
 					check_admin_referer( 'save_sce_options' );
-					Options::update_options( $_POST['options'] ); // phpcs:ignore
+					$posted_options = map_deep( wp_unslash( $_POST['options'] ), 'sanitize_text_field' );
+					if ( is_array( $posted_options ) ) {
+						Options::update_options( $posted_options );
+					}
 					printf( '<div class="updated sce-updated"><p><strong>%s</strong></p></div>', esc_html__( 'Your options have been saved.', 'simple-comment-editing' ) );
 				}
 				// Get options and defaults.

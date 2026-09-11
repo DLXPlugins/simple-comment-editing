@@ -12,7 +12,9 @@
  * Author: Ronald Huereca
  * Version: 3.3.0
  * Requires PHP: 7.2
- * Requires at least: 5.0
+ * Requires at least: 6.5
+ * License: GPLv2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Author URI: https://github.com/ronalfy/simple-comment-editing
  * Contributors: ronalfy
  * Text Domain: simple-comment-editing
