@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: comment editing, comments ,edit comments, ajax comments, comment moderation
 Requires at least: 6.5
 Tested up to: 7.1
-Stable tag: 3.3.0
+Stable tag: 3.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,22 +26,6 @@ Allow your users to edit their comments and WooCommerce reviews for a period of 
 <li>Add Mailchimp to your comment form and get email subscribers through comments.</li>
 </ol>
 
-=== Get more with Comment Edit Pro ===
-
-For additional features in addition to comment editing, please check out Comment Edit Pro.
-
-Features Include:
-
-* Newsletter integration with Mailchimp, ConvertKit, Flodesk, and MailerLite
-* Community features including @ Mentions, Comment Avatars, and Comment Character Control
-* Automations with Webhooks to connect to services like Zapier and other automation tools
-* Spam/bot protection add-ons with reCAPTCHA Enterprise or Cloudflare Turnstile support
-* Comment shortcuts and front-end moderation tools
-* Set comment rules per post type
-* Set comments to expire based on activity
-* Get notified of new and edited comments with the Slack integration
-
-
 == Installation ==
 
 1. Just unzip and upload the "simple-comment-editing" folder to your '/wp-content/plugins/' directory
@@ -55,13 +39,8 @@ Yes. The plugin has been renamed back to Simple Comment Editing.
 = Why doesn't this plugin come with any styles? =
 It's impossible to style an inline comment editor for every theme.  We've included basic HTML markup that is easily stylable to fit your theme.
 
-With Comment Edit Pro, you can choose between three themes.
-
 = Where are the options? =
-No options :) - Just simple comment editing. If you prefer options, try out the paid add-on Comment Edit Pro.
-
-= How do I customize this plugin? =
-For advanced options, please see the <a href="https://github.com/ronalfy/simple-comment-editing">GitHub repository</a> or get Comment Edit Pro.
+You can find the options by logging into your Dashboard and going to Settings->Simple Comment Editing.
 
 = What browsers have you tested this with? =
 Simple Comment Editing will work all the way back to IE10.
@@ -79,6 +58,17 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 5. Light button theme.
 
 == Changelog ==
+
+= 3.4.0 =
+* Released 2026-09-11 - Recommended update as this release fixes a few security warnings, removes Pro branding, and renames the plugin back to Simple Comment Editing while porting some pro editing features.
+* New: Rebranding/reverting name back to Simple Comment Editing.
+* Update: Porting some editing-related features from discontinued Pro plugin.
+* New: Adding Settings options for comment editing: show or hide the countdown timer, require login to edit, and unlimited editing for logged-in comment authors.
+* New: Adding deletion settings: allow users to delete comments, confirm before delete, and trash vs permanent delete for users and moderators.
+* New: Adding moderator spam handling behavior (spam vs spam and delete), including in wp-admin when moderating comments.
+* New: Adding customizable labels (Click to Edit, Save, Cancel, Delete) and messages (delete confirmation, deleted, deleted error, empty comment).
+* Fix: Settings save now merges options so other saved settings (such as Mailchimp) are not wiped accidentally.
+* Security: Security and WordPress.org updates: tightening SQL prepares in uninstall and cleanup queries, better option sanitization when reading/saving settings, ensuring passing Plugin Check report, replacing deprecated functions, added license header, and tested up to WordPress 7.1.
 
 = 3.3.1 =
 * Released 2026-09-11
@@ -531,5 +521,5 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Upgrade Notice ==
 
-= 3.3.0 =
-Reorganizing admin level settings. Ensuring plugin works with WordPress 7.0.
+= 3.4.0 =
+Recommended update as this release fixes a few security warnings, removes Pro branding, and renames the plugin back to Simple Comment Editing while porting some pro editing features.
