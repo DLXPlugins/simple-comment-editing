@@ -41,15 +41,15 @@
             "step": "importWxr",
             "file": {
                 "resource": "url",
-                "url": "https://raw.githubusercontent.com/DLXPlugins/simple-comment-editing/5d1f6469dc4a30a26b7a9649e9b4961e5e141c9a/blueprint-content.xml"
+                "url": "https://raw.githubusercontent.com/ronalfy/simple-comment-editing/main/blueprint-content.xml"
             }
         },
 		{
             "step": "setSiteOptions",
             "options": {
-                "blogname": "Comment Edit Core Demo",
+                "blogname": "Simple Comment Editing Demo",
                 "users_can_register": "0",
-                "admin_email": "ronald@dlxplugins.local"
+                "admin_email": "ronalfy@example.local"
             }
         },
         {

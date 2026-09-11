@@ -1,12 +1,11 @@
 {
-    "name": "dlxplugins/commenteditlite",
+    "name": "ronalfy/simple-comment-editing",
     "description": "Allow users to edit comments for a period of time.",
     "type": "project",
     "license": "GPL",
     "authors": [
         {
-            "name": "Ronald Huereca",
-            "email": "ronald@dlxplugins.com"
+            "name": "Ronald Huereca"
         }
     ],
     "minimum-stability": "dev",

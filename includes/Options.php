@@ -65,12 +65,19 @@ class Options {
 	 * @param array $options array of options.
 	 */
 	public static function update_options( $options = array() ) {
+		$current_options = self::get_options( true );
 
 		foreach ( $options as $key => &$option ) {
 			switch ( $key ) {
 				case 'enable_mailchimp':
 				case 'mailchimp_api_key_valid':
 				case 'mailchimp_checkbox_enabled':
+				case 'show_icons':
+				case 'show_timer':
+				case 'allow_delete':
+				case 'allow_delete_confirmation':
+				case 'allow_unlimited_editing':
+				case 'require_login_for_editing':
 					$option = (bool) filter_var( $options[ $key ], FILTER_VALIDATE_BOOLEAN );
 					break;
 				case 'timer':
@@ -80,24 +87,32 @@ class Options {
 					}
 					$option = $timer;
 					break;
-				case 'show_icons':
-					$show_icons = filter_var( $options[ $key ], FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE );
-					if ( null === $show_icons || false === $show_icons ) {
-						$option = false;
-					} else {
-						$option = true;
-					}
+				case 'delete_behavior_users':
+				case 'delete_behavior_moderators':
+					$option = 'delete' === $options[ $key ] ? 'delete' : 'trash';
+					break;
+				case 'spam_behavior_moderators':
+					$option = 'delete' === $options[ $key ] ? 'delete' : 'spam';
 					break;
 				default:
-					$option = sanitize_text_field( $options[ $key ] );
+					if ( is_array( $option ) ) {
+						$option = map_deep( $option, 'sanitize_text_field' );
+					} else {
+						$option = sanitize_text_field( $options[ sanitize_key( $key ) ] );
+					}
 					break;
 			}
 		}
+
+		$options = wp_parse_args( $options, $current_options );
+
 		if ( Functions::is_multisite() ) {
 			update_site_option( 'sce_options', $options );
 		} else {
 			update_option( 'sce_options', $options );
 		}
+
+		self::$options = $options;
 	}
 
 	/**
@@ -111,6 +126,22 @@ class Options {
 			'timer_appearance'                => 'words',
 			'button_theme'                    => 'default',
 			'show_icons'                      => false,
+			'show_timer'                      => true,
+			'allow_delete'                    => true,
+			'allow_delete_confirmation'       => true,
+			'allow_unlimited_editing'         => false,
+			'require_login_for_editing'       => false,
+			'delete_behavior_users'           => 'trash',
+			'delete_behavior_moderators'      => 'trash',
+			'spam_behavior_moderators'        => 'spam',
+			'click_to_edit_text'              => __( 'Click to Edit', 'simple-comment-editing' ),
+			'save_text'                       => __( 'Save', 'simple-comment-editing' ),
+			'cancel_text'                     => __( 'Cancel', 'simple-comment-editing' ),
+			'delete_text'                     => __( 'Delete', 'simple-comment-editing' ),
+			'confirm_delete'                  => __( 'Do you want to delete this comment?', 'simple-comment-editing' ),
+			'comment_deleted'                 => __( 'Your comment has been removed.', 'simple-comment-editing' ),
+			'comment_deleted_error'           => __( 'Your comment could not be deleted', 'simple-comment-editing' ),
+			'comment_empty_error'             => __( 'Your comment appears to be empty.', 'simple-comment-editing' ),
 			'enable_mailchimp'                => false,
 			'mailchimp_api_key'               => '',
 			'mailchimp_api_key_valid'         => false,

@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( 'No direct access.' );
 }
 
-use DLXPlugins\CommentEditLite\Functions as Functions;
+use DLXPlugins\CommentEditLite\Functions;
 
 /**
  * Class Admin Settings.
@@ -48,16 +48,6 @@ class Admin_Settings {
 			'<a href="%s">%s</a>',
 			esc_url( Functions::get_settings_url( 'settings' ) ),
 			esc_html__( 'Settings', 'simple-comment-editing' )
-		);
-		$admin_settings_links[] = sprintf(
-			'<a href="%s">%s</a>',
-			esc_url( Functions::get_settings_url( 'support' ) ),
-			esc_html__( 'Support', 'simple-comment-editing' )
-		);
-		$admin_settings_links[] = sprintf(
-			'<a href="%s" style="color: #f60098;" target="_blank">%s</a>',
-			esc_url( 'https://dlxplugins.com/plugins/comment-edit-pro/' ),
-			esc_html__( 'Go Pro', 'simple-comment-editing' )
 		);
 		if ( ! is_array( $settings ) ) {
 			return $admin_settings_links;
@@ -265,13 +255,8 @@ class Admin_Settings {
 				<h1>
 					<a href="<?php echo esc_url( Functions::get_settings_url() ); ?>" class="sce-admin-logo"><img src="<?php echo esc_url( Functions::get_plugin_logo() ); ?>" alt="Simple Comment Editing" /></a>
 				</h1>
-				<div class="sce-docs-wrap">
-					<a href="https://dlxplugins.com/support/" target="_blank" class="sce-support-link"><?php esc_html_e( 'Get Support', 'simple-comment-editing' ); ?></a>
-					<a href="https://docs.dlxplugins.com/comment-edit-lite/" target="_blank" class="sce-docs-link"><?php esc_html_e( 'View Documentation', 'simple-comment-editing' ); ?></a>
-					<a href="https://dlxplugins.com/plugins/comment-edit-pro/" target="_blank" class="sce-comment-edit-pro-link"><?php esc_html_e( 'Go Pro', 'simple-comment-editing' ); ?></a>
-				</div>
 			</div>
-			<p class="sce-info-text"><?php esc_html_e( 'Comment Edit Core is the simplest and most extensible plugin to allow your users to edit their comments.', 'simple-comment-editing' ); ?> - <a href="https://dlxplugins.com/plugins/comment-edit-pro/" target="_blank" class="sce-comment-edit-pro-link"><?php esc_html_e( 'Go Pro', 'simple-comment-editing' ); ?></a></p>
+			<p class="sce-info-text"><?php esc_html_e( 'Simple Comment Editing is the simplest and most extensible plugin to allow your users to edit their comments.', 'simple-comment-editing' ); ?></p>
 		<?php
 	}
 
@@ -291,10 +276,10 @@ class Admin_Settings {
 	 */
 	public function register_settings_menu() {
 		$hook = add_options_page(
-			__( 'Comment Edit Core', 'simple-comment-editing' ),
-			__( 'Comment Edit Core', 'simple-comment-editing' ),
+			__( 'Simple Comment Editing', 'simple-comment-editing' ),
+			__( 'Simple Comment Editing', 'simple-comment-editing' ),
 			'manage_options',
-			'comment-edit-core',
+			'simple-comment-editing',
 			array( __NAMESPACE__ . '\Admin_Settings', 'settings_page' )
 		);
 		return $hook;

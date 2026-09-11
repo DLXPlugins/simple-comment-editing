@@ -31,7 +31,7 @@ class Enqueue {
 	 * @param string $hook The page hook name.
 	 */
 	public function admin_scripts( $hook ) {
-		if ( 'options-general.php' !== $hook && 'settings_page_comment-edit-core' !== $hook ) {
+		if ( 'options-general.php' !== $hook && 'settings_page_simple-comment-editing' !== $hook ) {
 			return;
 		}
 		wp_enqueue_style(
@@ -40,7 +40,5 @@ class Enqueue {
 			SCE_VERSION,
 			'all'
 		);
-		wp_enqueue_script( 'fancybox', Functions::get_plugin_url( '/fancybox/jquery.fancybox.min.js' ), array( 'jquery' ), SCE_VERSION, true );
-		wp_enqueue_style( 'fancybox', Functions::get_plugin_url( '/fancybox/jquery.fancybox.min.css' ), array(), SCE_VERSION, 'all' );
 	}
 }

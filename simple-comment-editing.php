@@ -1,6 +1,6 @@
 <?php
 /**
- * Main class for Comment Edit Lite.
+ * Main class for Simple Comment Editing.
  *
  * @package DLXPlugins\CommentEditLite
  */
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 use DLXPlugins\CommentEditLite\Admin\Admin_Settings;
 
 /**
- * Main class for Comment Edit Lite.
+ * Main class for Simple Comment Editing.
  */
 class Simple_Comment_Editing {
 
@@ -91,17 +91,6 @@ class Simple_Comment_Editing {
 		* @param string  $image_url URL path to the loading image.
 		*/
 		self::$loading_img = esc_url( apply_filters( 'sce_loading_img', Functions::get_plugin_url( '/images/loading.gif' ) ) );
-
-		/**
-		* Filter: sce_allow_delete
-		*
-		* Determine if users can delete their comments
-		*
-		* @since 1.1.0
-		*
-		* @param bool  $allow_delete True allows deletion, false does not
-		*/
-		self::$allow_delete = (bool) apply_filters( 'sce_allow_delete', self::$allow_delete );
 	}
 
 	/**
@@ -110,18 +99,23 @@ class Simple_Comment_Editing {
 	 * @see init action.
 	 */
 	public function init() {
+		new Output();
+
+		/**
+		 * Filter: sce_allow_delete
+		 *
+		 * Determine if users can delete their comments.
+		 *
+		 * @since 1.1.0
+		 *
+		 * @param bool $allow_delete True allows deletion, false does not.
+		 */
+		self::$allow_delete = (bool) apply_filters( 'sce_allow_delete', self::$allow_delete );
 
 		// Skip out and do nothing if we're in the admin and not doing AJAX.
 		if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
 			return false;
 		}
-
-		// Load text domain.
-		load_plugin_textdomain(
-			'simple-comment-editing',
-			false,
-			dirname( plugin_basename( __FILE__ ) ) . '/languages/'
-		);
 
 		// Initialize errors.
 		self::$errors = new \WP_Error();
@@ -854,12 +848,24 @@ class Simple_Comment_Editing {
 			if ( $security_key_count ) {
 				global $wpdb;
 				delete_option( 'ajax-edit-comments_security_key_count' );
-				$wpdb->query( "delete from {$wpdb->postmeta} where left(meta_value, 7) = '_wpAjax' ORDER BY {$wpdb->postmeta}.meta_id ASC" ); // phpcs:ignore.
+				$wpdb->query(
+					$wpdb->prepare(
+						"DELETE FROM {$wpdb->postmeta} WHERE LEFT( meta_value, %d ) = %s",
+						7,
+						'_wpAjax'
+					)
+				);
 			}
 			// Delete expired meta.
 			global $wpdb;
-			$query = $wpdb->prepare( "delete from {$wpdb->commentmeta} where meta_key = '_sce' AND CAST( SUBSTRING(meta_value, LOCATE('-',meta_value ) +1 ) AS UNSIGNED) < %d", time() - ( Functions::get_comment_time() * MINUTE_IN_SECONDS ) );
-			$wpdb->query( $query ); // phpcs:ignore.
+			$wpdb->query(
+				$wpdb->prepare(
+					"DELETE FROM {$wpdb->commentmeta} WHERE meta_key = %s AND CAST( SUBSTRING( meta_value, LOCATE( %s, meta_value ) + 1 ) AS UNSIGNED ) < %d",
+					'_sce',
+					'-',
+					time() - ( Functions::get_comment_time() * MINUTE_IN_SECONDS )
+				)
+			);
 			set_transient( 'sce_security_keys', true, HOUR_IN_SECONDS );
 		}
 	}
@@ -893,7 +899,7 @@ function sce_plugin_activate() {
 }
 
 /**
- * Redirect to Comment Edit Lite settings page upon activation.
+ * Redirect to Simple Comment Editing settings page upon activation.
  */
 function sce_plugin_activate_redirect() {
 
@@ -913,7 +919,7 @@ function sce_plugin_activate_redirect() {
 			return;
 		}
 
-		$settings_url = admin_url( 'options-general.php?page=comment-edit-core' );
+		$settings_url = admin_url( 'options-general.php?page=simple-comment-editing' );
 		if ( class_exists( '\CommentEditPro\Comment_Edit_Pro' ) ) {
 			$settings_url = admin_url( 'options-general.php?page=comment-edit-pro' );
 		}
