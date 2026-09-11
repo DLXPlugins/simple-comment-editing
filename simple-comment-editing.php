@@ -91,17 +91,6 @@ class Simple_Comment_Editing {
 		* @param string  $image_url URL path to the loading image.
 		*/
 		self::$loading_img = esc_url( apply_filters( 'sce_loading_img', Functions::get_plugin_url( '/images/loading.gif' ) ) );
-
-		/**
-		* Filter: sce_allow_delete
-		*
-		* Determine if users can delete their comments
-		*
-		* @since 1.1.0
-		*
-		* @param bool  $allow_delete True allows deletion, false does not
-		*/
-		self::$allow_delete = (bool) apply_filters( 'sce_allow_delete', self::$allow_delete );
 	}
 
 	/**
@@ -110,6 +99,18 @@ class Simple_Comment_Editing {
 	 * @see init action.
 	 */
 	public function init() {
+		new Output();
+
+		/**
+		 * Filter: sce_allow_delete
+		 *
+		 * Determine if users can delete their comments.
+		 *
+		 * @since 1.1.0
+		 *
+		 * @param bool $allow_delete True allows deletion, false does not.
+		 */
+		self::$allow_delete = (bool) apply_filters( 'sce_allow_delete', self::$allow_delete );
 
 		// Skip out and do nothing if we're in the admin and not doing AJAX.
 		if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
